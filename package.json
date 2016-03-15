@@ -1,0 +1,28 @@
+{
+  "name": "Wonder-Reader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alice-em/Wonder-Reader.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alice-em/Wonder-Reader/issues"
+  },
+  "homepage": "https://github.com/alice-em/Wonder-Reader#readme",
+  "dependencies": {
+    "cbr": "^1.0.3",
+    "ebook-cover-generator": "0.0.9",
+    "electron-prebuilt": "^0.37.2",
+    "node-7z": "^0.4.0",
+    "node-7z-esf": "^0.4.1",
+    "rar-to-zip": "0.0.1"
+  }
+}
