@@ -7,7 +7,7 @@ var node7zEsf = require('node-7z-esf'); // https://www.npmjs.com/package/node-7z
 var rarToZip = require('rar-to-zip'); // https://www.npmjs.com/package/rar-to-zip
 var fs = require('fs'); // https://nodejs.org/api/fs.html
 var path = require('path'); // https://nodejs.org/api/path.html
-var jsZip = require('jszip'); // http://stuk.github.io/jszip/
+var JSZip = require('jszip'); // http://stuk.github.io/jszip/
 
 app.on('ready', function() {
 	var mainWindow = new BrowserWindow({
