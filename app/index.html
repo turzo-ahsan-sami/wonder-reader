@@ -12,8 +12,12 @@
 
 <body>
 	<div class="header">
+		<h1>Header</h1>
 		<ul>
-			<li><h1>Header</h1></li>
+			<li><button><i class="fa fa-angle-double-left"></i></button></li>
+			<li><button><i class="fa fa-angle-left"></i></button></li>
+			<li><button><i class="fa fa-angle-right"></i></button></li>
+			<li><button><i class="fa fa-angle-double-right"></i></button></li>
 			<li><button id="openFile" onclick="openFile()"><i class="fa fa-folder-open-o"></i></button></li>
 		</ul>
 
@@ -25,27 +29,7 @@
 
 
 
-
-
-	The content of the document......
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<!-- JS SCRIPTS -->
 	<script> // Open/Load Window Function
 		var remote = require('remote');
 		var dialog = remote.require('dialog');

@@ -11,24 +11,35 @@ p {
 
 .header {
 	background-color: #0E2E3B;
+	border-bottom: 1px solid #D8D7C3;
+	/*position: absolute;*/
 }
 
 .library {
 	background-color: #166678;
 	clear: both;
+	height: 100vh;
+	/*position: relative;*/
 }
 
 h1, h2, h3, h4, h5, h6 {
 	color: #D8D7C3;
 	margin: 0;
 	padding: 5px;
-	border: 1px solid #d8d7c3;
+	/*border: 1px solid #d8d7c3;*/
 	display: inline-block;
+	margin: 2px;
 }
 
 ul {
 	padding: 0;
 	margin: 0;
+	display: inline;
+	float: right;
+}
+
+ul li {
+	float: left;
 }
 
 button {
