@@ -10,7 +10,7 @@
   font-style: normal;
 }
 body {
-	background-color: #D8D7C3;
+  background-color: #D8D7C3;
   margin: 0;
   font-family: rokkitt;
   /*color: #D8D7C3;*/
@@ -60,15 +60,16 @@ button {
 }
 
 /* ---- Library Values ---- */
+
 .library {
-	width: 175px;
+  width: 175px;
 }
 .library h2 {
-	width: 97px;
-	margin: 0 auto;
-	display: block;
+  width: 97px;
+  margin: 0 auto;
+  display: block;
 }
-.library ul{
+.library ul {
   font-family: monospace;
   color: #0E2E3B;
 }
@@ -78,6 +79,22 @@ button {
 .fa-folder-open-o {
   margin-right: -2px;
   margin-left: 2px;
+}
+.fa-caret-right {
+	transition: border .75s, left .5s;
+	position: absolute;
+  font-size: 25px;
+  top: 50vh;
+  left: 158px;
+  color: #166678;
+  padding-left: 13px;
+  padding-right: 2px;
+  border-radius: 50px;
+  border: 2px solid rgba(0, 0, 0, 0);
+}
+.fa-caret-right:hover {
+	border: 2px solid #166678;
+	left: 162px;
 }
 .directory {
   background-color: #7DB9B3;
