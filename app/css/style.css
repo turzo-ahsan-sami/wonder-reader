@@ -1,50 +1,100 @@
 /* ./app/css/style.css */
 
+
 /* ---- GLOBAL VALUES ---- */
 
+@font-face {
+  font-family: 'rokkitt';
+  src: url('../fonts/Rokkitt-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 body {
-	margin: 0;
+	background-color: #D8D7C3;
+  margin: 0;
+  font-family: rokkitt;
+  /*color: #D8D7C3;*/
 }
 p {
-	color: #7DB9B3;
+  color: #7DB9B3;
 }
-
 .header {
-	background-color: #0E2E3B;
-	border-bottom: 1px solid #D8D7C3;
-	/*position: absolute;*/
+  background-color: #0E2E3B;
+  border-bottom: 1px solid #D8D7C3;
+  /*position: absolute;*/
 }
-
 .library {
-	background-color: #166678;
-	clear: both;
-	height: 100vh;
-	/*position: relative;*/
+  background-color: #166678;
+  clear: both;
+  height: 100vh;
+  /*position: relative;*/
 }
-
 h1, h2, h3, h4, h5, h6 {
-	color: #D8D7C3;
-	margin: 0;
-	padding: 5px;
-	/*border: 1px solid #d8d7c3;*/
-	display: inline-block;
-	margin: 2px;
+  color: #D8D7C3;
+  margin: 0;
+  padding: 5px;
+  /*border: 1px solid #d8d7c3;*/
+  display: inline-block;
+  margin: 2px;
 }
-
 ul {
-	padding: 0;
-	margin: 0;
-	display: inline;
-	float: right;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
 }
-
-ul li {
-	float: left;
-}
-
 button {
-	font-size: 36px;
-	background-color: rgba(0, 0, 0, 0);
-	border: 0px;
-	color: #D8D7C3;
+  font-size: 36px;
+  background-color: rgba(0, 0, 0, 0);
+  border: 0px;
+  color: #D8D7C3;
 }
+
+/* ---- Header Values ---- */
+
+.header ul {
+  display: inline;
+  float: right;
+}
+.header ul li {
+  float: left;
+}
+
+/* ---- Library Values ---- */
+.library {
+	width: 175px;
+}
+.library h2 {
+	width: 97px;
+	margin: 0 auto;
+	display: block;
+}
+.library ul{
+  font-family: monospace;
+  color: #0E2E3B;
+}
+.fa-folder-o {
+  padding-left: 2px;
+}
+.fa-folder-open-o {
+  margin-right: -2px;
+  margin-left: 2px;
+}
+.directory {
+  background-color: #7DB9B3;
+  border-top: 1px solid #D8D7C3;
+}
+li ul {
+  margin-left: 16px;
+}
+
+/*.file::before {
+	content: "<i class=\"fa fa-file-o\"></i>"
+}
+
+.dir::before {
+	content: "<i class=\"fa fa-folder-o\"></i>"
+}
+
+.dir-open::before {
+	content: "<i class=\"fa fa-folder-open-o\"></i>"
+}*/
