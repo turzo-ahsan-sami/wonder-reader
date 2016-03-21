@@ -73,6 +73,12 @@ button {
   font-family: monospace;
   color: #0E2E3B;
 }
+.library ul li {
+	cursor: pointer;
+}
+.library li:hover {
+	text-decoration: underline;
+}
 .fa-folder-o {
   padding-left: 2px;
 }
