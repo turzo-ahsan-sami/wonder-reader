@@ -87,7 +87,7 @@ button {
   margin-left: 2px;
 }
 .fa-caret-right {
-	transition: border .75s, left .5s;
+	transition: left .5s;
 	position: absolute;
   font-size: 25px;
   top: 50vh;
@@ -96,10 +96,8 @@ button {
   padding-left: 13px;
   padding-right: 2px;
   border-radius: 50px;
-  border: 2px solid rgba(0, 0, 0, 0);
 }
 .fa-caret-right:hover {
-	border: 2px solid #166678;
 	left: 162px;
 }
 .directory {
