@@ -56,17 +56,22 @@
 		var fs = remote.require('fs');
 		var dialog = remote.require('dialog');
 		var $ = require('jquery');
+		var cbr = require('cbr');
+
+
 		function openFile () {
-			dialog.showOpenDialog(function (fileNames) {
+			dialog.showOpenDialog({ filters: [
+				{ name: 'cbr', extensions: ['cbr'] }
+			]},
+			function (fileNames) {
 				console.log(fileNames); //logs file in dev tools console
 				if (fileNames === undefined) return;
 				var fileName = fileNames[0];
 				fs.readFile(fileName, 'utf-8', function (err, data) {
 					// debugger;
 					console.log(fileName);
-					$('#viewDiv').attr('src',fileName); // loads file into img tag #viewDiv
+					// $('#viewDiv').attr('src',fileName); // loads file into img tag #viewDiv
 					// $('#viewDiv').load();
-
 				});
 			});
 		}
