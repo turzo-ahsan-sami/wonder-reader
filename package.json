@@ -23,7 +23,7 @@
     "ebook-cover-generator": "0.0.9",
     "electron-prebuilt": "^0.37.2",
     "jquery": "^2.2.2",
-    "jszip": "^2.5.0",
+    "jszip": "^2.6.0",
     "node-7z": "^0.4.0",
     "node-7z-esf": "^0.4.1",
     "rar-to-zip": "0.0.1"
