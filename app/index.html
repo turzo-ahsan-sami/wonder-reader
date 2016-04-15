@@ -83,21 +83,21 @@
 					console.log(fileNames); //logs file in dev tools console
 					if (fileNames === undefined) return;
 					var fileName = fileNames[0];
-					// var s = fs.createReadStream('fileName')
-					// 	.pipe(es.split())
-					// 	.pipe(es.mapSync(function(line) {
-					// 			s.pause(); // Pauses readStream
-					// 			lineNr += 1; // Increments lineNr +1
-					// 			logMemoryUsage(lineNr); // Process line here and call s.resume() when ready
-					// 			s.resume(); // Resumes readStream
-					// 		});
-					// 		.on('error', function() {
-					// 			console.log('Error while reading file');
-					// 		});
-					// 		.on('end', function() {
-					// 			console.log('Read file successful')
-					// 		});
-					// 	);
+					var s = fs.createReadStream('fileName')
+						.pipe(es.split())
+						.pipe(es.mapSync(function(line) {
+								s.pause(); // Pauses readStream
+								lineNr += 1; // Increments lineNr +1
+								logMemoryUsage(lineNr); // Process line here and call s.resume() when ready
+								s.resume(); // Resumes readStream
+							});
+							.on('error', function() {
+								console.log('Error while reading file');
+							});
+							.on('end', function() {
+								console.log('Read file successful')
+							});
+						);
 					fs.readFile(fileName, 'utf-8', function(err, data) {
 						if (err) throw err;
 						console.log(fileName); // example: "/home/user/(comic).cbr"
