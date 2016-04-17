@@ -12,4 +12,18 @@ $(".dir").before("<i class=\"fa fa-folder-o\"></i> ");
 $(".dir-open").before("<i class=\"fa fa-folder-open-o\"></i> ");
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
