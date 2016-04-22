@@ -88,21 +88,21 @@
 								lineNr += 1; // Increments lineNr +1
 								logMemoryUsage(lineNr); // Process line here and call s.resume() when ready
 								s.resume(); // Resumes readStream
-							});
+							})
 							.on('error', function() {
 								console.log('Error while reading file');
-							});
+							})
 							.on('end', function() {
 								console.log('Read file successful')
-							});
-						);
+							}));
 					fs.readFile(fileName, 'utf-8', function(err, data) {
 						if (err) throw err;
 						console.log(fileName); // example: "/home/user/(comic).cbr"
 						console.log(data);
 					});
-				});
-			}
+				}
+			);
+		}
 	</script>
 	<script src="js/jquery-app.js"></script>
 
