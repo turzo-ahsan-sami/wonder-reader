@@ -21,7 +21,7 @@
   "dependencies": {
     "cbr": "^1.0.3",
     "ebook-cover-generator": "0.0.9",
-    "electron-prebuilt": "^0.37.2",
+    "electron-prebuilt": "~1.0.1",
     "event-stream": "^3.3.2",
     "jquery": "^2.2.2",
     "jszip": "^2.6.0",
