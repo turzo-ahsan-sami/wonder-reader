@@ -15,5 +15,5 @@ app.on('ready', function() {
 		height: 600
 	});
 
-	mainWindow.loadURL('file://' + __dirname + '/app/index.html');
+	mainWindow.loadURL('file://' + __dirname + '/app/index.html'); // TODO: make into library html.
 });
