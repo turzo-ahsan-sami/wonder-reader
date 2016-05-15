@@ -8,3 +8,10 @@ TODO:
 	* __naviBar__: __firstPage__, __prevPage__, __nextPage__, __lastPage__, __zoom__. Others will be included as soon as conceived.  
 * Make sketch layouts.  
 * Any other neat ideas that could work go here too.
+
+
+## Notes
+* Stream/Pipe Handbook :: ( https://github.com/substack/stream-handbook )
+* node.fs API :: ( https://nodejs.org/api/fs.html )
+* electron.io API et Docs :: ( http://electron.atom.io/docs/ )
+* Event-Stream API et Docs :: ( https://github.com/dominictarr/event-stream )
