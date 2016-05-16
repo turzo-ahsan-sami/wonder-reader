@@ -1,6 +1,6 @@
 var remote = require('remote');
 var fs = remote.require('fs');
-var util = require('util');
+// var util = require('util');
 var stream = require('stream');
 var es = require('event-stream'); // https://github.com/dominictarr/event-stream
 var dialog = remote.require('dialog');
