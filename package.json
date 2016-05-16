@@ -1,11 +1,11 @@
 {
   "name": "Wonder-Reader",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ./"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
