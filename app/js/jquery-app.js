@@ -1,5 +1,7 @@
 //  js/jquery-app.js
 //  Using jQuery-2.2.2
+// const $ = require('jquery');
+
 $( document ).ready(function() {
 
 // -----<

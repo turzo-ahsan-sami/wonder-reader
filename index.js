@@ -1,6 +1,6 @@
 const electron = require('electron');
 const app = electron.app; // http://electron.atom.io/docs/v0.37.2/api/app/
-const BrowserWindows = electron.BrowserWindow; //  http://electron.atom.io/docs/v0.37.2/api/browser-window/
+const BrowserWindow = electron.BrowserWindow; //  http://electron.atom.io/docs/v0.37.2/api/browser-window/
 var fs = require('fs'); // https://nodejs.org/api/fs.html
 // var cbr = require('cbr'); // https://www.npmjs.com/package/cbr
 // var ebook = require('ebook-cover-generator'); // https://www.npmjs.com/package/ebook-cover-generator
@@ -17,7 +17,7 @@ function createWindow() {
     width: 800,  // Window Size : width (duh)
     height: 600 // Window Size : height
   });
-  win.loadURL(`file://${__dirname}/index.htmls`); // Points to the html file to load in the app ::
+  win.loadURL(`file://${__dirname}/app/index.html`); // Points to the html file to load in the app ::
   // TODO: figure out why .loadURL doesn't work properly
   win.webContents.openDevTools();
   win.on('closed', () => {

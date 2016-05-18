@@ -5,19 +5,19 @@ var stream = require('stream');
 var es = require('event-stream'); // https://github.com/dominictarr/event-stream
 var dialog = remote.require('dialog');
 var $ = require('jquery');
-var cbr = require('cbr');
+// var cbr = require('cbr');
 
 var lineNr = 1;
 
-var filePiper(fileName, err) { // Streams files passed through the program.
+function filePiper(fileName, err) { // Streams files passed through the program.
   console.log('filePiper ln1 :: ' + fs.createReadStream(fileName));
   var stream = fs.createReadStream(fileName);
   console.log('filePiper ln2 :: ' +  stream.pipe());
   stream.pipe();
-  catch(err) {
-    console.log('filePiper failure.');
-  };
-});
+  // catch(err) {
+  //   console.log('filePiper failure.');
+  // };
+};
 
 function openFile() {
   dialog.showOpenDialog(
@@ -33,13 +33,8 @@ function openFile() {
       if (fileNames === undefined) return;
       var fileName = fileNames[0];
       filePiper(fileName);
-
-
-
-
-
-
-
+		})
+	};
 
     //   var s = fs.createReadStream('fileName')
     //     .pipe(es.split())
@@ -69,5 +64,3 @@ function openFile() {
     //       console.log(data);
     //     });
     // }
-  );
-}
