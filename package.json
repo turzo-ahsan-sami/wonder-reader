@@ -27,6 +27,7 @@
     "node-7z": "^0.4.0"
   },
   "devDependencies": {
-    "electron-prebuilt": "^1.0.2"
+    "electron-prebuilt": "^1.0.2",
+    "jquery": "^2.2.4"
   }
 }

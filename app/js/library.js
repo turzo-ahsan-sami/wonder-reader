@@ -1,7 +1,7 @@
 var fs = require('fs'); // https://nodejs.org/api/fs.html#fs_file_system
 var stream = require('stream'); //https://nodejs.org/api/stream.html#stream_stream
 var es = require('event-stream'); // https://github.com/dominictarr/event-stream
-const {dialog} = require('dialog').remote; // http://electron.atom.io/docs/api/dialog/
+const {dialog} = require('electron'); // http://electron.atom.io/docs/api/dialog/
 // var cbr = require('cbr');
 
 var lineNr = 1;
