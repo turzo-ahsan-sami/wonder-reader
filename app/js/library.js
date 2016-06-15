@@ -1,16 +1,16 @@
 var fs = require('fs'); // https://nodejs.org/api/fs.html#fs_file_system
 var stream = require('stream'); //https://nodejs.org/api/stream.html#stream_stream
 var es = require('event-stream'); // https://github.com/dominictarr/event-stream
-const {dialog} = require('electron'); // http://electron.atom.io/docs/api/dialog/
+const {dialog} = require('electron').remote; // http://electron.atom.io/docs/api/dialog/
 // var cbr = require('cbr');
 
 var lineNr = 1;
 
 function filePiper(fileName, err) { // Streams files passed through the program.
   console.log('filePiper ln1 :: ' + fs.createReadStream(fileName));
-  var stream = fs.createReadStream(fileName);
-  console.log('filePiper ln2 :: ' +  stream.pipe());
-  stream.pipe();
+  var s = fs.createReadStream(fileName);
+  console.log('filePiper ln2 :: ' +  stream(s));
+  stream(s);
   // catch(err) {
   //   console.log('filePiper failure.');
   // };
@@ -29,6 +29,7 @@ function openFile() {
       console.log(fileNames); //logs file in dev tools console
       if (fileNames === undefined) return;
       var fileName = fileNames[0];
+      console.log(fileName);
       filePiper(fileName);
 		})
 	};
