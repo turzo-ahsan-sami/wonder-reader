@@ -1,10 +1,7 @@
-var remote = require('remote');
-var fs = remote.require('fs');
-// var util = require('util');
-var stream = require('stream');
+var fs = require('fs'); // https://nodejs.org/api/fs.html#fs_file_system
+var stream = require('stream'); //https://nodejs.org/api/stream.html#stream_stream
 var es = require('event-stream'); // https://github.com/dominictarr/event-stream
-var dialog = remote.require('dialog');
-var $ = require('jquery');
+const {dialog} = require('dialog').remote; // http://electron.atom.io/docs/api/dialog/
 // var cbr = require('cbr');
 
 var lineNr = 1;
