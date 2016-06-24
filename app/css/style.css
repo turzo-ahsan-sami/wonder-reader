@@ -45,6 +45,9 @@ ul {
   margin: 0;
   list-style-type: none;
 }
+li ul {
+  margin-left: 16px;
+}
 button {
   font-size: 36px;
   background-color: rgba(0, 0, 0, 0);
@@ -104,9 +107,7 @@ button {
   background-color: #7DB9B3;
   border-top: 1px solid #D8D7C3;
 }
-li ul {
-  margin-left: 16px;
-}
+
 
 /*.file::before {
 	content: "<i class=\"fa fa-file-o\"></i>"
@@ -122,7 +123,7 @@ li ul {
 
 /* ---- ViewerDiv Values ---- */
 .mainWindow {
-	float: left;
+	/*float: left;*/
 	/*clear: none;*/
 	position: relative;
 	background-color: #D8B7C3;

@@ -12,10 +12,11 @@ var fs = require('fs'); // https://nodejs.org/api/fs.html
 
 
 let win // Global 'win' variable
+
 function createWindow() {
   win = new BrowserWindow({
-    width: 800,  // Window Size : width (duh)
-    height: 600 // Window Size : height
+    width: 1000,  // Window Size : width (duh)
+    height: 700 // Window Size : height
   });
   win.loadURL(`file://${__dirname}/app/index.html`); // Points to the html file to load in the app ::
   // TODO: figure out why .loadURL doesn't work properly

@@ -3,20 +3,25 @@ var stream = require('stream'); //https://nodejs.org/api/stream.html#stream_stre
 var es = require('event-stream'); // https://github.com/dominictarr/event-stream
 const {dialog} = require('electron').remote; // http://electron.atom.io/docs/api/dialog/
 // var cbr = require('cbr');
-
 var lineNr = 1;
 
 function filePiper(fileName, err) { // Streams files passed through the program.
-  console.log('filePiper ln1 :: ' + fs.createReadStream(fileName));
-  var s = fs.createReadStream(fileName);
-  console.log('filePiper ln2 :: ' +  stream(s));
-  stream(s);
+
+  // Folder Creation
+  var tempFolder = fs.mkdtempSync('/tmp/won-');
+  console.log('CREATE: ' + tempFolder + ' created');
+
+  console.log('filePiper line 15 :: ' + fs.createReadStream(fileName));
+  var fileStream = fs.createReadStream(fileName);
+  console.log('filePiper line 17 :: ' +  fileStream);
+
   // catch(err) {
   //   console.log('filePiper failure.');
   // };
 };
 
 function openFile() {
+
   dialog.showOpenDialog(
     { filters: [{
       name: 'cbr',
@@ -31,8 +36,9 @@ function openFile() {
       var fileName = fileNames[0];
       console.log(fileName);
       filePiper(fileName);
-		})
-	};
+		}
+  )
+};
 
     //   var s = fs.createReadStream('fileName')
     //     .pipe(es.split())

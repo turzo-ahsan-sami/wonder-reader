@@ -1,7 +1,6 @@
 //  js/jquery-app.js
 //  Using jQuery-2.2.2
 const $ = require('jquery');
-console.log('test');
 
 $( document ).ready(function() {
 
@@ -13,20 +12,6 @@ $( document ).ready(function() {
 $(".file").before("<i class=\"fa fa-file-o\"></i> ");
 $(".dir").before("<i class=\"fa fa-folder-o\"></i> ");
 $(".dir-open").before("<i class=\"fa fa-folder-open-o\"></i> ");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 });
