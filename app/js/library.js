@@ -3,7 +3,7 @@ var stream = require('stream'); //https://nodejs.org/api/stream.html#stream_stre
 var es = require('event-stream'); // https://github.com/dominictarr/event-stream
 const {dialog} = require('electron').remote; // http://electron.atom.io/docs/api/dialog/
 // var cbr = require('cbr');
-var lineNr = 1;
+// var lineNr = 1;
 
 function filePiper(fileName, err) { // Streams files passed through the program.
 
