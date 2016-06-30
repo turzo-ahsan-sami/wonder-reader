@@ -20,7 +20,7 @@ function createWindow() {
   });
   win.loadURL(`file://${__dirname}/app/index.html`); // Points to the html file to load in the app ::
   // TODO: figure out why .loadURL doesn't work properly
-  win.webContents.openDevTools();
+  win.webContents.openDevTools(); // Loads with Dev Tools open.  Remove before release.
   win.on('closed', () => {
     win = null;
   });
