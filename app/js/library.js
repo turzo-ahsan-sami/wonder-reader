@@ -23,9 +23,9 @@ function filePiper(fileName, err) { // Streams files passed through the program.
     console.log('dirContents: ' + dirContents);
   });
 
-  // catch(err) {
-  //   console.log('filePiper failure.');
-  // };
+  catch(err) {
+    console.log('filePiper failure.');
+  };
 };
 
 function openFile() {
@@ -43,8 +43,10 @@ function openFile() {
       if (fileNames === undefined) return;
       var fileName = fileNames[0];
       console.log(fileName);
+
       filePiper(fileName);
-      console.log('filePiper completed')
+
+      console.log('filePiper completed');
 		}
   )
 };
