@@ -2,18 +2,29 @@ var fs = require('fs'); // https://nodejs.org/api/fs.html#fs_file_system
 var stream = require('stream'); //https://nodejs.org/api/stream.html#stream_stream
 var es = require('event-stream'); // https://github.com/dominictarr/event-stream
 const {dialog} = require('electron').remote; // http://electron.atom.io/docs/api/dialog/
-// var cbr = require('cbr');
-// var lineNr = 1;
+var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
+var Sync = require('node-sync'); // https://github.com/ybogdanov/node-sync
+
+
 
 function filePiper(fileName, err) { // Streams files passed through the program.
 
   // Folder Creation
-  var tempFolder = fs.mkdtempSync('/tmp/won-');
+  var tempFolder = fs.mkdtempSync('/tmp/wonderReader-');
   console.log('CREATE: ' + tempFolder + ' created');
 
-  console.log('filePiper line 15 :: ' + fs.createReadStream(fileName));
   var fileStream = fs.createReadStream(fileName);
-  console.log('filePiper line 17 :: ' +  fileStream);
+  console.log('filePiper line 15 :: ' + fileStream);
+  var rar = new unrar(fileStream);
+
+  rar.extract(tempFolder, null, function (err) {
+    console.log('Rar successful: ' + tempFolder);
+    var dirContents = fs.readdirSync(tempFolder);
+    console.log('dirContents: ' + dirContents);
+  });
+
+
+
 
   // catch(err) {
   //   console.log('filePiper failure.');
