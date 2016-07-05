@@ -47,6 +47,7 @@ function openFile() {
       var fileName = fileNames[0];
       console.log(fileName);
       filePiper(fileName);
+      console.log('filePiper completed')
 		}
   )
 };
