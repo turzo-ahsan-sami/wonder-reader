@@ -23,9 +23,6 @@ function filePiper(fileName, err) { // Streams files passed through the program.
     console.log('dirContents: ' + dirContents);
   });
 
-
-
-
   // catch(err) {
   //   console.log('filePiper failure.');
   // };
@@ -51,32 +48,3 @@ function openFile() {
 		}
   )
 };
-
-    //   var s = fs.createReadStream('fileName')
-    //     .pipe(es.split())
-    //     .pipe(es.mapSync(function(line) {
-    //         // s.pause(); // Pauses readStream
-    //         // lineNr += 1; // Increments lineNr +1
-    //         // logMemoryUsage(lineNr); // Process line here and call s.resume() when ready
-    //         // s.resume(); // Resumes readStream
-    //       })
-    //       // .on('error', function() {
-    //       // 	console.log('Error while reading file');
-    //       // })
-    //       // .on('end', function() {
-    //       // 	console.log('Read file successful')
-    //       // })
-    //     );
-    //
-    //
-    //     fs.readFile(fileName, 'utf-8', function(err, data) {
-    //       if (err) throw err;
-    //       console.log('Line 103 good!')
-    //       // s(fileName);
-    //       console.log(s(fileName));
-    //       console.log('IZ GUD!')
-    //
-    //       console.log(fileName); // example: "/home/user/(comic).cbr"
-    //       console.log(data);
-    //     });
-    // }
