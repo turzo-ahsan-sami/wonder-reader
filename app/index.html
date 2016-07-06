@@ -6,8 +6,6 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<!-- <script src="js/jquery-2.2.2.min.js"></script> -->
-  <!-- JS SCRIPTS -->
 
 </head>
 
@@ -19,10 +17,10 @@
 				<button><i class="fa fa-angle-double-left"></i></button>
 			</li>
 			<li>
-				<button><i class="fa fa-angle-left"></i></button>
+				<button id="pageLeft" onclick="pageLeft()"><i class="fa fa-angle-left"></i></button>
 			</li>
 			<li>
-				<button><i class="fa fa-angle-right"></i></button>
+				<button id="pageRight" onclick="pageRight()"><i class="fa fa-angle-right"></i></button>
 			</li>
 			<li>
 				<button><i class="fa fa-angle-double-right"></i></button>
@@ -44,9 +42,9 @@
 					<li><span class="file">Item A</span></li>
 					<li><span class="file">Item B</span></li>
 					<ul>
-						<li>Item I</li>
-						<li>Item II</li>
-						<li>Item III</li>
+						<li><span class="file">Item I</span></li>
+						<li><span class="file">Item II</span></li>
+						<li><span class="file">Item III</span></li>
 					</ul>
 				</ul>
 			</li>
@@ -57,10 +55,10 @@
 
 
 	<div class="mainWindow">
-		<img id="viewDiv" />
+		<img id="viewImgOne" />
+    <img id="viewImgTwo" />
 	</div>
 	<script src="js/library.js"></script>
-	<script src="js/jquery-app.js"></script>
 </body>
 
 </html>
