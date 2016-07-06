@@ -3,9 +3,6 @@ var stream = require('stream'); //https://nodejs.org/api/stream.html#stream_stre
 var es = require('event-stream'); // https://github.com/dominictarr/event-stream
 const {dialog} = require('electron').remote; // http://electron.atom.io/docs/api/dialog/
 var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
-var Sync = require('sync'); // https://github.com/ybogdanov/node-sync
-
-
 
 function filePiper(fileName, err) { // Streams files passed through the program.
 
@@ -40,11 +37,9 @@ function openFile() {
       var fileName = fileNames[0];
       console.log(fileName);
 
-      Sync(function(){
-        filePiper.sync(null, fileName);
-        console.log('interior sync log @ line 45')
-      });
-      console.log('filePiper completed');
+      filePiper(fileName);
+      console.log('interior sync log @ line 45')
+
 		}
   )
 };
