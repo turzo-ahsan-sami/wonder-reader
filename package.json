@@ -19,17 +19,16 @@
   },
   "homepage": "https://github.com/alice-em/Wonder-Reader#readme",
   "dependencies": {
-    "cbr": "^1.0.3",
+    "cbr": "1.0.3",
     "ebook-cover-generator": "0.0.9",
-    "electron-prebuilt": "~1.2.0",
-    "event-stream": "^3.3.2",
-    "jquery": "^2.2.2",
-    "node-7z": "^0.4.0",
-    "node-sync": "^0.1.0",
-    "node-unrar": "^0.1.2"
+    "electron-prebuilt": "1.1.0",
+    "event-stream": "3.3.2",
+    "jquery": "2.2.x",
+    "node-unrar": "0.1.2",
+    "sync": "0.2.5"
   },
   "devDependencies": {
-    "electron-prebuilt": "^1.0.2",
-    "jquery": "^2.2.4"
+    "electron-prebuilt": "1.1.0",
+    "jquery": "2.2.x"
   }
 }

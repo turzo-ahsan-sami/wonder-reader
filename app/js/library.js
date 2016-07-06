@@ -3,7 +3,7 @@ var stream = require('stream'); //https://nodejs.org/api/stream.html#stream_stre
 var es = require('event-stream'); // https://github.com/dominictarr/event-stream
 const {dialog} = require('electron').remote; // http://electron.atom.io/docs/api/dialog/
 var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
-var Sync = require('node-sync'); // https://github.com/ybogdanov/node-sync
+var Sync = require('sync'); // https://github.com/ybogdanov/node-sync
 
 
 
@@ -18,14 +18,10 @@ function filePiper(fileName, err) { // Streams files passed through the program.
   var rar = new unrar(fileStream);
 
   rar.extract(tempFolder, null, function (err) {
-    console.log('Rar successful: ' + tempFolder);
+    console.log('Rar successful: ' + tempFolder + ' @ line 21');
     var dirContents = fs.readdirSync(tempFolder);
-    console.log('dirContents: ' + dirContents);
+    console.log('dirContents: ' + dirContents + ' @ line 23');
   });
-
-  catch(err) {
-    console.log('filePiper failure.');
-  };
 };
 
 function openFile() {
@@ -44,8 +40,10 @@ function openFile() {
       var fileName = fileNames[0];
       console.log(fileName);
 
-      filePiper(fileName);
-
+      Sync(function(){
+        filePiper.sync(null, fileName);
+        console.log('interior sync log @ line 45')
+      });
       console.log('filePiper completed');
 		}
   )
