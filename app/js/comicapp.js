@@ -14,21 +14,22 @@ var viewHeight = parseInt(document.getElementById('view-window').style.height);
 var viewWidth = parseInt(document.getElementById('view-window').style.width);
   // var vertMargin = parseInt(document.getElementById('view-window').style.marginTop)
 function limiter() {
-  var zoomValue = document.getElementById('zoomlimit').value;
+
+  var zoomValue = zoomLimit.value;
 
   if (zoomValue >= 200) {
-    document.getElementById('zoomlimit').value = 200;
+    zoomLimit.value = 200;
   } else if (zoomValue < 25) {
-    document.getElementById('zoomlimit').value = 25;
+    zoomLimit.value = 25;
   } else {
     // do nothiing
   };
-  var newHeight = document.getElementById('zoomlimit').value * 0.01 * viewHeight
-  var newWidth = document.getElementById('zoomlimit').value * 0.01 * viewWidth
-  document.getElementById('view-window').style.height = newHeight
-  document.getElementById('view-window').style.marginTop = newHeight * -0.5 + 20
-  document.getElementById('view-window').style.width = newWidth
-  document.getElementById('view-window').style.marginLeft = newWidth * -0.5
+  var newHeight = zoomLimit.value * 0.01 * viewHeight;
+  var newWidth = zoomLimit.value * 0.01 * viewWidth;
+  viewWindow.style.height = newHeight;
+  viewWindow.style.marginTop = newHeight * -0.5 + 20;
+  viewWindow.style.width = newWidth;
+  viewWindow.style.marginLeft = newWidth * -0.5;
 };
 
 /* Disables all a tags */
