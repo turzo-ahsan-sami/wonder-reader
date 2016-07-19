@@ -19,10 +19,11 @@
   },
   "homepage": "https://github.com/alice-em/Wonder-Reader#readme",
   "dependencies": {
-    "cbr": "1.0.3",
+    "cbr": "^1.0.3",
     "ebook-cover-generator": "0.0.9",
     "event-stream": "3.3.2",
     "jquery": "2.2.x",
+    "mkdirp": "^0.5.1",
     "node-unrar": "0.1.2"
   },
   "devDependencies": {
