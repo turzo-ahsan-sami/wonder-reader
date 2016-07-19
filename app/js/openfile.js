@@ -2,10 +2,10 @@ var fs = require('fs'); // https://nodejs.org/api/fs.html#fs_file_system
 // var stream = require('stream'); //https://nodejs.org/api/stream.html#stream_stream
 // var es = require('event-stream'); // https://github.com/dominictarr/event-stream
 const {dialog} = require('electron').remote; // http://electron.atom.io/docs/api/dialog/
-var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
+// var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
 const $ = require('jquery');
 var cbr = require('cbr'); // https://www.npmjs.com/package/cbr
-// var mkdirp = require('mkdirp') // https://github.com/substack/node-mkdirp
+var mkdirp = require('mkdirp') // https://github.com/substack/node-mkdirp
 
 $(document).ready(function() {   // Library Modifications and Stylings
   // Class Names and Font Awesome
@@ -30,8 +30,8 @@ function filePiper(fileName, err) { // Streams files passed through the program.
 
   cbr(fileName, tempFolder, function(error, out) {
     if (error) {
-      console.log(ERR! line 33 with cbr)
-    }
+      console.log('ERR! line 33 with cbr')
+    };
     console.log('Rar successful: ' + tempFolder + ' @ line 34');
     var dirContents = fs.readdirSync(tempFolder);
     console.log('dirContents: ' + dirContents + ' @ line 36');
