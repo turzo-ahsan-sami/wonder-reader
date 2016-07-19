@@ -75,9 +75,12 @@ button {
 .library ul {
   font-family: monospace;
   color: #0E2E3B;
+  float: left;
 }
 .library ul li {
 	cursor: pointer;
+  clear: both;
+  margin: 1px 1px 0 0;
 }
 .library li:hover {
 	text-decoration: underline;
@@ -108,7 +111,11 @@ button {
   border-top: 1px solid #D8D7C3;
 }
 
-
+.navigation {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
 /*.file::before {
 	content: "<i class=\"fa fa-file-o\"></i>"
 }
