@@ -7,13 +7,6 @@ const $ = require('jquery');
 var cbr = require('cbr'); // https://www.npmjs.com/package/cbr
 var mkdirp = require('mkdirp') // https://github.com/substack/node-mkdirp
 
-$(document).ready(function() {   // Library Modifications and Stylings
-  // Class Names and Font Awesome
-  $(".file").before("<i class=\"fa fa-file-o\"></i> ");
-  $(".dir").before("<i class=\"fa fa-folder-o\"></i> ");
-  $(".dir-open").before("<i class=\"fa fa-folder-open-o\"></i> ");
-});
-
 function filePiper(fileName, err) { // Streams files passed through the program.
 
   // Folder Creation
