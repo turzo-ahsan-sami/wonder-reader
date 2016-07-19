@@ -21,14 +21,17 @@ function filePiper(fileName, err) { // Streams files passed through the program.
   console.log(fileComic);
   var tempFolder = "app/cache/" + fileComic + "/"; // tempFolder Variable for loaded comic
   console.log(tempFolder);
-  // mkdirp.sync(tempFolder);
-  // console.log('CREATE: ' + tempFolder + ' created, line 27');
+  mkdirp.sync(tempFolder);
+  console.log('CREATE: ' + tempFolder + ' created, line 27');
 
   var fileStream = fs.createReadStream(fileName); // Streams to not clog down System
   console.log('filePiper line 29 :: ' + fileStream);
-  var rar = new unrar(fileStream);
+  // var rar = new unrar(fileStream);
 
-  rar.extract(tempFolder, null, function (err) { // Extracts .cbr into tempFolder
+  cbr(fileName, tempFolder, function(error, out) {
+    if (error) {
+      console.log(ERR! line 33 with cbr)
+    }
     console.log('Rar successful: ' + tempFolder + ' @ line 34');
     var dirContents = fs.readdirSync(tempFolder);
     console.log('dirContents: ' + dirContents + ' @ line 36');
@@ -36,6 +39,15 @@ function filePiper(fileName, err) { // Streams files passed through the program.
     document.getElementById("viewImgOne").src = 'cache/' + fileComic + '/' + dirContents[0]; // Loads array[0] into window
     document.getElementById("viewImgTwo").src = 'cache/' + fileComic + '/' + dirContents[1]; // Loads array[1] into window
   });
+
+  // rar.extract(tempFolder, null, function (err) { // Extracts .cbr into tempFolder
+  //   console.log('Rar successful: ' + tempFolder + ' @ line 34');
+  //   var dirContents = fs.readdirSync(tempFolder);
+  //   console.log('dirContents: ' + dirContents + ' @ line 36');
+  //
+  //   document.getElementById("viewImgOne").src = 'cache/' + fileComic + '/' + dirContents[0]; // Loads array[0] into window
+  //   document.getElementById("viewImgTwo").src = 'cache/' + fileComic + '/' + dirContents[1]; // Loads array[1] into window
+  // });
 };
 
 function openFile() {
