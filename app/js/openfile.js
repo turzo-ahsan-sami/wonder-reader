@@ -47,7 +47,7 @@ function openFile() {
       var x = 1;
       console.log(fileNames); // Logs file in dev tools console
       if (fileNames === undefined) return; // Breaks on error
-      var fileName = fileNames[0]; // Filepath name
+      var fileName = fileNames[0]; // Filepath name :: TODO create replace(#, '') function
       console.log(fileName);
 
       filePiper(fileName); // Streams and unrars .cbr into tempFolder
