@@ -23,24 +23,17 @@ function filePiper(fileName, err) { // Streams files passed through the program.
 
   cbr(fileName, tempFolder, function(error, out) {
     if (error) {
-      console.log('ERR! line 33 with cbr')
+      console.log('ERR! line 26 openfile.js')
+    } else {
+      console.log('Rar successful: ' + tempFolder + ' @ line 34');
+      var dirContents = fs.readdirSync(tempFolder);
+      console.log('dirContents: ' + dirContents + ' @ line 30');
+      document.getElementById("viewImgOne").src = 'cache/' + fileComic + '/' + dirContents[0]; // Loads array[0] into window
+      document.getElementById("viewImgTwo").src = 'cache/' + fileComic + '/' + dirContents[1]; // Loads array[1] into window
+      console.log(pathFinder('viewImgOne') + "viewDivOne at line 34, opefile.js");
+      console.log(pathFinder('viewImgTwo') + "viewDivTwo at line 35, opefile.js");
     };
-    console.log('Rar successful: ' + tempFolder + ' @ line 34');
-    var dirContents = fs.readdirSync(tempFolder);
-    console.log('dirContents: ' + dirContents + ' @ line 36');
-
-    document.getElementById("viewImgOne").src = 'cache/' + fileComic + '/' + dirContents[0]; // Loads array[0] into window
-    document.getElementById("viewImgTwo").src = 'cache/' + fileComic + '/' + dirContents[1]; // Loads array[1] into window
   });
-
-  // rar.extract(tempFolder, null, function (err) { // Extracts .cbr into tempFolder
-  //   console.log('Rar successful: ' + tempFolder + ' @ line 34');
-  //   var dirContents = fs.readdirSync(tempFolder);
-  //   console.log('dirContents: ' + dirContents + ' @ line 36');
-  //
-  //   document.getElementById("viewImgOne").src = 'cache/' + fileComic + '/' + dirContents[0]; // Loads array[0] into window
-  //   document.getElementById("viewImgTwo").src = 'cache/' + fileComic + '/' + dirContents[1]; // Loads array[1] into window
-  // });
 };
 
 function openFile() {

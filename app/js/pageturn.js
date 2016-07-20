@@ -2,6 +2,26 @@
 var leftKey = 37;
 var rightKey = 39;
 
+function pathFinder(imgID) { // finds the Array value of current loaded comic page
+  var pathSource = document.getElementById(imgID).src; // returns file:// + $PATH: Figure that shit out, Alice!
+  console.log(pathSource + " at line 7, pageTurn.js");
+  var fileName = pathSource.replace(/^.*[\\\/]/, '');
+  console.log(fileName + " at line 9, pageTurn.js");
+  var r = /[^\/]*$/;
+  var pathDir = pathSource.replace(r, '');
+  console.log(pathDir + " at line 7, pageTurn.js");
+  console.log('Line 13:' + fs.readdirSync(pathDir))
+  var readPathDir = fs.readdirSync(pathDir);
+  // for(var i=0; i = readPathDir.length - 1; i++) {
+  //   (function(i){
+  //     if (fileName == readPathDir[i]) {
+  //       return i;
+  //     };
+  //   });
+  // };
+};
+
+
 
 function pageRight() {
   if (/*event.keyCode = rightKey && */(x + 2) < dirContents.length) {
