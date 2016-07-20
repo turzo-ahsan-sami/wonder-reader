@@ -29,14 +29,16 @@ p {
   height: 100vh;
 	width: 175px;
 	float: left;
-  position: relative;
+  position: fixed;
+  top: 0;
 	z-index: 2;
+}
+.title {
+  margin-left: 180px;
 }
 h1, h2, h3, h4, h5, h6 {
   color: #D8D7C3;
-  margin: 0;
   padding: 5px;
-  /*border: 1px solid #d8d7c3;*/
   display: inline-block;
   margin: 2px;
 }
@@ -75,9 +77,12 @@ button {
 .library ul {
   font-family: monospace;
   color: #0E2E3B;
+  float: left;
 }
 .library ul li {
 	cursor: pointer;
+  clear: both;
+  margin: 1px 1px 0 0;
 }
 .library li:hover {
 	text-decoration: underline;
@@ -108,7 +113,11 @@ button {
   border-top: 1px solid #D8D7C3;
 }
 
-
+.navigation {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
 /*.file::before {
 	content: "<i class=\"fa fa-file-o\"></i>"
 }

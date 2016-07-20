@@ -18,7 +18,7 @@ function createWindow() {
     width: 1000,  // Window Size : width (duh)
     height: 700 // Window Size : height
   });
-  win.loadURL(`file://${__dirname}/app/index.html`); // Points to the html file to load in the app ::
+  win.loadURL(`file://${__dirname}/app/index.html`); // Points to the html file to load in the app
   win.webContents.openDevTools(); // Loads with Dev Tools open.  Remove before release.
   win.on('closed', () => {
     win = null;
