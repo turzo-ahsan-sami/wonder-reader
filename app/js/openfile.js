@@ -10,7 +10,7 @@ var mkdirp = require('mkdirp') // https://github.com/substack/node-mkdirp
 function filePiper(fileName, err) { // Streams files passed through the program.
 
   // Folder Creation
-  var fileComic = fileName.replace(/^.*[\\\/]/, '').replace(/\s#/g, '');
+  var fileComic = fileName.replace(/^.*[\\\/]/, '').replace(/[\s#]/g, ''); // Function removes path dir, spaces, and '#'. Good to note!
   console.log(fileComic);
   var tempFolder = "app/cache/" + fileComic + "/"; // tempFolder Variable for loaded comic
   console.log(tempFolder);
