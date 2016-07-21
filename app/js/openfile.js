@@ -30,8 +30,6 @@ function filePiper(fileName, err) { // Streams files passed through the program.
       console.log('dirContents: ' + dirContents + ' @ line 30');
       document.getElementById("viewImgOne").src = 'cache/' + fileComic + '/' + dirContents[0]; // Loads array[0] into window
       document.getElementById("viewImgTwo").src = 'cache/' + fileComic + '/' + dirContents[1]; // Loads array[1] into window
-      console.log(pathFinder('viewImgOne') + "viewDivOne at line 34, opefile.js");
-      console.log(pathFinder('viewImgTwo') + "viewDivTwo at line 35, opefile.js");
     };
   });
 };
@@ -49,7 +47,7 @@ function openFile() {
       var x = 1;
       console.log(fileNames); // Logs file in dev tools console
       if (fileNames === undefined) return; // Breaks on error
-      var fileName = fileNames[0]; // Filepath name
+      var fileName = fileNames[0]; // Filepath name :: TODO create replace(#, '') function
       console.log(fileName);
 
       filePiper(fileName); // Streams and unrars .cbr into tempFolder

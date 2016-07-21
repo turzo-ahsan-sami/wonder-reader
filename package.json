@@ -22,7 +22,9 @@
     "cbr": "^1.0.3",
     "ebook-cover-generator": "0.0.9",
     "jquery": "2.2.x",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.5.3",
+    "sanitize-filename": "^1.6.0"
   },
   "devDependencies": {
     "electron-prebuilt": "~1.2.0"
