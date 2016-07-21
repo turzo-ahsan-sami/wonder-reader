@@ -10,22 +10,22 @@ var mkdirp = require('mkdirp') // https://github.com/substack/node-mkdirp
 function filePiper(fileName, err) { // Streams files passed through the program.
 
   // Folder Creation
-  var fileComic = fileName.replace(/^.*[\\\/]/, '').replace(/\s/g, '');
+  var fileComic = fileName.replace(/^.*[\\\/]/, '').replace(/\s#/g, '');
   console.log(fileComic);
   var tempFolder = "app/cache/" + fileComic + "/"; // tempFolder Variable for loaded comic
   console.log(tempFolder);
   mkdirp.sync(tempFolder);
-  console.log('CREATE: ' + tempFolder + ' created, line 27');
+  console.log('CREATE: ' + tempFolder + ' created, line 18');
 
   var fileStream = fs.createReadStream(fileName); // Streams to not clog down System
-  console.log('filePiper line 29 :: ' + fileStream);
+  console.log('filePiper line 21 :: ' + fileStream);
   // var rar = new unrar(fileStream);
 
   cbr(fileName, tempFolder, function(error, out) {
     if (error) {
       console.log('ERR! line 26 openfile.js')
     } else {
-      console.log('Rar successful: ' + tempFolder + ' @ line 34');
+      console.log('Rar successful: ' + tempFolder + ' @ line 28');
       var dirContents = fs.readdirSync(tempFolder);
       console.log('dirContents: ' + dirContents + ' @ line 30');
       document.getElementById("viewImgOne").src = 'cache/' + fileComic + '/' + dirContents[0]; // Loads array[0] into window
@@ -51,7 +51,7 @@ function openFile() {
       console.log(fileName);
 
       filePiper(fileName); // Streams and unrars .cbr into tempFolder
-      console.log('interior sync log @ line 45');
+      console.log('interior sync log @ line 28');
 		}
   )
 };
