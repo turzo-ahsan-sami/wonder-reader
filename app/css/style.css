@@ -78,6 +78,7 @@ button {
   font-family: monospace;
   color: #0E2E3B;
   float: left;
+  width: 100%;
 }
 .library ul li {
 	cursor: pointer;
