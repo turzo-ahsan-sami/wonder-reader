@@ -1,12 +1,12 @@
-var pathfinder = require('./js/pathfinder')
+var path = require('path')
 
 // KeyCode Variables
 var leftKey = 37;
 var rightKey = 39;
 
 function pageRight() {
-  var x = pathfinder('viewImgOne').indexVar;
-  var dirContents = pathfinder('viewImgOne').pathArray;
+  // var x = pathfinder('viewImgOne').indexVar;
+  // var dirContents = pathfinder('viewImgOne').pathArray;
 
   if ((x + 2) < dirContents.length) {
     x = x + 2;
@@ -19,8 +19,7 @@ function pageRight() {
   document.getElementById("viewImgTwo").src = 'cache/' + dirContents[x+1]; // Loads array[x + 1] into window
 };
 function pageLeft() {
-  var x = pathfinder('viewImgOne').indexVar;
-  var dirContents = pathfinder('viewImgOne').pathArray;
+
 
   if ((x - 2) > 0) {
     x = x - 2;

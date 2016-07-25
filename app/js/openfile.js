@@ -6,11 +6,15 @@ const {dialog} = require('electron').remote; // http://electron.atom.io/docs/api
 const $ = require('jquery');
 var cbr = require('cbrreader'); // https://www.npmjs.com/package/cbr
 var mkdirp = require('mkdirp') // https://github.com/substack/node-mkdirp
+var path = require('path') // https://nodejs.org/api/path.html
 
 function filePiper(fileName, err) { // Streams files passed through the program.
 
   // Folder Creation
-  var fileComic = fileName.replace(/^.*[\\\/]/, '').replace(/[\s#]/g, ''); // Function removes path dir, spaces, and '#'. Good to note!
+  var fileComic = path.posix.basename(fileName, '.cbr'); // Function removes path dir, spaces, and '#'. Good to note!
+  if (process.platform == 'win32') {
+    fileComic = path.win32.basename(fileName, '.cbr');
+  }
   console.log(fileComic);
   var tempFolder = "app/cache/" + fileComic + "/"; // tempFolder Variable for loaded comic
   console.log(tempFolder);
@@ -44,7 +48,6 @@ function openFile() {
 
     // Open File function
     function(fileNames) {
-      var x = 1;
       console.log(fileNames); // Logs file in dev tools console
       if (fileNames === undefined) return; // Breaks on error
       var fileName = fileNames[0]; // Filepath name
