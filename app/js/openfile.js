@@ -2,7 +2,7 @@ var fs = require('fs'); // https://nodejs.org/api/fs.html#fs_file_system
 // var stream = require('stream'); //https://nodejs.org/api/stream.html#stream_stream
 // var es = require('event-stream'); // https://github.com/dominictarr/event-stream
 const {dialog} = require('electron').remote; // http://electron.atom.io/docs/api/dialog/
-// var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
+var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
 const $ = require('jquery');
 var cbr = require('cbrreader'); // https://www.npmjs.com/package/cbr
 var mkdirp = require('mkdirp') // https://github.com/substack/node-mkdirp
@@ -21,21 +21,26 @@ function filePiper(fileName, err) { // Streams files passed through the program.
   mkdirp.sync(tempFolder);
   console.log('CREATE: ' + tempFolder + ' created, line 18');
 
-  var fileStream = fs.createReadStream(fileName); // Streams to not clog down System
-  console.log('filePiper line 21 :: ' + fileStream);
-  // var rar = new unrar(fileStream);
+  // var fileStream = fs.createReadStream(fileName); // Streams to not clog down System
+  // console.log('filePiper line 21 :: ' + fileStream);
+  var rar = new unrar(fileName);
 
-  cbr(fileName, tempFolder, function(error, out) {
-    if (error) {
-      alert('ERR! line 26 openfile.js')
-    } else {
-      console.log('Rar successful: ' + tempFolder + ' @ line 28');
-      var dirContents = fs.readdirSync(tempFolder);
-      console.log('dirContents: ' + dirContents + ' @ line 30');
-      document.getElementById("viewImgOne").src = 'cache/' + fileComic + '/' + dirContents[0]; // Loads array[0] into window
-      document.getElementById("viewImgTwo").src = 'cache/' + fileComic + '/' + dirContents[1]; // Loads array[1] into window
-    };
+  rar.extract(tempFolder, null, function (err) {
+      console.log('Meow!')
   });
+
+
+  // cbr(fileName, tempFolder, function(error, out) {
+  //   if (error) {
+  //     alert('ERR! line 26 openfile.js')
+  //   } else {
+  //     console.log('Rar successful: ' + tempFolder + ' @ line 28');
+  //     var dirContents = fs.readdirSync(tempFolder);
+  //     console.log('dirContents: ' + dirContents + ' @ line 30');
+  //     document.getElementById("viewImgOne").src = 'cache/' + fileComic + '/' + dirContents[0]; // Loads array[0] into window
+  //     document.getElementById("viewImgTwo").src = 'cache/' + fileComic + '/' + dirContents[1]; // Loads array[1] into window
+  //   };
+  // });
 };
 
 function openFile() {

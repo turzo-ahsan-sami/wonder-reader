@@ -23,6 +23,7 @@
     "ebook-cover-generator": "0.0.9",
     "jquery": "2.2.x",
     "mkdirp": "^0.5.1",
+    "node-unrar": "^0.1.2",
     "rimraf": "^2.5.3",
     "sanitize-filename": "^1.6.0"
   },
