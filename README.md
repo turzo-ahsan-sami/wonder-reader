@@ -4,7 +4,7 @@ Version 0.0.9 Alpha
 
 __Requirements__: Git, Node, and NPM
 
- ## Installation and Starting
+## Installation and Starting
 
 ```shell
 git clone https://github.com/alice-em/Wonder-Reader.git
@@ -13,7 +13,7 @@ npm install
 npm start
 ```
 
-Mary Marvel 001 is included under `example/` for testing purposes. The comic is listed on various Public Domain comic sites. 
+Mary Marvel 001 is included under `example/` for testing purposes. The comic is listed on various Public Domain comic sites.
 
 TODO:
 * On load, the app opens up into the __library__, which functions as the main window for the entire app. If lib is closed, entire app closes.
