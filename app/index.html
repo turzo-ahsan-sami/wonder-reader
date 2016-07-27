@@ -11,7 +11,7 @@
 
 <body>
 	<div class="header">
-		<h1 class="title">Header</h1>
+		<h1 class="title shift-left">Header</h1>
     <div id="cpanel" class="top-div">
       <!--<ul>
         <li class="zoominput"><input type="number" id="zoomlimit" data-ride="spinner" name="zoom-percent" value="100" onchange="limiter()" min="25" max="200" data-min="25" data-max="200"></li>
@@ -41,8 +41,8 @@
 		</ul>
 	</div>
 
-	<div class="library">
-		<h2>Library</h2>
+	<div class="library shift-left" id="libSlider">
+		<h1>Library</h1>
 		<ul id="dirLib" class="directory">
 			<li><span class="dir">Item 1</span></li>
 			<li><span class="dir">Item 2</span></li>
@@ -60,7 +60,7 @@
 			</li>
 			<li><span class="dir">Item 4</span></li>
 		</ul>
-		<i class="fa fa-caret-right"></i>
+		<button onclick="libSlider()"><i class="fa fa-caret-right"></i></button>
 	</div>
 
 	<div class="mainWindow">
@@ -70,6 +70,7 @@
 	<script src="js/openfile.js"></script> <!-- Top Level file -->
 	<script src="js/libstyles.js"></script>
 	<script src="js/pageturn.js"></script>
+	<script src="js/libslider.js"></script>
 </body>
 
 </html>

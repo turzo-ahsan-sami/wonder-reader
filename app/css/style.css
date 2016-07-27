@@ -23,24 +23,11 @@ p {
   border-bottom: 1px solid #D8D7C3;
   /*position: absolute;*/
 }
-.library {
-  background-color: #166678;
-  /*clear: both;*/
-  height: 100vh;
-	width: 175px;
-	float: left;
-  position: fixed;
-  top: 0;
-	z-index: 2;
-}
-.title {
-  margin-left: 180px;
-}
 h1, h2, h3, h4, h5, h6 {
   color: #D8D7C3;
   padding: 5px;
   display: inline-block;
-  margin: 2px;
+  margin: 0;
 }
 ul {
   padding: 0;
@@ -56,9 +43,18 @@ button {
   border: 0px;
   color: #D8D7C3;
 }
+button:focus {
+  outline: none;
+}
 
 /* ---- Header Values ---- */
-
+.title {
+  margin-left: 180px;
+  transition: margin-left .5s
+}
+h1.title.shift-left {
+  margin-left: 5px
+}
 .header ul {
   display: inline;
   float: right;
@@ -69,16 +65,31 @@ button {
 
 /* ---- Library Values ---- */
 
-.library h2 {
-  width: 97px;
-  margin: 0 auto;
+.library {
+  background-color: #166678;
+  /*clear: both;*/
+  height: 100vh;
+	width: 175px;
+	float: left;
+  position: fixed;
+  top: 0;
+	z-index: 2;
+  border-right: 3px solid #0e2e3b;
+  transition: margin-left .5s;
+}
+.library h1 {
+  /*margin: 0 auto;*/
   display: block;
+  text-align: center;
+  width: 175px;
 }
 .library ul {
   font-family: monospace;
   color: #0E2E3B;
   float: left;
   width: 100%;
+  height: 100%;
+  transition: all .25s
 }
 .library ul li {
 	cursor: pointer;
@@ -88,6 +99,12 @@ button {
 .library li:hover {
 	text-decoration: underline;
 }
+.shift-left {
+  margin-left: -172px;
+}
+.shift-left ul#dirLib {
+  color: rgba(125, 185, 179, 0);
+}
 .fa-folder-o {
   padding-left: 2px;
 }
@@ -96,18 +113,21 @@ button {
   margin-left: 2px;
 }
 .fa-caret-right {
-	transition: left .5s;
+	transition: right .5s;
 	position: absolute;
-  font-size: 25px;
+  font-size: 36px;
   top: 50vh;
-  left: 158px;
-  color: #166678;
+  right: -10px;
+  color: #7DB9B3;
   padding-left: 13px;
   padding-right: 2px;
   border-radius: 50px;
 }
 .fa-caret-right:hover {
-	left: 162px;
+	right: -14px;
+}
+.fa-caret-right:focus {
+  outline: none;
 }
 .directory {
   background-color: #7DB9B3;
