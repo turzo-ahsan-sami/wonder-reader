@@ -25,6 +25,9 @@
     "node-unrar": "^0.1.5"
   },
   "devDependencies": {
-    "electron-prebuilt": "~1.2.0"
+    "electron-prebuilt": "~1.2.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0"
   }
 }
