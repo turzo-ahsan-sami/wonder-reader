@@ -4,7 +4,7 @@ var fs = require('fs'); // https://nodejs.org/api/fs.html#fs_file_system
 const {dialog} = require('electron').remote; // http://electron.atom.io/docs/api/dialog/
 var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
 const $ = require('jquery');
-var cbr = require('cbrreader'); // https://www.npmjs.com/package/cbr
+// var cbr = require('cbr'); // https://www.npmjs.com/package/cbr
 var mkdirp = require('mkdirp') // https://github.com/substack/node-mkdirp
 var path = require('path') // https://nodejs.org/api/path.html
 
@@ -26,7 +26,7 @@ function filePiper(fileName, err) { // Streams files passed through the program.
   var rar = new unrar(fileName);
 
   rar.extract(tempFolder, null, function (err) {
-      console.log('Meow!')
+    console.log('Line 29 Success!')
   });
 
 
