@@ -1,7 +1,6 @@
 var path = require('path');
 var fs = require('fs');
 var $ = require('jquery');
-// var exports = module.exports = {};
 
 exports.load = (fileName) => {
   var filePath = path.dirname(fileName);
@@ -16,6 +15,4 @@ exports.load = (fileName) => {
       } // If neither file nor folder, do nothing.
     })(i);
   };
-  // console.log(dirContents);
-  console.log(libList);
 };
