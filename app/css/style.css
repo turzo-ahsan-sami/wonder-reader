@@ -122,16 +122,7 @@ button#trash {
   color: rgba(125, 185, 179, 0);
 }
 
-.fa-folder-o {
-  padding-left: 2px;
-}
-
-.fa-folder-open-o {
-  margin-right: -2px;
-  margin-left: 2px;
-}
-
-.fa-caret-right {
+#libSlider {
   transition: right 0.5s;
   position: absolute;
   font-size: 36px;
@@ -143,11 +134,11 @@ button#trash {
   border-radius: 50px;
 }
 
-.fa-caret-right:hover {
+#libSlider:hover {
   right: -14px;
 }
 
-.fa-caret-right:focus {
+#libSlider:focus {
   outline: none;
 }
 
