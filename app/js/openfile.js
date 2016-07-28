@@ -7,6 +7,7 @@ const $ = require('jquery');
 // var cbr = require('cbr'); // https://www.npmjs.com/package/cbr
 var mkdirp = require('mkdirp') // https://github.com/substack/node-mkdirp
 var path = require('path') // https://nodejs.org/api/path.html
+var libWatch = require('./js/libwatch.js'); // libWatch.load(fileName) should insert information into lib's <ul>
 
 function filePiper(fileName, err) { // Streams files passed through the program.
 
@@ -28,6 +29,7 @@ function filePiper(fileName, err) { // Streams files passed through the program.
     var dirContents = fs.readdirSync(tempFolder);
     document.getElementById("viewImgOne").src = 'cache/' + fileComic + '/' + dirContents[0]; // Loads array[0] into window
     document.getElementById("viewImgTwo").src = 'cache/' + fileComic + '/' + dirContents[1]; // Loads array[1] into window
+    libWatch.load(fileName);
   });
 
 };

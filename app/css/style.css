@@ -1,59 +1,20 @@
-/* ./app/css/style.css */
-
-
+/* ./app/css/style.scss */
 /* ---- GLOBAL VALUES ---- */
-
-@font-face {
-  font-family: 'rokkitt';
-  src: url('../fonts/Rokkitt-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
 body {
   background-color: #D8D7C3;
   margin: 0;
   font-family: rokkitt;
   /*color: #D8D7C3;*/
 }
+
 p {
   color: #7DB9B3;
 }
+
 .header {
   background-color: #0E2E3B;
   border-bottom: 1px solid #D8D7C3;
   /*position: absolute;*/
-}
-h1, h2, h3, h4, h5, h6 {
-  color: #D8D7C3;
-  padding: 5px;
-  display: inline-block;
-  margin: 0;
-}
-ul {
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
-}
-li ul {
-  margin-left: 16px;
-}
-button {
-  font-size: 36px;
-  background-color: rgba(0, 0, 0, 0);
-  border: 0px;
-  color: #D8D7C3;
-}
-button:focus {
-  outline: none;
-}
-
-/* ---- Header Values ---- */
-.title {
-  margin-left: 180px;
-  transition: margin-left .5s
-}
-h1.title.shift-left {
-  margin-left: 5px
 }
 .header ul {
   display: inline;
@@ -63,19 +24,61 @@ h1.title.shift-left {
   float: left;
 }
 
-/* ---- Library Values ---- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #D8D7C3;
+  padding: 5px;
+  display: inline-block;
+  margin: 0;
+}
 
+ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+li ul {
+  margin-left: 16px;
+}
+
+button {
+  font-size: 36px;
+  background-color: transparent;
+  border: 0;
+  color: #D8D7C3;
+}
+
+button:focus {
+  outline: none;
+}
+
+/* ---- Header Values ---- */
+.title {
+  margin-left: 180px;
+  transition: margin-left 0.5s;
+}
+
+h1.title.shift-left {
+  margin-left: 5px;
+}
+
+/* ---- Library Values ---- */
 .library {
   background-color: #166678;
   /*clear: both;*/
   height: 100vh;
-	width: 175px;
-	float: left;
+  width: 175px;
+  float: left;
   position: fixed;
   top: 0;
-	z-index: 2;
+  z-index: 2;
   border-right: 3px solid #0e2e3b;
-  transition: margin-left .5s;
+  transition: margin-left 0.5s;
 }
 .library h1 {
   /*margin: 0 auto;*/
@@ -88,33 +91,42 @@ h1.title.shift-left {
   color: #0E2E3B;
   float: left;
   width: 100%;
-  height: 100%;
-  transition: all .25s
+  height: 90%;
+  transition: all 0.25s;
+  overflow-y: auto;
 }
-.library ul li {
-	cursor: pointer;
+.library li {
+  cursor: pointer;
   clear: both;
-  margin: 1px 1px 0 0;
+  padding: 1px;
+  font-size: 12px;
 }
 .library li:hover {
-	text-decoration: underline;
+  text-decoration: underline;
 }
+.library li:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 .shift-left {
   margin-left: -172px;
 }
 .shift-left ul#dirLib {
   color: rgba(125, 185, 179, 0);
 }
+
 .fa-folder-o {
   padding-left: 2px;
 }
+
 .fa-folder-open-o {
   margin-right: -2px;
   margin-left: 2px;
 }
+
 .fa-caret-right {
-	transition: right .5s;
-	position: absolute;
+  transition: right 0.5s;
+  position: absolute;
   font-size: 36px;
   top: 50vh;
   right: -10px;
@@ -123,12 +135,15 @@ h1.title.shift-left {
   padding-right: 2px;
   border-radius: 50px;
 }
+
 .fa-caret-right:hover {
-	right: -14px;
+  right: -14px;
 }
+
 .fa-caret-right:focus {
   outline: none;
 }
+
 .directory {
   background-color: #7DB9B3;
   border-top: 1px solid #D8D7C3;
@@ -139,28 +154,19 @@ h1.title.shift-left {
   right: 0;
   top: 0;
 }
-/*.file::before {
-	content: "<i class=\"fa fa-file-o\"></i>"
-}
-
-.dir::before {
-	content: "<i class=\"fa fa-folder-o\"></i>"
-}
-
-.dir-open::before {
-	content: "<i class=\"fa fa-folder-open-o\"></i>"
-}*/
 
 /* ---- ViewerDiv Values ---- */
 .mainWindow {
-	/*float: left;*/
-	/*clear: none;*/
-	position: relative;
-	background-color: #D8B7C3;
-	width: 100%;
-	height: 100vh;
+  /*float: left;*/
+  /*clear: none;*/
+  position: relative;
+  background-color: #D8B7C3;
+  width: 100%;
+  height: 100vh;
 }
 .mainWindow img {
   float: left;
   width: 50%;
 }
+
+/*# sourceMappingURL=style.css.map */
