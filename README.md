@@ -13,6 +13,9 @@ npm install
 npm start
 ```
 
+## Development
+__Requirements__: Grunt-cli, Sass, and some sort of text-editor
+
 Mary Marvel 001 is included under `example/` for testing purposes. The comic is listed on various Public Domain comic sites.
 
 TODO:
