@@ -1,0 +1,1 @@
+var rimraf = require('rimraf');

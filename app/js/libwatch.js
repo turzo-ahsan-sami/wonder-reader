@@ -9,9 +9,9 @@ exports.load = (fileName) => {
   let libList = [];
   for (i = 0; i < dirContents.length; i++) {
     (function(i) {
-      if (fs.statSync(filePath + '/' + dirContents[i]).isFile()) { // Check if file
+      if (fs.statSync(path.join(filePath, dirContents[i])).isFile()) { // Check if file
         $("#dirLib").append('<li><i class="fa fa-file" aria-hidden="true"></i> ' + dirContents[i] + '</li>');
-      } else if (fs.statSync(filePath + '/' + dirContents[i]).isDirectory()) { // Check if folder
+      } else if (fs.statSync(path.join(filePath, dirContents[i])).isDirectory()) { // Check if folder
         $("#dirLib").append('<li><i class="fa fa-folder" aria-hidden="true"></i> ' + dirContents[i] + '</li>')
       } // If neither file nor folder, do nothing.
     })(i);
