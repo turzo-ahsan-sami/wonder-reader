@@ -74,6 +74,7 @@ button#trash {
     top: 0;
     z-index: 2;
     border-right: 3px solid #0e2e3b;
+    word-wrap: break-word;
     transition: margin-left 0.5s;
     h1 {
         /*margin: 0 auto;*/
