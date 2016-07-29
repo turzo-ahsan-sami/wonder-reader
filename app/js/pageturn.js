@@ -1,7 +1,8 @@
 var path = require('path');
 var fs = require('fs');
 
-function pageRight() {
+exports.pageRight = () => {
+
   var filePath = decodeURI(document.getElementById('viewImgOne').src.substr(7)); // removes file:// from PATH
   var fileDir = path.dirname(filePath)
   var dirArray = fs.readdirSync(fileDir);
@@ -21,7 +22,7 @@ function pageRight() {
   document.getElementById("viewImgTwo").src = path.join(fileDir, dirArray[index + 1]); // Loads array[x + 1] into window
 };
 
-function pageLeft() {
+exports.pageLeft = () => {
   var filePath = decodeURI(document.getElementById('viewImgOne').src.substr(7)); // removes file:// from PATH
   var fileDir = path.dirname(filePath)
   var dirArray = fs.readdirSync(fileDir);
@@ -40,15 +41,3 @@ function pageLeft() {
   document.getElementById("viewImgOne").src = path.join(fileDir, dirArray[index]); // Loads array[x] into window
   document.getElementById("viewImgTwo").src = path.join(fileDir, dirArray[index + 1]); // Loads array[x + 1] into window
 };
-
-// KeyCode Variables
-var leftKey = 37;
-var rightKey = 39;
-
-$(document).keydown(function(event) {
-  if (event.which == leftKey) {
-    pageLeft();
-  } else if (event.which == rightKey) {
-    pageRight();
-  };
-});

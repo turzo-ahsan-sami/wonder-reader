@@ -7,6 +7,7 @@ var path = require('path'); // https://nodejs.org/api/path.html
 var extract = require('extract-zip'); // https://www.npmjs.com/package/extract-zip
 var libWatch = require('./js/libwatch.js'); // libWatch.load(fileName) should insert information into lib's <ul>
 var clearcache = require('./js/clearcache'); // Trash that old shit!
+var page = require('./js/pageturn.js'); // Page turning functionality
 
 function filePiper(fileName, err) { // Streams files passed through the program.
 
@@ -56,3 +57,19 @@ function openFile() {
 function trash() {
   clearcache.trashIt(); // clearcache.js
 }
+
+function pageRight() {
+  page.pageRight();
+};
+
+function pageLeft() {
+  page.pageLeft();
+}
+
+$(document).keydown(function(event) {
+  if (event.which == 37) { // left key
+    pageLeft();
+  } else if (event.which == 39) { // right key
+    pageRight();
+  };
+});
