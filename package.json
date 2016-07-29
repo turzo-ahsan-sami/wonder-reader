@@ -20,6 +20,7 @@
   "homepage": "https://github.com/alice-em/Wonder-Reader#readme",
   "dependencies": {
     "ebook-cover-generator": "0.0.9",
+    "extract-zip": "^1.5.0",
     "jquery": "2.2.x",
     "mkdirp": "^0.5.1",
     "node-unrar": "^0.1.5"

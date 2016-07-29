@@ -2,8 +2,9 @@ var fs = require('fs'); // https://nodejs.org/api/fs.html#fs_file_system
 const {dialog} = require('electron').remote; // http://electron.atom.io/docs/api/dialog/
 var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
 const $ = require('jquery');
-var mkdirp = require('mkdirp') // https://github.com/substack/node-mkdirp
-var path = require('path') // https://nodejs.org/api/path.html
+var mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
+var path = require('path'); // https://nodejs.org/api/path.html
+var extract = require('extract-zip'); // https://www.npmjs.com/package/extract-zip
 var libWatch = require('./js/libwatch.js'); // libWatch.load(fileName) should insert information into lib's <ul>
 var clearcache = require('./js/clearcache'); // Trash that old shit!
 
