@@ -34,7 +34,6 @@ function pageLeft() {
 
   if ((index - 2) > 0) {
     // If page number - 2 is greater than 0, ie the first page/cover, then it turns the page 'left'
-
     index = index - 2;
     console.log('x = ' + index + ': line 43');
   } else if ((index - 2) <= 0 ) {

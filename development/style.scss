@@ -1,63 +1,73 @@
 /* ./app/css/style.scss */
 /* ---- GLOBAL VALUES ---- */
 body {
-    background-color: #D8D7C3;
-    margin: 0;
-    font-family: rokkitt;
-    /*color: #D8D7C3;*/
+  background-color: #D8D7C3;
+  margin: 0;
+  font-family: rokkitt;
+  /*color: #D8D7C3;*/
 }
+
 p {
-    color: #7DB9B3;
+  color: #7DB9B3;
 }
+
 .header {
-    background-color: #0E2E3B;
-    border-bottom: 1px solid #D8D7C3;
-    /*position: absolute;*/
-    ul {
-        display: inline;
-        float: right;
-        li {
-            float: left;
-        }
+  background-color: #0E2E3B;
+  border-bottom: 1px solid #D8D7C3;
+  /*position: absolute;*/
+  ul {
+    display: inline;
+    float: right;
+
+    li {
+      float: left;
     }
+  }
 }
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-    color: #D8D7C3;
-    padding: 8px;
-    display: inline-block;
-    margin: 0;
-    font-family: sans-serif;
+  color: #D8D7C3;
+  padding: 8px;
+  display: inline-block;
+  margin: 0;
+  font-family: sans-serif;
 }
+
 ul {
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
 }
+
 li ul {
-    margin-left: 16px;
+  margin-left: 16px;
 }
+
 button {
-    font-size: 35px;
-    background-color: rgba(0, 0, 0, 0);
-    border: 0;
-    color: #D8D7C3;
+  font-size: 35px;
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
+  color: #D8D7C3;
 }
+
 button:focus {
-    outline: none;
+  outline: none;
 }
 /* ---- Header Values ---- */
 .title {
-    margin-left: 180px;
-    transition: margin-left 0.5s;
+  margin-left: 180px;
+  transition: margin-left .5s;
 }
+
 h1.title.shift-left {
-    margin-left: 5px;
+  margin-left: 5px;
 }
+
 button#trash {
   margin-left: 10px;
   background-color: #ff0000;
@@ -65,88 +75,99 @@ button#trash {
 }
 /* ---- Library Values ---- */
 .library {
-    background-color: #166678;
-    /*clear: both;*/
-    height: 100vh;
-    width: 175px;
-    float: left;
-    position: fixed;
-    top: 0;
-    z-index: 2;
-    border-right: 3px solid #0e2e3b;
-    word-wrap: break-word;
-    transition: margin-left 0.5s;
-    h1 {
-        /*margin: 0 auto;*/
-        display: block;
-        text-align: center;
-        width: 175px;
-    }
-    ul {
-        font-family: monospace;
-        color: #0E2E3B;
-        float: left;
-        width: 100%;
-        height: 90%;
-        transition: all 0.25s;
-        overflow-y: auto;
+  background-color: #166678;
+  /*clear: both;*/
+  height: 100vh;
+  width: 175px;
+  float: left;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  border-right: 3px solid #0e2e3b;
+  word-wrap: break-word;
+  transition: margin-left .5s;
 
-    }
-    li {
-        cursor: pointer;
-        clear: both;
-        padding: 1px;
-        font-size: 12px;
-    }
-    li:hover {
-        text-decoration: underline;
-    }
-    li:nth-child(even) {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
+  h1 {
+    /*margin: 0 auto;*/
+    display: block;
+    text-align: center;
+    width: 175px;
+  }
+
+  ul {
+    font-family: monospace;
+    color: #0E2E3B;
+    float: left;
+    width: 100%;
+    height: 90%;
+    transition: all .25s;
+    overflow-y: auto;
+  }
+
+  li {
+    cursor: pointer;
+    clear: both;
+    padding: 1px;
+    font-size: 12px;
+  }
+
+  li:hover {
+    text-decoration: underline;
+  }
+
+  li:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
 }
+
 .shift-left {
-    margin-left: -172px;
-    ul#dirLib {
-        color: rgba(125, 185, 179, 0);
-    }
+  margin-left: -172px;
+
+  ul#dirLib {
+    color: rgba(125, 185, 179, 0);
+  }
 }
+
 #libSlider {
-    transition: right 0.5s;
-    position: absolute;
-    font-size: 36px;
-    top: 50vh;
-    right: -10px;
-    color: #7DB9B3;
-    padding-left: 13px;
-    padding-right: 2px;
-    border-radius: 50px;
+  transition: right .5s;
+  position: absolute;
+  font-size: 65px;
+  top: 50vh;
+  right: -22px;
+  color: #f3f3f3;
+  z-index: -1;
+  text-shadow: 1px 0 0 #000;
 }
+
 #libSlider:hover {
-    right: -14px;
+  right: -29px;
 }
+
 #libSlider:focus {
-    outline: none;
+  outline: none;
 }
+
 .directory {
-    background-color: #7DB9B3;
-    border-top: 1px solid #D8D7C3;
+  background-color: #f3f3f3;
+  border-top: 1px solid #D8D7C3;
 }
+
 .navigation {
-    position: absolute;
-    right: 0;
-    top: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 /* ---- ViewerDiv Values ---- */
 .mainWindow {
-    /*float: left;*/
-    /*clear: none;*/
-    position: relative;
-    background-color: #D8B7C3;
-    width: 100%;
-    height: 100vh;
-    img {
-        float: left;
-        width: 50%;
-    }
+  /*float: left;*/
+  /*clear: none;*/
+  position: relative;
+  background-color: #D8B7C3;
+  width: 100%;
+  height: 100vh;
+
+  img {
+    float: left;
+    width: 50%;
+  }
 }
