@@ -24,10 +24,12 @@ function filePiper(fileName, err) { // Streams files passed through the program.
   rar.extract(tempFolder, null, function (err) {
     console.log('Line 29 Success!');
     var dirContents = fs.readdirSync(tempFolder);
+    $('#loader').addClass('hidden').removeClass('loader');
     document.getElementById("viewImgOne").src = path.join('cache/', fileComic, dirContents[0]); // Loads array[0] into window
     document.getElementById("viewImgTwo").src = path.join('cache/', fileComic, dirContents[1]); // Loads array[1] into window
     libWatch.load(fileName); // libwatch.js
   });
+  $('#loader').addClass('loader').removeClass('hidden');
 };
 
 function openFile() {
