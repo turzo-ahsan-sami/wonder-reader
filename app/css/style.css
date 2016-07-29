@@ -147,6 +147,15 @@ button#trash {
   border-top: 1px solid #D8D7C3;
 }
 
+.directory::-webkit-scrollbar-track {
+  background-color: #f3f3f3;
+}
+
+.directory::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
 .navigation {
   position: absolute;
   right: 0;
