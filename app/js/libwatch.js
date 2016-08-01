@@ -9,7 +9,7 @@ exports.load = (fileName) => {
   $('.libFile').remove();
   $('.libDir').remove();
   for (i = 0; i < dirContents.length; i++) {
-    if (fs.statSync(path.join(filePath, dirContents[i])).isFile()) { // Check if file
+    if (fs.statSync(path.join(filePath, dirContents[i])).isFile() && path.extname(dirContents[i]) == ".cbr") { // Check if file
       $("#dirLib").append('<li class="libFile"><i class="fa fa-file" aria-hidden="true"></i> ' + dirContents[i] + '</li>');
     } else if (fs.statSync(path.join(filePath, dirContents[i])).isDirectory()) { // Check if folder
       $("#dirLib").append('<li class="libDir"><i class="fa fa-folder" aria-hidden="true"></i> ' + dirContents[i] + '</li>')
