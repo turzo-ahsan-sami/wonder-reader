@@ -1,7 +1,7 @@
 /* ./app/css/style.scss */
 /* ---- GLOBAL VALUES ---- */
 body {
-  background-color: #D8D7C3;
+  background-color: #424242;
   margin: 0;
   font-family: rokkitt;
   /*color: #D8D7C3;*/
@@ -14,7 +14,9 @@ p {
 .header {
   background-color: #0E2E3B;
   border-bottom: 1px solid #D8D7C3;
-  /*position: absolute;*/
+  position: fixed;
+  z-index: 2;
+  width: 100%;
 }
 .header ul {
   display: inline;
@@ -109,11 +111,21 @@ button#trash {
   padding: 1px;
   font-size: 12px;
 }
-.library li:hover {
-  text-decoration: underline;
-}
 .library li:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.1);
+}
+.library .libFile a,
+.library .libDir a {
+  display: block;
+  text-decoration: none;
+  transition: all .25s;
+  padding: 2px;
+}
+.library .libFile a:hover,
+.library .libDir a:hover {
+  text-decoration: none;
+  box-shadow: inset 1px 0px 0px 0px #ff0000;
+  background: #fff;
 }
 
 .shift-left {
@@ -170,6 +182,7 @@ button#trash {
   background-color: #D8B7C3;
   width: 100%;
   height: 100vh;
+  padding-top: 56px;
 }
 .mainWindow img {
   float: left;
