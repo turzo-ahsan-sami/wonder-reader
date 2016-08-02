@@ -9,10 +9,10 @@ exports.load = (fileName) => {
   $('.libFile').remove();
   $('.libDir').remove();
   for (i = 0; i < dirContents.length; i++) {
-    if (fs.statSync(path.join(filePath, dirContents[i])).isFile() && path.extname(dirContents[i]) == ".cbr") { // Check if file
-      $("#dirLib").append('<li class="libFile"><i class="fa fa-file" aria-hidden="true"></i> ' + dirContents[i] + '</li>');
+    if (fs.statSync(path.join(filePath, dirContents[i])).isFile() && ['.cbr', '.cbz'].indexOf(path.extname(dirContents[i])) > -1) { // Check if file and if .cbr or .cbz
+      $("#dirLib").append('<li class="libFile"><a href="#" onclick="filePiper('path.join(filePath, dirContents[i])')"<i class="fa fa-file" aria-hidden="true"></i> ' + dirContents[i] + '</a></li>');
     } else if (fs.statSync(path.join(filePath, dirContents[i])).isDirectory()) { // Check if folder
-      $("#dirLib").append('<li class="libDir"><i class="fa fa-folder" aria-hidden="true"></i> ' + dirContents[i] + '</li>')
+      $("#dirLib").append('<li class="libDir"><a href="#" onclick=""><i class="fa fa-folder" aria-hidden="true"></i> ' + dirContents[i] + '</a></li>')
     } // If neither file nor folder, do nothing.
   };
 };
