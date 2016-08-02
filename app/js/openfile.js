@@ -9,6 +9,8 @@ var libWatch = require('./js/libwatch.js'); // libWatch.load(fileName) should in
 var clearcache = require('./js/clearcache'); // Trash that old shit!
 var page = require('./js/pageturn.js'); // Page turning functionality
 
+var imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
+
 function filePiper(fileName, err) { // Streams files passed through the program.
 
   // Folder Creation
@@ -27,28 +29,41 @@ function filePiper(fileName, err) { // Streams files passed through the program.
   var tempFolder = path.join("app/cache/", fileComic); // tempFolder Variable for loaded comic
   console.log(tempFolder);
   mkdirp.sync(tempFolder);
-  console.log('CREATE: ' + tempFolder + ' created, line 18');
+  console.log('CREATE: ' + tempFolder + ' created');
 
-  if (path.extname(fileName) == ".cbr") {
+  if (path.extname(fileName) == ".cbr") { // .CBR file type function
     var rar = new unrar(fileName);
     rar.extract(tempFolder, null, function (err) {
-      console.log('Line 29 Success!');
+      console.log('Line 35 Success!');
       var dirContents = fs.readdirSync(tempFolder);
       $('#loader').addClass('hidden').removeClass('loader');
       document.getElementById("viewImgOne").src = path.join('cache/', fileComic, dirContents[0]); // Loads array[0] into window
       document.getElementById("viewImgTwo").src = path.join('cache/', fileComic, dirContents[1]); // Loads array[1] into window
       libWatch.load(fileName); // libwatch.js
     });
-  } else if (path.extname(fileName) == ".cbz") {
-    extract(fileName, {dir: 'app/cache'}, function(err) {
-      console.log('Line 29 Success!');
+  } else if (path.extname(fileName) == ".cbz") { // .CBZ file type function
+    extract(fileName, {dir: tempFolder}, function(err) {
+      console.log('Line 44 Success!');
       var dirContents = fs.readdirSync(tempFolder);
+
+      console.log(tempFolder);
+      console.log(dirContents[0]);
+
+      if (fs.statSync(path.join(tempFolder, dirContents[0])).isDirectory()) {
+        var zipDir = dirContents[0];
+        var dirContents = fs.readdirSync(path.join(tempFolder, zipDir));
+        console.log('zipDir created as ' + zipDir)
+      } else {
+        var zipDir = ''; // Creates empty string
+        console.log('openfile.js @ line 53 :: Empty zipDir string created')
+      }
+      var dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i])) > -1});
       $('#loader').addClass('hidden').removeClass('loader');
-      document.getElementById("viewImgOne").src = path.join('cache/', fileComic, dirContents[0]); // Loads array[0] into window
-      document.getElementById("viewImgTwo").src = path.join('cache/', fileComic, dirContents[1]); // Loads array[1] into window
+      document.getElementById("viewImgOne").src = path.join('cache/', fileComic, zipDir, dirContents[0]); // Loads array[0] into window
+      document.getElementById("viewImgTwo").src = path.join('cache/', fileComic, zipDir, dirContents[1]); // Loads array[1] into window
       libWatch.load(fileName); // libwatch.js
     });
-  } else {
+  } else { // Neither .CBR nor .CBZ
     alert("I don't think that is a comic you picked.");
   };
   $('#loader').addClass('loader').removeClass('hidden');

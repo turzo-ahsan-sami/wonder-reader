@@ -11,33 +11,17 @@ p {
   color: #7DB9B3;
 }
 
-.header {
-  background-color: #0E2E3B;
-  border-bottom: 1px solid #D8D7C3;
-  position: fixed;
-  z-index: 2;
-  width: 100%;
-  ul {
-    display: inline;
-    float: right;
-
-    li {
-      float: left;
-    }
-  }
-}
-
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  color: #D8D7C3;
+  color: #fff;
   padding: 8px;
   display: inline-block;
   margin: 0;
-  font-family: sans-serif;
+  font-family: CarterOne;
 }
 
 ul {
@@ -54,13 +38,29 @@ button {
   font-size: 35px;
   background-color: rgba(0, 0, 0, 0);
   border: 0;
-  color: #D8D7C3;
+  color: #fff;
 }
 
 button:focus {
   outline: none;
 }
 /* ---- Header Values ---- */
+.header {
+  background-color: #0E2E3B;
+  border-bottom: 1px solid #D8D7C3;
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  ul {
+    display: inline;
+    float: right;
+
+    li {
+      float: left;
+    }
+  }
+}
+
 .title {
   margin-left: 180px;
   transition: margin-left .5s;
@@ -109,8 +109,8 @@ button#trash {
   li {
     cursor: pointer;
     clear: both;
-    padding: 1px;
     font-size: 12px;
+    font-family: Josefin;
   }
 
   li:nth-child(even) {
@@ -121,13 +121,15 @@ button#trash {
     a {
       display: block;
       text-decoration: none;
-      transition: all .25s;
-      padding: 2px;
+      transition: all .5s;
+      padding: 3px;
+      color: #808080;
     }
     a:hover {
       text-decoration: none;
-      box-shadow: inset 1px 0px 0px 0px #ff0000;
+      box-shadow: inset 2px 0px 0px 0px #ff0000;
       background: #fff;
+      color: #000;
     }
   }
 }
@@ -146,14 +148,14 @@ button#trash {
   position: absolute;
   font-size: 65px;
   top: 50vh;
-  right: -22px;
+  right: -15px;
   color: #f3f3f3;
   z-index: -1;
-  text-shadow: 1px 0 0 #000;
+  text-shadow: 4px 0 0 #0E2E3B;
 }
 
 #libSlider:hover {
-  right: -29px;
+  right: -25px;
 }
 
 #libSlider:focus {
@@ -162,7 +164,6 @@ button#trash {
 
 .directory {
   background-color: #f3f3f3;
-  border-top: 1px solid #D8D7C3;
 }
 .directory::-webkit-scrollbar-track {
   background-color: #f3f3f3;
