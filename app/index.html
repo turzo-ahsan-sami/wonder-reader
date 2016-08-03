@@ -13,6 +13,16 @@
 	<div class="header">
 		<h1 class="title shift-left">Wonder Reader</h1>
     <div id="cpanel" class="top-div">
+
+			<label for="zoomRange">Zoom</label>
+			<input type="range" min="25" max="200" value="100" id="zoomRange" oninput="outputUpdate(value)">
+			<output for="zoomRange" id="zoomDisplay">100%</output>
+			<script>
+				function outputUpdate(vol) {
+					document.querySelector('#zoomDisplay').value = vol + '%';
+				}
+			</script>
+
       <!--<ul>
         <li class="zoominput"><input type="number" id="zoomlimit" data-ride="spinner" name="zoom-percent" value="100" onchange="limiter()" min="25" max="200" data-min="25" data-max="200"></li>
         <li><i class="fa fa-percent"></i></li>

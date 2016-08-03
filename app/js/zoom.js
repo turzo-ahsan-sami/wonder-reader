@@ -24,12 +24,11 @@ function limiter() {
   viewWindow.style.marginLeft = newWidth * -0.5;
 };
 
-/* Disables all a tags */
-window.onload = function () {
-  var anchors = document.getElementsByTagName("a");
-  for (var i = 0; i < anchors.length; i++) {
-    anchors[i].onclick = function () {
-      return (false)
-    }
-  }
-}
+/* Prototype value increaser */
+var c = 0
+
+function zoomAdder () {
+  var zoomValue = parseInt(document.getElementById('zoomlimit').value)
+  // console.log("++c + zoomValue is "++c + zoomValue);
+  document.getElementById("zoomlimit").value = zoomValue + ++c;
+};
