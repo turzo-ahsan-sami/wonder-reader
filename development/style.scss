@@ -63,8 +63,10 @@ h1.title.shift-left {
 }
 #cpanel {
     float: left;
-    width: 300px;
-    margin-left: 5px;
+    width: 165px;
+    position: fixed;
+    right: 220px;
+    top: 8px;
     label {
         display: none;
         float: left;
@@ -72,9 +74,9 @@ h1.title.shift-left {
     input[type="range"] {
         -webkit-appearance: none;
         float: left;
-        width: 70%;
+        width: 75px;
         position: relative;
-        top: 20px;
+        top: 15px;
         background: transparent;
     }
     input[type="range"]:focus {
@@ -109,10 +111,11 @@ h1.title.shift-left {
         float: right;
         width: 80px;
         text-align: right;
-        margin-top: 7px;
+        //margin-top: 7px;
         background: rgb(20, 139, 181);
         border-radius: 2px;
         padding: 3px 3px 0 0;
+        border: 2px solid rgba(255,255,255,0.8);
     }
 }
 button#trash {
