@@ -1,7 +1,7 @@
 /* ./app/css/style.scss */
 /* ---- GLOBAL VALUES ---- */
 body {
-  background-color: #424242;
+  background-color: #ddbfeb;
   margin: 0;
   font-family: rokkitt;
   /*color: #D8D7C3;*/
@@ -246,7 +246,6 @@ button#trash {
   /*float: left;*/
   /*clear: none;*/
   position: relative;
-  background-color: #D8B7C3;
   width: 100%;
   height: 100vh;
   padding-top: 56px;
