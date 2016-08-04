@@ -26,28 +26,19 @@
 					document.querySelector('#zoomSlider').value = val;
 				}
 			</script>
-
-      <!--<ul>
-        <li class="zoominput"><input type="number" id="zoomlimit" data-ride="spinner" name="zoom-percent" value="100" onchange="limiter()" min="25" max="200" data-min="25" data-max="200"></li>
-        <li><i class="fa fa-percent"></i></li>
-        <li><a href="#" id="plus-circle" data-value="1" data-target="#zoomlimit" data-toggle="spinner" data-on="mousehold"><i class="fa fa-plus-circle"></i></a></li>
-        <li><a href="#" id="minus-circle" data-value="-1" data-target="#zoomlimit" data-toggle="spinner" data-on="mousehold"><i class="fa fa-minus-circle"></i></a></li>
-        <li><a href="#" id="folder-open-o" onclick="openFile();"><i class="fa fa-folder-open-o"></i></a></li>
-        <li><a href="#" id="fa-archive"><i class="fa fa-archive"></i></a></li>
-      </ul> -->
     </div>
 		<ul class="navigation">
 			<li>
-				<button><i class="fa fa-angle-double-left"></i></button>
+				<button id="prevComic" onclick="" disabled><i class="fa fa-angle-double-left"></i></button>
 			</li>
 			<li>
-				<button id="pageLeft" onclick="pageLeft()"><i class="fa fa-angle-left"></i></button>
+				<button id="pageLeft" onclick="pageLeft()" disabled><i class="fa fa-angle-left"></i></button>
 			</li>
 			<li>
-				<button id="pageRight" onclick="pageRight()"><i class="fa fa-angle-right"></i></button>
+				<button id="pageRight" onclick="pageRight()" disabled><i class="fa fa-angle-right"></i></button>
 			</li>
 			<li>
-				<button><i class="fa fa-angle-double-right"></i></button>
+				<button id="nextComic" onclick="" disabled><i class="fa fa-angle-double-right"></i></button>
 			</li>
 			<li>
 				<button id="openFile" onclick="openFile()"><i class="fa fa-folder-open-o"></i></button>
@@ -71,6 +62,7 @@
 	</div>
 	<script src="js/openfile.js"></script> <!-- Top Level file -->
 	<script src="js/libslider.js"></script>
+	<script src="js/zoom.js"></script>
 </body>
 
 </html>

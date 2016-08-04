@@ -5,7 +5,7 @@ var zoomText = document.getElementById('zoomText'); // Zoom Text Input
 var viewHeight = parseInt(viewer.style.height);
 var viewWidth = parseInt(viewer.style.width);
   // var vertMargin = parseInt(document.getElementById('view-window').style.marginTop)
-function slideToText() {
+function zoom() {
 
   var zoomValue = zoomSlider.value;
   // Limits zoom paramaters to 25% to 200%
