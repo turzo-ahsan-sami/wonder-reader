@@ -14,12 +14,16 @@
 		<h1 class="title shift-left">Wonder Reader</h1>
     <div id="cpanel" class="top-div">
 
-			<label for="zoomRange">Zoom</label>
-			<input type="range" min="25" max="200" value="100" id="zoomRange" oninput="outputUpdate(value)">
-			<output for="zoomRange" id="zoomDisplay">100%</output>
+			<label for="zoomSlider">Zoom</label>
+			<input type="range" min="25" max="200" value="100" id="zoomSlider" oninput="zoomTextUpdate(value)" for="zoomText">
+			<input type="text" for="zoomSlider" id="zoomText" oninput="zoomSliderUpdate(value)" value="100"/>
+			<span id="percent">%</span>
 			<script>
-				function outputUpdate(vol) {
-					document.querySelector('#zoomDisplay').value = vol + '%';
+				function zoomTextUpdate(val) {
+					document.querySelector('#zoomText').value = val;
+				}
+				function zoomSliderUpdate(val) {
+					document.querySelector('#zoomSlider').value = val;
 				}
 			</script>
 
@@ -60,7 +64,7 @@
 		<button onclick="libSlider()" id="libSlider"><i class="fa fa-caret-right"></i></button>
 	</div>
 
-	<div class="mainWindow">
+	<div class="mainWindow" id="viewer">
 		<img id="viewImgOne" />
     <img id="viewImgTwo" />
     <div id="loader" class="loader hidden">Loading...</div>

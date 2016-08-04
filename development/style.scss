@@ -104,7 +104,7 @@ h1.title.shift-left {
     input[type=range]:focus::-webkit-slider-runnable-track {
         background: #367ebd;
     }
-    output {
+    #zoomText {
         color: #fff;
         font-family: CarterOne;
         font-size: 22px;
@@ -114,8 +114,17 @@ h1.title.shift-left {
         //margin-top: 7px;
         background: rgb(20, 139, 181);
         border-radius: 2px;
-        padding: 3px 3px 0 0;
+        padding: 3px 26px 0 0;
         border: 2px solid rgba(255,255,255,0.8);
+    }
+    #percent {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      color: #fff;
+      font-family: CarterOne;
+      float: right;
+      font-size: 22px;
     }
 }
 button#trash {

@@ -114,7 +114,7 @@ h1.title.shift-left {
 #cpanel input[type=range]:focus::-webkit-slider-runnable-track {
   background: #367ebd;
 }
-#cpanel output {
+#cpanel #zoomText {
   color: #fff;
   font-family: CarterOne;
   font-size: 22px;
@@ -123,8 +123,17 @@ h1.title.shift-left {
   text-align: right;
   background: #148bb5;
   border-radius: 2px;
-  padding: 3px 3px 0 0;
+  padding: 3px 26px 0 0;
   border: 2px solid rgba(255, 255, 255, 0.8);
+}
+#cpanel #percent {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: #fff;
+  font-family: CarterOne;
+  float: right;
+  font-size: 22px;
 }
 
 button#trash {
