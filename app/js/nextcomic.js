@@ -25,13 +25,21 @@ exports.load = (fileName) => {
   console.log(baseName);
   console.log(fileIndex);
 
-
+  var nextComic = document.getElementById('nextComic');
+  var prevComic = document.getElementById('prevComic');
+  var nextSrc = path.join(filePath, dirComics[fileIndex + 1]);
+  var prevSrc = path.join(filePath, dirComics[fileIndex - 1]);
 
   if (fileIndex == 0) { // If loaded comic is first comic in directory
-
+    nextComic.onclick=function() {filePiper(nextSrc)};
+    enable('nextComic')
   } else if (fileIndex == dirContents.length -1) { // If loaded comic is the last comic in directory
-
-  } else {
-
+    prevComic.onclick=function() {filePiper(prevSrc)};
+    enable('prevComic')
+  } else { // If comic is somewhere in the middle of the directory array
+    nextComic.onclick=function() {filePiper(nextSrc)};
+    prevComic.onclick=function() {filePiper(prevSrc)};
+    enable('nextComic')
+    enable('prevComic')
   }
 };

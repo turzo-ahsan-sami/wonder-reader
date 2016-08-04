@@ -12,6 +12,7 @@ var page = require('./js/pageturn.js'); // Page turning functionality
 var nextcomic = require('./js/nextcomic.js'); // Loads Functions onto previous and next buttons
 
 var imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
+// TODO :: Force test arrays to lowercase
 
 function filePiper(fileName, err) { // Streams files passed through the program.
 
@@ -37,7 +38,9 @@ function filePiper(fileName, err) { // Streams files passed through the program.
     var rar = new unrar(fileName);
     rar.extract(tempFolder, null, function (err) {
       var dirContents = fs.readdirSync(tempFolder);
-      var dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i])) > -1}); // Cleans out the crap :: see imgTypes[...] @ line 12
+      console.log(dirContents)
+      var dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1}); // Cleans out the crap :: see imgTypes[...] @ line 12
+      console.log(dirContents)
       $('#loader').addClass('hidden').removeClass('loader');
       document.getElementById("viewImgOne").src = path.join('cache/', fileComic, dirContents[0]); // Loads array[0] into window
       document.getElementById("viewImgTwo").src = path.join('cache/', fileComic, dirContents[1]); // Loads array[1] into window
@@ -60,7 +63,7 @@ function filePiper(fileName, err) { // Streams files passed through the program.
         var zipDir = ''; // Creates empty string
         console.log('openfile.js @ line 53 :: Empty zipDir string created')
       }
-      var dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i])) > -1});
+      var dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1});
       // Cleans out the non-image files :: see imgTypes[...] @ line 12
       $('#loader').addClass('hidden').removeClass('loader');
       document.getElementById("viewImgOne").src = path.join('cache/', fileComic, zipDir, dirContents[0]); // Loads array[0] into window
