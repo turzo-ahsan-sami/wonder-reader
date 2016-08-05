@@ -28,7 +28,7 @@ exports.load = (fileName) => {
   var nextComic = document.getElementById('nextComic');
   var prevComic = document.getElementById('prevComic');
   var nextSrc = path.join(filePath, dirComics[fileIndex + 1]);
-  var prevSrc = path.join(filePath, dirComics[fileIndex - 1]);
+  var prevSrc = path.join(filePath, dirComics[fileIndex - 1]); // TODO: Throws errors on first comic
 
   if (fileIndex == 0) { // If loaded comic is first comic in directory
     nextComic.onclick=function() {filePiper(nextSrc)};

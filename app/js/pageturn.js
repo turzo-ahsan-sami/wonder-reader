@@ -4,7 +4,7 @@ var fs = require('fs');
 exports.pageRight = () => {
 
   var filePath = decodeURI(document.getElementById('viewImgOne').src.substr(7)); // removes file:// from PATH
-  var fileDir = path.dirname(filePath)
+  var fileDir = path.dirname(filePath);
   var dirArray = fs.readdirSync(fileDir);
   var fileName = path.basename(filePath);
   var index = dirArray.indexOf(fileName);
@@ -16,7 +16,7 @@ exports.pageRight = () => {
     // If page number + 2 is greater or equal to the total number of pages, then it stops on the last page
     index = dirArray.length;
   };
-  document.getElementById("viewImgOne").src = path.join(fileDir, dirArray[index]); // Loads array[x] into window
+  document.getElementById("viewImgOne").src = path.join(fileDir, dirArray[index]); // Loads array[x] into window // TODO : Causes errors, maybe change to (dirArray.length -1)?
   document.getElementById("viewImgTwo").src = path.join(fileDir, dirArray[index + 1]); // Loads array[x + 1] into window
 };
 

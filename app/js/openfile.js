@@ -10,9 +10,9 @@ var libWatch = require('./js/libwatch.js'); // libWatch.load(fileName) loads int
 var clearcache = require('./js/clearcache'); // Trash that old shit!
 var page = require('./js/pageturn.js'); // Page turning functionality
 var nextcomic = require('./js/nextcomic.js'); // Loads Functions onto previous and next buttons
+var center = require('./js/centerfold.js'); // Checks to see if comic has any two page spreads
 
 var imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
-// TODO :: Force test arrays to lowercase
 
 function filePiper(fileName, err) { // Streams files passed through the program.
 
@@ -41,10 +41,7 @@ function filePiper(fileName, err) { // Streams files passed through the program.
       $('#loader').addClass('hidden').removeClass('loader');
       document.getElementById("viewImgOne").src = path.join('cache', fileComic, dirContents[0]); // Loads array[0] into window
       document.getElementById("viewImgTwo").src = path.join('cache', fileComic, dirContents[1]); // Loads array[1] into window
-      enable("pageLeft");
-      enable("pageRight");
-      libWatch.load(fileName); // libwatch.js
-      nextcomic.load(fileName);
+      postExtract(fileName)
     });
 
     // .CBZ file type function
@@ -65,18 +62,13 @@ function filePiper(fileName, err) { // Streams files passed through the program.
       $('#loader').addClass('hidden').removeClass('loader');
       document.getElementById("viewImgOne").src = path.join('cache', fileComic, zipDir, dirContents[0]); // Loads array[0] into window
       document.getElementById("viewImgTwo").src = path.join('cache', fileComic, zipDir, dirContents[1]); // Loads array[1] into window
-      enable("pageLeft");
-      enable("pageRight");
-      libWatch.load(fileName); // libwatch.js
-      nextcomic.load(fileName);
-
+      postExtract(fileName)
     });
 
     // Neither .CBR nor .CBZ
   } else {
     alert("I don't think that is a comic you picked.");
   };
-
   $('#loader').addClass('loader').removeClass('hidden');
 
 };
@@ -119,6 +111,14 @@ function enable(id) {
 function disable(id) {
   document.getElementById(id).disabled = true;
 };
+
+function postExtract(fileName) {
+  enable("pageLeft");
+  enable("pageRight");
+  libWatch.load(fileName); // libwatch.js
+  nextcomic.load(fileName);
+  center.fold("viewImgOne");
+}
 
 $(document).keydown(function(event) {
   if (event.which == 37) { // left key

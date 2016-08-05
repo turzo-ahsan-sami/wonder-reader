@@ -7,9 +7,12 @@ const BrowserWindow = electron.BrowserWindow; // http://electron.atom.io/docs/ap
 let win // Global 'win' variable
 function createWindow() {
   win = new BrowserWindow({
-    width: 1000,  // Window Size : width (duh)
-    height: 700, // Window Size : height
-    icon: './logo.png'
+    width: 1000,
+    height: 700,
+    minWidth: 855,
+    minHeight: 530,
+    icon: './logo.png',
+    title: 'Wonder Reader'
   });
   win.loadURL(`file://${__dirname}/app/index.html`); // Points to the html file to load in the app
   win.maximize(); // Starts as maximized as you can get!
