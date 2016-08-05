@@ -17,19 +17,16 @@ var imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Type
 function filePiper(fileName, err) { // Streams files passed through the program.
 
   // Folder Creation
-  if (path.extname(fileName) == ".cbr") {
-    var fileComic = path.posix.basename(fileName, '.cbr'); // Function removes path dir, spaces, and '#'. Good to note!
+  if ([".cbr", ".cbz"].indexOf(path.extname(fileName).toLowerCase()) > -1) {
+    var fileComic = path.posix.basename(fileName); // Function removes path dir, spaces, and '#'. Good to note!
     if (process.platform == 'win32') {
-      fileComic = path.win32.basename(fileName, '.cbr');
+      fileComic = path.win32.basename(fileName);
     }
-  } else if (path.extname(fileName) == ".cbz") {
-    var fileComic = path.posix.basename(fileName, '.cbz'); // Function removes path dir, spaces, and '#'. Good to note!
-    if (process.platform == 'win32') {
-      fileComic = path.win32.basename(fileName, '.cbz');
-    }
+  } else {
+    // insert Error function here
   }
   // console.log(fileComic);
-  var tempFolder = path.join("app/cache/", fileComic); // tempFolder Variable for loaded comic
+  var tempFolder = path.join("app", "cache", fileComic); // tempFolder Variable for loaded comic
   // console.log(tempFolder);
   mkdirp.sync(tempFolder);
 
@@ -42,8 +39,8 @@ function filePiper(fileName, err) { // Streams files passed through the program.
       var dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1}); // Cleans out the crap :: see imgTypes[...] @ line 12
       console.log(dirContents)
       $('#loader').addClass('hidden').removeClass('loader');
-      document.getElementById("viewImgOne").src = path.join('cache/', fileComic, dirContents[0]); // Loads array[0] into window
-      document.getElementById("viewImgTwo").src = path.join('cache/', fileComic, dirContents[1]); // Loads array[1] into window
+      document.getElementById("viewImgOne").src = path.join('cache', fileComic, dirContents[0]); // Loads array[0] into window
+      document.getElementById("viewImgTwo").src = path.join('cache', fileComic, dirContents[1]); // Loads array[1] into window
       enable("pageLeft");
       enable("pageRight");
       libWatch.load(fileName); // libwatch.js
@@ -66,8 +63,8 @@ function filePiper(fileName, err) { // Streams files passed through the program.
       var dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1});
       // Cleans out the non-image files :: see imgTypes[...] @ line 12
       $('#loader').addClass('hidden').removeClass('loader');
-      document.getElementById("viewImgOne").src = path.join('cache/', fileComic, zipDir, dirContents[0]); // Loads array[0] into window
-      document.getElementById("viewImgTwo").src = path.join('cache/', fileComic, zipDir, dirContents[1]); // Loads array[1] into window
+      document.getElementById("viewImgOne").src = path.join('cache', fileComic, zipDir, dirContents[0]); // Loads array[0] into window
+      document.getElementById("viewImgTwo").src = path.join('cache', fileComic, zipDir, dirContents[1]); // Loads array[1] into window
       enable("pageLeft");
       enable("pageRight");
       libWatch.load(fileName); // libwatch.js
