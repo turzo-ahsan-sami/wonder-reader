@@ -157,7 +157,6 @@ button#trash {
         width: 175px;
     }
     ul {
-        font-family: monospace;
         color: #0E2E3B;
         float: left;
         width: 100%;
@@ -169,7 +168,7 @@ button#trash {
         cursor: pointer;
         clear: both;
         font-size: 12px;
-        font-family: Josefin;
+        font-family: Ubuntu;
     }
     li:nth-child(even) {
         background-color: rgba(0, 0, 0, 0.1);
@@ -179,13 +178,14 @@ button#trash {
         a {
             display: block;
             text-decoration: none;
-            transition: all 0.5s;
-            padding: 3px;
+            transition: all 0.25s;
+            padding: 3px 0 3px 5px;
             color: #808080;
+            box-shadow: inset 1px 0 0 0 #ddbfeb;
         }
         a:hover {
             text-decoration: none;
-            box-shadow: inset 2px 0 0 0 #ff0000;
+            box-shadow: inset 3px 0 0 0 #000;
             background: #fff;
             color: #000;
         }

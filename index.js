@@ -1,8 +1,8 @@
-const electron = require('electron');
-const app = electron.app; // http://electron.atom.io/docs/v0.37.2/api/app/
+const electron = require('electron'); // http://electron.atom.io/docs/
+const app = electron.app; // http://electron.atom.io/docs/api/app/
 // const Tray = electron.Tray; // http://electron.atom.io/docs/api/tray/
-const BrowserWindow = electron.BrowserWindow; //  http://electron.atom.io/docs/v0.37.2/api/browser-window/
-var fs = require('fs'); // https://nodejs.org/api/fs.html
+const BrowserWindow = electron.BrowserWindow; // http://electron.atom.io/docs/api/browser-window/
+// var fs = require('fs'); // https://nodejs.org/api/fs.html
 
 let win // Global 'win' variable
 function createWindow() {
@@ -12,6 +12,7 @@ function createWindow() {
     icon: './logo.png'
   });
   win.loadURL(`file://${__dirname}/app/index.html`); // Points to the html file to load in the app
+  win.maximize(); // Starts as maximized as you can get!
   win.webContents.openDevTools(); // Loads with Dev Tools open.  Remove before release.
   win.on('closed', () => {
     win = null;
