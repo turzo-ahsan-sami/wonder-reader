@@ -7,22 +7,27 @@ exports.fold = (id) => {
       fileDir = path.dirname(filePath), // Directory
       dirContents = fs.readdirSync(fileDir), // Directory
       fileName = path.basename(filePath),
-      spread = []
+      spread = [];
 
       console.log(fileDir);
+      console.log(dirContents.length);
 
-      for(i=0; i < dirContents.length; i++) {
+      console.log(sizeOf(path.join(fileDir, dirContents[0])).width);
+      console.log(sizeOf(path.join(fileDir, dirContents[0])).height);
+
+      for(var i = 0; i < dirContents.length; i++) {
         (function(i) {
-          var dimensions = sizeOf(path.join(fileDir, dirContents[i])),
-              w = dimensions.width,
-              h = dimensions.height;
+          var dimensions = sizeOf(path.join(fileDir, dirContents[i]));
+          var width = dimensions.width;
+          var height = dimensions.height;
 
-          if ( w > h ) {
-            spread.push(i)
+          if ( width >= height ) {
+            spread.push(i);
+            console.log(i);
           } else {
-            // Do nothing
+            // Do Nothing!
           };
-        });
+        })(i);
       };
 
       console.log(spread);
