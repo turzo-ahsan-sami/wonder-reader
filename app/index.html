@@ -15,7 +15,7 @@
     <div id="cpanel" class="top-div">
 
 			<label for="zoomSlider">Zoom</label>
-			<input type="range" min="25" max="200" value="100" id="zoomSlider" oninput="zoomTextUpdate(value)" for="zoomText">
+			<input type="range" min="25" max="200" value="100" step="5" id="zoomSlider" oninput="zoomTextUpdate(value)" for="zoomText">
 			<input type="text" for="zoomSlider" id="zoomText" oninput="zoomSliderUpdate(value)" value="100"/>
 			<span id="percent">%</span>
 			<script>

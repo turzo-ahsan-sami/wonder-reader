@@ -3,12 +3,13 @@
 body {
   background-color: #ddbfeb;
   margin: 0;
-  font-family: rokkitt;
-  /*color: #D8D7C3;*/
+  font-family: Ubuntu;
+  -webkit-user-select: none;
 }
 
 p {
   color: #7DB9B3;
+  cursor: default;
 }
 
 h1,
@@ -22,6 +23,7 @@ h6 {
   display: inline-block;
   margin: 0;
   font-family: CarterOne;
+  cursor: default;
 }
 
 ul {
