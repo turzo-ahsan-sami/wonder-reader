@@ -2,7 +2,6 @@ var fs = require('fs'); // https://nodejs.org/api/fs.html#fs_file_system
 const {dialog} = require('electron').remote; // http://electron.atom.io/docs/api/dialog/
 var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
 const $ = require('jquery');
-var sizeOf = require('image-size'); // https://github.com/image-size/image-size
 var mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
 var path = require('path'); // https://nodejs.org/api/path.html
 var extract = require('extract-zip'); // https://www.npmjs.com/package/extract-zip
@@ -39,7 +38,7 @@ function filePiper(fileName, err) { // Streams files passed through the program.
       var dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1}); // Cleans out the crap :: see imgTypes[...] @ line 12
       console.log(dirContents)
       $('#loader').addClass('hidden').removeClass('loader');
-      document.getElementById("viewImgOne").src = path.join('cache', fileComic, dirContents[0]); // Loads array[0] into window
+      document.getElementById("viewImgOne").src = encodeURIComponent(path.join('cache', fileComic, dirContents[0])); // Loads array[0] into window
       document.getElementById("viewImgTwo").src = path.join('cache', fileComic, dirContents[1]); // Loads array[1] into window
       postExtract(fileName)
     });
