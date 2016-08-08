@@ -95,7 +95,7 @@ h1.title.shift-left {
       width: 12px;
       border-radius: 5px;
       background: #fff;
-      margin-top: -8px;
+      margin-top: -9px;
       background-color: rgb(20, 139, 181);
       border: 2px solid rgba(255,255,255,0.8);
     }
@@ -104,12 +104,13 @@ h1.title.shift-left {
         height: 8.4px;
         cursor: pointer;
         //box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
-        background: #3071a9;
-        border-radius: 1.3px;
-        border: 0.2px solid #010101;
+        background: rgb(20, 139, 181);
+        border-radius: 4px;
+        border: 2px solid rgba(255,255,255,0.8);
+        transition: all .5s;
     }
     input[type=range]:focus::-webkit-slider-runnable-track {
-        background: #367ebd;
+        box-shadow: 0px 0px 5px 2px #91d5fd;
     }
     #zoomText {
         color: #fff;
@@ -120,9 +121,14 @@ h1.title.shift-left {
         text-align: right;
         //margin-top: 7px;
         background: rgb(20, 139, 181);
-        border-radius: 2px;
+        border-radius: 4px;
         padding: 3px 26px 0 0;
         border: 2px solid rgba(255,255,255,0.8);
+        outline: none;
+        transition: all .5s;
+    }
+    #zoomText:focus {
+      box-shadow: 0px 0px 5px 2px #91d5fd;
     }
     #percent {
       position: absolute;

@@ -93,18 +93,6 @@ function openFile() {
   )
 };
 
-function trash() {
-  clearcache.trashIt(); // clearcache.js
-};
-
-function pageRight() {
-  page.pageRight();
-};
-
-function pageLeft() {
-  page.pageLeft();
-};
-
 function enable(id) {
   document.getElementById(id).disabled = false;
 };
@@ -121,9 +109,13 @@ function postExtract(fileName) {
 }
 
 $(document).keydown(function(event) {
-  if (event.which == 37) { // left key
-    pageLeft();
-  } else if (event.which == 39) { // right key
-    pageRight();
+  if (document.activeElement.id == 'zoomText' || document.activeElement.id == 'zoomSlider') {
+    // Do nothing when focused on zoom input
+  } else {
+    if (event.which == 37) { // left key
+      page.pageLeft();
+    } else if (event.which == 39) { // right key
+      page.pageRight();
+    };
   };
 });

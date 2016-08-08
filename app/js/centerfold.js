@@ -23,6 +23,6 @@ exports.fold = (id) => {
     })(i);
   };
 
-  console.log("These are the indexes of centerfolds" + spread);
+  console.log("These are the indexes of centerfolds " + spread);
   return spread;
 }
