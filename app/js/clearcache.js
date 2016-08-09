@@ -8,7 +8,7 @@ exports.trashIt = () => {
     var cache = './app/cache';
     var cacheContents = fs.readdirSync(cache);
     var currentDirArray = path.dirname(decodeURI(document.getElementById('viewImgOne').src.substr(7))).split(path.sep);
-    var currentDir = currentDirArray[currentDirArray.length-1];
+    var currentDir = currentDirArray[currentDirArray.indexOf('cache')+1];
 
     console.log(currentDir)
     for(i=0; i < cacheContents.length; i++) {

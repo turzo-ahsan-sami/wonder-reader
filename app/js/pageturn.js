@@ -3,7 +3,7 @@ var fs = require('fs');
 
 exports.pageRight = () => {
 
-  var filePath = decodeURI(document.getElementById('viewImgOne').src.substr(7)); // removes file:// from PATH
+  var filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7)); // removes file:// from PATH
   var fileDir = path.dirname(filePath);
   var dirArray = fs.readdirSync(fileDir);
   var fileName = path.basename(filePath);
@@ -14,14 +14,14 @@ exports.pageRight = () => {
     index = index + 2;
   } else if ((index + 2) >= dirArray.length) {
     // If page number + 2 is greater or equal to the total number of pages, then it stops on the last page
-    index = dirArray.length;
+    index = dirArray.length -1;
   };
-  document.getElementById("viewImgOne").src = path.join(fileDir, dirArray[index]); // Loads array[x] into window // TODO : Causes errors, maybe change to (dirArray.length -1)?
-  document.getElementById("viewImgTwo").src = path.join(fileDir, dirArray[index + 1]); // Loads array[x + 1] into window
+  document.getElementById("viewImgOne").src = path.join(fileDir, encodeURIComponent(dirArray[index])); // Loads array[x] into window // TODO : Causes errors, maybe change to (dirArray.length -1)?
+  document.getElementById("viewImgTwo").src = path.join(fileDir, encodeURIComponent(dirArray[index + 1])); // Loads array[x + 1] into window
 };
 
 exports.pageLeft = () => {
-  var filePath = decodeURI(document.getElementById('viewImgOne').src.substr(7)); // removes file:// from PATH
+  var filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7)); // removes file:// from PATH
   var fileDir = path.dirname(filePath)
   var dirArray = fs.readdirSync(fileDir);
   var fileName = path.basename(filePath);
@@ -34,6 +34,6 @@ exports.pageLeft = () => {
     // If page number - 2 is less or equal to 0, ie the first page/cover, then it stops on the first page/cover
     index = 0;
   };
-  document.getElementById("viewImgOne").src = path.join(fileDir, dirArray[index]); // Loads array[x] into window
-  document.getElementById("viewImgTwo").src = path.join(fileDir, dirArray[index + 1]); // Loads array[x + 1] into window
+  document.getElementById("viewImgOne").src = path.join(fileDir, encodeURIComponent(dirArray[index])); // Loads array[x] into window
+  document.getElementById("viewImgTwo").src = path.join(fileDir, encodeURIComponent(dirArray[index + 1])); // Loads array[x + 1] into window
 };
