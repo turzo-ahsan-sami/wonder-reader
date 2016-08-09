@@ -1,6 +1,6 @@
 {
   "name": "Wonder-Reader",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,7 @@
   "dependencies": {
     "ebook-cover-generator": "0.0.9",
     "extract-zip": "^1.5.0",
+    "get-folder-size": "^1.0.0",
     "image-size": "^0.5.0",
     "jquery": "2.2.x",
     "jquery-ui": "^1.12.0",

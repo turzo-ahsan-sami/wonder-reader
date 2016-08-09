@@ -9,7 +9,7 @@ exports.load = (fileName) => {
   $('.libFile').remove();
   $('.libDir').remove();
   for (i = 0; i < dirContents.length; i++) {
-    if (fs.statSync(path.join(filePath, dirContents[i])).isFile() && ['.cbr', '.cbz'].indexOf(path.extname(dirContents[i])) > -1) {
+    if (fs.statSync(path.join(filePath, dirContents[i])).isFile() && ['.cbr', '.cbz'].indexOf(path.extname(dirContents[i]).toLowerCase()) > -1) {
       // Check if file and if .cbr or .cbz
       $("#dirLib").append('<li class="libFile"><a href="#" onclick="filePiper(\'' + path.join(filePath, dirContents[i]) + '\')"><i class="fa fa-file" aria-hidden="true"></i> ' + dirContents[i].slice(0,-4) + '</a></li>');
     } else if (fs.statSync(path.join(filePath, dirContents[i])).isDirectory()) {
