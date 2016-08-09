@@ -5,6 +5,7 @@ const $ = require('jquery');
 var mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
 var path = require('path'); // https://nodejs.org/api/path.html
 var extract = require('extract-zip'); // https://www.npmjs.com/package/extract-zip
+var directoryExists = require('directory-exists'); // https://www.npmjs.com/package/directory-exists
 var libWatch = require('./js/libwatch.js'); // libWatch.load(fileName) loads into #library.ul
 var clearcache = require('./js/clearcache'); // Trash that old shit!
 var page = require('./js/pageturn.js'); // Page turning functionality
@@ -27,7 +28,7 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
   }
   var tempFolder = path.join("app", "cache", fileComic); // tempFolder Variable for loaded comic
 
-  if (fs.statSync(tempFolder).isDirectory()) { // Checks for existing Directory
+  if (directoryExists.sync(tempFolder)) { // Checks for existing Directory
     console.log(tempFolder + " previously created.")
     var dirContents = fs.readdirSync(tempFolder);
     if (fs.statSync(path.join(tempFolder, dirContents[0])).isDirectory()) {
