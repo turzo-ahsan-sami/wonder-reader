@@ -1,6 +1,5 @@
 var center = require('./js/centerfold.js');
 
-
 var val = 2; // or -2 by defaults
 
 function pageTurn(val) {
@@ -33,6 +32,7 @@ function pageTurn(val) {
       if (index + val == centerFolds[0]) { //
         index = index + val;
         viewOne.src = path.join(fileDir, encodeURIComponent(dirArray[index]));
+        viewTwo.src = '';
         viewOne.style.width = '100%';
         viewTwo.style.display = 'none';
       } else if (index == centerFolds[0]) { // For when actually on the centerFold
@@ -62,6 +62,7 @@ function pageTurn(val) {
 
         index = index + val;
         viewOne.src = path.join(fileDir, encodeURIComponent(dirArray[index]));
+        viewTwo.src = '';
         viewOne.style.width = '100%';
         viewTwo.style.display = 'none';
       } else if (index == centerFolds[0]) {
@@ -76,6 +77,8 @@ function pageTurn(val) {
         };
       } else {
         index = index + val
+        viewOne.src = path.join(fileDir, encodeURIComponent(dirArray[index]));
+        viewTwo.src = path.join(fileDir, encodeURIComponent(dirArray[index + 1]));
       }
     }
   } else { // For when centerFold has various values
@@ -90,11 +93,22 @@ function pageTurn(val) {
 
 
   }
+
+  if (dirArray[index + 1] == undefined || dirArray[index + 1] == null) { // For when the last page falls on #viewImgOne
+    viewOne.src = path.join(fileDir, encodeURIComponent(dirArray[index]));
+    viewTwo.src = '';
+    viewOne.style.width = '100%';
+    viewTwo.style.display = 'none';
+  }
 }
 
-function defaults() { // For when displaying 2 pages
-  document.getElementById('viewImgOne').style.width = '50%';
-  document.getElementById('viewImgTwo').style.width = '50%';
-  document.getElementById('viewImgOne').style.display = 'initial';
-  document.getElementById('viewImgTwo').style.display = 'initial';
-}
+function defaults(val) { // For when displaying 2 pages
+  if (Math.abs(val) == 2) { // For when displaying 2 pages
+    document.getElementById('viewImgOne').style.width = '50%';
+    document.getElementById('viewImgTwo').style.width = '50%';
+    document.getElementById('viewImgOne').style.display = 'initial';
+    document.getElementById('viewImgTwo').style.display = 'initial';
+  } else { // If val == 1;
+    // Do nothing
+  }
+};
