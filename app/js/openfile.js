@@ -139,3 +139,8 @@ function handleError(evt) {
   }
 };
 window.addEventListener("error", handleError, true);
+
+document.getElementById('dirLib').style.height = window.innerHeight - 56 +'px';
+window.onresize = function() {
+  document.getElementById('dirLib').style.height = window.innerHeight - 56 +'px';
+}
