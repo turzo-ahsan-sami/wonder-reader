@@ -24,7 +24,11 @@ exports.fold = (id) => {
       };
     })(i);
   };
-
+  // There shouldn't be any duplicates;
+  function sortNumber(a,b) { // To Sort numerically, just in case
+    return a - b;
+  };
+  spread = spread.sort(sortNumber);
   console.log("These are the indexes of centerfolds " + spread);
   return spread;
 }

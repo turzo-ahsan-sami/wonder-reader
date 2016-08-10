@@ -15,8 +15,27 @@ var center = require('./js/centerfold.js'); // Checks to see if comic has any tw
 // var validChar = '/^([!#$&-;=?-[]_a-z~]|%[0-9a-fA-F]{2})+$/g';
 var imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
 
-function filePiper(fileName, err) { // checks and extracts files and then loads them.
+function openFile() {
+  dialog.showOpenDialog( // Limits openFile to .cbr files
+    { filters: [{
+      name: 'Comic Files (.cbr, .cbz)',
+      extensions: ['cbr', 'cbz']
+      }]
+    },
 
+    // Open File function
+    function(fileNames) {
+      if (fileNames === undefined) return; // Breaks on error
+      var fileName = fileNames[0]; // Filepath name
+      filePiper(fileName); // Streams and unrars .cbr into tempFolder
+		}
+  )
+};
+
+function filePiper(fileName, err) { // checks and extracts files and then loads them
+  if (err) {
+    handleError(err);
+  };
   // Folder Creation
   if ([".cbr", ".cbz"].indexOf(path.extname(fileName).toLowerCase()) > -1) {
     var fileComic = path.posix.basename(fileName).replace(/#/g, ""); // Function removes path dir, spaces, and '#'. Good to note!
@@ -86,23 +105,6 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
   }; // End Directory checker
 };
 
-function openFile() {
-  dialog.showOpenDialog( // Limits openFile to .cbr files
-    { filters: [{
-      name: 'Comic Files (.cbr, .cbz)',
-      extensions: ['cbr', 'cbz']
-      }]
-    },
-
-    // Open File function
-    function(fileNames) {
-      if (fileNames === undefined) return; // Breaks on error
-      var fileName = fileNames[0]; // Filepath name
-      filePiper(fileName); // Streams and unrars .cbr into tempFolder
-		}
-  )
-};
-
 function enable(id) {
   document.getElementById(id).disabled = false;
 };
@@ -115,7 +117,6 @@ function postExtract(fileName) {
   enable("pageRight");
   libWatch.load(fileName); // libwatch.js
   nextcomic.load(fileName);
-  center.fold("viewImgOne");
 }
 
 $(document).keydown(function(event) {

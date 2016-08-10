@@ -34,6 +34,19 @@ TODO:
 * node.fs API :: ( https://nodejs.org/api/fs.html )
 * electron.io API et Docs :: ( http://electron.atom.io/docs/ )
 
+```
+> var array = []
+undefined
+> array[0]
+undefined
+> array[0] == true
+false
+> array[0] == false
+false
+> array.length
+0
+```
+
 ## Credit
 
 * CSS Loaders :: https://github.com/lukehaas/css-loaders
