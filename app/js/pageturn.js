@@ -1,6 +1,6 @@
 var path = require('path');
 var fs = require('fs');
-
+var val = 2
 exports.pageRight = (val) => {
 
   var filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7)); // removes file:// from PATH
