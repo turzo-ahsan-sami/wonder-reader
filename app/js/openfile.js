@@ -124,9 +124,9 @@ $(document).keydown(function(event) {
     // Do nothing when focused on zoom input
   } else {
     if (event.which == 37) { // left key
-      page.pageLeft();
+      page.pageLeft(2);
     } else if (event.which == 39) { // right key
-      page.pageRight();
+      page.pageRight(2);
     };
   };
 });
