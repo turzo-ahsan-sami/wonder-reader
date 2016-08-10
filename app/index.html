@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Wonder Reader</title>
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
@@ -10,22 +11,26 @@
 <body>
 	<div class="header">
 		<h1 class="title shift-left">Wonder Reader</h1>
-    <div id="cpanel" class="top-div">
+		<div id="cpanel" class="top-div">
 
 			<label for="zoomSlider">Zoom</label>
 			<input type="range" min="25" max="200" value="100" step="5" id="zoomSlider" oninput="zoomTextUpdate(value)" for="zoomText">
-			<input type="text" for="zoomSlider" id="zoomText" oninput="zoomSliderUpdate(value)" value="100"/>
+			<input type="text" for="zoomSlider" id="zoomText" oninput="zoomSliderUpdate(value)" value="100" />
 			<span id="percent">%</span>
 			<script>
 				function zoomTextUpdate(val) {
 					document.querySelector('#zoomText').value = val;
 				}
+
 				function zoomSliderUpdate(val) {
 					document.querySelector('#zoomSlider').value = val;
 				}
 			</script>
-    </div>
+		</div>
 		<ul class="navigation">
+			<li>
+				<button id="column" onclick="" disabled><i class="fa fa-columns"></i></button>
+			</li>
 			<li>
 				<button id="prevComic" onclick="" disabled><i class="fa fa-angle-double-left"></i></button>
 			</li>
@@ -55,10 +60,11 @@
 
 	<div class="mainWindow" id="viewer">
 		<img id="viewImgOne" />
-    <img id="viewImgTwo" />
-    <div id="loader" class="loader hidden">Loading...</div>
+		<img id="viewImgTwo" />
+		<div id="loader" class="loader hidden">Loading...</div>
 	</div>
-	<script src="js/openfile.js"></script> <!-- Top Level file -->
+	<script src="js/openfile.js"></script>
+	<!-- Top Level file -->
 	<script src="js/libslider.js"></script>
 	<script src="js/zoom.js"></script>
 </body>

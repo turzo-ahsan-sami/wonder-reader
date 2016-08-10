@@ -2,7 +2,7 @@ var center = require('./js/centerfold.js');
 
 var val = 2; // or -2 by defaults
 
-function pageTurn(val) {
+exports.turn = (val) => {
   var filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7)); // removes file:// from PATH
   var fileDir = path.dirname(filePath);
   var dirArray = fs.readdirSync(fileDir);
@@ -17,10 +17,13 @@ function pageTurn(val) {
     var polarity = -1;
   };
 
+  if (Math.abs(val) == 1) {
+    viewOne.style.width = '100%'
+  }
+
   if (centerFolds.length == 0) {
     var index = index + val;
     if (index >= dirArray.length -1) {
-      // If page number + 2 is greater or equal to the total number of pages, then it stops on the last page
       index = dirArray.length -1; // TODO: figure out this proper value
     } else if (index <= 0) {
       index = 0;
@@ -36,45 +39,30 @@ function pageTurn(val) {
         viewOne.style.width = '100%';
         viewTwo.style.display = 'none';
       } else if (index == centerFolds[0]) { // For when actually on the centerFold
+
         index = index + 1*polarity;
-        if (Math.abs(val) == 2) { // For when displaying 2 pages
-          defaults()
-        }
+        defaults(val) // For when displaying 2 pages
         viewOne.src = path.join(fileDir, encodeURIComponent(dirArray[index]));
         viewTwo.src = path.join(fileDir, encodeURIComponent(dirArray[index + 1]));
       }
     } else { // (centerFolds[0] % 2 == 1) :: ODD, assumes page turning right && two page turning
       // TODO: Display cover (dirArray[0]) as 100%;
 
-      if (index == 0) {
+      if (index == 0 || index == centerFolds[0]) {
       // For when displaying first page
         index = index + 1*polarity;
         viewOne.src = path.join(fileDir, encodeURIComponent(dirArray[index]));
         viewTwo.src = path.join(fileDir, encodeURIComponent(dirArray[index + 1]));
-        if (Math.abs(val) == 2) { // For when displaying 2 pages
-          defaults()
-        };
+        defaults(val) // For when displaying 2 pages
+
       } else if (index + val == centerFolds[0] || index + val == 0) {
       // For when landing on either CenterFold or Cover
-
-      /* TODO: Create checker to see what the length of images
-      *  past CenterFolds[0] are and display last page as appropiate */
 
         index = index + val;
         viewOne.src = path.join(fileDir, encodeURIComponent(dirArray[index]));
         viewTwo.src = '';
         viewOne.style.width = '100%';
         viewTwo.style.display = 'none';
-      } else if (index == centerFolds[0]) {
-      // For when moving past the CenterFold
-      // Maybe combine with previous 'if (index == 0)' statement
-
-        index = index + 1*polarity;
-        viewOne.src = path.join(fileDir, encodeURIComponent(dirArray[index]));
-        viewTwo.src = path.join(fileDir, encodeURIComponent(dirArray[index + 1]));
-        if (Math.abs(val) == 2) { // For when displaying 2 pages
-          defaults()
-        };
       } else {
         index = index + val
         viewOne.src = path.join(fileDir, encodeURIComponent(dirArray[index]));
@@ -90,7 +78,6 @@ function pageTurn(val) {
 
     console.log('centerFolds array : ' + centerFolds + ' with length: ' + centerFolds.length);
     console.log('diff array : ' + diff + ' with length: ' + diff.length);
-
 
   }
 
@@ -108,7 +95,7 @@ function defaults(val) { // For when displaying 2 pages
     document.getElementById('viewImgTwo').style.width = '50%';
     document.getElementById('viewImgOne').style.display = 'initial';
     document.getElementById('viewImgTwo').style.display = 'initial';
-  } else { // If val == 1;
+  } else { // If val == 1
     // Do nothing
   }
 };
