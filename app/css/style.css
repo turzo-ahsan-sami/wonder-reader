@@ -19,11 +19,12 @@ h4,
 h5,
 h6 {
   color: #fff;
-  padding: 8px;
+  padding: 0;
   display: inline-block;
   margin: 0;
   font-family: CarterOne;
   cursor: default;
+  font-size: 36px;
 }
 
 ul {
@@ -37,11 +38,13 @@ li ul {
 }
 
 button {
-  font-size: 35px;
-  background-color: transparent;
+  font-size: 36px;
+  background-color: rgba(0, 0, 0, 0.1);
   border: 0;
-  color: #fff;
-  transition: color .5s;
+  color: rgba(255, 255, 255, 0.9);
+  transition: all .5s;
+  padding: 6px 6px 7px;
+  cursor: pointer;
 }
 
 button:focus {
@@ -50,16 +53,20 @@ button:focus {
 
 button:disabled {
   cursor: not-allowed;
-  color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.2);
+}
+
+button:disabled:hover {
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
 }
 
 /* ---- Header Values ---- */
 .header {
   background-color: #0E2E3B;
-  border-bottom: 1px solid #D8D7C3;
   position: fixed;
   z-index: 2;
   width: 100%;
+  box-shadow: 0 0 5px #624e6b;
 }
 .header ul {
   display: inline;
@@ -68,14 +75,17 @@ button:disabled {
 .header ul li {
   float: left;
 }
+.header button:hover {
+  text-shadow: 0 0 5px #fff;
+}
 
 .title {
-  margin-left: 180px;
+  margin-left: 190px;
   transition: margin-left 0.5s;
 }
 
 h1.title.shift-left {
-  margin-left: 5px;
+  margin-left: 15px;
   float: left;
 }
 
@@ -128,7 +138,7 @@ h1.title.shift-left {
   font-family: CarterOne;
   font-size: 22px;
   float: right;
-  width: 80px;
+  width: 52px;
   text-align: right;
   background: #148bb5;
   border-radius: 4px;
@@ -151,14 +161,14 @@ h1.title.shift-left {
 }
 
 button#trash {
-  margin-left: 10px;
   background-color: #ff0000;
   padding-left: 10px;
+  box-shadow: -3px 0 10px -2px black;
 }
 
 /* ---- Library Values ---- */
 .library {
-  background-color: #166678;
+  background-color: rgba(22, 102, 120, 0.2);
   /*clear: both;*/
   height: 100vh;
   width: 175px;
@@ -189,6 +199,7 @@ button#trash {
   clear: both;
   font-size: 12px;
   font-family: Ubuntu;
+  line-height: 1.42857143;
 }
 .library li:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.1);
@@ -211,7 +222,7 @@ button#trash {
 }
 
 .shift-left {
-  margin-left: -172px;
+  margin-left: -175px;
 }
 .shift-left ul#dirLib {
   color: rgba(125, 185, 179, 0);
@@ -226,6 +237,7 @@ button#trash {
   color: #f3f3f3;
   z-index: -1;
   text-shadow: 4px 0 0 #0E2E3B;
+  background: transparent;
 }
 
 #libSlider:hover {
@@ -253,6 +265,7 @@ button#trash {
   position: absolute;
   right: 0;
   top: 0;
+  box-shadow: -3px 0 10px -2px rgba(144, 144, 144, 0.2);
 }
 
 /* ---- ViewerDiv Values ---- */
