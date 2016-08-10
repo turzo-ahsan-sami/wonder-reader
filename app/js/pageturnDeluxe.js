@@ -22,6 +22,8 @@ exports.turn = (val) => {
   }
 
   if (centerFolds.length == 0) {
+  // For no centerFolds. This is easy.
+  
     var index = index + val;
     if (index >= dirArray.length -1) {
       index = dirArray.length -1; // TODO: figure out this proper value
@@ -30,7 +32,10 @@ exports.turn = (val) => {
     }
     viewOne.src = path.join(fileDir, encodeURIComponent(dirArray[index])); // Loads array[x] into window // TODO : Causes errors, maybe change to (dirArray.length -1)?
     viewTwo.src = path.join(fileDir, encodeURIComponent(dirArray[index + 1])); // Loads array[x + 1] into window
-  } else if (centerFolds.length == 1) { // For when a single CenterFold exists
+
+  } else if (centerFolds.length == 1) {
+  // For when a single CenterFold exists //
+
     if (centerFolds[0] % 2 == 0) { // EVEN, assumes page turning right && two page turning
       if (index + val == centerFolds[0]) { //
         index = index + val;
@@ -69,7 +74,10 @@ exports.turn = (val) => {
         viewTwo.src = path.join(fileDir, encodeURIComponent(dirArray[index + 1]));
       }
     }
-  } else { // For when centerFold has various values
+
+  } else {
+  // For when centerFold has various values //
+
     var diff = [centerFolds[0]];
 
     for (i=1; i < centerFolds.length; i++) {
