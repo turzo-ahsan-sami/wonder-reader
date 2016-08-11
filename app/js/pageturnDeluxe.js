@@ -17,13 +17,9 @@ exports.turn = (val) => {
     var polarity = -1;
   };
 
-  if (Math.abs(val) == 1) {
-    viewOne.style.width = '100%'
-  }
-
   if (centerFolds.length == 0) {
   // For no centerFolds. This is easy.
-  
+
     var index = index + val;
     if (index >= dirArray.length -1) {
       index = dirArray.length -1; // TODO: figure out this proper value
@@ -78,10 +74,12 @@ exports.turn = (val) => {
   } else {
   // For when centerFold has various values //
 
-    var diff = [centerFolds[0]];
+    var diff = [centerFolds[0]]; // Factors difference between values
+    var parity = [centerFolds[0]%2]; // 0 for EVEN, 1 for ODD
 
     for (i=1; i < centerFolds.length; i++) {
-      diff.push(centerFolds[i] - centerFolds[i-1])
+      diff.push(centerFolds[i] - centerFolds[i-1]);
+      parity.push((centerFolds[i] - centerFolds[i-1]) % 2);
     };
 
     console.log('centerFolds array : ' + centerFolds + ' with length: ' + centerFolds.length);
@@ -98,7 +96,7 @@ exports.turn = (val) => {
 }
 
 function defaults(val) { // For when displaying 2 pages
-  if (Math.abs(val) == 2) { // For when displaying 2 pages
+  if (Math.abs(val) == 2) {
     document.getElementById('viewImgOne').style.width = '50%';
     document.getElementById('viewImgTwo').style.width = '50%';
     document.getElementById('viewImgOne').style.display = 'initial';
@@ -106,4 +104,12 @@ function defaults(val) { // For when displaying 2 pages
   } else { // If val == 1
     // Do nothing
   }
+};
+
+exports.singlePage = (val) => { // For Single page viewing and styling
+  if (Math.abs(val) == 1) {
+    viewOne.style.width = '100%';
+    viewTwo.src = '';
+    viewTwo.style.display = 'none';
+  };
 };
