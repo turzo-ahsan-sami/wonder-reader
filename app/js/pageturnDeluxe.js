@@ -1,17 +1,16 @@
 var center = require('./js/centerfold.js');
-var $ = require('jquery');
 
 var val = 2; // or -2 by defaults
 
-exports.turn = (val) => {
+function pageTurn(val) {
   var filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7)); // removes file:// from PATH
   var fileDir = path.dirname(filePath);
   var dirArray = fs.readdirSync(fileDir);
   var fileName = path.basename(filePath);
   var index = dirArray.indexOf(fileName);
   var centerFolds = center.fold('viewImgOne');
-  var viewOne = document.getElementById("viewImgOne");
-  var viewTwo = document.getElementById("viewImgTwo");
+  var viewOne = document.getElementById('viewImgOne');
+  var viewTwo = document.getElementById('viewImgTwo');
 
   var polarity = 1;
   if (val < 0) {
@@ -99,10 +98,20 @@ function defaults(val) { // For when displaying 2 pages
   }
 };
 
-exports.singlePage = (val) => { // For Single page viewing and styling
+function singlePage(val) { // For Single page viewing and styling
   if (Math.abs(val) == 1) {
     viewOne.style.width = '100%';
     viewTwo.src = '';
     viewTwo.style.display = 'none';
   };
 };
+
+exports.pageRight = () => { // Gets val from #column... see pageturn.js: pageSpread()
+  var val = document.getElementById('column').dataset.val
+  pageTurn(val);
+}
+
+exports.pageLeft = () => {
+  var val = document.getElementById('column').dataset.val * -1
+  pageTurn(val);
+}

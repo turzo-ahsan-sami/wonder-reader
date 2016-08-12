@@ -2,7 +2,6 @@ const electron = require('electron'); // http://electron.atom.io/docs/
 const app = electron.app; // http://electron.atom.io/docs/api/app/
 // const Tray = electron.Tray; // http://electron.atom.io/docs/api/tray/
 const BrowserWindow = electron.BrowserWindow; // http://electron.atom.io/docs/api/browser-window/
-// var fs = require('fs'); // https://nodejs.org/api/fs.html
 
 let win // Global 'win' variable
 function createWindow() {
@@ -11,7 +10,7 @@ function createWindow() {
     height: 700,
     minWidth: 855,
     minHeight: 530,
-    icon: './logo.png',
+    icon: './shieldLogo.png',
     title: 'Wonder Reader'
   });
   win.loadURL(`file://${__dirname}/app/index.html`); // Points to the html file to load in the app
