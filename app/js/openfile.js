@@ -15,23 +15,6 @@ var center = require('./js/centerfold.js'); // Checks to see if comic has any tw
 // var validChar = '/^([!#$&-;=?-[]_a-z~]|%[0-9a-fA-F]{2})+$/g';
 var imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
 
-function openFile() {
-  dialog.showOpenDialog( // Limits openFile to .cbr files
-    { filters: [{
-      name: 'Comic Files (.cbr, .cbz)',
-      extensions: ['cbr', 'cbz']
-      }]
-    },
-
-    // Open File function
-    function(fileNames) {
-      if (fileNames === undefined) return; // Breaks on error
-      var fileName = fileNames[0]; // Filepath name
-      filePiper(fileName); // Streams and unrars .cbr into tempFolder
-		}
-  )
-};
-
 function filePiper(fileName, err) { // checks and extracts files and then loads them
   if (err) {
     handleError(err);
@@ -60,6 +43,7 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
       document.getElementById("viewImgOne").src = path.join('cache', fileComic, encodeURIComponent(dirContents[0]));
       document.getElementById("viewImgTwo").src = path.join('cache', fileComic, encodeURIComponent(dirContents[1]));
     };
+    postExtract(fileName);
 
   } else { // If no Directory exists
     mkdirp.sync(tempFolder);
@@ -74,7 +58,7 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
         $('#loader').addClass('hidden').removeClass('loader');
         document.getElementById("viewImgOne").src = path.join('cache', fileComic, encodeURIComponent(dirContents[0])); // Loads array[0] into window
         document.getElementById("viewImgTwo").src = path.join('cache', fileComic, encodeURIComponent(dirContents[1])); // Loads array[1] into window
-        postExtract(fileName)
+        postExtract(fileName);
       });
 
       // .CBZ file type function
@@ -105,6 +89,23 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
   }; // End Directory checker
 };
 
+function openFile() {
+  dialog.showOpenDialog( // Limits openFile to .cbr files
+    { filters: [{
+      name: 'Comic Files (.cbr, .cbz)',
+      extensions: ['cbr', 'cbz']
+      }]
+    },
+
+    // Open File function
+    function(fileNames) {
+      if (fileNames === undefined) return; // Breaks on error
+      var fileName = fileNames[0]; // Filepath name
+      filePiper(fileName); // Streams and unrars .cbr into tempFolder
+		}
+  );
+};
+
 function enable(id) {
   document.getElementById(id).disabled = false;
 };
@@ -115,9 +116,10 @@ function disable(id) {
 function postExtract(fileName) {
   enable("pageLeft");
   enable("pageRight");
+  enable("column");
   libWatch.load(fileName); // libwatch.js
   nextcomic.load(fileName);
-}
+};
 
 $(document).keydown(function(event) {
   if (document.activeElement.id == 'zoomText' || document.activeElement.id == 'zoomSlider') {
@@ -144,3 +146,13 @@ document.getElementById('dirLib').style.height = window.innerHeight - 56 +'px';
 window.onresize = function() {
   document.getElementById('dirLib').style.height = window.innerHeight - 56 +'px';
 }
+
+function pageSpread() { // Default is 2
+  if($('#column').hasClass('disabled')) {
+    $('#column').removeClass('disabled');
+    document.getElementById('column').dataset.val = 2;
+  } else {
+    $('#column').addClass('disabled');
+    document.getElementById('column').dataset.val = 1;
+  }
+};

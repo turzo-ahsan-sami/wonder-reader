@@ -1,4 +1,5 @@
 var center = require('./js/centerfold.js');
+var $ = require('jquery');
 
 var val = 2; // or -2 by defaults
 
@@ -73,21 +74,13 @@ exports.turn = (val) => {
 
   } else {
   // For when centerFold has various values //
-
-    var diff = [centerFolds[0]]; // Factors difference between values
-    var parity = [centerFolds[0]%2]; // 0 for EVEN, 1 for ODD
-
-    for (i=1; i < centerFolds.length; i++) {
-      diff.push(centerFolds[i] - centerFolds[i-1]);
-      parity.push((centerFolds[i] - centerFolds[i-1]) % 2);
-    };
-
-    console.log('centerFolds array : ' + centerFolds + ' with length: ' + centerFolds.length);
-    console.log('diff array : ' + diff + ' with length: ' + diff.length);
-
+  /*
+  * I think this means it should be
+  * taken care of with the final function
+  */
   }
 
-  if (dirArray[index + 1] == undefined || dirArray[index + 1] == null) { // For when the last page falls on #viewImgOne
+  if (centerFolds.indexOf(dirArray[index + 1]) > -1 || dirArray[index + 1] == null) { // For when the last page falls on #viewImgOne
     viewOne.src = path.join(fileDir, encodeURIComponent(dirArray[index]));
     viewTwo.src = '';
     viewOne.style.width = '100%';
