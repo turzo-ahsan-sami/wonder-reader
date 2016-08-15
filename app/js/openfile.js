@@ -7,12 +7,12 @@ var path = require('path'); // https://nodejs.org/api/path.html
 var extract = require('extract-zip'); // https://www.npmjs.com/package/extract-zip
 var directoryExists = require('directory-exists'); // https://www.npmjs.com/package/directory-exists
 var libWatch = require('./js/libwatch.js'); // libWatch.load(fileName) loads into #library.ul
-var clearcache = require('./js/clearcache'); // Trash that old shit!
-var page = require('./js/pageturn.js'); // Page turning functionality
+var clean = require('./js/clean.js'); // Trash that old shit!
+// var page = require('./js/pageturn.js'); // Page turning functionality
 var nextcomic = require('./js/nextcomic.js'); // Loads Functions onto previous and next buttons
-var center = require('./js/centerfold.js'); // Checks to see if comic has any two page spreads
-
+var page = require('./js/page.js')
 // var validChar = '/^([!#$&-;=?-[]_a-z~]|%[0-9a-fA-F]{2})+$/g';
+
 var imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
 
 function filePiper(fileName, err) { // checks and extracts files and then loads them
@@ -114,6 +114,7 @@ function disable(id) {
 };
 
 function postExtract(fileName) {
+  page.onLoad();
   enable("pageLeft");
   enable("pageRight");
   enable("column");
@@ -146,13 +147,3 @@ document.getElementById('dirLib').style.height = window.innerHeight - 56 +'px';
 window.onresize = function() {
   document.getElementById('dirLib').style.height = window.innerHeight - 56 +'px';
 }
-
-function pageSpread() { // Default is 2
-  if($('#column').hasClass('disabled')) {
-    $('#column').removeClass('disabled');
-    document.getElementById('column').dataset.val = 2;
-  } else {
-    $('#column').addClass('disabled');
-    document.getElementById('column').dataset.val = 1;
-  }
-};

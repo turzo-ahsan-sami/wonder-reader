@@ -11,11 +11,15 @@ function createWindow() {
     minWidth: 855,
     minHeight: 530,
     icon: './shieldLogo.png',
-    title: 'Wonder Reader'
+    title: 'Wonder Reader',
+    show: false
   });
   win.loadURL(`file://${__dirname}/app/index.html`); // Points to the html file to load in the app
   win.maximize(); // Starts as maximized as you can get!
   win.webContents.openDevTools(); // Loads with Dev Tools open.  Remove before release.
+  win.once('ready-to-show', () => {
+    win.show();
+  })
   win.on('closed', () => {
     win = null;
   });

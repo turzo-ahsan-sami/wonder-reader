@@ -3,7 +3,7 @@ var fs = require('fs');
 var path = require('path');
 var getSize = require('get-folder-size');
 
-exports.trashIt = () => {
+exports.trash = () => {
   var cache = './app/cache';
   getSize(cache, function(err,size) {
     var cacheSize = size / 1024 / 1024
