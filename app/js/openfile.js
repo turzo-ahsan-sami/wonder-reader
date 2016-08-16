@@ -1,7 +1,7 @@
 var fs = require('fs'); // https://nodejs.org/api/fs.html#fs_file_system
 const {dialog} = require('electron').remote; // http://electron.atom.io/docs/api/dialog/
 var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
-const $ = require('jquery');
+const $ = require('jquery'); // https://www.npmjs.com/package/jquery
 var mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
 var path = require('path'); // https://nodejs.org/api/path.html
 var extract = require('extract-zip'); // https://www.npmjs.com/package/extract-zip
@@ -127,9 +127,9 @@ $(document).keydown(function(event) {
     // Do nothing when focused on zoom input
   } else {
     if (event.which == 37) { // left key
-      page.pageLeft(2);
+      page.Left();
     } else if (event.which == 39) { // right key
-      page.pageRight(2);
+      page.Right();
     };
   };
 });

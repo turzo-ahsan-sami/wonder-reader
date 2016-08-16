@@ -4,7 +4,7 @@ var sizeOf = require('image-size'),
 var imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
 
 exports.fold = (id) => {
-  var filePath = decodeURIComponent(document.getElementById(id).src.substr(7)), // removes file:// from PATH
+  var filePath = decodeURIComponent(document.getElementById(id).src.substr(7)),
     fileDir = path.dirname(filePath), // Directory
     dirContents = fs.readdirSync(fileDir), // Directory contents
     dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1}), // Filters out non-image files types
@@ -29,6 +29,5 @@ exports.fold = (id) => {
     return a - b;
   };
   spread = spread.sort(sortNumber);
-  console.log("These are the indexes of centerfolds " + spread);
   return spread;
 }
