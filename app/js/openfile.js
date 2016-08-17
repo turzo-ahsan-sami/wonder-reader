@@ -8,7 +8,6 @@ var extract = require('extract-zip'); // https://www.npmjs.com/package/extract-z
 var directoryExists = require('directory-exists'); // https://www.npmjs.com/package/directory-exists
 var libWatch = require('./js/libwatch.js'); // libWatch.load(fileName) loads into #library.ul
 var clean = require('./js/clean.js'); // Trash that old shit!
-// var page = require('./js/pageturn.js'); // Page turning functionality
 var nextcomic = require('./js/nextcomic.js'); // Loads Functions onto previous and next buttons
 var page = require('./js/page.js')
 // var validChar = '/^([!#$&-;=?-[]_a-z~]|%[0-9a-fA-F]{2})+$/g';

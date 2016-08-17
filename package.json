@@ -20,12 +20,14 @@
   "homepage": "https://github.com/alice-em/Wonder-Reader#readme",
   "dependencies": {
     "directory-exists": "1.0.1",
+    "directory-tree": "^1.1.0",
     "ebook-cover-generator": "0.0.9",
     "extract-zip": "0.5.0",
     "get-folder-size": "1.0.0",
     "image-size": "0.5.0",
     "jquery": "2.2.x",
     "jquery-ui": "1.12.0",
+    "jsonfile": "^2.3.1",
     "mkdirp": "0.5.1",
     "node-unrar": "0.1.5"
   },
