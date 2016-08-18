@@ -14,8 +14,8 @@
 		<div id="cpanel" class="top-div">
 
 			<label for="zoomSlider">Zoom</label>
-			<input type="range" min="25" max="200" value="100" step="5" id="zoomSlider" oninput="zoomTextUpdate(value)" for="zoomText">
-			<input type="text" for="zoomSlider" id="zoomText" oninput="zoomSliderUpdate(value)" value="100" />
+			<input type="range" min="100" max="300" value="100" step="1" id="zoomSlider" oninput="pageZoom(); zoomTextUpdate(value)" for="zoomText">
+			<output type="text" for="zoomSlider" id="zoomText">100</output>
 			<span id="percent">%</span>
 			<script>
 				function zoomTextUpdate(val) {
@@ -58,15 +58,15 @@
 		<button onclick="libSlider()" id="libSlider"><i class="fa fa-caret-right"></i></button>
 	</div>
 
-	<div class="mainWindow" id="viewer">
-		<img id="viewImgOne" />
-		<img id="viewImgTwo" />
-		<div id="loader" class="loader hidden">Loading...</div>
+	<div class="mainWindow dragscroll" id="viewer">
+		<div id="innerWindow">
+			<img id="viewImgOne" />
+			<img id="viewImgTwo" />
+			<div id="loader" class="loader hidden">Loading...</div>
+		</div>
 	</div>
 	<script src="js/openfile.js"></script>
-	<!-- Top Level file -->
-	<script src="js/libslider.js"></script>
-	<script src="js/zoom.js"></script>
+	<script src="js/dragscroll.js"></script>
 </body>
 
 </html>

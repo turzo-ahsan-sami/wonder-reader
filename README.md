@@ -1,6 +1,6 @@
 # Wonder-Reader
 
-Version 0.0.10 Alpha
+Version 0.0.12 Alpha
 
 __Requirements__: Git, Node, and NPM
 
@@ -50,6 +50,7 @@ false
 ## Credit
 
 * CSS Loaders :: https://github.com/lukehaas/css-loaders
+* Dragscroll.js :: https://github.com/asvd/dragscroll
 * Electron :: http://electron.atom.io
 * Font Awesome :: http://fontawesome.io/
 * Node :: https://nodejs.org/en/

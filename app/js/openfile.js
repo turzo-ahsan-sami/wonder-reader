@@ -142,7 +142,27 @@ function handleError(evt) {
 };
 window.addEventListener("error", handleError, true);
 
-document.getElementById('dirLib').style.height = window.innerHeight - 56 +'px';
+document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
+document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
 window.onresize = function() {
-  document.getElementById('dirLib').style.height = window.innerHeight - 56 +'px';
-}
+  document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
+  document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
+};
+
+function pageZoom() {
+  var viewer = document.getElementById('innerWindow');
+  var zoomSlide = document.getElementById('zoomSlider');
+
+  viewer.style.width = zoomSlide.value + "%";
+};
+
+function libSlider() {
+  $('#library').toggleClass('shift-left');
+  $('.header h1').toggleClass('shift-left');
+};
+
+$('.header').mouseenter( function() {
+  $('#viewer').removeClass('dragscroll');
+}).mouseleave( function() {
+  $('#viewer').addClass('dragscroll');
+})
