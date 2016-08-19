@@ -22,7 +22,7 @@
     "directory-exists": "1.0.1",
     "directory-tree": "^1.1.0",
     "ebook-cover-generator": "0.0.9",
-    "extract-zip": "0.5.0",
+    "extract-zip": "1.5.0",
     "get-folder-size": "1.0.0",
     "image-size": "0.5.0",
     "jquery": "2.2.x",
