@@ -143,6 +143,7 @@ exports.spread = () => { // Default is 2
   var dirContents = fs.readdirSync(fileDir);
   var fileName = path.basename(filePath);
   var index = dirContents.indexOf(fileName);
+  var polarity = 1;
 
   if($('#column').hasClass('disabled')) {
     $('#column').removeClass('disabled');

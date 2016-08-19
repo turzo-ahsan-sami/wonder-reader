@@ -55,7 +55,14 @@ button:disabled:hover,
 .disabled:hover {
   text-shadow: 0 0 5px rgba(255,255,255,0.2);
 }
-
+#bgColor {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to left, #8e9eab , #eef2f3);
+  z-index: -1;
+}
 /* ---- Header Values ---- */
 .header {
     background-color: #0E2E3B;
@@ -264,6 +271,17 @@ button#trash {
     }
 }
 /* ---- Loading Icon ---- */
+#bgLoader {
+  height: 150px;
+  width: 150px;
+  background: rgba(0,0,0,0.1);
+  position: absolute;
+  right: 44.5%;
+  top: 34%;
+  border-radius: 50%;
+  -webkit-filter: blur(1px);
+  border: 2px solid rgba(0,0,0,0.2);
+}
 .loader,
 .loader:after,
 .loader:before {
@@ -289,7 +307,7 @@ button#trash {
     text-indent: -9999em;
     margin: 88px auto;
     position: fixed;
-    font-size: 11px;
+    font-size: 12px;
     -webkit-transform: translateZ(0);
     -ms-transform: translateZ(0);
     transform: translateZ(0);

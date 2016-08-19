@@ -1,17 +1,10 @@
 var fs = require('fs'); // https://nodejs.org/api/fs.html#fs_file_system
 const {dialog} = require('electron').remote; // http://electron.atom.io/docs/api/dialog/
 var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
-const $ = require('jquery'); // https://www.npmjs.com/package/jquery
 var mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
 var path = require('path'); // https://nodejs.org/api/path.html
 var extract = require('extract-zip'); // https://www.npmjs.com/package/extract-zip
 var directoryExists = require('directory-exists'); // https://www.npmjs.com/package/directory-exists
-var libWatch = require('./js/libwatch.js'); // libWatch.load(fileName) loads into #library.ul
-var clean = require('./js/clean.js'); // Trash that old shit!
-var nextcomic = require('./js/nextcomic.js'); // Loads Functions onto previous and next buttons
-var page = require('./js/page.js');
-// var openFile = require('./js/openfile.test.js');
-// var validChar = '/^([!#$&-;=?-[]_a-z~]|%[0-9a-fA-F]{2})+$/g';
 
 var imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
 
@@ -56,7 +49,6 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
         var dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1}); // Cleans out the crap :: see imgTypes[...] @ line 12
         console.log(dirContents)
         $('#loader').addClass('hidden').removeClass('loader');
-        $('#bgLoader').addClass('hidden');
         document.getElementById("viewImgOne").src = path.join('cache', fileComic, encodeURIComponent(dirContents[0])); // Loads array[0] into window
         document.getElementById("viewImgTwo").src = path.join('cache', fileComic, encodeURIComponent(dirContents[1])); // Loads array[1] into window
         postExtract(fileName);
@@ -66,20 +58,6 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
     } else if (path.extname(fileName).toLowerCase() == ".cbz") {
       extract(fileName, {dir: tempFolder}, function(err) {
         var dirContents = fs.readdirSync(tempFolder);
-        var filtered = [];
-        for(i=0; i < dirContents.length; i++) {
-          if(fs.statSync(path.join(tempFolder,dirContents[i])).isDirectory()) {
-            filtered.push(dirContents[i]);
-            console.log(dirContents[i] + " pushed in")
-          } else if (imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1) {
-            filtered.push(dirContents[i]);
-            console.log(dirContents[i] + " pushed in")
-          } else {
-            console.log(dirContents[i] + " rejected!")
-          }
-        };
-        dirContents = filtered;
-        console.log(dirContents);
         if (fs.statSync(path.join(tempFolder, dirContents[0])).isDirectory()) {
           var zipDir = dirContents[0];
           var dirContents = fs.readdirSync(path.join(tempFolder, zipDir));
@@ -91,7 +69,6 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
         var dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1});
         // Cleans out the non-image files :: see imgTypes[...] @ line 12
         $('#loader').addClass('hidden').removeClass('loader');
-        $('#bgLoader').addClass('hidden');
         document.getElementById("viewImgOne").src = path.join('cache', fileComic, encodeURIComponent(zipDir), encodeURIComponent(dirContents[0])); // Loads array[0] into window
         document.getElementById("viewImgTwo").src = path.join('cache', fileComic, encodeURIComponent(zipDir), encodeURIComponent(dirContents[1])); // Loads array[1] into window
         postExtract(fileName)
@@ -102,7 +79,6 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
       handleError(evt)
     };
     $('#loader').addClass('loader').removeClass('hidden');
-    $('#bgLoader').removeClass('hidden');
   }; // End Directory checker
 };
 
@@ -123,94 +99,9 @@ function openFile() {
   );
 };
 
-function enable(id) {
-  document.getElementById(id).disabled = false;
+exports.Dialog = () => { // See page.spread()
+  openFile();
 };
-function disable(id) {
-  document.getElementById(id).disabled = true;
-};
-
-function postExtract(fileName) {
-  var inner = document.getElementById('innerWindow');
-  var imgOne = document.getElementById('viewImgOne');
-  var imgTwo = document.getElementById('viewImgTwo');
-
-  page.onLoad();
-  enable("pageLeft");
-  enable("pageRight");
-  enable("column");
-  libWatch.load(fileName); // libwatch.js
-  nextcomic.load(fileName);
-
-  if(imgOne.clientHeight >= imgTwo.clientHeight) {
-    inner.style.height = imgOne.clientHeight + "px";
-  } else {
-    inner.style.height = imgTwo.clientHeight + "px";
-  };
-  console.log('postExtract initial inner.style.height set at: ' + inner.style.height)
-};
-
-$(document).keydown(function(event) {
-  if (document.activeElement.id == 'zoomText' || document.activeElement.id == 'zoomSlider') {
-    // Do nothing when focused on zoom input
-  } else {
-    if (event.which == 37) { // left key
-      page.Left();
-    } else if (event.which == 39) { // right key
-      page.Right();
-    };
-  };
-});
-
-function handleError(evt) {
-  if (evt.message) { // Chrome sometimes provides this
-    alert("Error: "+evt.message +"  at linenumber: "+evt.lineno+" of file: "+evt.filename);
-  } else {
-    alert("Error: "+evt.type+" from element: "+(evt.srcElement || evt.target));
-  }
-};
-window.addEventListener("error", handleError, true);
-
-document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
-document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
-window.onresize = function() {
-  document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
-  document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
-};
-
-function pageZoom() {
-  var outer = document.getElementById('viewer');
-  var inner = document.getElementById('innerWindow');
-  var zoomSlide = document.getElementById('zoomSlider');
-  var imgOne = document.getElementById('viewImgOne');
-  var imgTwo = document.getElementById('viewImgTwo');
-  console.log(inner.clientHeight)
-
-  // Center Points
-  var cPX = outer.scrollTop + outer.clientHeight/2;
-  var cPY = outer.scrollLeft + outer.clientWidth/2;
-
-  // Position Ratios to whole
-  var cPXR = cPX/inner.clientHeight;
-  var cPYR = cPY/inner.clientWidth;
-
-  inner.style.width = zoomSlide.value + "%";
-  if(imgOne.clientHeight >= imgTwo.clientHeight) {
-    inner.style.height = imgOne.clientHeight + "px";
-  } else {
-    inner.style.height = imgTwo.clientHeight + "px";
-  };
-  outer.scrollTop = inner.clientHeight*cPXR - outer.clientHeight/2;
-  outer.scrollLeft = inner.clientWidth*cPYR - outer.clientWidth/2;
-};
-
-function libSlider() {
-  $('#library').toggleClass('shift-left');
-  // $('.header h1').toggleClass('shift-left');
-};
-
-$('.header').mouseenter( function() {
-  $('#viewer').removeClass('dragscroll');
-}).mouseleave( function() {
-  $('#viewer').addClass('dragscroll');
-})
+exports.Open = (fileName) => { // See page.spread()
+  filePiper(filename);
+}
