@@ -19,6 +19,7 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
   if (err) {
     handleError(err);
   };
+
   // Folder Creation
   if ([".cbr", ".cbz"].indexOf(path.extname(fileName).toLowerCase()) > -1) {
     var fileComic = path.posix.basename(fileName).replace(/#/g, ""); // Function removes path dir, spaces, and '#'. Good to note!
@@ -28,32 +29,47 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
   } else {
     handleError(evt)
   }
+
   var tempFolder = path.join("app", "cache", fileComic); // tempFolder Variable for loaded comic
 
   if (directoryExists.sync(tempFolder)) { // Checks for existing Directory
     console.log(tempFolder + " previously created.")
     var dirContents = fs.readdirSync(tempFolder);
+    var filtered = [];
+    for(i=0; i < dirContents.length; i++) {
+      if(fs.statSync(imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || path.join(tempFolder,dirContents[i])).isDirectory()) {
+        filtered.push(dirContents[i]);
+        console.log(dirContents[i] + " pushed in")
+      } else {
+        console.log(dirContents[i] + " rejected!")
+      }
+    };
+    dirContents = filtered;
+    console.log(dirContents);
     if (fs.statSync(path.join(tempFolder, dirContents[0])).isDirectory()) {
       console.log(dirContents[0] + " is a directory. Moving into new directory.")
-      var fileComic = path.join(fileComic, dirContents[0]);
-      var dirContents = fs.readdirSync(tempFolder);
+      fileComic = path.join(fileComic, encodeURIComponent(dirContents[0]));
+      dirContents = fs.readdirSync(path.join(tempFolder, dirContents[0]));
+      dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1});
+      console.log(path.join(tempFolder, dirContents[0]));
     } else {
-      var dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1});
-      console.log(dirContents);
-      document.getElementById("viewImgOne").src = path.join('cache', fileComic, encodeURIComponent(dirContents[0]));
-      document.getElementById("viewImgTwo").src = path.join('cache', fileComic, encodeURIComponent(dirContents[1]));
+      dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1});
+      console.log(dirContents[0]);
     };
+    document.getElementById("viewImgOne").src = path.join('cache', fileComic, encodeURIComponent(dirContents[0]));
+    document.getElementById("viewImgTwo").src = path.join('cache', fileComic, encodeURIComponent(dirContents[1]));
+
     postExtract(fileName);
 
   } else { // If no Directory exists
     mkdirp.sync(tempFolder);
 
-      // .CBR file type function
+    // .CBR file type function
     if (path.extname(fileName).toLowerCase() == ".cbr") {
       var rar = new unrar(fileName);
       rar.extract(tempFolder, null, function (err) {
         var dirContents = fs.readdirSync(tempFolder);
-        var dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1}); // Cleans out the crap :: see imgTypes[...] @ line 12
+        dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1}); // Cleans out the crap :: see imgTypes[...] @ line 12
         console.log(dirContents)
         $('#loader').addClass('hidden').removeClass('loader');
         $('#bgLoader').addClass('hidden');
@@ -62,16 +78,13 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
         postExtract(fileName);
       });
 
-      // .CBZ file type function
+    // .CBZ file type function
     } else if (path.extname(fileName).toLowerCase() == ".cbz") {
       extract(fileName, {dir: tempFolder}, function(err) {
         var dirContents = fs.readdirSync(tempFolder);
         var filtered = [];
         for(i=0; i < dirContents.length; i++) {
-          if(fs.statSync(path.join(tempFolder,dirContents[i])).isDirectory()) {
-            filtered.push(dirContents[i]);
-            console.log(dirContents[i] + " pushed in")
-          } else if (imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1) {
+          if(imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(tempFolder,dirContents[i])).isDirectory()) {
             filtered.push(dirContents[i]);
             console.log(dirContents[i] + " pushed in")
           } else {
@@ -81,23 +94,19 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
         dirContents = filtered;
         console.log(dirContents);
         if (fs.statSync(path.join(tempFolder, dirContents[0])).isDirectory()) {
-          var zipDir = dirContents[0];
-          var dirContents = fs.readdirSync(path.join(tempFolder, zipDir));
-          console.log('zipDir created as ' + zipDir)
-        } else {
-          var zipDir = ''; // Creates empty string
-          console.log('openfile.js @ line 53 :: Empty zipDir string created')
+          fileComic = path.join(fileComic, encodeURIComponent(dirContents[0]));
+          var dirContents = fs.readdirSync(path.join(tempFolder, dirContents[0]));
         }
-        var dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1});
+        dirContents = dirContents.filter(function(x, i) {return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1});
         // Cleans out the non-image files :: see imgTypes[...] @ line 12
         $('#loader').addClass('hidden').removeClass('loader');
         $('#bgLoader').addClass('hidden');
-        document.getElementById("viewImgOne").src = path.join('cache', fileComic, encodeURIComponent(zipDir), encodeURIComponent(dirContents[0])); // Loads array[0] into window
-        document.getElementById("viewImgTwo").src = path.join('cache', fileComic, encodeURIComponent(zipDir), encodeURIComponent(dirContents[1])); // Loads array[1] into window
+        document.getElementById("viewImgOne").src = path.join('cache', fileComic, encodeURIComponent(dirContents[0])); // Loads array[0] into window
+        document.getElementById("viewImgTwo").src = path.join('cache', fileComic, encodeURIComponent(dirContents[1])); // Loads array[1] into window
         postExtract(fileName)
       });
 
-      // Neither .CBR nor .CBZ
+    // Neither .CBR nor .CBZ
     } else {
       handleError(evt)
     };
@@ -171,8 +180,11 @@ function handleError(evt) {
 };
 window.addEventListener("error", handleError, true);
 
+// On Load
 document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
 document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
+
+// On Changes
 window.onresize = function() {
   document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
   document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';

@@ -4,7 +4,7 @@ var path = require('path');
 var fs = require('fs');
 
 function pageTurn(val) {
-  var filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7)); // removes file:// from PATH
+  var filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7)); 
   var fileDir = path.dirname(filePath);
   var dirContents = fs.readdirSync(fileDir);
   var fileName = path.basename(filePath);
@@ -102,10 +102,8 @@ function defaults(fileDir, dirContents, index, polarity) {
 
   if (Math.abs(val) == 2) {
     if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1*polarity) > -1) {
-      console.log(98 + ' ' + fileDir + ' ' + dirContents[index] + ' ' + index)
       singlePage(fileDir, dirContents, index, polarity);
     } else {
-      console.log(101 + ' ' + fileDir + ' ' + dirContents[index] + ' ' + index)
       viewOne.style.display = 'initial';
       viewTwo.style.display = 'initial';
       viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
@@ -123,7 +121,7 @@ function defaults(fileDir, dirContents, index, polarity) {
   } else if (Math.abs(val) == 1) { // If val == 1
     singlePage(fileDir, dirContents, index, polarity);
   } else {
-    alert('Danger! Danger! Will Robinson!\nErr: page.js @ ln 140 :: Invalid variable val: ' + val)
+    alert('Danger! Danger! Will Robinson!\nErr: page.js @ ln 126 :: Invalid variable val: ' + val)
   }
 };
 
