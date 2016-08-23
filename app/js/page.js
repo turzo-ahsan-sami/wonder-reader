@@ -4,7 +4,7 @@ var path = require('path');
 var fs = require('fs');
 
 function pageTurn(val) {
-  var filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7)); 
+  var filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
   var fileDir = path.dirname(filePath);
   var dirContents = fs.readdirSync(fileDir);
   var fileName = path.basename(filePath);
@@ -25,7 +25,7 @@ function pageTurn(val) {
     index = dirContents.length -1;
     val = 0;
     polarity = 0;
-    singlePage(fileDir, dirContents, index, polarity);
+    singlePage(fileDir, dirContents, index);
   } else if (index + val <= 0) { // For first page
     index = 0;
     val = 0;
@@ -38,7 +38,7 @@ function pageTurn(val) {
       console.log(34);
       index = index + val;
       if (index == dirContents.length - 1) {
-        singlePage(fileDir, dirContents, index, polarity);
+        singlePage(fileDir, dirContents, index);
       } else {
         defaults(fileDir, dirContents, index, polarity);
       }
@@ -49,11 +49,11 @@ function pageTurn(val) {
         if (centerFolds.indexOf(index + polarity) > -1) {
           console.log('I think you\'re landing on centerFolds[]')
           index = index + polarity;
-          singlePage(fileDir, dirContents, index, polarity);
+          singlePage(fileDir, dirContents, index);
         } else if (centerFolds.indexOf(index + val) > -1) {
           console.log ('When landing on centerFolds[]')
           index = index + val;
-          singlePage(fileDir, dirContents, index, polarity);
+          singlePage(fileDir, dirContents, index);
         } else if (centerFolds.indexOf(index) > -1) {
           console.log('For when actually on the centerFolds[]')
           index = index + polarity;
@@ -73,7 +73,7 @@ function pageTurn(val) {
         } else if (centerFolds.indexOf(index + val) > -1 || index + val == 0) {
         // For when landing on either CenterFold or Cover
           index = index + val;
-          singlePage(fileDir, dirContents, index, polarity);
+          singlePage(fileDir, dirContents, index);
         } else {
         // For all other cases
           index = index + val;
@@ -84,7 +84,7 @@ function pageTurn(val) {
   };
 };
 
-function singlePage(fileDir, dirContents, index, polarity) { // For Single page viewing and styling
+function singlePage(fileDir, dirContents, index) { // For Single page viewing and styling
   var viewOne = document.getElementById('viewImgOne');
   var viewTwo = document.getElementById('viewImgTwo');
 
@@ -102,7 +102,7 @@ function defaults(fileDir, dirContents, index, polarity) {
 
   if (Math.abs(val) == 2) {
     if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1*polarity) > -1) {
-      singlePage(fileDir, dirContents, index, polarity);
+      singlePage(fileDir, dirContents, index);
     } else {
       viewOne.style.display = 'initial';
       viewTwo.style.display = 'initial';
@@ -119,7 +119,7 @@ function defaults(fileDir, dirContents, index, polarity) {
 
     }
   } else if (Math.abs(val) == 1) { // If val == 1
-    singlePage(fileDir, dirContents, index, polarity);
+    singlePage(fileDir, dirContents, index);
   } else {
     alert('Danger! Danger! Will Robinson!\nErr: page.js @ ln 126 :: Invalid variable val: ' + val)
   }
@@ -150,7 +150,7 @@ exports.spread = () => { // Default is 2
   } else {
     $('#column').addClass('disabled');
     document.getElementById('column').dataset.val = 1;
-    singlePage(fileDir, dirContents, index, polarity);
+    singlePage(fileDir, dirContents, index);
   };
 };
 
@@ -167,7 +167,7 @@ exports.onLoad = () => {
   console.log('The two-page spreads for this comic are indices: ' + centerFolds)
 
   if (centerFolds[0]%2 == 1 || val == 1) {
-    singlePage(fileDir, dirContents, index, polarity);
+    singlePage(fileDir, dirContents, index);
   } else {
     defaults(fileDir, dirContents, index, polarity);
   };
