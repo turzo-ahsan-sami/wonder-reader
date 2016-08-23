@@ -1,22 +1,7 @@
-var fs = require('fs'); // https://nodejs.org/api/fs.html#fs_file_system
 const $ = require('jquery'); // https://www.npmjs.com/package/jquery
-var path = require('path'); // https://nodejs.org/api/path.html
 var clean = require('./js/clean.js'); // Trash that old shit!
 var page = require('./js/page.js'); // Page turning
-var file = require('./js/file.js'); // File loading module
-
-// file.dialog();
-// file.loader(fileName, err);
-
-
-var imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
-
-function enable(id) {
-  document.getElementById(id).disabled = false;
-};
-function disable(id) {
-  document.getElementById(id).disabled = true;
-};
+var file = require('./js/file.js'); // File loading module .dialog & .loader(fileName)
 
 $(document).keydown(function(event) {
   if (document.activeElement.id == 'zoomText' || document.activeElement.id == 'zoomSlider') {
@@ -77,7 +62,6 @@ function pageZoom() {
 
 function libSlider() {
   $('#library').toggleClass('shift-left');
-  // $('.header h1').toggleClass('shift-left');
 };
 
 $('.header').mouseenter( function() {

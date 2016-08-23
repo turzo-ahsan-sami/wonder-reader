@@ -7,7 +7,6 @@ body {
 }
 
 p {
-  color: #7DB9B3;
   cursor: default;
 }
 
@@ -41,7 +40,7 @@ button {
   background-color: rgba(0, 0, 0, 0.1);
   border: 0;
   color: rgba(255, 255, 255, 0.9);
-  transition: all .5s;
+  transition: all 0.5s;
   padding: 6px 6px 7px;
   cursor: pointer;
 }
@@ -59,8 +58,8 @@ button:disabled {
   color: rgba(255, 255, 255, 0.2);
 }
 
-button:disabled:hover,
-.disabled:hover {
+.disabled:hover,
+button:disabled:hover {
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
 }
 
@@ -138,10 +137,10 @@ button:disabled:hover,
   background: #148bb5;
   border-radius: 4px;
   border: 2px solid rgba(255, 255, 255, 0.8);
-  transition: all .5s;
+  transition: all 0.5s;
 }
 #cpanel input[type=range]:focus::-webkit-slider-runnable-track {
-  box-shadow: 0px 0px 5px 2px #91d5fd;
+  box-shadow: 0 0 5px 2px #91d5fd;
 }
 #cpanel #zoomText {
   color: #fff;
@@ -155,10 +154,10 @@ button:disabled:hover,
   padding: 3px 26px 0 0;
   border: 2px solid rgba(255, 255, 255, 0.8);
   outline: none;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 #cpanel #zoomText:focus {
-  box-shadow: 0px 0px 5px 2px #91d5fd;
+  box-shadow: 0 0 5px 2px #91d5fd;
 }
 #cpanel #percent {
   position: absolute;
@@ -173,12 +172,12 @@ button:disabled:hover,
 button#trash {
   background-color: #ff0000;
   padding-left: 10px;
-  box-shadow: -3px 0 10px -2px black;
+  box-shadow: -3px 0 10px -2px #000;
 }
 
 /* ---- Library Values ---- */
 .library {
-  background-color: rgba(22, 102, 120, 0.98);
+  background-color: #148bb5;
   /*clear: both;*/
   height: 100vh;
   width: 175px;
@@ -186,10 +185,10 @@ button#trash {
   position: fixed;
   top: 0;
   z-index: 2;
-  border-right: 3px solid #0e2e3b;
+  border-right: 3px solid #0E2E3B;
   word-wrap: break-word;
   transition: margin-left 0.5s;
-  box-shadow: 3px 0px 5px rgba(0, 28, 90, 0.6);
+  box-shadow: 3px 0 5px rgba(0, 0, 0, 0.5);
 }
 .library h1 {
   /*margin: 0 auto;*/
@@ -236,7 +235,7 @@ button#trash {
   margin-left: -175px;
 }
 .shift-left ul#dirLib {
-  color: rgba(125, 185, 179, 0);
+  color: transparent;
 }
 
 #libSlider {
@@ -307,7 +306,7 @@ button#trash {
 .loader,
 .loader:after,
 .loader:before {
-  background: #ffffff;
+  background: #fff;
   -webkit-animation: load1 1s infinite ease-in-out;
   animation: load1 1s infinite ease-in-out;
   width: 1em;
@@ -328,7 +327,7 @@ button#trash {
 }
 
 .loader {
-  color: #ffffff;
+  color: #fff;
   text-indent: -9999em;
   margin: 88px auto;
   position: fixed;
@@ -348,8 +347,8 @@ button#trash {
 
 @-webkit-keyframes load1 {
   0%,
-    100%,
-    80% {
+  100%,
+  80% {
     box-shadow: 0 0;
     height: 4em;
   }
@@ -360,8 +359,8 @@ button#trash {
 }
 @keyframes load1 {
   0%,
-    100%,
-    80% {
+  100%,
+  80% {
     box-shadow: 0 0;
     height: 4em;
   }
