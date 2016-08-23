@@ -11,9 +11,9 @@ var mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
 var path = require('path');
 var extract = require('extract-zip'); // https://www.npmjs.com/package/extract-zip
 var directoryExists = require('directory-exists'); // https://www.npmjs.com/package/directory-exists
-var libWatch = require('./js/libwatch.js'); // libWatch.load(fileName) loads into #library.ul
-var nextcomic = require('./js/nextcomic.js'); // Loads Functions onto previous and next buttons
-var page = require('./js/page.js');
+var libWatch = require('./libwatch.js'); // libWatch.load(fileName) loads into #library.ul
+var nextcomic = require('./nextcomic.js'); // Loads Functions onto previous and next buttons
+var page = require('./page.js');
 // var openFile = require('./js/openfile.test.js');
 // var validChar = '/^([!#$&-;=?-[]_a-z~]|%[0-9a-fA-F]{2})+$/g';
 
@@ -192,7 +192,10 @@ function postExtract(fileName) {
   console.log('postExtract initial inner.style.height set at: ' + inner.style.height)
 };
 
-module.exports = {
-  dialog: openFile();
-  loader: filePiper(fileName, err);
+exports.dialog = () => {
+  openFile();
+}
+
+exports.loader = (fileName) => {
+  filePiper(fileName);
 }
