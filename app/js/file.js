@@ -14,7 +14,7 @@ var directoryExists = require('directory-exists'); // https://www.npmjs.com/pack
 var libWatch = require('./libwatch.js'); // libWatch.load(fileName) loads into #library.ul
 var nextcomic = require('./nextcomic.js'); // Loads Functions onto previous and next buttons
 var page = require('./page.js');
-// var openFile = require('./js/openfile.test.js');
+var strain = require('./strain.js');
 // var validChar = '/^([!#$&-;=?-[]_a-z~]|%[0-9a-fA-F]{2})+$/g';
 
 var imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
@@ -60,25 +60,18 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
     for(i=0; i < dirContents.length; i++) {
       if(imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(tempFolder,dirContents[i])).isDirectory()) {
         filtered.push(dirContents[i]);
-        console.log(dirContents[i] + " pushed in")
       } else {
         console.log(dirContents[i] + " rejected!")
       }
     };
     dirContents = filtered;
-    console.log(dirContents);
     if (fs.statSync(path.join(tempFolder, dirContents[0])).isDirectory()) { // If there is an interior directory
       console.log(dirContents[0] + " is a directory. Moving into new directory.")
       fileComic = path.join(fileComic, encodeURIComponent(dirContents[0]));
-      dirContents = fs.readdirSync(path.join(tempFolder, dirContents[0]));
-      dirContents = dirContents.filter(function(x, i) {
-        return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1
-      });
+      dirContents = strain(fs.readdirSync(path.join(tempFolder, dirContents[0])));
       console.log(path.join(tempFolder, dirContents[0]));
     } else { // if no interior directory exists
-      dirContents = dirContents.filter(function(x, i) {
-        return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1
-      });
+      dirContents = strain(dirContents);
       console.log(dirContents[0]);
     };
     document.getElementById("viewImgOne").src = path.join('cache', fileComic, encodeURIComponent(dirContents[0]));
@@ -95,14 +88,7 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
     if (path.extname(fileName).toLowerCase() == ".cbr") {
       var rar = new unrar(fileName);
       rar.extract(tempFolder, null, function (err) {
-        var dirContents = fs.readdirSync(tempFolder);
-
-        dirContents = dirContents.filter(function(x, i) {
-          return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1
-        });
-        // Cleans out the crap :: see imgTypes[...] @ line 12
-
-        console.log(dirContents)
+        var dirContents = strain(fs.readdirSync(tempFolder));
 
         $('#loader').addClass('hidden').removeClass('loader');
         $('#bgLoader').addClass('hidden');
@@ -125,29 +111,24 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
         for(i=0; i < dirContents.length; i++) {
           if(imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(tempFolder,dirContents[i])).isDirectory()) {
             filtered.push(dirContents[i]);
-            console.log(dirContents[i] + " pushed in")
           } else {
             console.log(dirContents[i] + " rejected!")
           }
         };
 
         dirContents = filtered;
-        console.log(dirContents);
-
         // Checks for interior folders
         if (fs.statSync(path.join(tempFolder, dirContents[0])).isDirectory()) {
           fileComic = path.join(fileComic, encodeURIComponent(dirContents[0]));
           dirContents = fs.readdirSync(path.join(tempFolder, dirContents[0]));
         }
 
-        dirContents = dirContents.filter(function(x, i) {
-          return imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1
-        });
+        dirContents = strain(dirContents)
         // Cleans out the non-image files :: see imgTypes[...] @ line 12
 
         $('#loader').addClass('hidden').removeClass('loader');
         $('#bgLoader').addClass('hidden');
-
+        console.log(dirContents[0]);
         document.getElementById("viewImgOne").src = path.join('cache', fileComic, encodeURIComponent(dirContents[0])); // Loads array[0] into window
         document.getElementById("viewImgTwo").src = path.join('cache', fileComic, encodeURIComponent(dirContents[1])); // Loads array[1] into window
 

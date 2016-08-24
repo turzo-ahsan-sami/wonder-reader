@@ -221,14 +221,26 @@ button#trash {
   transition: all 0.25s;
   padding: 3px 0 3px 5px;
   color: #808080;
-  box-shadow: inset 1px 0 0 0 #ddbfeb;
+  box-shadow: inset 3px 0 0 0 #ddbfeb;
 }
 .library .libDir a:hover,
 .library .libFile a:hover {
   text-decoration: none;
-  box-shadow: inset 3px 0 0 0 #000;
+  box-shadow: inset 2px 0 0 1px #000;
   background: #fff;
   color: #000;
+}
+.library .current span {
+  display: block;
+  text-decoration: none;
+  transition: all 0.25s;
+  padding: 3px 0 3px 5px;
+  color: #148bb5;
+  box-shadow: inset 3px 0 0 1px #148bb5;
+}
+.library .current span:hover {
+  text-decoration: none;
+  background: #fff;
 }
 
 .shift-left {
@@ -294,13 +306,12 @@ button#trash {
 #bgLoader {
   height: 150px;
   width: 150px;
-  background: rgba(0, 0, 0, 0.1);
-  position: absolute;
-  right: 44.5%;
-  top: 34%;
+  background: #148bb5;
+  position: fixed;
   border-radius: 50%;
-  -webkit-filter: blur(1px);
-  border: 2px solid rgba(0, 0, 0, 0.2);
+  opacity: 0.5;
+  mix-blend-mode: exclusion;
+  box-shadow: 0px 0px 12px -3px #000;
 }
 
 .loader,
@@ -329,7 +340,7 @@ button#trash {
 .loader {
   color: #fff;
   text-indent: -9999em;
-  margin: 88px auto;
+  margin: 55px 69px;
   position: fixed;
   font-size: 12px;
   -webkit-transform: translateZ(0);
@@ -337,8 +348,6 @@ button#trash {
   transform: translateZ(0);
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
-  right: 50%;
-  top: 30%;
 }
 
 .loader:after {

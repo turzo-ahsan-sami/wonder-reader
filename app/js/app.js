@@ -27,11 +27,19 @@ window.addEventListener("error", handleError, true);
 // On Load
 document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
 document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
+document.getElementById('bgLoader').style.left = window.innerWidth/2 - 75 + 'px';
+document.getElementById('bgLoader').style.top = window.innerHeight/2 - 75 + 'px';
+document.getElementById('loader').style.left = window.innerWidth/2 - 75 + 'px';
+document.getElementById('loader').style.top = window.innerHeight/2 - 75 + 'px';
 
 // On Changes
 window.onresize = function() {
   document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
   document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
+  document.getElementById('bgLoader').style.left = window.innerWidth/2 - 75 + 'px';
+  document.getElementById('bgLoader').style.top = window.innerHeight/2 - 75 + 'px';
+  document.getElementById('loader').style.left = window.innerWidth/2 - 75 + 'px';
+  document.getElementById('loader').style.top = window.innerHeight/2 - 75 + 'px';
 };
 
 function pageZoom() {

@@ -223,13 +223,27 @@ button#trash {
       transition: all 0.25s;
       padding: 3px 0 3px 5px;
       color: $gray;
-      box-shadow: inset 1px 0 0 0 $libColor;
+      box-shadow: inset 3px 0 0 0 $libColor;
     }
     a:hover {
       text-decoration: none;
-      box-shadow: inset 3px 0 0 0 $black;
+      box-shadow: inset 2px 0 0 1px $black;
       background: $white;
       color: $black;
+    }
+  }
+  .current {
+    span {
+      display: block;
+      text-decoration: none;
+      transition: all 0.25s;
+      padding: 3px 0 3px 5px;
+      color: $comicBleu;
+      box-shadow: inset 3px 0 0 1px $comicBleu;
+    }
+    span:hover {
+      text-decoration: none;
+      background: $white;
     }
   }
 }
@@ -287,13 +301,13 @@ button#trash {
 #bgLoader {
   height: 150px;
   width: 150px;
-  background: $darkTrans;
-  position: absolute;
-  right: 44.5%;
-  top: 34%;
+  background: $comicBleu;
+  position: fixed;
   border-radius: 50%;
-  -webkit-filter: blur(1px);
-  border: 2px solid $darkTransDeg;
+  opacity: 0.5;
+  mix-blend-mode: exclusion;
+  //border: 2px solid $darkTransDeg;
+  box-shadow: 0px 0px 12px -3px $black;
 }
 .loader,
 .loader:after,
@@ -318,7 +332,7 @@ button#trash {
 .loader {
   color: $white;
   text-indent: -9999em;
-  margin: 88px auto;
+  margin: 55px 69px;
   position: fixed;
   font-size: 12px;
   -webkit-transform: translateZ(0);
@@ -326,8 +340,8 @@ button#trash {
   transform: translateZ(0);
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
-  right: 50%;
-  top: 30%;
+  //right: 50%;
+  //top: 30%;
 }
 .loader:after {
   left: 1.5em;
