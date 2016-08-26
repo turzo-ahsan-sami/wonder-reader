@@ -3,14 +3,16 @@
 /  extracting and sourcing images
 /  to where they need to go. */
 
-var fs = require('fs');
-const {dialog} = require('electron').remote;
-var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
 const $ = require('jquery');
-var mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
-var path = require('path');
-var extract = require('extract-zip'); // https://www.npmjs.com/package/extract-zip
+const {dialog} = require('electron').remote;
 var directoryExists = require('directory-exists'); // https://www.npmjs.com/package/directory-exists
+var extract = require('extract-zip'); // https://www.npmjs.com/package/extract-zip
+var fs = require('fs');
+var mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
+var os = require('os'); // https://nodejs.org/api/os.html
+var path = require('path');
+var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
+// User Modules //
 var libWatch = require('./libwatch.js'); // libWatch.load(fileName) loads into #library.ul
 var nextcomic = require('./nextcomic.js'); // Loads Functions onto previous and next buttons
 var page = require('./page.js');
@@ -51,7 +53,8 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
     handleError(evt)
   }
 
-  var tempFolder = path.join("app", "cache", fileComic); // tempFolder Variable for loaded comic
+  // tempFolder Variable for loaded comic
+  var tempFolder = path.join(os.homedir(), 'Documents', '.wonderReader', 'cache', fileComic);
 
   if (directoryExists.sync(tempFolder)) { // Checks for existing Directory
     console.log(tempFolder + " previously created.")
@@ -68,16 +71,12 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
     if (fs.statSync(path.join(tempFolder, dirContents[0])).isDirectory()) { // If there is an interior directory
       console.log(dirContents[0] + " is a directory. Moving into new directory.")
       fileComic = path.join(fileComic, encodeURIComponent(dirContents[0]));
-      dirContents = strain(fs.readdirSync(path.join(tempFolder, dirContents[0])));
+      dirContents = fs.readdirSync(path.join(tempFolder, dirContents[0]));
       console.log(path.join(tempFolder, dirContents[0]));
     } else { // if no interior directory exists
-      dirContents = strain(dirContents);
       console.log(dirContents[0]);
     };
-    document.getElementById("viewImgOne").src = path.join('cache', fileComic, encodeURIComponent(dirContents[0]));
-    document.getElementById("viewImgTwo").src = path.join('cache', fileComic, encodeURIComponent(dirContents[1]));
-
-    postExtract(fileName);
+    postExtract(fileName, fileComic, dirContents);
 
   } else { // If no Directory exists
     mkdirp.sync(tempFolder);
@@ -88,15 +87,12 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
     if (path.extname(fileName).toLowerCase() == ".cbr") {
       var rar = new unrar(fileName);
       rar.extract(tempFolder, null, function (err) {
-        var dirContents = strain(fs.readdirSync(tempFolder));
+        var dirContents = fs.readdirSync(tempFolder);
 
         $('#loader').addClass('hidden').removeClass('loader');
         $('#bgLoader').addClass('hidden');
 
-        document.getElementById("viewImgOne").src = path.join('cache', fileComic, encodeURIComponent(dirContents[0])); // Loads array[0] into window
-        document.getElementById("viewImgTwo").src = path.join('cache', fileComic, encodeURIComponent(dirContents[1])); // Loads array[1] into window
-
-        postExtract(fileName);
+        postExtract(fileName, fileComic, dirContents);
       });
 
     // -----------------------
@@ -115,7 +111,6 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
             console.log(dirContents[i] + " rejected!")
           }
         };
-
         dirContents = filtered;
         // Checks for interior folders
         if (fs.statSync(path.join(tempFolder, dirContents[0])).isDirectory()) {
@@ -123,23 +118,15 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
           dirContents = fs.readdirSync(path.join(tempFolder, dirContents[0]));
         }
 
-        dirContents = strain(dirContents)
-        // Cleans out the non-image files :: see imgTypes[...] @ line 12
-
         $('#loader').addClass('hidden').removeClass('loader');
         $('#bgLoader').addClass('hidden');
-        console.log(dirContents[0]);
-        document.getElementById("viewImgOne").src = path.join('cache', fileComic, encodeURIComponent(dirContents[0])); // Loads array[0] into window
-        document.getElementById("viewImgTwo").src = path.join('cache', fileComic, encodeURIComponent(dirContents[1])); // Loads array[1] into window
 
-        postExtract(fileName)
+        postExtract(fileName, fileComic, dirContents)
       });
-
     // Neither .CBR nor .CBZ
     } else {
       handleError(evt)
     };
-
     // Async class adding then hidden on final load
     $('#loader').addClass('loader').removeClass('hidden');
     $('#bgLoader').removeClass('hidden');
@@ -153,10 +140,15 @@ function disable(id) {
   document.getElementById(id).disabled = true;
 };
 
-function postExtract(fileName) {
+function postExtract(fileName, fileComic, dirContents) {
   var inner = document.getElementById('innerWindow');
-  var imgOne = document.getElementById('viewImgOne');
-  var imgTwo = document.getElementById('viewImgTwo');
+  var viewOne = document.getElementById('viewImgOne');
+  var viewTwo = document.getElementById('viewImgTwo');
+
+  dirContents = strain(dirContents)
+
+  viewOne.src = path.join(os.homedir(), 'Documents', '.wonderReader', 'cache', fileComic, encodeURIComponent(dirContents[0]));
+  viewTwo.src = path.join(os.homedir(), 'Documents', '.wonderReader', 'cache', fileComic, encodeURIComponent(dirContents[1]));
 
   page.onLoad();
   enable("pageLeft");
@@ -165,10 +157,10 @@ function postExtract(fileName) {
   libWatch.load(fileName); // libwatch.js
   nextcomic.load(fileName);
 
-  if(imgOne.clientHeight >= imgTwo.clientHeight) {
-    inner.style.height = imgOne.clientHeight + "px";
+  if(viewOne.clientHeight >= viewTwo.clientHeight) {
+    inner.style.height = viewOne.clientHeight + "px";
   } else {
-    inner.style.height = imgTwo.clientHeight + "px";
+    inner.style.height = viewTwo.clientHeight + "px";
   };
   console.log('postExtract initial inner.style.height set at: ' + inner.style.height)
 };

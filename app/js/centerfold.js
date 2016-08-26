@@ -1,6 +1,6 @@
-var sizeOf = require('image-size');
-var path = require('path');
 var fs = require('fs');
+var path = require('path');
+var sizeOf = require('image-size');
 var strain = require('./strain.js')
 
 exports.fold = (id) => {
@@ -28,4 +28,4 @@ exports.fold = (id) => {
   };
   spread = spread.sort(sortNumber);
   return spread;
-}
+};

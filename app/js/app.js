@@ -31,6 +31,7 @@ document.getElementById('bgLoader').style.left = window.innerWidth/2 - 75 + 'px'
 document.getElementById('bgLoader').style.top = window.innerHeight/2 - 75 + 'px';
 document.getElementById('loader').style.left = window.innerWidth/2 - 75 + 'px';
 document.getElementById('loader').style.top = window.innerHeight/2 - 75 + 'px';
+document.getElementById('innerWindow').style.top = window.innerHeight - 56 + 'px';
 
 // On Changes
 window.onresize = function() {
@@ -72,6 +73,7 @@ function libSlider() {
   $('#library').toggleClass('shift-left');
 };
 
+// dragscroll things
 $('.header').mouseenter( function() {
   $('#viewer').removeClass('dragscroll');
 }).mouseleave( function() {
