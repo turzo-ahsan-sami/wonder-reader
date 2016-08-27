@@ -49,7 +49,6 @@ function pageZoom() {
   var zoomSlide = document.getElementById('zoomSlider');
   var imgOne = document.getElementById('viewImgOne');
   var imgTwo = document.getElementById('viewImgTwo');
-  console.log(inner.clientHeight)
 
   // Center Points
   var cPX = outer.scrollTop + outer.clientHeight/2;

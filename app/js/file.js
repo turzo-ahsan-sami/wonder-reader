@@ -54,27 +54,21 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
   }
 
   // tempFolder Variable for loaded comic
-  var tempFolder = path.join(os.homedir(), 'Documents', '.wonderReader', 'cache', fileComic);
+  var tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic);
 
   if (directoryExists.sync(tempFolder)) { // Checks for existing Directory
-    console.log(tempFolder + " previously created.")
     var dirContents = fs.readdirSync(tempFolder);
     var filtered = [];
     for(i=0; i < dirContents.length; i++) {
       if(imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(tempFolder,dirContents[i])).isDirectory()) {
         filtered.push(dirContents[i]);
-      } else {
-        console.log(dirContents[i] + " rejected!")
       }
     };
     dirContents = filtered;
     if (fs.statSync(path.join(tempFolder, dirContents[0])).isDirectory()) { // If there is an interior directory
-      console.log(dirContents[0] + " is a directory. Moving into new directory.")
       fileComic = path.join(fileComic, encodeURIComponent(dirContents[0]));
       dirContents = fs.readdirSync(path.join(tempFolder, dirContents[0]));
-      console.log(path.join(tempFolder, dirContents[0]));
     } else { // if no interior directory exists
-      console.log(dirContents[0]);
     };
     postExtract(fileName, fileComic, dirContents);
 
@@ -107,8 +101,6 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
         for(i=0; i < dirContents.length; i++) {
           if(imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(tempFolder,dirContents[i])).isDirectory()) {
             filtered.push(dirContents[i]);
-          } else {
-            console.log(dirContents[i] + " rejected!")
           }
         };
         dirContents = filtered;
@@ -147,8 +139,8 @@ function postExtract(fileName, fileComic, dirContents) {
 
   dirContents = strain(dirContents)
 
-  viewOne.src = path.join(os.homedir(), 'Documents', '.wonderReader', 'cache', fileComic, encodeURIComponent(dirContents[0]));
-  viewTwo.src = path.join(os.homedir(), 'Documents', '.wonderReader', 'cache', fileComic, encodeURIComponent(dirContents[1]));
+  viewOne.src = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic, encodeURIComponent(dirContents[0]));
+  viewTwo.src = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic, encodeURIComponent(dirContents[1]));
 
   page.onLoad();
   enable("pageLeft");
@@ -162,7 +154,6 @@ function postExtract(fileName, fileComic, dirContents) {
   } else {
     inner.style.height = viewTwo.clientHeight + "px";
   };
-  console.log('postExtract initial inner.style.height set at: ' + inner.style.height)
 };
 
 exports.dialog = () => {

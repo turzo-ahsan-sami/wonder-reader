@@ -4,15 +4,15 @@ var fs = require('fs');
 var path = require('path');
 var strain = require('./strain.js');
 
+var centerFolds
+
 function pageTurn(val) {
   var filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
   var fileDir = path.dirname(filePath);
   var dirContents = strain(fs.readdirSync(fileDir));
   var fileName = path.basename(filePath);
   var index = Number(dirContents.indexOf(fileName));
-  var centerFolds = center.fold('viewImgOne');
-
-  var val = Number(val);
+  val = Number(val);
 
   var polarity = 1;
   if (val < 0) {
@@ -21,13 +21,11 @@ function pageTurn(val) {
 
   // Limits Val to range
   if (index + val >= dirContents.length -1) { // For last page
-    console.log('Last page reached.')
     index = dirContents.length -1;
     val = 0;
     polarity = 0;
     singlePage(fileDir, dirContents, index);
   } else if (index + val <= 0) { // For first page
-    console.log('Cover page reached.')
     index = 0;
     val = 0;
     polarity = 0;
@@ -37,24 +35,19 @@ function pageTurn(val) {
     // For no centerFolds. This is easy.
       index = index + val;
       if (index == dirContents.length - 1) {
-        console.log('.');
         singlePage(fileDir, dirContents, index);
       } else {
-        console.log('.');
         defaults(fileDir, dirContents, index, polarity);
       }
     } else {
     // For when any CenterFold exists //
       if (centerFolds.indexOf(index + polarity) > -1) {
-        console.log('.');
         index = index + polarity;
         singlePage(fileDir, dirContents, index);
       } else if (centerFolds.indexOf(index + val) > -1) {
-        console.log ('.');
         index = index + val;
         singlePage(fileDir, dirContents, index);
       } else if (centerFolds.indexOf(index) > -1) {
-        console.log('.');
         if (polarity > 0) {
           index = index + polarity;
         } else {
@@ -62,7 +55,6 @@ function pageTurn(val) {
         }
         defaults(fileDir, dirContents, index, polarity);
       } else {
-        console.log('.');
         index = index + val;
         defaults(fileDir, dirContents, index, polarity);
       };
@@ -85,11 +77,9 @@ function defaults(fileDir, dirContents, index, polarity) {
   var inner = document.getElementById('innerWindow');
   var viewOne = document.getElementById('viewImgOne');
   var viewTwo = document.getElementById('viewImgTwo');
-  var centerFolds = center.fold('viewImgOne');
   var val = document.getElementById('column').dataset.val;
 
   dirContents = strain(dirContents);
-  console.log(index);
 
   if (Math.abs(val) == 2) {
     if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1*polarity) > -1) {
@@ -150,15 +140,14 @@ exports.spread = () => { // Default is 2
 
 exports.onLoad = () => {
   var filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
-  console.log(filePath)
   var fileDir = path.dirname(filePath);
   var dirContents = strain(fs.readdirSync(fileDir));
   var fileName = path.basename(filePath);
   var index = dirContents.indexOf(fileName);
-  var centerFolds = center.fold('viewImgOne');
   var val = document.getElementById('column').dataset.val;
   var polarity = 0;
-  console.log('The two-page spreads for this comic are array indices: ' + centerFolds)
+
+  centerFolds = center.fold('viewImgOne');
 
   // Removed 'centerFolds[0]%2 == 1 ||' from if statement
   if (val == 1) {

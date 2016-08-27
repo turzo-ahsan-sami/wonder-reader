@@ -16,7 +16,7 @@ function createWindow() {
   });
   win.loadURL(`file://${__dirname}/app/index.html`); // Points to the html file to load in the app
   win.maximize(); // Starts as maximized as you can get!
-  win.webContents.openDevTools(); // Loads with Dev Tools open.  Remove before release.
+  //win.webContents.openDevTools(); // Loads with Dev Tools open.  Remove before release.
   win.once('ready-to-show', () => {
     win.show();
   })
@@ -27,7 +27,6 @@ function createWindow() {
 
 app.on('ready', () => {
   // const appIcon = new Tray('./logo.png')
-  // console.log(appIcon)
   createWindow()
 });
 
