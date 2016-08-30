@@ -25,8 +25,9 @@ function createWindow() {
   });
 }
 
+const icon = nativeImage.createFromPath('./shieldIcon.png')
 app.setName('Wonder Reader');
-app.dock.setIcon('shieldIcon.png')
+app.dock.setIcon(icon)
 app.on('ready', () => {
   createWindow()
 });
