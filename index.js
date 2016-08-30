@@ -33,13 +33,11 @@ app.on('ready', () => {
 });
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+  app.quit();
 });
 
 app.on('activate', () => {
-  if (win ===null) {
+  if (win === null) {
     createWindow();
   }
 });
