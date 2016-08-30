@@ -1,7 +1,7 @@
 const electron = require('electron'); // http://electron.atom.io/docs/
 const app = electron.app; // http://electron.atom.io/docs/api/app/
-// const Tray = electron.Tray; // http://electron.atom.io/docs/api/tray/
 const BrowserWindow = electron.BrowserWindow; // http://electron.atom.io/docs/api/browser-window/
+const nativeImage = require('electron').nativeImage
 
 let win // Global 'win' variable
 function createWindow() {
@@ -10,7 +10,7 @@ function createWindow() {
     height: 700,
     minWidth: 855,
     minHeight: 530,
-    icon: './shieldLogo.png',
+    icon: './shieldIcon.png',
     title: 'Wonder Reader',
     show: false
   });
@@ -25,8 +25,9 @@ function createWindow() {
   });
 }
 
+app.setName('Wonder Reader');
+app.dock.setIcon('shieldIcon.png')
 app.on('ready', () => {
-  // const appIcon = new Tray('./logo.png')
   createWindow()
 });
 
