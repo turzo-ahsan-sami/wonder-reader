@@ -113,11 +113,15 @@ function defaults(fileDir, dirContents, index, polarity) {
 exports.Right = () => { // See page.spread()
   var val = document.getElementById('column').dataset.val;
   pageTurn(val);
+  document.getElementById('viewer').scrollTop = 0;
+  document.getElementById('viewer').scrollLeft = 0;
 }
 
 exports.Left = () => {
   var val = document.getElementById('column').dataset.val * -1;
   pageTurn(val);
+  document.getElementById('viewer').scrollTop = 0;
+  document.getElementById('viewer').scrollLeft = 0;
 }
 
 exports.spread = () => { // Default is 2
