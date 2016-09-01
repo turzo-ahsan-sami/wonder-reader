@@ -73,8 +73,9 @@ function libSlider() {
 };
 
 // dragscroll things
-$('.header').mouseenter( function() {
+$('#zoomSlider').mouseenter( function() {
   $('#viewer').removeClass('dragscroll');
 }).mouseleave( function() {
   $('#viewer').addClass('dragscroll');
-})
+});
+// slider focuse

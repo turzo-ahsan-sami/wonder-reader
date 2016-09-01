@@ -119,10 +119,10 @@ function defaults(fileDir, dirContents, index, polarity) {
   } else {
     alert('Danger! Danger! Will Robinson!\nErr: page.js @ ln 126 :: Invalid variable val: ' + val)
   }
-  if(viewOne.clientHeight >= viewTwo.clientHeight) {
-    inner.style.height = viewOne.clientHeight + "px";
+  if(document.getElementById('viewImgOne').clientHeight >= document.getElementById('viewImgTwo').clientHeight) {
+    inner.style.height = document.getElementById('viewImgOne').clientHeight + "px";
   } else {
-    inner.style.height = viewTwo.clientHeight + "px";
+    inner.style.height = document.getElementById('viewImgTwo').clientHeight + "px";
   };
 };
 
