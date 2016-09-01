@@ -4,13 +4,33 @@ var fs = require('fs');
 var path = require('path');
 var strain = require('./strain.js');
 
-var centerFolds
+var filePath;
+var fileName;
+var fileDir;
+var dirContents;
+var centerFolds;
+
+exports.onLoad = () => {
+  filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
+  fileName = path.basename(filePath);
+  fileDir = path.dirname(filePath);
+  dirContents = strain(fs.readdirSync(fileDir));
+  centerFolds = center.fold('viewImgOne');
+
+  var index = dirContents.indexOf(fileName);
+  var val = document.getElementById('column').dataset.val;
+  var polarity = 0;
+
+  if (val == 1) {
+    singlePage(fileDir, dirContents, index);
+  } else {
+    defaults(fileDir, dirContents, index, polarity);
+  };
+};
 
 function pageTurn(val) {
-  var filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
-  var fileDir = path.dirname(filePath);
-  var dirContents = strain(fs.readdirSync(fileDir));
-  var fileName = path.basename(filePath);
+  filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
+  fileName = path.basename(filePath);
   var index = Number(dirContents.indexOf(fileName));
   val = Number(val);
 
@@ -32,7 +52,7 @@ function pageTurn(val) {
     defaults(fileDir, dirContents, index, polarity);
   } else {
     if (centerFolds.length == 0) {
-    // For no centerFolds. This is easy.
+    // For no centerFolds. This is easy
       index = index + val;
       if (index == dirContents.length - 1) {
         singlePage(fileDir, dirContents, index);
@@ -65,7 +85,6 @@ function pageTurn(val) {
 function singlePage(fileDir, dirContents, index) { // For Single page viewing and styling
   var viewOne = document.getElementById('viewImgOne');
   var viewTwo = document.getElementById('viewImgTwo');
-  dirContents = strain(dirContents)
 
   viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
   viewOne.style.width = '100%';
@@ -78,8 +97,6 @@ function defaults(fileDir, dirContents, index, polarity) {
   var viewOne = document.getElementById('viewImgOne');
   var viewTwo = document.getElementById('viewImgTwo');
   var val = document.getElementById('column').dataset.val;
-
-  dirContents = strain(dirContents);
 
   if (Math.abs(val) == 2) {
     if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1*polarity) > -1) {
@@ -96,7 +113,6 @@ function defaults(fileDir, dirContents, index, polarity) {
       // var ratioTwo = viewTwo.width / viewTwo.height;
       // viewOne.style.width = ratioOne/(ratioOne + ratioTwo)*100 + '%';
       // viewTwo.style.width = ratioTwo/(ratioOne + ratioTwo)*100 + '%';
-
     }
   } else if (Math.abs(val) == 1) { // If val == 1
     singlePage(fileDir, dirContents, index);
@@ -125,9 +141,7 @@ exports.Left = () => {
 }
 
 exports.spread = () => { // Default is 2
-  var filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
-  var fileDir = path.dirname(filePath);
-  var dirContents = strain(fs.readdirSync(fileDir));
+  filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
   var index = dirContents.indexOf(path.basename(filePath));
   var polarity = 1;
 
@@ -139,24 +153,5 @@ exports.spread = () => { // Default is 2
     $('#column').addClass('disabled');
     document.getElementById('column').dataset.val = 1;
     singlePage(fileDir, dirContents, index);
-  };
-};
-
-exports.onLoad = () => {
-  var filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
-  var fileDir = path.dirname(filePath);
-  var dirContents = strain(fs.readdirSync(fileDir));
-  var fileName = path.basename(filePath);
-  var index = dirContents.indexOf(fileName);
-  var val = document.getElementById('column').dataset.val;
-  var polarity = 0;
-
-  centerFolds = center.fold('viewImgOne');
-
-  // Removed 'centerFolds[0]%2 == 1 ||' from if statement
-  if (val == 1) {
-    singlePage(fileDir, dirContents, index);
-  } else {
-    defaults(fileDir, dirContents, index, polarity);
   };
 };

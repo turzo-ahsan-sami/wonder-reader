@@ -14,12 +14,14 @@ exports.load = (fileName) => {
   var filePath = path.dirname(fileName);
   var dirContents = fs.readdirSync(filePath);
 
-  var dirComics = dirContents.filter(function(x,i) { return fs.statSync(path.join(filePath, dirContents[i])).isFile() && ['.cbr', '.cbz'].indexOf(path.extname(dirContents[i])) > -1});
+  dirComics = dirContents.filter(function(x,i) { return fs.statSync(path.join(filePath, dirContents[i])).isFile() && ['.cbr', '.cbz'].indexOf(path.extname(dirContents[i]).toLowerCase()) > -1});
 
   var fileIndex = dirComics.indexOf(baseName); // Gets index position of file inside directory array
 
   var nextComic = document.getElementById('nextComic');
   var prevComic = document.getElementById('prevComic');
+
+  console.log('Index = ' + fileIndex)
 
   if (fileIndex == 0) { // If loaded comic is first comic in directory
     var nextSrc = path.join(filePath, dirComics[fileIndex + 1]);
