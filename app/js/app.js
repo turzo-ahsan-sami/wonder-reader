@@ -36,12 +36,20 @@ document.getElementById('innerWindow').style.top = window.innerHeight - 56 + 'px
 
 // On Changes
 window.onresize = function() {
+  var inner = document.getElementById('innerWindow');
+  var imgOne = document.getElementById('viewImgOne');
+  var imgTwo = document.getElementById('viewImgTwo');
   document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
   document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
   document.getElementById('bgLoader').style.left = window.innerWidth/2 - 75 + 'px';
   document.getElementById('bgLoader').style.top = window.innerHeight/2 - 75 + 'px';
   document.getElementById('loader').style.left = window.innerWidth/2 - 75 + 'px';
   document.getElementById('loader').style.top = window.innerHeight/2 - 75 + 'px';
+  if(imgOne.clientHeight >= imgTwo.clientHeight) {
+    inner.style.height = imgOne.clientHeight + "px";
+  } else {
+    inner.style.height = imgTwo.clientHeight + "px";
+  };
 };
 
 function pageZoom() {

@@ -80,6 +80,13 @@ function pageTurn(val) {
       };
     };
   };
+  if(document.getElementById('viewImgOne').clientHeight >= document.getElementById('viewImgTwo').clientHeight) {
+    inner.style.height = document.getElementById('viewImgOne').clientHeight + "px";
+  } else {
+    inner.style.height = document.getElementById('viewImgTwo').clientHeight + "px";
+  };
+  document.getElementById('viewer').scrollTop = 0;
+  document.getElementById('viewer').scrollLeft = 0;
 };
 
 function singlePage(fileDir, dirContents, index) { // For Single page viewing and styling
@@ -119,25 +126,16 @@ function defaults(fileDir, dirContents, index, polarity) {
   } else {
     alert('Danger! Danger! Will Robinson!\nErr: page.js @ ln 126 :: Invalid variable val: ' + val)
   }
-  if(document.getElementById('viewImgOne').clientHeight >= document.getElementById('viewImgTwo').clientHeight) {
-    inner.style.height = document.getElementById('viewImgOne').clientHeight + "px";
-  } else {
-    inner.style.height = document.getElementById('viewImgTwo').clientHeight + "px";
-  };
 };
 
 exports.Right = () => { // See page.spread()
   var val = document.getElementById('column').dataset.val;
   pageTurn(val);
-  document.getElementById('viewer').scrollTop = 0;
-  document.getElementById('viewer').scrollLeft = 0;
 }
 
 exports.Left = () => {
   var val = document.getElementById('column').dataset.val * -1;
   pageTurn(val);
-  document.getElementById('viewer').scrollTop = 0;
-  document.getElementById('viewer').scrollLeft = 0;
 }
 
 exports.spread = () => {
