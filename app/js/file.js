@@ -154,6 +154,8 @@ function postExtract(fileName, fileComic, dirContents) {
   } else {
     inner.style.height = viewTwo.clientHeight + "px";
   };
+  document.getElementById('viewer').scrollTop = 0;
+  document.getElementById('viewer').scrollLeft = 0;
 };
 
 exports.dialog = () => {
