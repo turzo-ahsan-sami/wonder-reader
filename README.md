@@ -28,7 +28,7 @@ TODO:
 * Any other neat ideas that could work go here too.
 	* Create a bookmarking system
 	* Reloop files into other extraction method if initial one fails. If both fail, err
-
+	* Double click zoom in function!
 
 ## Notes
 * node.fs API :: ( https://nodejs.org/api/fs.html )
