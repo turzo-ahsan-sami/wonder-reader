@@ -17,10 +17,8 @@ if (obj.library == "#") {
   loadLibrary(obj);
 }
 
-// --- Functions --- //
-
 function newLibrary(configFile) {
-  dialog.showOpenDialog( // Limited to directories
+  dialog.showOpenDialog(
     { properties: ['openDirectory'] },
     function(filenames) {
       var newLib = {libary: filenames};

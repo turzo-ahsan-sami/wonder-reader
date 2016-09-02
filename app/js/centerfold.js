@@ -5,8 +5,8 @@ var strain = require('./strain.js')
 
 exports.fold = (id) => {
   var filePath = decodeURIComponent(document.getElementById(id).src.substr(7));
-  var fileDir = path.dirname(filePath); // Directory
-  var dirContents = strain(fs.readdirSync(fileDir)) // Directory contents
+  var fileDir = path.dirname(filePath);
+  var dirContents = strain(fs.readdirSync(fileDir));
   var spread = [];
 
   for (var i = 0; i < dirContents.length; i++) {
@@ -17,13 +17,10 @@ exports.fold = (id) => {
 
       if (width >= height) {
         spread.push(i);
-      } else {
-        // Do Nothing!
-      };
+      }
     })(i);
   };
-  // There shouldn't be any duplicates;
-  function sortNumber(a,b) { // To Sort numerically, just in case
+  function sortNumber(a,b) {
     return a - b;
   };
   spread = spread.sort(sortNumber);

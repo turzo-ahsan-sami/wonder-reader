@@ -45,7 +45,7 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
 
   // Folder Creation
   if ([".cbr", ".cbz"].indexOf(path.extname(fileName).toLowerCase()) > -1) {
-    var fileComic = path.posix.basename(fileName).replace(/#/g, ""); // Function removes path dir, spaces, and '#'. Good to note!
+    var fileComic = path.posix.basename(fileName).replace(/#/g, "");
     if (process.platform == 'win32') {
       fileComic = path.win32.basename(fileName).replace(/#/g, "");
     }
@@ -146,7 +146,8 @@ function postExtract(fileName, fileComic, dirContents) {
   enable("pageLeft");
   enable("pageRight");
   enable("column");
-  libWatch.load(fileName); // libwatch.js
+  $('#viewer').addClass('active');
+  libWatch.load(fileName);
   nextcomic.load(fileName);
 
   if(viewOne.clientHeight >= viewTwo.clientHeight) {

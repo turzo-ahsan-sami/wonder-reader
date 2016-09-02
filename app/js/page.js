@@ -140,7 +140,7 @@ exports.Left = () => {
   document.getElementById('viewer').scrollLeft = 0;
 }
 
-exports.spread = () => { // Default is 2
+exports.spread = () => {
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
   var index = dirContents.indexOf(path.basename(filePath));
   var polarity = 1;

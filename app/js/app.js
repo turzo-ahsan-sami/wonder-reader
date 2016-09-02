@@ -6,7 +6,8 @@ var file = require('./js/file.js'); // File loading module .dialog & .loader(fil
 $(document).keydown(function(event) {
   if (document.activeElement.id == 'zoomText' || document.activeElement.id == 'zoomSlider') {
     // Do nothing when focused on zoom input
-  } else {
+  } else if ( $('#viewer').hasClass('active') ) {
+    // Check if file is loaded. See file.js: postExtract()
     if (event.which == 37) { // left key
       page.Left();
     } else if (event.which == 39) { // right key
@@ -16,7 +17,7 @@ $(document).keydown(function(event) {
 });
 
 function handleError(evt) {
-  if (evt.message) { // Chrome sometimes provides this
+  if (evt.message) {
     alert("Error: "+evt.message +"  at linenumber: "+evt.lineno+" of file: "+evt.filename);
   } else {
     alert("Error: "+evt.type+" from element: "+(evt.srcElement || evt.target));
@@ -75,7 +76,8 @@ function libSlider() {
 // dragscroll things
 $('#zoomSlider').mouseenter( function() {
   $('#viewer').removeClass('dragscroll');
+  $('#zoomSlider').focus();
 }).mouseleave( function() {
   $('#viewer').addClass('dragscroll');
+  $('#zoomSlider').blur();
 });
-// slider focuse
