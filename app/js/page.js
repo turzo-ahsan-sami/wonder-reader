@@ -80,6 +80,7 @@ function pageTurn(val) {
       };
     };
   };
+  var inner = document.getElementById('innerWindow');
   if(document.getElementById('viewImgOne').clientHeight >= document.getElementById('viewImgTwo').clientHeight) {
     inner.style.height = document.getElementById('viewImgOne').clientHeight + "px";
   } else {
