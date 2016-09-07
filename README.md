@@ -4,6 +4,12 @@ Version 0.1.2
 
 __Requirements__: Git, Node, and NPM
 
+## Downloads
+
+* Windows: ((link))[https://github.com/alice-em/Wonder-Reader-Releases/blob/master/Wonder-Reader-win32-x64.zip]
+* OSX: ((link))[https://github.com/alice-em/Wonder-Reader-Releases/blob/master/Wonder-Reader-darwin-x64.zip]
+* Linix: ((link))[https://github.com/alice-em/Wonder-Reader-Releases/blob/master/Wonder-Reader-linux-x64.zip]
+
 ## Installation and Starting
 
 ```shell
