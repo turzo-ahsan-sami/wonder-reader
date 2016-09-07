@@ -1,6 +1,6 @@
 # Wonder-Reader
 
-Version 0.1.2
+Version 0.1.3
 
 __Requirements__: Git, Node, and NPM
 
