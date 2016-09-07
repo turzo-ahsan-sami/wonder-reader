@@ -24,7 +24,7 @@ __Requirements__: electron-packager
 
 * OSX / Darwin
 
-      $ electron-packager ./ --platform=darwin --arch=x64 --out=../Wonder-Reader-Releases --prune=true --icon=./shieldIcon.icns
+		  $ electron-packager ./ --platform=darwin --arch=x64 --out=../Wonder-Reader-Releases --prune=true --icon=./shieldIcon.icns
 
 * Windows
 
