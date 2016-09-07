@@ -1,3 +1,7 @@
+// library.js
+
+// work in progress
+
 var coverGen = require('ebook-cover-generator'); // https://www.npmjs.com/package/ebook-cover-generator
 var fs = require('fs');
 var path = require('path');

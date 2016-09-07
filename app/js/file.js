@@ -12,13 +12,13 @@ var mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
 var os = require('os'); // https://nodejs.org/api/os.html
 var path = require('path');
 var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
+
 // User Modules //
 var directory = require('./directory.js')
-var libWatch = require('./libwatch.js'); // libWatch.load(fileName) loads into #library.ul
-var nextcomic = require('./nextcomic.js'); // Loads Functions onto previous and next buttons
+var libWatch = require('./libwatch.js');
+var nextcomic = require('./nextcomic.js');
 var page = require('./page.js');
 var strain = require('./strain.js');
-// var validChar = '/^([!#$&-;=?-[]_a-z~]|%[0-9a-fA-F]{2})+$/g';
 
 function openFile() {
   dialog.showOpenDialog(
@@ -42,7 +42,6 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
     handleError(err);
   };
 
-  // Folder Creation
   if ([".cbr", ".cbz"].indexOf(path.extname(fileName).toLowerCase()) > -1) {
     var fileComic = path.posix.basename(fileName).replace(/#/g, "");
     if (process.platform == 'win32') {

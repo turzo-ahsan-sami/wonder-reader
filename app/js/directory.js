@@ -1,3 +1,5 @@
+// directory.js merges directories within directories to then return a new path
+
 var path = require('path');
 var fs = require('fs');
 

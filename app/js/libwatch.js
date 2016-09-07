@@ -1,3 +1,5 @@
+// libWatch.load(fileName) loads into #library.ul
+
 var $ = require('jquery');
 var fs = require('fs');
 var path = require('path');

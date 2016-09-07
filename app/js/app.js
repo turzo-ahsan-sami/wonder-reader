@@ -1,7 +1,7 @@
 const $ = require('jquery'); // https://www.npmjs.com/package/jquery
-var clean = require('./js/clean.js'); // Trash that old shit!
-var page = require('./js/page.js'); // Page turning
-var file = require('./js/file.js'); // File loading module .dialog & .loader(fileName)
+var clean = require('./js/clean.js');
+var file = require('./js/file.js');
+var page = require('./js/page.js');
 
 $(document).keydown(function(event) {
   if (document.activeElement.id == 'zoomText' || document.activeElement.id == 'zoomSlider') {
@@ -68,6 +68,11 @@ function pageZoom() {
   var cPYR = cPY/inner.clientWidth;
 
   inner.style.width = zoomSlide.value + "%";
+  if (zoomSlide.value < 100) {
+    inner.style.marginLeft = (100 - zoomSlide.value)/2 + "%";
+  } else {
+    inner.style.marginLeft = 0;
+  };
   if(imgOne.clientHeight >= imgTwo.clientHeight) {
     inner.style.height = imgOne.clientHeight + "px";
   } else {

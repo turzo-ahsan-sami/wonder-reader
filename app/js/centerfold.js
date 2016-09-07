@@ -1,3 +1,5 @@
+// centerfold.js returns an array with the index locations of supposed centerfolds
+
 var fs = require('fs');
 var path = require('path');
 var sizeOf = require('image-size');

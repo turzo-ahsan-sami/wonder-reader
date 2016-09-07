@@ -1,3 +1,5 @@
+// strain.js cleans out the dirty files, like .DS_Store
+
 var path = require('path');
 var imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
 

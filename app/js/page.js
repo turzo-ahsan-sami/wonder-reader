@@ -1,3 +1,5 @@
+// page.js turns pages.  TODO: Research how files are held in win32 environments
+
 var $ = require('jquery');
 var center = require('./centerfold.js');
 var fs = require('fs');

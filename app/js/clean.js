@@ -1,3 +1,5 @@
+// clean.js clears out old cache files. Might be worth doing at app.close
+
 var fs = require('fs');
 var getSize = require('get-folder-size');
 var os = require('os');
