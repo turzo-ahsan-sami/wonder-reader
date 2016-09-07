@@ -13,13 +13,12 @@ var os = require('os'); // https://nodejs.org/api/os.html
 var path = require('path');
 var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
 // User Modules //
+var directory = require('./directory.js')
 var libWatch = require('./libwatch.js'); // libWatch.load(fileName) loads into #library.ul
 var nextcomic = require('./nextcomic.js'); // Loads Functions onto previous and next buttons
 var page = require('./page.js');
 var strain = require('./strain.js');
 // var validChar = '/^([!#$&-;=?-[]_a-z~]|%[0-9a-fA-F]{2})+$/g';
-
-var imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
 
 function openFile() {
   dialog.showOpenDialog(
@@ -55,67 +54,30 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
 
   // tempFolder Variable for loaded comic
   var tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic);
+  console.log('tempFolder = ' + tempFolder)
 
   if (directoryExists.sync(tempFolder)) { // Checks for existing Directory
+    tempFolder = directory.fix(tempFolder);
     var dirContents = fs.readdirSync(tempFolder);
-    var filtered = [];
-    for(i=0; i < dirContents.length; i++) {
-      if(imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(tempFolder,dirContents[i])).isDirectory()) {
-        filtered.push(dirContents[i]);
+    if (dirContents.length == 0) {
+      if (path.extname(fileName).toLowerCase() == ".cbr") {
+        rarExtractor(fileName, tempFolder, dirContents);
+      } else if (path.extname(fileName).toLowerCase() == ".cbz") {
+        zipExtractor(fileName, tempFolder, dirContents);
+      } else {
+        handleError(evt);
       }
+    } else {
+      postExtract(fileName, tempFolder, dirContents);
     };
-    dirContents = filtered;
-    if (fs.statSync(path.join(tempFolder, dirContents[0])).isDirectory()) { // If there is an interior directory
-      fileComic = path.join(fileComic, encodeURIComponent(dirContents[0]));
-      dirContents = fs.readdirSync(path.join(tempFolder, dirContents[0]));
-    } else { // if no interior directory exists
-    };
-    postExtract(fileName, fileComic, dirContents);
-
   } else { // If no Directory exists
     mkdirp.sync(tempFolder);
+    var dirContents;
 
-    // -----------------------
-    // .CBR file type function
-    // -----------------------
     if (path.extname(fileName).toLowerCase() == ".cbr") {
-      var rar = new unrar(fileName);
-      rar.extract(tempFolder, null, function (err) {
-        var dirContents = fs.readdirSync(tempFolder);
-
-        $('#loader').addClass('hidden').removeClass('loader');
-        $('#bgLoader').addClass('hidden');
-
-        postExtract(fileName, fileComic, dirContents);
-      });
-
-    // -----------------------
-    // .CBZ file type function
-    // -----------------------
+      rarExtractor(fileName, tempFolder, dirContents);
     } else if (path.extname(fileName).toLowerCase() == ".cbz") {
-      extract(fileName, {dir: tempFolder}, function(err) {
-        var dirContents = fs.readdirSync(tempFolder);
-
-        // To clean out other files and check for folders
-        var filtered = [];
-        for(i=0; i < dirContents.length; i++) {
-          if(imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(tempFolder,dirContents[i])).isDirectory()) {
-            filtered.push(dirContents[i]);
-          }
-        };
-        dirContents = filtered;
-        // Checks for interior folders
-        if (fs.statSync(path.join(tempFolder, dirContents[0])).isDirectory()) {
-          fileComic = path.join(fileComic, encodeURIComponent(dirContents[0]));
-          dirContents = fs.readdirSync(path.join(tempFolder, dirContents[0]));
-        }
-
-        $('#loader').addClass('hidden').removeClass('loader');
-        $('#bgLoader').addClass('hidden');
-
-        postExtract(fileName, fileComic, dirContents)
-      });
-    // Neither .CBR nor .CBZ
+      zipExtractor(fileName, tempFolder, dirContents)
     } else {
       handleError(evt)
     };
@@ -132,15 +94,15 @@ function disable(id) {
   document.getElementById(id).disabled = true;
 };
 
-function postExtract(fileName, fileComic, dirContents) {
+function postExtract(fileName, tempFolder, dirContents) {
   var inner = document.getElementById('innerWindow');
   var viewOne = document.getElementById('viewImgOne');
   var viewTwo = document.getElementById('viewImgTwo');
 
   dirContents = strain(dirContents)
 
-  viewOne.src = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic, encodeURIComponent(dirContents[0]));
-  viewTwo.src = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic, encodeURIComponent(dirContents[1]));
+  viewOne.src = path.join(tempFolder, encodeURIComponent(dirContents[0]));
+  viewTwo.src = path.join(tempFolder, encodeURIComponent(dirContents[1]));
 
   page.onLoad();
   enable("pageLeft");
@@ -165,4 +127,41 @@ exports.dialog = () => {
 
 exports.loader = (fileName) => {
   filePiper(fileName);
+}
+
+// --------------- //
+// File Extractors /
+// ---------------//
+
+function rarExtractor(fileName, tempFolder, dirContents) {
+  var rar = new unrar(fileName);
+  rar.extract(tempFolder, null, function (err) {
+    tempFolder = directory.fix(tempFolder);
+    dirContents = fs.readdirSync(tempFolder);
+
+    if (dirContents.length == 0) {
+      zipExtractor(fileName, tempFolder);
+    } else {
+      $('#loader').addClass('hidden').removeClass('loader');
+      $('#bgLoader').addClass('hidden');
+
+      postExtract(fileName, tempFolder, dirContents);
+    }
+  });
+};
+
+function zipExtractor(fileName, tempFolder, dirContents) {
+  extract(fileName, {dir: tempFolder}, function (err) {
+    tempFolder = directory.fix(tempFolder);
+    dirContents = fs.readdirSync(tempFolder);
+
+    if (dirContents.length == 0) {
+      rarExtractor(fileName, tempFolder);
+    } else {
+      $('#loader').addClass('hidden').removeClass('loader');
+      $('#bgLoader').addClass('hidden');
+
+      postExtract(fileName, tempFolder, dirContents);
+    };
+  });
 }
