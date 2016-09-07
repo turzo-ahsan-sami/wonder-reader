@@ -1,6 +1,6 @@
 # Wonder-Reader
 
-Version 0.1.1
+Version 0.1.2
 
 __Requirements__: Git, Node, and NPM
 
@@ -12,6 +12,21 @@ cd Wonder-Reader
 npm install
 npm start
 ```
+
+## Compiling
+__Requirements__: electron-packager
+
+* OSX / Darwin
+
+      $ electron-packager ./ --platform=darwin --arch=x64 --out=../Wonder-Reader-Releases --prune=true --icon=./shieldIcon.icns
+
+* Windows
+
+		  $ electron-packager ./ --platform=win32 --arch=x64 --out=../Wonder-Reader-Releases --prune=true --icon=./shieldIcon.ico
+
+* Linux
+
+		  $ electron-packager ./ --platform=linux --arch=x64 --out=../Wonder-Reader-Releases --prune=true
 
 ## Development
 __Requirements__: Grunt-cli, Sass, and some sort of text-editor
