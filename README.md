@@ -2,15 +2,15 @@
 
 Version 0.1.3
 
-__Requirements__: Git, Node, and NPM
-
 ## Downloads
 
 * Windows: [(link)](https://github.com/alice-em/Wonder-Reader-Releases/blob/master/Wonder-Reader-win32-x64.zip)
 * OSX: [(link)](https://github.com/alice-em/Wonder-Reader-Releases/blob/master/Wonder-Reader-darwin-x64.zip)
-* Linix: [(link)](https://github.com/alice-em/Wonder-Reader-Releases/blob/master/Wonder-Reader-linux-x64.zip)
+* Linux: [(link)](https://github.com/alice-em/Wonder-Reader-Releases/blob/master/Wonder-Reader-linux-x64.zip)
 
 ## Installation and Starting
+
+__Requirements__: Git, Node, and NPM
 
 ```shell
 git clone https://github.com/alice-em/Wonder-Reader.git
@@ -40,32 +40,14 @@ __Requirements__: Grunt-cli, Sass, and some sort of text-editor
 Mary Marvel 001 is included under `example/` for testing purposes. The comic is listed on various Public Domain comic sites.
 
 TODO:
-* ~~Loading a file creates a __newWindow__, with navigation buttons "__naviBar__".  Maybe include some sort of skinning possibilities; TBD.~~ Ehh, I decided not to.
-	* Comics at either __firstPage__ or __lastPage__ can open up the next file in library folder.
-	* ~~__naviBar__: __firstPage__, __prevPage__, __nextPage__, __lastPage__,~~ __zoom__. Others will be included as soon as conceived.
-* ~~Make sketch layouts.~~
-* ~~__Trash__ needs to have warning, as well a function to stop from deleting currently opened file directory.~~
-* ~~Check if folders and files exist, and load previous images if applicable.~~
 * Any other neat ideas that could work go here too.
 	* Create a bookmarking system
 	* Double click zoom in function!
+  * Comics at either __firstPage__ or __lastPage__ can open up the next file in library folder.
 
 ## Notes
 * node.fs API :: ( https://nodejs.org/api/fs.html )
 * electron.io API et Docs :: ( http://electron.atom.io/docs/ )
-
-```
-> var array = []
-undefined
-> array[0]
-undefined
-> array[0] == true
-false
-> array[0] == false
-false
-> array.length
-0
-```
 
 ## Credit
 
