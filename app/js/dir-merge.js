@@ -5,7 +5,7 @@ var fs = require('fs');
 
 var imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
 
-exports.fix = (directory) => {
+exports.merge = (directory) => {
   var dirContents = fs.readdirSync(directory);
 
   var filtered = [];

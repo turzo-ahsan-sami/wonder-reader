@@ -14,7 +14,7 @@ var path = require('path');
 var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
 
 // User Modules //
-var directory = require('./directory.js')
+var directory = require('./dir-merge.js');
 var libWatch = require('./libwatch.js');
 var nextcomic = require('./nextcomic.js');
 var page = require('./page.js');
@@ -56,7 +56,7 @@ function filePiper(fileName, err) { // checks and extracts files and then loads 
   console.log('tempFolder = ' + tempFolder)
 
   if (directoryExists.sync(tempFolder)) { // Checks for existing Directory
-    tempFolder = directory.fix(tempFolder);
+    tempFolder = directory.merge(tempFolder);
     var dirContents = fs.readdirSync(tempFolder);
     if (dirContents.length == 0) {
       if (path.extname(fileName).toLowerCase() == ".cbr") {
@@ -135,7 +135,7 @@ exports.loader = (fileName) => {
 function rarExtractor(fileName, tempFolder, dirContents) {
   var rar = new unrar(fileName);
   rar.extract(tempFolder, null, function (err) {
-    tempFolder = directory.fix(tempFolder);
+    tempFolder = directory.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
 
     if (dirContents.length == 0) {
@@ -151,7 +151,7 @@ function rarExtractor(fileName, tempFolder, dirContents) {
 
 function zipExtractor(fileName, tempFolder, dirContents) {
   extract(fileName, {dir: tempFolder}, function (err) {
-    tempFolder = directory.fix(tempFolder);
+    tempFolder = directory.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
 
     if (dirContents.length == 0) {

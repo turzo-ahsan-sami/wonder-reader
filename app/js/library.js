@@ -7,7 +7,7 @@ var fs = require('fs');
 var path = require('path');
 const {dialog} = require('electron').remote;
 var jsonfile = require('jsonfile'); // https://www.npmjs.com/package/jsonfile
-var dirTree = require('./directory-tree.js') // https://github.com/mihneadb/node-directory-tree
+var dirTree = require('directory-tree') // https://github.com/mihneadb/node-directory-tree
 
 var configFile = './json/config.json';
 
