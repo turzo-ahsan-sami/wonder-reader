@@ -1,7 +1,5 @@
-/* file.js
-/  loads files into the program,
-/  extracting and sourcing images
-/  to where they need to go. */
+// file.js: loads files into the program,
+// extracting and sourcing images to where they need to go
 
 const $ = require('jquery');
 const {dialog} = require('electron').remote;
@@ -32,12 +30,12 @@ function openFile() {
     function(fileNames) {
       if (fileNames === undefined) return; // Breaks on error
       var fileName = fileNames[0]; // Filepath name
-      filePiper(fileName); // Extracts files to their proper locations
+      fileLoad(fileName); // Extracts files to their proper locations
 		}
   );
 };
 
-function filePiper(fileName, err) { // checks and extracts files and then loads them
+function fileLoad(fileName, err) { // checks and extracts files and then loads them
   if (err) {
     handleError(err);
   };
@@ -125,7 +123,7 @@ exports.dialog = () => {
 }
 
 exports.loader = (fileName) => {
-  filePiper(fileName);
+  fileLoad(fileName);
 }
 
 // --------------- //
