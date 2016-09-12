@@ -12,7 +12,7 @@ var fileDir;
 var dirContents;
 var centerFolds;
 
-exports.onLoad = () => {
+exports.load = () => {
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
   fileName = path.basename(filePath);
   fileDir = path.dirname(filePath);

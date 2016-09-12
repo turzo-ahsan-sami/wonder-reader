@@ -17,6 +17,7 @@ var libWatch = require('./libwatch.js');
 var nextcomic = require('./nextcomic.js');
 var page = require('./page.js');
 var strain = require('./strain.js');
+var title = require('./title.js');
 
 function openFile() {
   dialog.showOpenDialog(
@@ -101,11 +102,12 @@ function postExtract(fileName, tempFolder, dirContents) {
   viewOne.src = path.join(tempFolder, encodeURIComponent(dirContents[0]));
   viewTwo.src = path.join(tempFolder, encodeURIComponent(dirContents[1]));
 
-  page.onLoad();
+  page.load();
   enable("pageLeft");
   enable("pageRight");
   enable("column");
   $('#viewer').addClass('active');
+  title.load(fileName);
   libWatch.load(fileName);
   nextcomic.load(fileName);
 
@@ -126,9 +128,9 @@ exports.loader = (fileName) => {
   fileLoad(fileName);
 }
 
-// --------------- //
-// File Extractors /
-// ---------------//
+//-/-----------------\
+//-| File Extractors |
+//-\-----------------/
 
 function rarExtractor(fileName, tempFolder, dirContents) {
   var rar = new unrar(fileName);
