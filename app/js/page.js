@@ -119,7 +119,7 @@ function defaults(fileDir, dirContents, index, polarity) {
       viewOne.style.width = '50%';
       viewTwo.style.width = '50%';
 
-      if(viewOne.clientHeight >= dviewTwo.clientHeight) {
+      if(viewOne.clientHeight >= viewTwo.clientHeight) {
         inner.style.height = viewOne.clientHeight + "px";
       } else {
         inner.style.height = viewTwo.clientHeight + "px";
