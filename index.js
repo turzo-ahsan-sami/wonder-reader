@@ -24,10 +24,9 @@ function createWindow() {
     win = null;
   });
 }
-
+const icon = nativeImage.createFromPath('./shieldIcon.png');
 app.setName('Wonder Reader');
-if (process.platform != 'win32') {
-  const icon = nativeImage.createFromPath('./shieldIcon.png');
+if (process.platform == 'darwin') {
   app.dock.setIcon(icon);
 };
 app.on('ready', () => {
