@@ -6,11 +6,15 @@ var fs = require('fs');
 var path = require('path');
 var strain = require('./strain.js');
 
-var filePath;
-var fileName;
-var fileDir;
-var dirContents;
 var centerFolds;
+var dirContents;
+var fileDir;
+var fileName;
+var filePath;
+
+var inner = document.getElementById('innerWindow');
+var viewOne = document.getElementById('viewImgOne');
+var viewTwo = document.getElementById('viewImgTwo');
 
 exports.load = () => {
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
@@ -23,7 +27,7 @@ exports.load = () => {
   centerFolds = center.fold('viewImgOne');
 
   var index = dirContents.indexOf(fileName);
-  var val = document.getElementById('column').dataset.val;
+  var val = Number(document.getElementById('column').dataset.val);
   var polarity = 0;
 
   if (val == 1) {
@@ -93,10 +97,6 @@ function pageTurn(val) {
 };
 
 function singlePage(fileDir, dirContents, index) { // For Single page viewing and styling
-  var inner = document.getElementById('innerWindow');
-  var viewOne = document.getElementById('viewImgOne');
-  var viewTwo = document.getElementById('viewImgTwo');
-
   viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
   viewOne.style.width = '100%';
   viewTwo.style.display = 'none';
@@ -109,10 +109,7 @@ function singlePage(fileDir, dirContents, index) { // For Single page viewing an
 };
 
 function defaults(fileDir, dirContents, index, polarity) {
-  var inner = document.getElementById('innerWindow');
-  var viewOne = document.getElementById('viewImgOne');
-  var viewTwo = document.getElementById('viewImgTwo');
-  var val = document.getElementById('column').dataset.val;
+  var val = Number(document.getElementById('column').dataset.val);
 
   if (Math.abs(val) == 2) {
     if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1*polarity) > -1) {
