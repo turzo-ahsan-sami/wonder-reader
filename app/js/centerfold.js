@@ -7,6 +7,9 @@ var strain = require('./strain.js')
 
 exports.fold = (id) => {
   var filePath = decodeURIComponent(document.getElementById(id).src.substr(7));
+  if (process.platform == "win32") {
+    filePath = decodeURIComponent(document.getElementById(id).src.substr(8));
+  }
   var fileDir = path.dirname(filePath);
   var dirContents = strain(fs.readdirSync(fileDir));
   var spread = [];

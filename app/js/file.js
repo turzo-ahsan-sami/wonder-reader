@@ -19,6 +19,8 @@ var page = require('./page.js');
 var strain = require('./strain.js');
 var title = require('./title.js');
 
+var dirContents;
+
 function openFile() {
   dialog.showOpenDialog(
     { filters: [{
@@ -56,12 +58,12 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
 
   if (directoryExists.sync(tempFolder)) { // Checks for existing Directory
     tempFolder = directory.merge(tempFolder);
-    var dirContents = fs.readdirSync(tempFolder);
+    dirContents = fs.readdirSync(tempFolder);
     if (dirContents.length == 0) {
       if (path.extname(fileName).toLowerCase() == ".cbr") {
-        rarExtractor(fileName, tempFolder, dirContents);
+        rarExtractor(fileName, tempFolder);
       } else if (path.extname(fileName).toLowerCase() == ".cbz") {
-        zipExtractor(fileName, tempFolder, dirContents);
+        zipExtractor(fileName, tempFolder);
       } else {
         handleError(evt);
       }
@@ -70,12 +72,11 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
     };
   } else { // If no Directory exists
     mkdirp.sync(tempFolder);
-    var dirContents;
 
     if (path.extname(fileName).toLowerCase() == ".cbr") {
-      rarExtractor(fileName, tempFolder, dirContents);
+      rarExtractor(fileName, tempFolder);
     } else if (path.extname(fileName).toLowerCase() == ".cbz") {
-      zipExtractor(fileName, tempFolder, dirContents)
+      zipExtractor(fileName, tempFolder)
     } else {
       handleError(evt)
     };
@@ -132,7 +133,7 @@ exports.loader = (fileName) => {
 //-| File Extractors |
 //-\-----------------/
 
-function rarExtractor(fileName, tempFolder, dirContents) {
+function rarExtractor(fileName, tempFolder) {
   var rar = new unrar(fileName);
   rar.extract(tempFolder, null, function (err) {
     tempFolder = directory.merge(tempFolder);
@@ -143,13 +144,12 @@ function rarExtractor(fileName, tempFolder, dirContents) {
     } else {
       $('#loader').addClass('hidden').removeClass('loader');
       $('#bgLoader').addClass('hidden');
-
       postExtract(fileName, tempFolder, dirContents);
     }
   });
 };
 
-function zipExtractor(fileName, tempFolder, dirContents) {
+function zipExtractor(fileName, tempFolder) {
   extract(fileName, {dir: tempFolder}, function (err) {
     tempFolder = directory.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
@@ -159,7 +159,6 @@ function zipExtractor(fileName, tempFolder, dirContents) {
     } else {
       $('#loader').addClass('hidden').removeClass('loader');
       $('#bgLoader').addClass('hidden');
-
       postExtract(fileName, tempFolder, dirContents);
     };
   });

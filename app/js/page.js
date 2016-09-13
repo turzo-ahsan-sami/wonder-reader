@@ -14,6 +14,9 @@ var centerFolds;
 
 exports.load = () => {
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
+  if (process.platform == "win32") {
+    filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
+  }
   fileName = path.basename(filePath);
   fileDir = path.dirname(filePath);
   dirContents = strain(fs.readdirSync(fileDir));
@@ -32,6 +35,9 @@ exports.load = () => {
 
 function pageTurn(val) {
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
+  if (process.platform == "win32") {
+    filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
+  }
   fileName = path.basename(filePath);
   var index = Number(dirContents.indexOf(fileName));
   val = Number(val);
@@ -149,6 +155,9 @@ exports.Left = () => {
 
 exports.spread = () => {
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
+  if (process.platform == "win32") {
+    filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
+  }
   var index = dirContents.indexOf(path.basename(filePath));
   var polarity = 1;
 
