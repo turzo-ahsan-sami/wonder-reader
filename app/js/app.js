@@ -78,6 +78,11 @@ function pageZoom() {
   } else {
     inner.style.height = imgTwo.clientHeight + "px";
   };
+  if (outer.clientHeight > inner.clientHeight) {
+    inner.style.marginTop = (outer.clientHeight - inner.clientHeight)/2 + 'px';
+  } else {
+    inner.style.marginTop = 0;
+  }
   outer.scrollTop = inner.clientHeight*cPXR - outer.clientHeight/2;
   outer.scrollLeft = inner.clientWidth*cPYR - outer.clientWidth/2;
 };

@@ -101,7 +101,7 @@ function singlePage(fileDir, dirContents, index) { // For Single page viewing an
   viewOne.style.width = '100%';
   viewTwo.style.display = 'none';
   viewTwo.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
-  if(viewOne.clientHeight >= dviewTwo.clientHeight) {
+  if(viewOne.clientHeight >= viewTwo.clientHeight) {
     inner.style.height = viewOne.clientHeight + "px";
   } else {
     inner.style.height = viewTwo.clientHeight + "px";
