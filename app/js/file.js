@@ -1,7 +1,5 @@
-/* file.js
-/  loads files into the program,
-/  extracting and sourcing images
-/  to where they need to go. */
+// file.js: loads files into the program,
+// extracting and sourcing images to where they need to go
 
 const $ = require('jquery');
 const {dialog} = require('electron').remote;
@@ -19,6 +17,7 @@ var libWatch = require('./libwatch.js');
 var nextcomic = require('./nextcomic.js');
 var page = require('./page.js');
 var strain = require('./strain.js');
+var title = require('./title.js');
 
 function openFile() {
   dialog.showOpenDialog(
@@ -32,12 +31,12 @@ function openFile() {
     function(fileNames) {
       if (fileNames === undefined) return; // Breaks on error
       var fileName = fileNames[0]; // Filepath name
-      filePiper(fileName); // Extracts files to their proper locations
+      fileLoad(fileName); // Extracts files to their proper locations
 		}
   );
 };
 
-function filePiper(fileName, err) { // checks and extracts files and then loads them
+function fileLoad(fileName, err) { // checks and extracts files and then loads them
   if (err) {
     handleError(err);
   };
@@ -103,11 +102,12 @@ function postExtract(fileName, tempFolder, dirContents) {
   viewOne.src = path.join(tempFolder, encodeURIComponent(dirContents[0]));
   viewTwo.src = path.join(tempFolder, encodeURIComponent(dirContents[1]));
 
-  page.onLoad();
+  page.load();
   enable("pageLeft");
   enable("pageRight");
   enable("column");
   $('#viewer').addClass('active');
+  title.load(fileName);
   libWatch.load(fileName);
   nextcomic.load(fileName);
 
@@ -125,12 +125,12 @@ exports.dialog = () => {
 }
 
 exports.loader = (fileName) => {
-  filePiper(fileName);
+  fileLoad(fileName);
 }
 
-// --------------- //
-// File Extractors /
-// ---------------//
+//-/-----------------\
+//-| File Extractors |
+//-\-----------------/
 
 function rarExtractor(fileName, tempFolder, dirContents) {
   var rar = new unrar(fileName);
