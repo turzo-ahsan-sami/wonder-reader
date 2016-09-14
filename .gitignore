@@ -6,6 +6,10 @@ app/cache/*/
 .sass-cache/
 *.map
 
+app/js/treeTest.js
+app/js/json/comic.json
+app/js/json/config.json
+
 # Runtime data
 pids
 *.pid

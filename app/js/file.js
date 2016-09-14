@@ -3,7 +3,8 @@
 
 const $ = require('jquery');
 const {dialog} = require('electron').remote;
-var directoryExists = require('directory-exists'); // https://www.npmjs.com/package/directory-exists
+var isThere = require('is-there'); // https://www.npmjs.com/package/is-there
+// var directoryExists = require('directory-exists'); // https://www.npmjs.com/package/directory-exists
 var extract = require('extract-zip'); // https://www.npmjs.com/package/extract-zip
 var fs = require('fs');
 var mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
@@ -56,7 +57,7 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
   var tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic);
   console.log('tempFolder = ' + tempFolder)
 
-  if (directoryExists.sync(tempFolder)) { // Checks for existing Directory
+  if (isThere(tempFolder)) { // Checks for existing Directory
     tempFolder = directory.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
     if (dirContents.length == 0) {
@@ -139,6 +140,8 @@ function rarExtractor(fileName, tempFolder) {
     tempFolder = directory.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
 
+    console.log('.');
+
     if (dirContents.length == 0) {
       zipExtractor(fileName, tempFolder);
     } else {
@@ -153,6 +156,8 @@ function zipExtractor(fileName, tempFolder) {
   extract(fileName, {dir: tempFolder}, function (err) {
     tempFolder = directory.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
+
+    console.log('.');
 
     if (dirContents.length == 0) {
       rarExtractor(fileName, tempFolder);
