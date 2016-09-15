@@ -88,7 +88,7 @@ function pageZoom() {
 };
 
 function libSlider() {
-  $('#library').toggleClass('shift-left');
+  $('#sideLib').toggleClass('shift-left');
 };
 
 // dragscroll things

@@ -9,6 +9,7 @@ $grayTrans: rgba(144,144,144,.2);
 $darkTrans: rgba(0,0,0,0.1);
 $darkTransDeg: rgba(0,0,0,0.2);
 $darkTransMid: rgba(0,0,0,0.5);
+$darkTransOpq: rgba(0,0,0,0.8);
 $black: #000;
 $teal: #0E2E3B;
 $comicBleu: rgb(20, 139, 181);
@@ -177,7 +178,29 @@ button#trash {
   padding-left: 10px;
   box-shadow: -3px 0 10px -2px $black;
 }
-/* ---- Library Values ---- */
+
+/* ---- mainLib Values ---- */
+#mainLib {
+  background: $darkTransOpq;
+  position: absolute;
+  width: 95%;
+  height: 600px;
+  z-index: 1;
+  margin: 49px 0 0 5%;
+  /* border: 1px solid rgba(255, 255, 255, 0.36); */
+  box-shadow: 0 0 10px 0px $darkTransOpq;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  h1 {
+    margin-left: 10px;
+  }
+  .fa {
+    font-size: 32px;
+    color: $white;
+    margin-left: 10px;
+  }
+}
+/* ---- miniLib Values ---- */
 .library {
   background-color: $comicBleu;
   /*clear: both;*/

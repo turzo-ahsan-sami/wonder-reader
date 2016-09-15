@@ -53,13 +53,20 @@
 		</ul>
 	</div>
 
-	<div class="library shift-left" id="library">
-		<h1>Library</h1>
+	<div class="library shift-left" id="sideLib">
+		<h1>Series</h1>
 		<ul id="dirLib" class="directory"></ul>
 		<button onclick="libSlider()" id="libSlider"><i class="fa fa-caret-right"></i></button>
 	</div>
 
 	<div class="mainWindow dragscroll" id="viewer">
+		<div class="mainLib" id="mainLib">
+			<h1>Library</h1>
+			<button><i class="fa fa-search"></i></button>
+			<button><i class="fa fa-refresh"></i></button>
+			<ul id="ulLib">
+			</ul>
+		</div>
 		<div id="innerWindow">
 			<img id="viewImgOne" draggable="false"/>
 			<img id="viewImgTwo" draggable="false"/>
