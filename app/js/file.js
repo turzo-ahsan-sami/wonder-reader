@@ -14,7 +14,7 @@ var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
 
 // User Modules //
 var directory = require('./dir-merge.js');
-var libWatch = require('./libwatch.js');
+var miniLib = require('./libMini.js');
 var nextcomic = require('./nextcomic.js');
 var page = require('./page.js');
 var strain = require('./strain.js');
@@ -110,7 +110,7 @@ function postExtract(fileName, tempFolder, dirContents) {
   enable("column");
   $('#viewer').addClass('active');
   title.load(fileName);
-  libWatch.load(fileName);
+  miniLib.load(fileName);
   nextcomic.load(fileName);
 
   if(viewOne.clientHeight >= viewTwo.clientHeight) {
