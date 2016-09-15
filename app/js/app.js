@@ -1,6 +1,7 @@
 const $ = require('jquery'); // https://www.npmjs.com/package/jquery
 var clean = require('./js/clean.js');
 var file = require('./js/file.js');
+var library = require('./js/library.js');
 var page = require('./js/page.js');
 
 $(document).keydown(function(event) {
