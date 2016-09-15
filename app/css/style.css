@@ -175,7 +175,35 @@ button#trash {
   box-shadow: -3px 0 10px -2px #000;
 }
 
-/* ---- Library Values ---- */
+/* ---- mainLib Values ---- */
+#mainLib {
+  background: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  width: 95%;
+  height: 600px;
+  z-index: 1;
+  margin: 49px 0 0 5%;
+  /* border: 1px solid rgba(255, 255, 255, 0.36); */
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.8);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+#mainLib h1 {
+  margin-left: 10px;
+  margin-right: 10px;
+  float: left;
+}
+#mainLib button {
+  float: left;
+}
+#mainLib .fa {
+  font-size: 32px;
+  color: #fff;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+/* ---- miniLib Values ---- */
 .library {
   background-color: #148bb5;
   /*clear: both;*/

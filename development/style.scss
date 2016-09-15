@@ -193,11 +193,17 @@ button#trash {
   border-bottom-left-radius: 5px;
   h1 {
     margin-left: 10px;
+    margin-right: 10px;
+    float: left;
+  }
+  button {
+    float: left;
   }
   .fa {
     font-size: 32px;
     color: $white;
-    margin-left: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }
 /* ---- miniLib Values ---- */
