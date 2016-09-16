@@ -196,6 +196,7 @@ button#trash {
   box-shadow: 0 0 10px 0px $darkTransOpq;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+  overflow-y: scroll;
   h1 {
     margin-left: 10px;
     margin-right: 10px;
@@ -213,20 +214,30 @@ button#trash {
   }
   ul {
     clear: both;
+    font-size: 10px;
     //padding: 2px 15px;
     color: $white;
     //background: $darkTrans;
   }
   li {
-    padding: 2px 15px;
-    background: $darkTrans;
+    padding: 2px 0 2px 20px;
+    background: $darkTransDeg;
   }
   li:nth-child(even) {
     background-color: $transparent;
   }
   li.folder {
     font-weight: bold;
+    padding: 2px 0 2px 15px;
     background: $whiteTransDeg;
+  }
+  #ulLib {
+    .fa {
+      font-size: 12px;
+    }
+    a {
+      display: block;
+    }
   }
 }
 /* ---- miniLib Values ---- */

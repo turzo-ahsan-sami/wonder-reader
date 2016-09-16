@@ -192,6 +192,7 @@ button#trash {
   box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.8);
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+  overflow-y: scroll;
 }
 #mainLib h1 {
   margin-left: 10px;
@@ -210,18 +211,26 @@ button#trash {
 }
 #mainLib ul {
   clear: both;
+  font-size: 10px;
   color: #fff;
 }
 #mainLib li {
-  padding: 2px 15px;
-  background: rgba(0, 0, 0, 0.1);
+  padding: 2px 0 2px 20px;
+  background: rgba(0, 0, 0, 0.2);
 }
 #mainLib li:nth-child(even) {
   background-color: transparent;
 }
 #mainLib li.folder {
   font-weight: bold;
+  padding: 2px 0 2px 15px;
   background: rgba(255, 255, 255, 0.2);
+}
+#mainLib #ulLib .fa {
+  font-size: 12px;
+}
+#mainLib #ulLib a {
+  display: block;
 }
 
 /* ---- miniLib Values ---- */
