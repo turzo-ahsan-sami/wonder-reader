@@ -4,7 +4,6 @@
 const $ = require('jquery');
 const {dialog} = require('electron').remote;
 var isThere = require('is-there'); // https://www.npmjs.com/package/is-there
-// var directoryExists = require('directory-exists'); // https://www.npmjs.com/package/directory-exists
 var extract = require('extract-zip'); // https://www.npmjs.com/package/extract-zip
 var fs = require('fs');
 var mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp

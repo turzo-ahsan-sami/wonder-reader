@@ -211,9 +211,13 @@ button#trash {
   font-size: 10px;
   color: #fff;
 }
+#mainLib ul ul {
+  padding-left: 10px;
+}
 #mainLib li {
-  padding: 2px 0 2px 20px;
+  padding: 2px 0 2px 25px;
   background: rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.15s;
 }
 #mainLib li:nth-child(even) {
   background-color: transparent;
@@ -222,6 +226,11 @@ button#trash {
   font-weight: bold;
   padding: 2px 0 2px 15px;
   background: rgba(255, 255, 255, 0.2);
+  border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
+}
+#mainLib li.file:hover {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
 }
 #mainLib #libHeader {
   height: 56px;
@@ -239,24 +248,59 @@ button#trash {
 
 #libDropDown {
   position: fixed;
-  top: 30px;
+  top: 10px;
   padding: 0;
-  transition: text-shadow 1s;
+  transition: all .25s;
   text-shadow: 0 0 5px #000;
   z-index: 1;
   background: none;
 }
 #libDropDown .fa {
-  font-size: 46px;
+  font-size: 70px;
   padding: 0;
-  color: #fff;
-  transition: color 1s;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all .25s;
 }
 
 #libDropDown:hover {
-  text-shadow: 0 0 15px #000;
+  top: 17px;
+}
+#libDropDown:hover .fa {
+  color: #fff;
 }
 
+#libStatus {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  float: right;
+  padding: 10px;
+}
+#libStatus .code {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  padding: 1px 3px 3px;
+  border-radius: 3px;
+}
+#libStatus .fa {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  padding: 3px 1px;
+}
+
+#repeat.rotater {
+  animation-name: rotate;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 /* ---- miniLib Values ---- */
 .library {
   background-color: #148bb5;
@@ -394,11 +438,13 @@ button#trash {
   opacity: 0.5;
   mix-blend-mode: exclusion;
   box-shadow: 0px 0px 12px -3px #000;
+  z-index: 5;
 }
 
 .loader,
 .loader:after,
 .loader:before {
+  z-index: 5;
   background: #fff;
   -webkit-animation: load1 1s infinite ease-in-out;
   animation: load1 1s infinite ease-in-out;
