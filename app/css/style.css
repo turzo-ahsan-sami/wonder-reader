@@ -184,14 +184,12 @@ button#trash {
 #mainLib {
   background: rgba(0, 0, 0, 0.8);
   position: absolute;
-  top: 100px;
-  right: 16px;
-  width: 95%;
+  top: 56px;
+  right: 5%;
+  width: 90%;
   height: 600px;
   z-index: 1;
-  box-shadow: -5px 0 10px 0px rgba(0, 0, 0, 0.8);
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.8);
 }
 #mainLib h1 {
   margin-left: 10px;
@@ -237,6 +235,26 @@ button#trash {
 }
 #mainLib #ulLib a {
   display: block;
+}
+
+#libDropDown {
+  position: fixed;
+  top: 30px;
+  padding: 0;
+  transition: text-shadow 1s;
+  text-shadow: 0 0 5px #000;
+  z-index: 1;
+  background: none;
+}
+#libDropDown .fa {
+  font-size: 46px;
+  padding: 0;
+  color: #fff;
+  transition: color 1s;
+}
+
+#libDropDown:hover {
+  text-shadow: 0 0 15px #000;
 }
 
 /* ---- miniLib Values ---- */
