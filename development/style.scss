@@ -188,15 +188,14 @@ button#trash {
 #mainLib {
   background: $darkTransOpq;
   position: absolute;
+  top: 100px;
+  right: 16px;
   width: 95%;
   height: 600px;
   z-index: 1;
-  margin: 49px 0 0 5%;
-  /* border: 1px solid rgba(255, 255, 255, 0.36); */
-  box-shadow: 0 0 10px 0px $darkTransOpq;
+  box-shadow: -5px 0 10px 0px $darkTransOpq;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  overflow-y: scroll;
   h1 {
     margin-left: 10px;
     margin-right: 10px;
@@ -230,6 +229,13 @@ button#trash {
     font-weight: bold;
     padding: 2px 0 2px 15px;
     background: $whiteTransDeg;
+  }
+  #libHeader {
+    height: 56px;
+  }
+  #libList {
+    height: 544px;
+    overflow-y: auto;
   }
   #ulLib {
     .fa {

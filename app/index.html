@@ -61,11 +61,15 @@
 
 	<div class="mainWindow dragscroll" id="viewer">
 		<div class="mainLib" id="mainLib">
-			<h1>Library</h1>
-			<button><i class="fa fa-search"></i></button>
-			<button onclick="library.builder()"><i class="fa fa-refresh"></i></button>
-			<ul id="ulLib">
-			</ul>
+			<div class="libHeader" id="libHeader">
+				<h1>Library</h1>
+				<button><i class="fa fa-search"></i></button>
+				<button onclick="library.builder()"><i class="fa fa-repeat"></i></button>
+			</div>
+			<div class="libList" id="libList">
+				<ul id="ulLib">
+				</ul>
+			</div>
 		</div>
 		<div id="innerWindow">
 			<img id="viewImgOne" draggable="false"/>

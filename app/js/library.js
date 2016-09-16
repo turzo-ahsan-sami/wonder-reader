@@ -13,17 +13,16 @@ var path = require('path');
 function libBuilder(directory, array, listID) {
   for (var i=0; i < array.length; i++) {
     if (fs.statSync(path.join(directory, array[i].name)).isFile()) {
-      // console.log(colors.cyan(array[i].name));
 
       newDirectory = dirEncode(directory);
 
       $('#' + listID).append('<li class="file"><a href="#" onclick="file.loader(\'' + path.join(newDirectory, encodeURIComponent(array[i].name)) + '\')"><i class="fa fa-file" aria-hidden="true"></i>' + array[i].name + '</a></li>')
     } else if ( fs.statSync(path.join(directory, array[i].name)).isDirectory()) {
-      // console.log(colors.red(array[i].name));
 
-      var newListID = array[i].name.replace(/\s|#|\(|\)|\'/g, "");
-      $('#' + listID).append('<ul id=' + newListID + '><a href="#" onclick="#"><li class="folder"><i class="fa fa-folder" aria-hidden="true"></i>' + array[i].name + '</a></li></ul>')
-      libBuilder(path.join(directory, array[i].name), array[i].children, newListID)
+      var newListID = array[i].name.replace(/\s|#|\(|\)|\'|,|&/g, "");
+      $('#' + listID).append('<ul id=' + newListID + '><li class="folder"><a href="#" onclick="#"><i class="fa fa-folder" aria-hidden="true"></i>' + array[i].name + '</a></li>');
+      libBuilder(path.join(directory, array[i].name), array[i].children, newListID);
+      $('#' + listID).append('</ul>');
     }
   };
 };
@@ -34,6 +33,10 @@ function dirEncode(oldPath) {
 
   for (j=0; j < tempPath.length; j++) {
     newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
+  };
+
+  if (process.platform != "win32") {
+    newPath = '/' + newPath;
   };
 
   return newPath;

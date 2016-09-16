@@ -127,7 +127,12 @@ exports.dialog = () => {
 }
 
 exports.loader = (fileName) => {
-  fileLoad(fileName);
+  fileName = decodeURIComponent(fileName);
+  if (isThere(fileName)) {
+    fileLoad(fileName);
+  } else {
+    alert('Missing or broken file: Could not open ' + fileName);
+  }
 }
 
 //-/-----------------\
@@ -139,8 +144,6 @@ function rarExtractor(fileName, tempFolder) {
   rar.extract(tempFolder, null, function (err) {
     tempFolder = directory.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
-
-    console.log('.');
 
     if (dirContents.length == 0) {
       zipExtractor(fileName, tempFolder);
@@ -156,8 +159,6 @@ function zipExtractor(fileName, tempFolder) {
   extract(fileName, {dir: tempFolder}, function (err) {
     tempFolder = directory.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
-
-    console.log('.');
 
     if (dirContents.length == 0) {
       rarExtractor(fileName, tempFolder);
