@@ -1,6 +1,6 @@
 // library.js : to populate the library with an interactive list of available selections
 
-// TODO: there is an issue with '+' and interior folders not showing. Figure that shit out.
+// TODO: there is an issue with 'Variant Covers'.  Figure out a way to make it unique.
 
 var $ = require('jquery');
 var colors = require('colors');
