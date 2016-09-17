@@ -26,7 +26,7 @@ function libBuilder(directory, array, listID) {
       $('#' + listID).append('<li class="file"><a href="#" onclick="file.loader(\'' + path.join(newDirectory, encodeURIComponent(array[i].name)) + '\')"><i class="fa fa-file" aria-hidden="true"></i>' + array[i].name + '</a></li>')
     } else if (fs.statSync(file).isDirectory()) {
 
-      var newListID = array[i].name.replace(/\s|#|\(|\)|\'|,|&|\+|-/g, "");
+      var newListID = (listID + array[i].name).replace(/\s|#|\(|\)|\'|,|&|\+|-/g, "");
       $('#' + listID).append('<ul id=' + newListID + '><li class="folder"><a href="#" onclick="#"><i class="fa fa-folder" aria-hidden="true"></i>' + array[i].name + '</a></li>');
       libBuilder(file, array[i].children, newListID);
       $('#' + listID).append('</ul>');
