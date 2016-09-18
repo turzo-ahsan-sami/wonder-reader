@@ -4,9 +4,7 @@ Version 0.2.0
 
 ## Downloads
 
-* Windows: [(link)](https://github.com/alice-em/Wonder-Reader-Releases/blob/master/Wonder-Reader-win32-x64.zip)
-* OSX: [(link)](https://github.com/alice-em/Wonder-Reader-Releases/blob/master/Wonder-Reader-darwin-x64.zip)
-* Linux: [(link)](https://github.com/alice-em/Wonder-Reader-Releases/blob/master/Wonder-Reader-linux-x64.zip)
+[Downloads](http://alice-em.github.io/Wonder-Reader/)
 
 ## Installation and Starting
 
