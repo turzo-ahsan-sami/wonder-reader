@@ -25,6 +25,11 @@ h6 {
   font-size: 36px;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 ul {
   padding: 0;
   margin: 0;
@@ -175,7 +180,128 @@ button#trash {
   box-shadow: -3px 0 10px -2px #000;
 }
 
-/* ---- Library Values ---- */
+/* ---- mainLib Values ---- */
+#mainLib {
+  background: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  top: 56px;
+  right: 5%;
+  width: 90%;
+  height: 600px;
+  z-index: 1;
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.8);
+}
+#mainLib h1 {
+  margin-left: 10px;
+  margin-right: 10px;
+  float: left;
+}
+#mainLib button {
+  float: left;
+  background: transparent;
+}
+#mainLib .fa {
+  font-size: 32px;
+  color: #fff;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+#mainLib ul {
+  clear: both;
+  font-size: 10px;
+  color: #fff;
+}
+#mainLib ul ul {
+  padding-left: 10px;
+}
+#mainLib li {
+  padding: 2px 0 2px 25px;
+  background: rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.15s;
+}
+#mainLib li:nth-child(even) {
+  background-color: transparent;
+}
+#mainLib li.folder {
+  font-weight: bold;
+  padding: 2px 0 2px 15px;
+  background: rgba(255, 255, 255, 0.2);
+  border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
+}
+#mainLib li.file:hover {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+#mainLib #libHeader {
+  height: 56px;
+}
+#mainLib #libList {
+  height: 544px;
+  overflow-y: auto;
+}
+#mainLib #ulLib .fa {
+  font-size: 12px;
+}
+#mainLib #ulLib a {
+  display: block;
+}
+
+#libDropDown {
+  position: fixed;
+  top: 10px;
+  padding: 0;
+  transition: all .25s;
+  text-shadow: 0 0 5px #000;
+  z-index: 1;
+  background: none;
+}
+#libDropDown .fa {
+  font-size: 70px;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all .25s;
+}
+
+#libDropDown:hover {
+  top: 17px;
+}
+#libDropDown:hover .fa {
+  color: #fff;
+}
+
+#libStatus {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  float: right;
+  padding: 10px;
+}
+#libStatus .code {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  padding: 1px 3px 3px;
+  border-radius: 3px;
+}
+#libStatus .fa {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  padding: 3px 1px;
+}
+
+#repeat.rotater {
+  animation-name: rotate;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* ---- miniLib Values ---- */
 .library {
   background-color: #148bb5;
   /*clear: both;*/
@@ -312,11 +438,13 @@ button#trash {
   opacity: 0.5;
   mix-blend-mode: exclusion;
   box-shadow: 0px 0px 12px -3px #000;
+  z-index: 5;
 }
 
 .loader,
 .loader:after,
 .loader:before {
+  z-index: 5;
   background: #fff;
   -webkit-animation: load1 1s infinite ease-in-out;
   animation: load1 1s infinite ease-in-out;

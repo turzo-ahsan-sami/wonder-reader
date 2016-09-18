@@ -1,6 +1,7 @@
 const $ = require('jquery'); // https://www.npmjs.com/package/jquery
 var clean = require('./js/clean.js');
 var file = require('./js/file.js');
+var library = require('./js/library.js');
 var page = require('./js/page.js');
 
 $(document).keydown(function(event) {
@@ -25,6 +26,8 @@ function handleError(evt) {
 };
 window.addEventListener("error", handleError, true);
 
+// Builds library on load
+library.onLoad();
 // On Load
 document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
 document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
@@ -33,6 +36,9 @@ document.getElementById('bgLoader').style.top = window.innerHeight/2 - 75 + 'px'
 document.getElementById('loader').style.left = window.innerWidth/2 - 75 + 'px';
 document.getElementById('loader').style.top = window.innerHeight/2 - 75 + 'px';
 document.getElementById('innerWindow').style.top = window.innerHeight - 56 + 'px';
+document.getElementById('libDropDown').style.left = window.innerWidth/2 - 19 + 'px';
+document.getElementById('mainLib').style.height = window.innerHeight - 86 + 'px';
+document.getElementById('libList').style.height = window.innerHeight - 142 + 'px';
 
 // On Changes
 window.onresize = function() {
@@ -45,6 +51,10 @@ window.onresize = function() {
   document.getElementById('bgLoader').style.top = window.innerHeight/2 - 75 + 'px';
   document.getElementById('loader').style.left = window.innerWidth/2 - 75 + 'px';
   document.getElementById('loader').style.top = window.innerHeight/2 - 75 + 'px';
+  document.getElementById('libDropDown').style.left = window.innerWidth/2 - 19 + 'px';
+  document.getElementById('mainLib').style.height = window.innerHeight - 86 + 'px';
+  document.getElementById('libList').style.height = window.innerHeight - 142 + 'px';
+
   if(imgOne.clientHeight >= imgTwo.clientHeight) {
     inner.style.height = imgOne.clientHeight + "px";
   } else {
@@ -88,7 +98,10 @@ function pageZoom() {
 };
 
 function libSlider() {
-  $('#library').toggleClass('shift-left');
+  $('#sideLib').toggleClass('shift-left');
+};
+function dropDown() {
+  $('#mainLib').slideToggle(800);
 };
 
 // dragscroll things

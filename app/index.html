@@ -53,13 +53,28 @@
 		</ul>
 	</div>
 
-	<div class="library shift-left" id="library">
-		<h1>Library</h1>
+	<div class="library shift-left" id="sideLib">
+		<h1>Series</h1>
 		<ul id="dirLib" class="directory"></ul>
 		<button onclick="libSlider()" id="libSlider"><i class="fa fa-caret-right"></i></button>
 	</div>
 
 	<div class="mainWindow dragscroll" id="viewer">
+		<div class="mainLib" id="mainLib">
+			<div class="libHeader" id="libHeader">
+				<h1>Library</h1>
+				<button onclick="library.openDir()"><i class="fa fa-search"></i></button>
+				<button id="repeat" onclick="library.builder()"><i class="fa fa-repeat"></i></button>
+				<span id="libStatus"></span>
+			</div>
+			<div class="libList" id="libList">
+				<ul id="ulLib">
+				</ul>
+			</div>
+		</div>
+		<button id="libDropDown" onclick="dropDown()">
+			<i class="fa fa-sort-desc" aria-hidden="true"></i>
+		</button>
 		<div id="innerWindow">
 			<img id="viewImgOne" draggable="false"/>
 			<img id="viewImgTwo" draggable="false"/>
