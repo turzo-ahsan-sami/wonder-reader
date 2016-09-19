@@ -28,6 +28,14 @@ window.addEventListener("error", handleError, true);
 
 // Builds library on load
 library.onLoad();
+
+// F12 Bind for dev-tools
+document.addEventListener("keydown", function (e) {
+	if (e.which === 123) {
+		require('remote').getCurrentWindow().toggleDevTools();
+	}
+});
+
 // On Load
 document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
 document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
