@@ -3,7 +3,6 @@
 // TODO: there is an issue with 'Variant Covers'.  Figure out a way to make it unique.
 
 var $ = require('jquery');
-var colors = require('colors');
 const {dialog} = require('electron').remote;
 var dirTree = require('directory-tree'); // https://www.npmjs.com/package/directory-tree
 var fs = require('fs');

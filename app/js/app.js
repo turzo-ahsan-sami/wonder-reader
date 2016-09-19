@@ -29,46 +29,41 @@ window.addEventListener("error", handleError, true);
 // Builds library on load
 library.onLoad();
 
-// F12 Bind for dev-tools
-document.addEventListener("keydown", function (e) {
-	if (e.which === 123) {
-		require('remote').getCurrentWindow().toggleDevTools();
-	}
-});
-
-// On Load
-document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
-document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
-document.getElementById('bgLoader').style.left = window.innerWidth/2 - 75 + 'px';
-document.getElementById('bgLoader').style.top = window.innerHeight/2 - 75 + 'px';
-document.getElementById('loader').style.left = window.innerWidth/2 - 75 + 'px';
-document.getElementById('loader').style.top = window.innerHeight/2 - 75 + 'px';
-document.getElementById('innerWindow').style.top = window.innerHeight - 56 + 'px';
-document.getElementById('libDropDown').style.left = window.innerWidth/2 - 39 + 'px';
-document.getElementById('mainLib').style.height = window.innerHeight - 86 + 'px';
-document.getElementById('libList').style.height = window.innerHeight - 142 + 'px';
-
-// On Changes
-window.onresize = function() {
-  var inner = document.getElementById('innerWindow');
-  var imgOne = document.getElementById('viewImgOne');
-  var imgTwo = document.getElementById('viewImgTwo');
+$( document ).ready( function() {
+  // On Load
   document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
   document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
   document.getElementById('bgLoader').style.left = window.innerWidth/2 - 75 + 'px';
   document.getElementById('bgLoader').style.top = window.innerHeight/2 - 75 + 'px';
   document.getElementById('loader').style.left = window.innerWidth/2 - 75 + 'px';
   document.getElementById('loader').style.top = window.innerHeight/2 - 75 + 'px';
+  document.getElementById('innerWindow').style.top = window.innerHeight - 56 + 'px';
   document.getElementById('libDropDown').style.left = window.innerWidth/2 - 39 + 'px';
   document.getElementById('mainLib').style.height = window.innerHeight - 86 + 'px';
   document.getElementById('libList').style.height = window.innerHeight - 142 + 'px';
 
-  if(imgOne.clientHeight >= imgTwo.clientHeight) {
-    inner.style.height = imgOne.clientHeight + "px";
-  } else {
-    inner.style.height = imgTwo.clientHeight + "px";
+  // On Changes
+  window.onresize = function() {
+    var inner = document.getElementById('innerWindow');
+    var imgOne = document.getElementById('viewImgOne');
+    var imgTwo = document.getElementById('viewImgTwo');
+    document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
+    document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
+    document.getElementById('bgLoader').style.left = window.innerWidth/2 - 75 + 'px';
+    document.getElementById('bgLoader').style.top = window.innerHeight/2 - 75 + 'px';
+    document.getElementById('loader').style.left = window.innerWidth/2 - 75 + 'px';
+    document.getElementById('loader').style.top = window.innerHeight/2 - 75 + 'px';
+    document.getElementById('libDropDown').style.left = window.innerWidth/2 - 39 + 'px';
+    document.getElementById('mainLib').style.height = window.innerHeight - 86 + 'px';
+    document.getElementById('libList').style.height = window.innerHeight - 142 + 'px';
+
+    if(imgOne.clientHeight >= imgTwo.clientHeight) {
+      inner.style.height = imgOne.clientHeight + "px";
+    } else {
+      inner.style.height = imgTwo.clientHeight + "px";
+    };
   };
-};
+});
 
 function pageZoom() {
   var outer = document.getElementById('viewer');

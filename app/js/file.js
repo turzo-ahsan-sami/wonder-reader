@@ -44,9 +44,9 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
   };
 
   if ([".cbr", ".cbz"].indexOf(path.extname(fileName).toLowerCase()) > -1) {
-    var fileComic = path.posix.basename(fileName).replace(/#/g, "");
+    var fileComic = path.posix.basename(fileName).replace(/#|!/g, "");
     if (process.platform == 'win32') {
-      fileComic = path.win32.basename(fileName).replace(/#/g, "");
+      fileComic = path.win32.basename(fileName).replace(/#|!/g, "");
     }
   } else {
     handleError(evt)
@@ -111,6 +111,7 @@ function postExtract(fileName, tempFolder, dirContents) {
   title.load(fileName);
   miniLib.load(fileName);
   nextcomic.load(fileName);
+  $('#mainLib').slideUp(800);
 
   if(viewOne.clientHeight >= viewTwo.clientHeight) {
     inner.style.height = viewOne.clientHeight + "px";
