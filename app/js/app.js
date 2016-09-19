@@ -38,7 +38,7 @@ $( document ).ready( function() {
   document.getElementById('loader').style.left = window.innerWidth/2 - 75 + 'px';
   document.getElementById('loader').style.top = window.innerHeight/2 - 75 + 'px';
   document.getElementById('innerWindow').style.top = window.innerHeight - 56 + 'px';
-  document.getElementById('libDropDown').style.left = window.innerWidth/2 - 39 + 'px';
+  document.getElementById('libDropDown').style.left = window.innerWidth/2 - 38.5 + 'px';
   document.getElementById('mainLib').style.height = window.innerHeight - 86 + 'px';
   document.getElementById('libList').style.height = window.innerHeight - 142 + 'px';
 
@@ -53,7 +53,7 @@ $( document ).ready( function() {
     document.getElementById('bgLoader').style.top = window.innerHeight/2 - 75 + 'px';
     document.getElementById('loader').style.left = window.innerWidth/2 - 75 + 'px';
     document.getElementById('loader').style.top = window.innerHeight/2 - 75 + 'px';
-    document.getElementById('libDropDown').style.left = window.innerWidth/2 - 39 + 'px';
+    document.getElementById('libDropDown').style.left = window.innerWidth/2 - 38.5 + 'px';
     document.getElementById('mainLib').style.height = window.innerHeight - 86 + 'px';
     document.getElementById('libList').style.height = window.innerHeight - 142 + 'px';
 
