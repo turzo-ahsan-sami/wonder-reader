@@ -54,6 +54,7 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
 
   // tempFolder Variable for loaded comic
   var tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic);
+  var looper = 0;
   console.log('tempFolder = ' + tempFolder)
 
   if (isThere(tempFolder)) { // Checks for existing Directory
@@ -61,9 +62,9 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
     dirContents = fs.readdirSync(tempFolder);
     if (dirContents.length == 0) {
       if (path.extname(fileName).toLowerCase() == ".cbr") {
-        rarExtractor(fileName, tempFolder);
+        rarExtractor(fileName, tempFolder, looper);
       } else if (path.extname(fileName).toLowerCase() == ".cbz") {
-        zipExtractor(fileName, tempFolder);
+        zipExtractor(fileName, tempFolder, looper);
       } else {
         handleError(evt);
       }
@@ -74,9 +75,9 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
     mkdirp.sync(tempFolder);
 
     if (path.extname(fileName).toLowerCase() == ".cbr") {
-      rarExtractor(fileName, tempFolder);
+      rarExtractor(fileName, tempFolder, looper);
     } else if (path.extname(fileName).toLowerCase() == ".cbz") {
-      zipExtractor(fileName, tempFolder)
+      zipExtractor(fileName, tempFolder, looper)
     } else {
       handleError(evt)
     };
@@ -139,14 +140,18 @@ exports.loader = (fileName) => {
 //-| File Extractors |
 //-\-----------------/
 
-function rarExtractor(fileName, tempFolder) {
+function rarExtractor(fileName, tempFolder, looper) {
   var rar = new unrar(fileName);
   rar.extract(tempFolder, null, function (err) {
     tempFolder = directory.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
 
-    if (dirContents.length == 0) {
-      zipExtractor(fileName, tempFolder);
+    if (dirContents.length == 0 && looper <= 3) {
+      looper++;
+      console.log('Loop = ' + looper);
+      zipExtractor(fileName, tempFolder, looper);
+    } else if (looper > 3) {
+      alert('Possible broken file?');
     } else {
       $('#loader').addClass('hidden').removeClass('loader');
       $('#bgLoader').addClass('hidden');
@@ -155,13 +160,17 @@ function rarExtractor(fileName, tempFolder) {
   });
 };
 
-function zipExtractor(fileName, tempFolder) {
+function zipExtractor(fileName, tempFolder, looper) {
   extract(fileName, {dir: tempFolder}, function (err) {
     tempFolder = directory.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
 
-    if (dirContents.length == 0) {
-      rarExtractor(fileName, tempFolder);
+    if (dirContents.length == 0 && looper <= 3) {
+      looper++;
+      console.log('Loop = ' + looper);
+      rarExtractor(fileName, tempFolder, looper);
+    } else if (looper > 3) {
+      alert('Possible broken file?');
     } else {
       $('#loader').addClass('hidden').removeClass('loader');
       $('#bgLoader').addClass('hidden');
