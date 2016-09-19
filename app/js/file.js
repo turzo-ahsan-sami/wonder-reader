@@ -3,9 +3,9 @@
 
 const $ = require('jquery');
 const {dialog} = require('electron').remote;
-var isThere = require('is-there'); // https://www.npmjs.com/package/is-there
 var extract = require('extract-zip'); // https://www.npmjs.com/package/extract-zip
 var fs = require('fs');
+var isThere = require('is-there'); // https://www.npmjs.com/package/is-there
 var mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
 var os = require('os'); // https://nodejs.org/api/os.html
 var path = require('path');
@@ -72,7 +72,7 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
       postExtract(fileName, tempFolder, dirContents);
     };
   } else { // If no Directory exists
-    mkdirp.sync(tempFolder);
+    mkdirp.sync(tempFolder, {'mode': '0777'});
 
     if (path.extname(fileName).toLowerCase() == ".cbr") {
       rarExtractor(fileName, tempFolder, looper);
