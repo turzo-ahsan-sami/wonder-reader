@@ -2,14 +2,14 @@
 // extracting and sourcing images to where they need to go
 
 const $ = require('jquery');
+var cbr = require('cbr');
 const {dialog} = require('electron').remote;
-var extract = require('extract-zip'); // https://www.npmjs.com/package/extract-zip
 var fs = require('fs');
 var isThere = require('is-there'); // https://www.npmjs.com/package/is-there
 var mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
 var os = require('os'); // https://nodejs.org/api/os.html
 var path = require('path');
-var unrar = require('node-unrar'); // https://github.com/scopsy/node-unrar
+var unzip = require('unzip');
 
 // User Modules //
 var directory = require('./dir-merge.js');
@@ -141,11 +141,11 @@ exports.loader = (fileName) => {
 //-\-----------------/
 
 function rarExtractor(fileName, tempFolder, looper) {
-  var rar = new unrar(fileName);
-  rar.extract(tempFolder, null, function (err) {
-    if (err) {
-      alert(err);
-    }
+  cbr(fileName, tempFolder, function (error) {
+    if (error) {
+      alert(error);
+    };
+
     tempFolder = directory.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
 
@@ -164,23 +164,24 @@ function rarExtractor(fileName, tempFolder, looper) {
 };
 
 function zipExtractor(fileName, tempFolder, looper) {
-  extract(fileName, {dir: tempFolder}, function (err) {
-    if (err) {
-      alert(err);
-    }
-    tempFolder = directory.merge(tempFolder);
-    dirContents = fs.readdirSync(tempFolder);
+  fs.createReadStream(fileName).pipe(
+    unzip.Extract({
+      path: tempFolder
+    }).on('close', function() {
+      tempFolder = directory.merge(tempFolder);
+      dirContents = fs.readdirSync(tempFolder);
 
-    if (dirContents.length == 0 && looper <= 3) {
-      looper++;
-      console.log('Loop = ' + looper);
-      rarExtractor(fileName, tempFolder, looper);
-    } else if (looper > 3) {
-      alert('Possible broken file?');
-    } else {
-      $('#loader').addClass('hidden').removeClass('loader');
-      $('#bgLoader').addClass('hidden');
-      postExtract(fileName, tempFolder, dirContents);
-    };
-  });
-}
+      if (dirContents.length == 0 && looper <= 3) {
+        looper++;
+        console.log('Loop = ' + looper);
+        rarExtractor(fileName, tempFolder, looper);
+      } else if (looper > 3) {
+        alert('Possible broken file?');
+      } else {
+        $('#loader').addClass('hidden').removeClass('loader');
+        $('#bgLoader').addClass('hidden');
+        postExtract(fileName, tempFolder, dirContents);
+      };
+    })
+  );
+};
