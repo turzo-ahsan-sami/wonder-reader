@@ -3,7 +3,7 @@ $white: #fff;
 $offWhite: #f3f3f3;
 $whiteOpaque: rgba(255,255,255,0.9);
 $whiteOpaqueDeg: rgba(255,255,255,0.8);
-$whiteTransDeg: rgba(255,255,255,0.2);
+$whiteTransDeg: rgba(255,255,255,0.1);
 $gray: #808080;
 $grayTrans: rgba(144,144,144,.2);
 $darkTrans: rgba(0,0,0,0.1);
@@ -298,7 +298,6 @@ button#trash {
 }
 /* ---- miniLib Values ---- */
 .library {
-  background-color: $comicBleu;
   /*clear: both;*/
   height: 100vh;
   width: 275px;
@@ -311,10 +310,9 @@ button#trash {
   transition: margin-left 0.65s;
   box-shadow: 3px 0 5px $darkTransMid;
   h1 {
-    /*margin: 0 auto;*/
     display: block;
     text-align: center;
-    //width: 175px;
+    background: $comicBleu;
   }
   ul {
     color: $teal;
@@ -346,9 +344,9 @@ button#trash {
     }
     a:hover {
       text-decoration: none;
-      color: $whiteOpaque;
+      color: $white;
       box-shadow: inset 2px 0 0 1px $libColor;
-      background: $darkTrans;
+      background: $black;
     }
   }
   .current {
@@ -362,9 +360,9 @@ button#trash {
     }
     span:hover {
       text-decoration: none;
-      color: $whiteOpaque;
+      color: $white;
       box-shadow: inset 2px 0 0 1px $whiteOpaqueDeg;
-      background: $darkTrans;
+      background: $black;
     }
   }
 }
@@ -392,10 +390,10 @@ button#trash {
   outline: none;
 }
 .directory {
-  background-color: $black;
+  background-color: $darkTransOpq;
 }
 .directory::-webkit-scrollbar-track {
-  background-color: $black;
+  background-color: $darkTransOpq;
 }
 .directory::-webkit-scrollbar-thumb {
   background-color: $whiteTransDeg;
