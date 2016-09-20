@@ -143,6 +143,9 @@ exports.loader = (fileName) => {
 function rarExtractor(fileName, tempFolder, looper) {
   var rar = new unrar(fileName);
   rar.extract(tempFolder, null, function (err) {
+    if (err) {
+      alert(err);
+    }
     tempFolder = directory.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
 
@@ -162,6 +165,9 @@ function rarExtractor(fileName, tempFolder, looper) {
 
 function zipExtractor(fileName, tempFolder, looper) {
   extract(fileName, {dir: tempFolder}, function (err) {
+    if (err) {
+      alert(err);
+    }
     tempFolder = directory.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
 
