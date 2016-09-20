@@ -343,12 +343,13 @@ button#trash {
   display: block;
   text-decoration: none;
   transition: all 0.25s;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.8);
   box-shadow: inset 3px 0 0 0 #ddbfeb;
 }
 .library .libDir a:hover,
 .library .libFile a:hover {
   text-decoration: none;
+  color: rgba(255, 255, 255, 0.9);
   box-shadow: inset 2px 0 0 1px #ddbfeb;
   background: rgba(0, 0, 0, 0.1);
 }
@@ -357,11 +358,12 @@ button#trash {
   text-decoration: none;
   transition: all 0.25s;
   padding: 3px 0 3px 10px;
-  color: #148bb5;
-  box-shadow: inset 3px 0 0 1px #148bb5;
+  color: rgba(255, 255, 255, 0.8);
+  box-shadow: inset 2px 0 0 1px #ddbfeb;
 }
 .library .current span:hover {
   text-decoration: none;
+  color: rgba(255, 255, 255, 0.9);
   box-shadow: inset 2px 0 0 1px rgba(255, 255, 255, 0.8);
   background: rgba(0, 0, 0, 0.1);
 }
