@@ -245,6 +245,15 @@ button#trash {
 #mainLib #ulLib a {
   display: block;
 }
+#mainLib #ulLib .fa-caret-down {
+  transition: transform .2s;
+}
+#mainLib #ulLib .rotate {
+  transform: rotate(-90deg);
+}
+#mainLib #ulLib ul {
+  display: none;
+}
 
 #libDropDown {
   position: fixed;

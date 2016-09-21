@@ -25,7 +25,7 @@ function libBuilder(directory, array, listID) {
     } else if (fs.statSync(file).isDirectory()) {
 
       var newListID = (listID + array[i].name).replace(/\s|#|\(|\)|\'|,|&|\+|-/g, "");
-      $('#' + listID).append('<ul id=' + newListID + '><li class="folder"><a href="#" onclick="#"><i class="fa fa-folder" aria-hidden="true"></i>' + array[i].name + '</a></li>');
+      $('#' + listID).append('<li class="folder"><a href="#" onclick="libFolders(\'' + newListID + '\')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>' + array[i].name + '</a></li><ul id=' + newListID + '>');
       libBuilder(file, array[i].children, newListID);
       $('#' + listID).append('</ul>');
     } else {

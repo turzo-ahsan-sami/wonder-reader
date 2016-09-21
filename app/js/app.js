@@ -100,6 +100,13 @@ function pageZoom() {
   outer.scrollLeft = inner.clientWidth*cPYR - outer.clientWidth/2;
 };
 
+function libFolders(id) {
+  id = $('#' + id);
+  if (id.is(':animated')) return;
+  id.prev('.folder').children().children('.fa-caret-down').toggleClass('rotate');
+  id.slideToggle(500, 'linear');
+}
+
 function libSlider() {
   $('#sideLib').toggleClass('shift-left');
 };
