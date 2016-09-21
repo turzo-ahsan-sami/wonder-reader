@@ -1,7 +1,5 @@
 // library.js : to populate the library with an interactive list of available selections
 
-// TODO: there is an issue with 'Variant Covers'.  Figure out a way to make it unique.
-
 var $ = require('jquery');
 const {dialog} = require('electron').remote;
 var dirTree = require('directory-tree'); // https://www.npmjs.com/package/directory-tree
@@ -12,8 +10,6 @@ var mkdirp = require('mkdirp');
 var os = require('os');
 var path = require('path');
 
-// jsonfile.writeFileSync(output, jSon, {spaces: 2});
-
 function libBuilder(directory, array, listID) {
   $('#libStatus').remove();
   console.log(directory)
@@ -23,7 +19,9 @@ function libBuilder(directory, array, listID) {
 
       newDirectory = dirEncode(directory);
 
-      $('#' + listID).append('<li class="file"><a href="#" onclick="file.loader(\'' + path.join(newDirectory, encodeURIComponent(array[i].name)) + '\')"><i class="fa fa-file" aria-hidden="true"></i>' + array[i].name + '</a></li>')
+      $('#' + listID).append(
+        '<li class="file"><a href="#" onclick="file.loader(\'' + path.join(newDirectory, encodeURIComponent(array[i].name)) + '\')"><i class="fa fa-file" aria-hidden="true"></i>' + array[i].name + '</a></li>'
+      );
     } else if (fs.statSync(file).isDirectory()) {
 
       var newListID = (listID + array[i].name).replace(/\s|#|\(|\)|\'|,|&|\+|-/g, "");
