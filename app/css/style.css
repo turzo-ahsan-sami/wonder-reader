@@ -215,7 +215,7 @@ button#trash {
   padding-left: 10px;
 }
 #mainLib li {
-  padding: 2px 0 2px 25px;
+  padding: 2px 0 2px 15px;
   background: rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.15s;
 }
