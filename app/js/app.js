@@ -44,9 +44,7 @@ $( document ).ready( function() {
 
   // On Changes
   window.onresize = function() {
-    var inner = document.getElementById('innerWindow');
-    var imgOne = document.getElementById('viewImgOne');
-    var imgTwo = document.getElementById('viewImgTwo');
+
     document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
     document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
     document.getElementById('bgLoader').style.left = window.innerWidth/2 - 75 + 'px';
@@ -57,14 +55,34 @@ $( document ).ready( function() {
     document.getElementById('mainLib').style.height = window.innerHeight - 86 + 'px';
     document.getElementById('libList').style.height = window.innerHeight - 142 + 'px';
 
-    if(imgOne.clientHeight >= imgTwo.clientHeight) {
-      inner.style.height = imgOne.clientHeight + "px";
-    } else {
-      inner.style.height = imgTwo.clientHeight + "px";
-    };
+    imgDivResizer();
   };
 });
 
+function imgDivResizer() {
+  var inner = document.getElementById('innerWindow');
+  var imgOne = document.getElementById('viewImgOne');
+  var imgTwo = document.getElementById('viewImgTwo');
+
+  if(imgOne.clientHeight >= imgTwo.clientHeight) {
+    inner.style.height = imgOne.clientHeight + "px";
+    // imgTwo.clientHeight = imgOne.clientHeight;
+  } else {
+    inner.style.height = imgTwo.clientHeight + "px";
+    // imgOne.clientHeight = imgTwo.clientHeight;
+  };
+  // var totalWidth = imgOne.clientWidth + imgTwo.clientWidth;
+  // console.log(imgOne.clientWidth/(totalWidth) + '%');
+  // console.log(imgTwo.clientWidth/(totalWidth) + '%');
+};
+
+// Adds an event listener to both images
+var images = document.querySelectorAll('img');
+for (var j = 0; j < images.length; j++) {
+  images[j].addEventListener('load', imgDivResizer());
+}
+
+// Handles the zoom
 function pageZoom() {
   var outer = document.getElementById('viewer');
   var inner = document.getElementById('innerWindow');
@@ -86,11 +104,9 @@ function pageZoom() {
   } else {
     inner.style.marginLeft = 0;
   };
-  if(imgOne.clientHeight >= imgTwo.clientHeight) {
-    inner.style.height = imgOne.clientHeight + "px";
-  } else {
-    inner.style.height = imgTwo.clientHeight + "px";
-  };
+
+  imgDivResizer();
+
   if (outer.clientHeight > inner.clientHeight) {
     inner.style.marginTop = (outer.clientHeight - inner.clientHeight)/2 + 'px';
   } else {

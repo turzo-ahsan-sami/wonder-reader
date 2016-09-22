@@ -114,11 +114,6 @@ function postExtract(fileName, tempFolder, dirContents) {
   nextcomic.load(fileName);
   $('#mainLib').slideUp(800);
 
-  if(viewOne.clientHeight >= viewTwo.clientHeight) {
-    inner.style.height = viewOne.clientHeight + "px";
-  } else {
-    inner.style.height = viewTwo.clientHeight + "px";
-  };
   document.getElementById('viewer').scrollTop = 0;
   document.getElementById('viewer').scrollLeft = 0;
 };

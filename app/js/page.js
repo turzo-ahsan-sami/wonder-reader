@@ -101,11 +101,11 @@ function singlePage(fileDir, dirContents, index) { // For Single page viewing an
   viewOne.style.width = '100%';
   viewTwo.style.display = 'none';
   viewTwo.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
-  if(viewOne.clientHeight >= viewTwo.clientHeight) {
-    inner.style.height = viewOne.clientHeight + "px";
-  } else {
-    inner.style.height = viewTwo.clientHeight + "px";
-  };
+  // if(viewOne.clientHeight >= viewTwo.clientHeight) {
+  //   inner.style.height = viewOne.clientHeight + "px";
+  // } else {
+  //   inner.style.height = viewTwo.clientHeight + "px";
+  // };
 };
 
 function defaults(fileDir, dirContents, index, polarity) {
@@ -117,16 +117,17 @@ function defaults(fileDir, dirContents, index, polarity) {
     } else {
       viewOne.style.display = 'initial';
       viewTwo.style.display = 'initial';
-      viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
-      viewTwo.src = path.join(fileDir, encodeURIComponent(dirContents[index + 1]));
       viewOne.style.width = '50%';
       viewTwo.style.width = '50%';
+      viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
+      viewTwo.src = path.join(fileDir, encodeURIComponent(dirContents[index + 1]));
 
-      if(viewOne.clientHeight >= viewTwo.clientHeight) {
-        inner.style.height = viewOne.clientHeight + "px";
-      } else {
-        inner.style.height = viewTwo.clientHeight + "px";
-      };
+
+      // if(viewOne.clientHeight >= viewTwo.clientHeight) {
+      //   inner.style.height = viewOne.clientHeight + "px";
+      // } else {
+      //   inner.style.height = viewTwo.clientHeight + "px";
+      // };
 
       // var ratioOne = viewOne.width / viewOne.height;
       // var ratioTwo = viewTwo.width / viewTwo.height;
