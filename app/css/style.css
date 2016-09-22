@@ -226,8 +226,8 @@ button#trash {
   font-weight: bold;
   padding: 2px 0 2px 15px;
   background: rgba(255, 255, 255, 0.1);
-  border-bottom-left-radius: 20px;
-  border-top-left-radius: 20px;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
 }
 #mainLib li.file:hover {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
@@ -246,7 +246,7 @@ button#trash {
   display: block;
 }
 #mainLib #ulLib .fa-caret-down {
-  transition: transform .2s;
+  transition: transform .5s;
 }
 #mainLib #ulLib .rotate {
   transform: rotate(-90deg);
@@ -333,7 +333,7 @@ button#trash {
   width: 100%;
   height: 90%;
   transition: all 0.25s;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 .library li {
   cursor: pointer;

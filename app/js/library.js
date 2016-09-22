@@ -12,7 +12,7 @@ var path = require('path');
 
 function libBuilder(directory, array, listID) {
   $('#libStatus').remove();
-  console.log(directory)
+  // console.log(directory)
   for (var i=0; i < array.length; i++) {
     var file = path.join(directory, array[i].name)
     if (fs.statSync(file).isFile()) {
