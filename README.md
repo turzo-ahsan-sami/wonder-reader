@@ -1,13 +1,12 @@
 # Wonder-Reader
 
-Version 0.2.1
+Version 0.2.2
 
 ## Downloads
 
 [Downloads](http://alice-em.github.io/Wonder-Reader/)
 
 ## Installation and Starting
-
 __Requirements__: Git, Node, and NPM
 
 ```shell
@@ -35,8 +34,6 @@ __Requirements__: electron-packager
 ## Development
 __Requirements__: Grunt-cli, Sass, and some sort of text-editor
 
-Mary Marvel 001 is included under `example/` for testing purposes. The comic is listed on various Public Domain comic sites.
-
 TODO:
 * Any other neat ideas that could work go here too.
 	* Create a bookmarking system
@@ -55,3 +52,4 @@ TODO:
 * Font Awesome :: http://fontawesome.io/
 * Node :: https://nodejs.org/en/
 * Node Directory Tree :: https://github.com/mihneadb/node-directory-tree
+* Logo design by Jake Brockway :: http://jacobvbrockway.weebly.com
