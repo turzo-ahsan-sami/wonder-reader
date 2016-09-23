@@ -404,15 +404,15 @@ button#trash {
 }
 
 .directory {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: #fff;
 }
 
 .directory::-webkit-scrollbar-track {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: #fff;
 }
 
 .directory::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #148bb5;
   border-radius: 2px;
 }
 
