@@ -23,20 +23,24 @@ exports.load = (fileName) => {
   var nextComic = document.getElementById('nextComic');
   var prevComic = document.getElementById('prevComic');
 
-  if (fileIndex <= 0) { // If loaded comic is first comic in directory
-    var nextSrc = path.join(filePath, dirComics[fileIndex + 1]);
-    nextComic.onclick=function() {file.loader(nextSrc)};
-    enable('nextComic')
-  } else if (fileIndex >= dirComics.length -1) { // If loaded comic is the last comic in directory
-    var prevSrc = path.join(filePath, dirComics[fileIndex - 1]);
-    prevComic.onclick=function() {file.loader(prevSrc)};
-    enable('prevComic')
-  } else { // If comic is somewhere in the middle of the directory array
-    var nextSrc = path.join(filePath, dirComics[fileIndex + 1]);
-    var prevSrc = path.join(filePath, dirComics[fileIndex - 1]);
-    nextComic.onclick=function() {file.loader(nextSrc)};
-    prevComic.onclick=function() {file.loader(prevSrc)};
-    enable('nextComic')
-    enable('prevComic')
+  if (dirComics.length > 1) {
+    if (fileIndex <= 0) { // If loaded comic is first comic in directory
+      var nextSrc = path.join(filePath, dirComics[fileIndex + 1]);
+      nextComic.onclick=function() {file.loader(nextSrc)};
+      enable('nextComic')
+    } else if (fileIndex >= dirComics.length -1) { // If loaded comic is the last comic in directory
+      var prevSrc = path.join(filePath, dirComics[fileIndex - 1]);
+      prevComic.onclick=function() {file.loader(prevSrc)};
+      enable('prevComic')
+    } else { // If comic is somewhere in the middle of the directory array
+      var nextSrc = path.join(filePath, dirComics[fileIndex + 1]);
+      var prevSrc = path.join(filePath, dirComics[fileIndex - 1]);
+      nextComic.onclick=function() {file.loader(nextSrc)};
+      prevComic.onclick=function() {file.loader(prevSrc)};
+      enable('nextComic')
+      enable('prevComic')
+    }
+  } else {
+    // Do nothing
   }
 };
