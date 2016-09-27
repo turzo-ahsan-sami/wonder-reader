@@ -30,7 +30,7 @@ exports.load = () => {
 
   var index = dirContents.indexOf(fileName);
   var val = Number(document.getElementById('column').dataset.val);
-  var polarity = 0;
+  var polarity = 1;
 
   if (val == 1) {
     singlePage(fileDir, dirContents, index);
