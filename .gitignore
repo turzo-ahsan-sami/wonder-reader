@@ -5,6 +5,7 @@ npm-debug.log*
 app/cache/*/
 .sass-cache/
 *.map
+build/
 
 app/js/treeTest.js
 app/js/json/comic.json
