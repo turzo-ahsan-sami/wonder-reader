@@ -1,6 +1,6 @@
 # Wonder-Reader
 
-Version 0.2.2
+Version 0.2.3
 
 ## Downloads
 
@@ -18,6 +18,9 @@ npm start
 
 ## Compiling
 __Requirements__: electron-packager
+
+### Terminal
+* Go to where you cloned __Wonder Reader__ `cd/to/git/Wonder-Reader`
 
 * OSX / Darwin
 

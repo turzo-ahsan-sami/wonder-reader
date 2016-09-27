@@ -1,9 +1,11 @@
-// page.js turns pages.  TODO: Research how files are held in win32 environments
+// page.js turns pages.
 
 var $ = require('jquery');
 var center = require('./centerfold.js');
 var fs = require('fs');
+var os = require('os');
 var path = require('path');
+var sizeOf = require('image-size');
 var strain = require('./strain.js');
 
 var centerFolds;
@@ -101,11 +103,6 @@ function singlePage(fileDir, dirContents, index) { // For Single page viewing an
   viewOne.style.width = '100%';
   viewTwo.style.display = 'none';
   viewTwo.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
-  // if(viewOne.clientHeight >= viewTwo.clientHeight) {
-  //   inner.style.height = viewOne.clientHeight + "px";
-  // } else {
-  //   inner.style.height = viewTwo.clientHeight + "px";
-  // };
 };
 
 function defaults(fileDir, dirContents, index, polarity) {
@@ -117,22 +114,16 @@ function defaults(fileDir, dirContents, index, polarity) {
     } else {
       viewOne.style.display = 'initial';
       viewTwo.style.display = 'initial';
-      viewOne.style.width = '50%';
-      viewTwo.style.width = '50%';
       viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
       viewTwo.src = path.join(fileDir, encodeURIComponent(dirContents[index + 1]));
 
+      var imageOne = sizeOf(path.join(fileDir, dirContents[index]));
+      var imageTwo = sizeOf(path.join(fileDir, dirContents[index + 1]));
+      var ratioOne = imageOne.width/imageOne.height;
+      var ratioTwo = imageTwo.width/imageTwo.height;
 
-      // if(viewOne.clientHeight >= viewTwo.clientHeight) {
-      //   inner.style.height = viewOne.clientHeight + "px";
-      // } else {
-      //   inner.style.height = viewTwo.clientHeight + "px";
-      // };
-
-      // var ratioOne = viewOne.width / viewOne.height;
-      // var ratioTwo = viewTwo.width / viewTwo.height;
-      // viewOne.style.width = ratioOne/(ratioOne + ratioTwo)*100 + '%';
-      // viewTwo.style.width = ratioTwo/(ratioOne + ratioTwo)*100 + '%';
+      viewOne.style.width = ratioOne/(ratioOne + ratioTwo)*100 + '%';
+      viewTwo.style.width = ratioTwo/(ratioOne + ratioTwo)*100 + '%';
     }
   } else if (Math.abs(val) == 1) { // If val == 1
     singlePage(fileDir, dirContents, index);
