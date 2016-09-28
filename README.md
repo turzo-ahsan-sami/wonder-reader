@@ -22,17 +22,8 @@ __Requirements__: electron-packager
 ### Terminal
 * Go to where you cloned __Wonder Reader__ `cd/to/git/Wonder-Reader`
 
-* OSX / Darwin
-
-		  electron-packager ./ --platform=darwin --arch=x64 --out=../Wonder-Reader-Releases --prune=true --icon=./shieldIcon.icns
-
-* Windows
-
-		  electron-packager ./ --platform=win32 --arch=x64 --out=../Wonder-Reader-Releases --prune=true --icon=./shieldIcon.ico
-
-* Linux
-
-		  electron-packager ./ --platform=linux --arch=x64 --out=../Wonder-Reader-Releases --prune=true
+    npm install
+    npm run packager
 
 ## Development
 __Requirements__: Grunt-cli, Sass, and some sort of text-editor
