@@ -1,6 +1,6 @@
 # Wonder-Reader
 
-Version 0.2.3
+Version 0.2.4
 
 ## Downloads
 
@@ -22,8 +22,8 @@ __Requirements__: electron-packager
 ### Terminal
 * Go to where you cloned __Wonder Reader__ `cd/to/git/Wonder-Reader`
 
-    npm install
-    npm run packager
+      npm install
+      npm run packager
 
 ## Development
 __Requirements__: Grunt-cli, Sass, and some sort of text-editor
