@@ -22,6 +22,7 @@ __Requirements__: electron-packager
 ### Terminal
 * Go to where you cloned __Wonder Reader__ `cd/to/git/Wonder-Reader`
 
+    npm install
     npm run packager
 
 ## Development
