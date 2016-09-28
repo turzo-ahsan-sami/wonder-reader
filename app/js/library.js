@@ -70,7 +70,7 @@ function loader() {
     var dirArray = dirTree(directory, ['.cbr', '.cbz']);
     var listID = 'ulLib';
 
-    jsonfile.writeFileSync(comics, dirArray)
+    jsonfile.writeFileSync(comics, dirArray, {'spaces': 2})
     jsonfile.writeFileSync(config, obj);
     $('#ulLib li').remove();
     $('#ulLib ul').remove();
