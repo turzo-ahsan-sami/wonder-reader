@@ -64,12 +64,14 @@ function loader() {
     console.log(fileNames);
 
     var directory = fileNames[0];
-    var file = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
+    var config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
+    var comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json')
     var obj = {'library': directory};
     var dirArray = dirTree(directory, ['.cbr', '.cbz']);
     var listID = 'ulLib';
 
-    jsonfile.writeFileSync(file, obj);
+    jsonfile.writeFileSync(comics, dirArray)
+    jsonfile.writeFileSync(config, obj);
     $('#ulLib li').remove();
     $('#ulLib ul').remove();
 

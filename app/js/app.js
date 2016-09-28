@@ -59,6 +59,7 @@ $( document ).ready( function() {
   };
 });
 
+// Function that resizes innerWindow div
 function imgDivResizer() {
   var inner = document.getElementById('innerWindow');
   var imgOne = document.getElementById('viewImgOne');
@@ -66,14 +67,9 @@ function imgDivResizer() {
 
   if(imgOne.clientHeight >= imgTwo.clientHeight) {
     inner.style.height = imgOne.clientHeight + "px";
-    // imgTwo.clientHeight = imgOne.clientHeight;
   } else {
     inner.style.height = imgTwo.clientHeight + "px";
-    // imgOne.clientHeight = imgTwo.clientHeight;
   };
-  // var totalWidth = imgOne.clientWidth + imgTwo.clientWidth;
-  // console.log(imgOne.clientWidth/(totalWidth) + '%');
-  // console.log(imgTwo.clientWidth/(totalWidth) + '%');
 };
 
 // Adds an event listener to both images
@@ -116,6 +112,7 @@ function pageZoom() {
   outer.scrollLeft = inner.clientWidth*cPYR - outer.clientWidth/2;
 };
 
+// Main Library folder collapsing
 function libFolders(id) {
   id = $('#' + id);
   if (id.is(':animated')) return;
@@ -123,6 +120,7 @@ function libFolders(id) {
   id.slideToggle(500, 'linear');
 }
 
+// Library Windows collapsing
 function libSlider() {
   $('#sideLib').toggleClass('shift-left');
 };
