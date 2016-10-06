@@ -1,6 +1,7 @@
 // page.js turns pages.
 
 var $ = require('jquery');
+var bookmark = require('./bookmark.js');
 var center = require('./centerfold.js');
 var fs = require('fs');
 var os = require('os');
@@ -18,7 +19,7 @@ var inner = document.getElementById('innerWindow');
 var viewOne = document.getElementById('viewImgOne');
 var viewTwo = document.getElementById('viewImgTwo');
 
-exports.load = () => {
+exports.load = (file) => {
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
   if (process.platform == "win32") {
     filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
@@ -28,7 +29,7 @@ exports.load = () => {
   dirContents = strain(fs.readdirSync(fileDir));
   centerFolds = center.fold('viewImgOne');
 
-  var index = dirContents.indexOf(fileName);
+  var index = bookmark.onLoad(file, dirContents);
   var val = Number(document.getElementById('column').dataset.val);
   var polarity = 1;
 

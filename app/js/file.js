@@ -104,7 +104,7 @@ function postExtract(fileName, tempFolder, dirContents) {
   viewOne.src = path.join(tempFolder, encodeURIComponent(dirContents[0]));
   viewTwo.src = path.join(tempFolder, encodeURIComponent(dirContents[1]));
 
-  page.load();
+  page.load(fileName);
   enable("pageLeft");
   enable("pageRight");
   enable("column");
