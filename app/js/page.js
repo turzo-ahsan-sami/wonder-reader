@@ -100,6 +100,8 @@ function pageTurn(val) {
 };
 
 function singlePage(fileDir, dirContents, index) { // For Single page viewing and styling
+  bookmark.onChange(index); // Updates Bookmarks
+
   viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
   viewOne.style.width = '100%';
   viewTwo.style.display = 'none';
@@ -113,6 +115,8 @@ function defaults(fileDir, dirContents, index, polarity) {
     if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1*polarity) > -1) {
       singlePage(fileDir, dirContents, index);
     } else {
+      bookmark.onChange(index); // Updates Bookmarks
+
       viewOne.style.display = 'initial';
       viewTwo.style.display = 'initial';
       viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
