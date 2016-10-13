@@ -19,8 +19,10 @@ exports.onLoad = (filePath, directoryContents) => {
   template.name = baseName;
   template.currentIndex = 0;
   template.fullIndex = directoryContents.length - 1;
+  console.log(template);
 
   template = Object.keys(template).map(function(k) { return template[k] }); // JSON => Array
+  console.log(template);
 
   var json = jsonfile.readFile(bookmark, function(err, obj) {
     if (err) {
@@ -30,6 +32,7 @@ exports.onLoad = (filePath, directoryContents) => {
       jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
       return 0;
     }
+    console.log(obj);
     var jsonArray = Object.keys(obj).map(function(k) { return obj[k] }); // JSON => Array
     jsonArray.push(template);
     console.log(JSON.stringify(jsonArray)); // TODO: Fix broken Arrays
