@@ -29,7 +29,8 @@ exports.load = (file) => {
   dirContents = strain(fs.readdirSync(fileDir));
   centerFolds = center.fold('viewImgOne');
 
-  var index = bookmark.onLoad(file, dirContents);
+  var index = 0
+  bookmark.onLoad(file, dirContents);
   var val = Number(document.getElementById('column').dataset.val);
   var polarity = 1;
 

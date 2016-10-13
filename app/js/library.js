@@ -18,12 +18,10 @@ function libBuilder(directory, array, listID) {
     if (fs.statSync(file).isFile()) {
 
       newDirectory = dirEncode(directory);
-
       $('#' + listID).append(
         '<li class="file"><a href="#" onclick="file.loader(\'' + path.join(newDirectory, encodeURIComponent(array[i].name)) + '\')"><i class="fa fa-file" aria-hidden="true"></i>' + array[i].name + '</a></li>'
       );
-    } else if (fs.statSync(file).isDirectory()) {
-
+    } else if (fs.statSync(file).isDirectory()) { // Deep scans interior folders
       var newListID = (listID + array[i].name).replace(/\s|#|\(|\)|\'|,|&|\+|-/g, "");
       $('#' + listID).append('<li class="folder"><a href="#" onclick="libFolders(\'' + newListID + '\')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>' + array[i].name + '</a></li><ul id=' + newListID + '>');
       libBuilder(file, array[i].children, newListID);
@@ -49,7 +47,6 @@ function dirEncode(oldPath) {
       newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
     };
   };
-
   return newPath;
 };
 
@@ -65,12 +62,12 @@ function loader() {
 
     var directory = fileNames[0];
     var config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
-    var comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json')
+    var comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
     var obj = {'library': directory};
     var dirArray = dirTree(directory, ['.cbr', '.cbz']);
     var listID = 'ulLib';
 
-    jsonfile.writeFileSync(comics, dirArray, {'spaces': 2})
+    jsonfile.writeFileSync(comics, dirArray, {'spaces': 2});
     jsonfile.writeFileSync(config, obj);
     $('#ulLib li').remove();
     $('#ulLib ul').remove();

@@ -1,5 +1,4 @@
 var fs = require('fs');
-var isThere = require('is-there');
 var jsonfile = require('jsonfile');
 var os = require('os');
 var page = require('./page.js')
@@ -21,27 +20,22 @@ exports.onLoad = (filePath, directoryContents) => {
   template.currentIndex = 0;
   template.fullIndex = directoryContents.length - 1;
 
-  json = jsonfile.readFile(bookmark, function(err, obj) {
+  template = Object.keys(template).map(function(k) { return template[k] }); // JSON => Array
+
+  var json = jsonfile.readFile(bookmark, function(err, obj) {
     if (err) {
-      jsonfile.writeFileSync(bookmark, template, {spaces: 2})
-    }
-    for (var i = 0; i < json.length; i++) {
-      if (baseName == json[i].name) {
-        template = json[i];
-      };
-    };
-    if (template.currentIndex != 0) {
-      var r = confirm("Continue from last page?");
-      if (r == true) {
-        return template.currentIndex;
-      } else {
-        return 0;
-      };
-    } else {
-      jsonfile.writefile()
+      var newArray = [];
+      newArray.push(template); // Pushes into Array
+      obj = JSON.stringify(newArray); // Array => JSON
+      jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
       return 0;
-    };
+    }
+    var jsonArray = Object.keys(obj).map(function(k) { return obj[k] }); // JSON => Array
+    jsonArray.push(template);
+    console.log(JSON.stringify(jsonArray)); // TODO: Fix broken Arrays
+    console.log(jsonArray);
   });
+
 };
 
 exports.onChange = (index) => {
