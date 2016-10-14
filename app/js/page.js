@@ -29,8 +29,16 @@ exports.load = (file) => {
   dirContents = strain(fs.readdirSync(fileDir));
   centerFolds = center.fold('viewImgOne');
 
-  var index = 0
-  bookmark.onLoad(file, dirContents);
+  var index = 0;
+  var continueIndex = Number(bookmark.onLoad(file, dirContents));
+  if(continueIndex > 0) {
+    var r = confirm('Continue ' + path.basename(file) + ' at page ' + continueIndex);
+    if (r == true) {
+      index = continueIndex;
+    } else {
+      index = 0;
+    };
+  };
   var val = Number(document.getElementById('column').dataset.val);
   var polarity = 1;
 
@@ -96,12 +104,13 @@ function pageTurn(val) {
       };
     };
   };
+  bookmark.onChange(index);
   document.getElementById('viewer').scrollTop = 0;
   document.getElementById('viewer').scrollLeft = 0;
 };
 
 function singlePage(fileDir, dirContents, index) { // For Single page viewing and styling
-  bookmark.onChange(index); // Updates Bookmarks
+  // bookmark.onChange(index); // Updates Bookmarks
 
   viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
   viewOne.style.width = '100%';
@@ -116,7 +125,7 @@ function defaults(fileDir, dirContents, index, polarity) {
     if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1*polarity) > -1) {
       singlePage(fileDir, dirContents, index);
     } else {
-      bookmark.onChange(index); // Updates Bookmarks
+      // bookmark.onChange(index); // Updates Bookmarks
 
       viewOne.style.display = 'initial';
       viewTwo.style.display = 'initial';
