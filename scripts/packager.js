@@ -17,9 +17,9 @@ packager(
   },
   function cb(err, appPaths) {
     postPackage(appPaths);
-  }
+  };
 );
 
 function postPackage(appPaths) {
-  console.log(colors.magenta('Wonder Reader packaging successful! Files can be found at ' + appPaths))
+  console.log(colors.magenta('Wonder Reader packaging successful! Files can be found at ' + appPaths));
 };

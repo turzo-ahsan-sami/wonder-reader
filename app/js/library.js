@@ -14,14 +14,14 @@ function libBuilder(directory, array, listID) {
   $('#libStatus').remove();
   // console.log(directory)
   for (var i=0; i < array.length; i++) {
-    var file = path.join(directory, array[i].name)
-    if (fs.statSync(file).isFile()) {
+    var file = path.join(directory, array[i].name);
+    if ( fs.statSync(file).isFile() ) {
 
       newDirectory = dirEncode(directory);
       $('#' + listID).append(
         '<li class="file"><a href="#" onclick="file.loader(\'' + path.join(newDirectory, encodeURIComponent(array[i].name)) + '\')"><i class="fa fa-file" aria-hidden="true"></i>' + array[i].name + '</a></li>'
       );
-    } else if (fs.statSync(file).isDirectory()) { // Deep scans interior folders
+    } else if ( fs.statSync(file).isDirectory() ) { // Deep scans interior folders
       var newListID = (listID + array[i].name).replace(/\s|#|\(|\)|\'|,|&|\+|-/g, "");
       $('#' + listID).append('<li class="folder"><a href="#" onclick="libFolders(\'' + newListID + '\')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>' + array[i].name + '</a></li><ul id=' + newListID + '>');
       libBuilder(file, array[i].children, newListID);

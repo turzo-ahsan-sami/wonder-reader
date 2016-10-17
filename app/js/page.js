@@ -9,11 +9,7 @@ var path = require('path');
 var sizeOf = require('image-size');
 var strain = require('./strain.js');
 
-var centerFolds;
-var dirContents;
-var fileDir;
-var fileName;
-var filePath;
+var centerFolds, dirContents, fileDir, fileName, filePath;
 
 var inner = document.getElementById('innerWindow');
 var viewOne = document.getElementById('viewImgOne');
@@ -104,14 +100,12 @@ function pageTurn(val) {
       };
     };
   };
-  bookmark.onChange(index);
+  bookmark.onChange(index); // Updates bookmark.json
   document.getElementById('viewer').scrollTop = 0;
   document.getElementById('viewer').scrollLeft = 0;
 };
 
 function singlePage(fileDir, dirContents, index) { // For Single page viewing and styling
-  // bookmark.onChange(index); // Updates Bookmarks
-
   viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
   viewOne.style.width = '100%';
   viewTwo.style.display = 'none';
@@ -125,8 +119,6 @@ function defaults(fileDir, dirContents, index, polarity) {
     if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1*polarity) > -1) {
       singlePage(fileDir, dirContents, index);
     } else {
-      // bookmark.onChange(index); // Updates Bookmarks
-
       viewOne.style.display = 'initial';
       viewTwo.style.display = 'initial';
       viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));

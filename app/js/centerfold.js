@@ -3,7 +3,7 @@
 var fs = require('fs');
 var path = require('path');
 var sizeOf = require('image-size');
-var strain = require('./strain.js')
+var strain = require('./strain.js');
 
 exports.fold = (id) => {
   var filePath = decodeURIComponent(document.getElementById(id).src.substr(7));

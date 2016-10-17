@@ -44,7 +44,6 @@ $( document ).ready( function() {
 
   // On Changes
   window.onresize = function() {
-
     document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
     document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
     document.getElementById('bgLoader').style.left = window.innerWidth/2 - 75 + 'px';
@@ -54,7 +53,6 @@ $( document ).ready( function() {
     document.getElementById('libDropDown').style.left = window.innerWidth/2 - 38.5 + 'px';
     document.getElementById('mainLib').style.height = window.innerHeight - 86 + 'px';
     document.getElementById('libList').style.height = window.innerHeight - 142 + 'px';
-
     imgDivResizer();
   };
 });
@@ -76,7 +74,7 @@ function imgDivResizer() {
 var images = document.querySelectorAll('img');
 for (var j = 0; j < images.length; j++) {
   images[j].addEventListener('load', imgDivResizer());
-}
+};
 
 // Handles the zoom
 function pageZoom() {
@@ -118,7 +116,7 @@ function libFolders(id) {
   if (id.is(':animated')) return;
   id.prev('.folder').children().children('.fa-caret-down').toggleClass('rotate');
   id.slideToggle(500, 'linear');
-}
+};
 
 // Library Windows collapsing
 function libSlider() {
