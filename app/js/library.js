@@ -20,10 +20,8 @@ function libBuilder(directory, array, listID) {
 
       newDirectory = dirEncode(directory);
       $('#' + listID).append(
-        '<li class="file"><a href="#" onclick="file.loader(\'' + path.join(newDirectory, encodeURIComponent(array[i].name)) + '\')"><i class="fa fa-file" aria-hidden="true"></i>' + array[i].name + '</a>'
+        '<li class="file"><a href="#" onclick="file.loader(\'' + path.join(newDirectory, encodeURIComponent(array[i].name)) + '\')"><i class="fa fa-file" aria-hidden="true"></i>' + array[i].name + bookmark.percent(array[i].name) + '</a></li>'
       );
-      bookmark.percent(array[i].name);
-      $('#' + listID).append('</li>');
     } else if ( fs.statSync(file).isDirectory() ) { // Deep scans interior folders
       var newListID = (listID + array[i].name).replace(/\s|#|\(|\)|\'|,|&|\+|-/g, "");
       $('#' + listID).append('<li class="folder"><a href="#" onclick="libFolders(\'' + newListID + '\')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>' + array[i].name + '</a></li><ul id=' + newListID + '>');

@@ -68,11 +68,12 @@ exports.onChange = (index) => {
 
 exports.percent = (fileName) => {
   var obj = jsonfile.readFileSync(bookmark);
+  // console.log(fileName + " with obj[]: " + obj[fileName])
   if ( obj[fileName] ) {
     var percent = obj[fileName][1]/obj[fileName][2]
-    var xyz = '<span class="bookmark-percent" style="float: right;">' + percent.toFixed(2)*100 + '%</span>';
+    var xyz = '<span class="bookmark-percent">' + percent.toFixed(2)*100 + '%</span>';
     console.log(percent.toFixed(2)*100);
     console.log(xyz);
     return xyz;
-  } else { return; };
+  } else { return '<span class="bookmark-percent">' + 0 + '%</span>'; };
 };
