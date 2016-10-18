@@ -1,145 +1,175 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Wonder-reader by alice-em</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Wonder-reader</h1>
-      <h2 class="project-tagline">Comic Book Reader, written with Node and Electron</h2>
-      <a href="https://github.com/alice-em/Wonder-Reader" class="btn">View on GitHub</a>
-      <a href="https://github.com/alice-em/Wonder-Reader/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/alice-em/Wonder-Reader/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
 
-    <section class="main-content">
-      <h1>
-<a id="wonder-reader" class="anchor" href="#wonder-reader" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Wonder-Reader</h1>
+<head>
+  <meta charset="UTF-8">
+  <title>Wonder-reader by alice-em</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+</head>
 
-<p><img src="https://raw.githubusercontent.com/alice-em/Wonder-Reader/master/shieldIcon.png" height="100" width="100">
-Version 0.2.2</p>
+<body>
+  <section class="page-header">
+    <h1 class="project-name">Wonder-reader</h1>
+    <h2 class="project-tagline">Comic Book Reader, written with Node and Electron</h2>
+    <a href="https://github.com/alice-em/Wonder-Reader" class="btn">View on GitHub</a>
+    <a href="https://github.com/alice-em/Wonder-Reader/zipball/master" class="btn">Download .zip</a>
+    <a href="https://github.com/alice-em/Wonder-Reader/tarball/master" class="btn">Download .tar.gz</a>
+  </section>
 
-<p><strong>Requirements</strong>: Git, Node, and NPM</p>
+  <section class="main-content">
+    <h1>
+      <a id="wonder-reader" class="anchor" href="#wonder-reader" aria-hidden="true">
+        <span aria-hidden="true" class="octicon octicon-link"></span>
+      </a>Wonder-Reader
+    </h1>
 
-<h2>
-<a id="downloads" class="anchor" href="#downloads" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Downloads</h2>
+    <p>
+      <img src="https://raw.githubusercontent.com/alice-em/Wonder-Reader/master/shieldIcon.png" height="100" width="100"> Version 0.3.0
+    </p>
 
-<ul>
-<li>Windows: <a href="https://gitlab.com/alice-em/wonderReaderReleases/raw/master/Wonder%20Reader-win32-x64.zip">(link)</a>
-</li>
-<li>OSX: <a href="https://gitlab.com/alice-em/wonderReaderReleases/raw/master/Wonder%20Reader-darwin-x64.zip">(link)</a>
-</li>
-<li>Linux: <a href="https://gitlab.com/alice-em/wonderReaderReleases/raw/master/Wonder%20Reader-linux-x64.zip0">(link)</a>
-</li>
-</ul>
+    <p>
+      <strong>Requirements</strong>: Git, Node, and NPM
+    </p>
 
-<h2>
-<a id="installation-and-starting" class="anchor" href="#installation-and-starting" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation and Starting</h2>
+    <h2>
+      <a id="downloads" class="anchor" href="#downloads" aria-hidden="true">
+        <span aria-hidden="true" class="octicon octicon-link"></span>
+      </a>Downloads
+    </h2>
 
-<div class="highlight highlight-source-shell"><pre>git clone https://github.com/alice-em/Wonder-Reader.git
-<span class="pl-c1">cd</span> Wonder-Reader
-npm install
-npm start</pre></div>
+    <ul>
+      <li>Windows: <a href="https://gitlab.com/alice-em/wonderReaderReleases/raw/master/Wonder%20Reader-win32-x64.zip">(link)</a>
+      </li>
+      <li>OSX: <a href="https://gitlab.com/alice-em/wonderReaderReleases/raw/master/Wonder%20Reader-darwin-x64.zip">(link)</a>
+      </li>
+      <li>Linux: <a href="https://gitlab.com/alice-em/wonderReaderReleases/raw/master/Wonder%20Reader-linux-x64.zip0">(link)</a>
+      </li>
+    </ul>
 
-<h2>
-<a id="compiling" class="anchor" href="#compiling" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Compiling</h2>
+    <h2>
+      <a id="installation-and-starting" class="anchor" href="#installation-and-starting" aria-hidden="true">
+        <span aria-hidden="true" class="octicon octicon-link"></span>
+      </a>Installation and Starting
+    </h2>
 
-<p><strong>Requirements</strong>: electron-packager</p>
+    <div class="highlight highlight-source-shell">
+      <pre>git clone https://github.com/alice-em/Wonder-Reader.git
+        <span class="pl-c1">cd</span> Wonder-Reader npm install npm start</pre>
+    </div>
 
-<ul>
-<li>
-<p>OSX / Darwin</p>
+    <h2>
+      <a id="compiling" class="anchor" href="#compiling" aria-hidden="true">
+        <span aria-hidden="true" class="octicon octicon-link"></span>
+      </a>Compiling
+    </h2>
 
-<pre><code>  $ electron-packager ./ --platform=darwin --arch=x64 --out=../Wonder-Reader-Releases --prune=true --icon=./shieldIcon.icns
-</code></pre>
-</li>
-<li>
-<p>Windows</p>
+    <p><strong>Requirements</strong>: electron-packager</p>
 
-<pre><code>  $ electron-packager ./ --platform=win32 --arch=x64 --out=../Wonder-Reader-Releases --prune=true --icon=./shieldIcon.ico
-</code></pre>
-</li>
-<li>
-<p>Linux</p>
+    <ul>
+      <li>
+        <p>OSX / Darwin</p>
 
-<pre><code>  $ electron-packager ./ --platform=linux --arch=x64 --out=../Wonder-Reader-Releases --prune=true
-</code></pre>
-</li>
-</ul>
+        <pre>
+          <code> $ electron-packager ./ --platform=darwin --arch=x64 --out=../Wonder-Reader-Releases --prune=true --icon=./shieldIcon.icns
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>Windows</p>
 
-<h2>
-<a id="development" class="anchor" href="#development" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Development</h2>
+        <pre>
+          <code> $ electron-packager ./ --platform=win32 --arch=x64 --out=../Wonder-Reader-Releases --prune=true --icon=./shieldIcon.ico
+          </code>
+        </pre>
+      </li>
+      <li>
+        <p>Linux</p>
 
-<p><strong>Requirements</strong>: Grunt-cli, Sass, and some sort of text-editor</p>
+        <pre>
+          <code> $ electron-packager ./ --platform=linux --arch=x64 --out=../Wonder-Reader-Releases --prune=true
+          </code>
+        </pre>
+      </li>
+    </ul>
 
-<p>TODO:</p>
+    <h2>
+      <a id="development" class="anchor" href="#development" aria-hidden="true">
+        <span aria-hidden="true" class="octicon octicon-link"></span>
+      </a>Development
+    </h2>
 
-<ul>
-<li>Comics at either <strong>firstPage</strong> or <strong>lastPage</strong> can open up the next file in library folder.</li>
-<li>Any other neat ideas that could work go here too.
+    <p>
+      <strong>Requirements</strong>: Grunt-cli, Sass, and some sort of text-editor
+    </p>
 
-<ul>
-<li>Create a bookmarking system</li>
-<li>Reloop files into other extraction method if initial one fails. If both fail, err</li>
-<li>Double click zoom in function!</li>
-</ul>
-</li>
-</ul>
+    <p>TODO:</p>
 
-<h2>
-<a id="notes" class="anchor" href="#notes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Notes</h2>
+    <ul>
+      <li>Comics at either
+        <strong>firstPage</strong> or <strong>lastPage</strong> can open up the next file in library folder.
+      </li>
+      <li>Any other neat ideas that could work go here too.
 
-<ul>
-<li>node.fs API :: ( <a href="https://nodejs.org/api/fs.html">https://nodejs.org/api/fs.html</a> )</li>
-<li>electron.io API et Docs :: ( <a href="http://electron.atom.io/docs/">http://electron.atom.io/docs/</a> )</li>
-</ul>
+        <ul>
+          <li>Create a bookmarking system</li>
+          <li>Reloop files into other extraction method if initial one fails. If both fail, err</li>
+          <li>Double click zoom in function!</li>
+        </ul>
+      </li>
+    </ul>
 
-<pre><code>&gt; var array = []
-undefined
-&gt; array[0]
-undefined
-&gt; array[0] == true
-false
-&gt; array[0] == false
-false
-&gt; array.length
-0
-</code></pre>
+    <h2>
+      <a id="notes" class="anchor" href="#notes" aria-hidden="true">
+        <span aria-hidden="true" class="octicon octicon-link"></span>
+      </a>Notes
+    </h2>
 
-<h2>
-<a id="credit" class="anchor" href="#credit" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Credit</h2>
+    <ul>
+      <li>node.fs API :: ( <a href="https://nodejs.org/api/fs.html">https://nodejs.org/api/fs.html</a> )</li>
+      <li>electron.io API et Docs :: ( <a href="http://electron.atom.io/docs/">http://electron.atom.io/docs/</a> )</li>
+    </ul>
 
-<ul>
-<li>CSS Loaders :: <a href="https://github.com/lukehaas/css-loaders">https://github.com/lukehaas/css-loaders</a>
-</li>
-<li>Dragscroll.js :: <a href="https://github.com/asvd/dragscroll">https://github.com/asvd/dragscroll</a>
-</li>
-<li>Electron :: <a href="http://electron.atom.io">http://electron.atom.io</a>
-</li>
-<li>Font Awesome :: <a href="http://fontawesome.io/">http://fontawesome.io/</a>
-</li>
-<li>Node :: <a href="https://nodejs.org/en/">https://nodejs.org/en/</a>
-</li>
-<li>Node Directory Tree :: <a href="https://github.com/mihneadb/node-directory-tree">https://github.com/mihneadb/node-directory-tree</a>
-</li>
-</ul>
+    <pre>
+      <code>&gt; var array = [] undefined &gt; array[0] undefined &gt; array[0] == true false &gt; array[0] == false false &gt; array.length 0
+      </code>
+    </pre>
 
-<p>Logo by Jake Brockway : <a href="http://jacobvbrockway.weebly.com">website</a></p>
+    <h2>
+      <a id="credit" class="anchor" href="#credit" aria-hidden="true">
+        <span aria-hidden="true" class="octicon octicon-link"></span>
+      </a>Credit</h2>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/alice-em/Wonder-Reader">Wonder-reader</a> is maintained by <a href="https://github.com/alice-em">alice-em</a>.</span>
+    <ul>
+      <li>CSS Loaders :: <a href="https://github.com/lukehaas/css-loaders">https://github.com/lukehaas/css-loaders</a>
+      </li>
+      <li>Dragscroll.js :: <a href="https://github.com/asvd/dragscroll">https://github.com/asvd/dragscroll</a>
+      </li>
+      <li>Electron :: <a href="http://electron.atom.io">http://electron.atom.io</a>
+      </li>
+      <li>Font Awesome :: <a href="http://fontawesome.io/">http://fontawesome.io/</a>
+      </li>
+      <li>Node :: <a href="https://nodejs.org/en/">https://nodejs.org/en/</a>
+      </li>
+      <li>Node Directory Tree :: <a href="https://github.com/mihneadb/node-directory-tree">https://github.com/mihneadb/node-directory-tree</a>
+      </li>
+    </ul>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
+    <p>Logo by Jake Brockway : <a href="http://jacobvbrockway.weebly.com">website</a>
+    </p>
 
-    </section>
+    <footer class="site-footer">
+      <span class="site-footer-owner"><a href="https://github.com/alice-em/Wonder-Reader">Wonder-reader</a> is maintained by <a href="https://github.com/alice-em">alice-em</a>.</span>
 
-  
-  </body>
+      <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+    </footer>
+
+  </section>
+
+
+</body>
+
 </html>
