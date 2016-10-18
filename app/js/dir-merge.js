@@ -11,7 +11,7 @@ exports.merge = (directory) => {
   var filtered = [];
 
   for(i=0; i < dirContents.length; i++) {
-    if(imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(directory,dirContents[i])).isDirectory()) {
+    if( imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(directory,dirContents[i])).isDirectory() ) {
       filtered.push(dirContents[i]);
     }
   };
@@ -19,10 +19,10 @@ exports.merge = (directory) => {
   dirContents = filtered;
 
   if (dirContents.length > 0) {
-    while (fs.statSync(path.join(directory, dirContents[0])).isDirectory()) {
+    while ( fs.statSync(path.join(directory, dirContents[0])).isDirectory() ) {
       filtered = new Array;
       for(i=0; i < dirContents.length; i++) {
-        if(imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(directory,dirContents[i])).isDirectory()) {
+        if( imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(directory,dirContents[i])).isDirectory() ) {
           filtered.push(dirContents[i]);
         };
       };
@@ -31,5 +31,5 @@ exports.merge = (directory) => {
     };
   };
   console.log(directory);
-  return directory
+  return directory;
 }

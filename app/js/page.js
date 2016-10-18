@@ -1,6 +1,7 @@
 // page.js turns pages.
 
 var $ = require('jquery');
+var bookmark = require('./bookmark.js');
 var center = require('./centerfold.js');
 var fs = require('fs');
 var os = require('os');
@@ -8,17 +9,13 @@ var path = require('path');
 var sizeOf = require('image-size');
 var strain = require('./strain.js');
 
-var centerFolds;
-var dirContents;
-var fileDir;
-var fileName;
-var filePath;
+var centerFolds, dirContents, fileDir, fileName, filePath;
 
 var inner = document.getElementById('innerWindow');
 var viewOne = document.getElementById('viewImgOne');
 var viewTwo = document.getElementById('viewImgTwo');
 
-exports.load = () => {
+exports.load = (file) => {
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
   if (process.platform == "win32") {
     filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
@@ -28,7 +25,17 @@ exports.load = () => {
   dirContents = strain(fs.readdirSync(fileDir));
   centerFolds = center.fold('viewImgOne');
 
-  var index = dirContents.indexOf(fileName);
+  var index = 0;
+  var continueIndex = Number(bookmark.onLoad(file, dirContents));
+  console.log('bookmark.onLoad() = ' + continueIndex)
+  if(continueIndex > 0) {
+    var r = confirm('Continue ' + path.basename(file) + ' at page ' + continueIndex);
+    if (r == true) {
+      index = continueIndex;
+    } else {
+      index = 0;
+    };
+  };
   var val = Number(document.getElementById('column').dataset.val);
   var polarity = 1;
 
@@ -94,6 +101,7 @@ function pageTurn(val) {
       };
     };
   };
+  bookmark.onChange(index); // Updates bookmark.json
   document.getElementById('viewer').scrollTop = 0;
   document.getElementById('viewer').scrollLeft = 0;
 };

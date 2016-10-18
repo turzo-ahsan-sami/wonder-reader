@@ -258,6 +258,11 @@ button#trash {
       display: none;
     }
   }
+  .bookmark-percent {
+    float: right;
+    font-size: 11px;
+    padding-right: 5px;
+  }
 }
 #libDropDown {
   position: fixed;

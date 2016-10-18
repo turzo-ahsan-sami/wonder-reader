@@ -254,6 +254,11 @@ button#trash {
 #mainLib #ulLib ul {
   display: none;
 }
+#mainLib .bookmark-percent {
+  float: right;
+  font-size: 11px;
+  padding-right: 5px;
+}
 
 #libDropDown {
   position: fixed;

@@ -50,12 +50,12 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
     }
   } else {
     handleError(evt)
-  }
+  };
 
   // tempFolder Variable for loaded comic
   var tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic);
   var looper = 0;
-  console.log('tempFolder = ' + tempFolder)
+  console.log('tempFolder = ' + tempFolder);
 
   if (isThere(tempFolder)) { // Checks for existing Directory
     tempFolder = directory.merge(tempFolder);
@@ -77,9 +77,9 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
     if (path.extname(fileName).toLowerCase() == ".cbr") {
       rarExtractor(fileName, tempFolder, looper);
     } else if (path.extname(fileName).toLowerCase() == ".cbz") {
-      zipExtractor(fileName, tempFolder, looper)
+      zipExtractor(fileName, tempFolder, looper);
     } else {
-      handleError(evt)
+      handleError(evt);
     };
     // Async class adding then hidden on final load
     $('#loader').addClass('loader').removeClass('hidden');
@@ -99,12 +99,12 @@ function postExtract(fileName, tempFolder, dirContents) {
   var viewOne = document.getElementById('viewImgOne');
   var viewTwo = document.getElementById('viewImgTwo');
 
-  dirContents = strain(dirContents)
+  dirContents = strain(dirContents);
 
   viewOne.src = path.join(tempFolder, encodeURIComponent(dirContents[0]));
   viewTwo.src = path.join(tempFolder, encodeURIComponent(dirContents[1]));
 
-  page.load();
+  page.load(fileName);
   enable("pageLeft");
   enable("pageRight");
   enable("column");
@@ -120,7 +120,7 @@ function postExtract(fileName, tempFolder, dirContents) {
 
 exports.dialog = () => {
   openFile();
-}
+};
 
 exports.loader = (fileName) => {
   fileName = decodeURIComponent(fileName);
@@ -128,8 +128,8 @@ exports.loader = (fileName) => {
     fileLoad(fileName);
   } else {
     alert('Missing or broken file: Could not open ' + fileName);
-  }
-}
+  };
+};
 
 //-/-----------------\
 //-| File Extractors |
@@ -154,7 +154,7 @@ function rarExtractor(fileName, tempFolder, looper) {
       $('#loader').addClass('hidden').removeClass('loader');
       $('#bgLoader').addClass('hidden');
       postExtract(fileName, tempFolder, dirContents);
-    }
+    };
   });
 };
 

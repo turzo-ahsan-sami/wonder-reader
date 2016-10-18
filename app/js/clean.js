@@ -27,4 +27,4 @@ function clearCache(cache) {
       rimraf.sync(path.join(cache, cacheContents[i])); // Deletes older directories
     };
   };
-}
+};
