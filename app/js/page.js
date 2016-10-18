@@ -27,6 +27,7 @@ exports.load = (file) => {
 
   var index = 0;
   var continueIndex = Number(bookmark.onLoad(file, dirContents));
+  console.log('bookmark.onLoad() = ' + continueIndex)
   if(continueIndex > 0) {
     var r = confirm('Continue ' + path.basename(file) + ' at page ' + continueIndex);
     if (r == true) {

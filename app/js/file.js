@@ -34,7 +34,7 @@ function openFile() {
       if (fileNames === undefined) return; // Breaks on error
       var fileName = fileNames[0]; // Filepath name
       fileLoad(fileName); // Extracts files to their proper locations
-		};
+		}
   );
 };
 
@@ -177,6 +177,6 @@ function zipExtractor(fileName, tempFolder, looper) {
         $('#bgLoader').addClass('hidden');
         postExtract(fileName, tempFolder, dirContents);
       };
-    });
+    })
   );
 };
