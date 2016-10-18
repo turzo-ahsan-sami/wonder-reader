@@ -17,7 +17,7 @@ packager(
   },
   function cb(err, appPaths) {
     postPackage(appPaths);
-  };
+  }
 );
 
 function postPackage(appPaths) {
