@@ -20,12 +20,8 @@ exports.onLoad = (filePath, directoryContents) => { // returns a new index for <
   template.name = baseName;
   template.currentIndex = 0;
   template.fullIndex = directoryContents.length - 1;
-  console.log(template);
 
   template = Object.keys(template).map(function(k) { return template[k] }); // JSON => Array
-  console.log(template);
-
-  console.log(isThere(bookmark));
 
   if ( isThere(bookmark) ) {
     var obj = jsonfile.readFileSync(bookmark);
@@ -39,7 +35,7 @@ exports.onLoad = (filePath, directoryContents) => { // returns a new index for <
         if (err) {
           console.log(err);
           return 0;
-        }
+        };
         console.log('Item, ' + baseName + ', added to bookmark.json.');
         return 0;
       });
@@ -60,7 +56,6 @@ exports.onChange = (index) => {
     console.log(obj[baseName][1]);
     jsonfile.writeFile(bookmark, obj, {spaces: 2}, function(err) {
       if (err) { return err };
-      console.dir(obj)
       console.log('bookmark.json updated');
     });
   });
@@ -70,10 +65,8 @@ exports.percent = (fileName) => {
   var obj = jsonfile.readFileSync(bookmark);
   // console.log(fileName + " with obj[]: " + obj[fileName])
   if ( obj[fileName] ) {
-    var percent = obj[fileName][1]/obj[fileName][2]
+    var percent = obj[fileName][1]/obj[fileName][2];
     var xyz = '<span class="bookmark-percent">' + percent.toFixed(2)*100 + '%</span>';
-    console.log(percent.toFixed(2)*100);
-    console.log(xyz);
     return xyz;
-  } else { return '<span class="bookmark-percent">' + 0 + '%</span>'; };
+  } else { return '<span class="bookmark-percent">' + 0 + '%</span>' };
 };

@@ -51,7 +51,7 @@ function dirEncode(oldPath) {
   return newPath;
 };
 
-function loader() {
+exports.openDir = () => {
   dialog.showOpenDialog({
     properties: [
       'openDirectory'
@@ -90,13 +90,9 @@ exports.builder = () => {
   libBuilder(directory, dirArray.children, listID)
 };
 
-exports.openDir = () => {
-  loader()
-}
-
 exports.onLoad = () => {
   var configFile = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json')
-  if (isThere(configFile)) {
+  if ( isThere(configFile) ) {
     var config = jsonfile.readFileSync(configFile);
     if (config.library != undefined) {
       var dirArray = dirTree(config.library, ['.cbr', '.cbz']);
@@ -104,10 +100,10 @@ exports.onLoad = () => {
       libBuilder(config.library, dirArray.children, listID)
     } else {
       $('#libStatus').append('The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.');
-    }
+    };
   } else {
     mkdirp.sync(path.join(os.tmpdir(), 'wonderReader', 'json'));
     fs.writeFileSync(configFile, '{}');
     $('#libStatus').append('The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.');
-  }
-}
+  };
+};
