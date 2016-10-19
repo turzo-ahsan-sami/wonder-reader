@@ -3,6 +3,7 @@
 const $ = require('jquery');
 const bookmark = require('./bookmark.js');
 const {dialog} = require('electron').remote;
+const dirFunction = require('./directory.js');
 const dirTree = require('directory-tree'); // https://www.npmjs.com/package/directory-tree
 const fs = require('fs');
 const isThere = require('is-there');
@@ -18,13 +19,13 @@ function libBuilder(directory, array, listID) {
     var file = path.join(directory, array[i].name);
     if ( fs.statSync(file).isFile() ) {
 
-      newDirectory = dirEncode(directory);
-      $('#' + listID).append(
+      newDirectory = dirFunction.encode(directory);
+      $(`#${listID}`).append(
         `<li class="file"><a href="#" onclick="file.loader('${path.join(newDirectory, encodeURIComponent(array[i].name))}')"><i class="fa fa-file" aria-hidden="true"></i>${array[i].name} ${bookmark.percent(array[i].name)}</a></li>`
       );
     } else if ( fs.statSync(file).isDirectory() ) { // Deep scans interior folders
       var newListID = (listID + array[i].name).replace(/\s|#|\(|\)|\'|,|&|\+|-/g, "");
-      $('#' + listID).append(`<li class="folder"><a href="#" onclick="libFolders('${newListID}')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${array[i].name}</a></li><ul id=${newListID}>`);
+      $(`#${listID}`).append(`<li class="folder"><a href="#" onclick="libFolders('${newListID}')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${array[i].name}</a></li><ul id=${newListID}>`);
       libBuilder(file, array[i].children, newListID);
       $(`#${listID}`).append('</ul>');
     } else {
@@ -32,23 +33,6 @@ function libBuilder(directory, array, listID) {
     };
   };
   $('#repeat').removeClass('rotater');
-};
-
-function dirEncode(oldPath) {
-  var newPath = '';
-  var tempPath = oldPath.split(path.sep);
-
-  if (process.platform != "win32") {
-    for (var j=0; j < tempPath.length; j++) {
-      newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
-    };
-    newPath = '/' + newPath;
-  } else {
-    for (var j=1; j < tempPath.length; j++) {
-      newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
-    };
-  };
-  return newPath;
 };
 
 exports.openDir = () => {

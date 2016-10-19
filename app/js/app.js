@@ -112,7 +112,7 @@ function pageZoom() {
 
 // Main Library folder collapsing
 function libFolders(id) {
-  id = $('#' + id);
+  id = $(`#${id}`);
   if (id.is(':animated')) return;
   id.prev('.folder').children().children('.fa-caret-down').toggleClass('rotate');
   id.slideToggle(500, 'linear');

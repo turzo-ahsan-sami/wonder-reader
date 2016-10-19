@@ -32,4 +32,21 @@ exports.merge = (directory) => {
   };
   console.log(directory);
   return directory;
-}
+};
+
+exports.encode = (oldPath) => {
+  var newPath = '';
+  var tempPath = oldPath.split(path.sep);
+
+  if (process.platform != "win32") {
+    for (var j=0; j < tempPath.length; j++) {
+      newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
+    };
+    newPath = `/${newPath}`;
+  } else {
+    for (var j=1; j < tempPath.length; j++) {
+      newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
+    };
+  };
+  return newPath;
+};

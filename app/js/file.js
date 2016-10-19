@@ -13,7 +13,7 @@ const unzip = require('unzip');
 
 // Wonder-Reader Specific Modules //
 const clean = require('./clean.js');
-const directory = require('./dir-merge.js');
+const dirFunction = require('./directory.js');
 const miniLib = require('./libMini.js');
 const nextcomic = require('./nextcomic.js');
 const page = require('./page.js');
@@ -60,7 +60,7 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
 
   if (isThere(tempFolder)) { // Checks for existing Directory
     console.log(tempFolder);
-    tempFolder = directory.merge(tempFolder);
+    tempFolder = dirFunction.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
     if (dirContents.length == 0) {
       if (path.extname(fileName).toLowerCase() == ".cbr") {
@@ -143,7 +143,7 @@ function rarExtractor(fileName, tempFolder, looper) {
       alert(error);
     };
 
-    tempFolder = directory.merge(tempFolder);
+    tempFolder = dirFunction.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
 
     if (dirContents.length == 0 && looper <= 3) {
@@ -167,7 +167,7 @@ function zipExtractor(fileName, tempFolder, looper) {
       path: tempFolder
     }).on('close', function() {
       console.log('Extraction complete!');
-      tempFolder = directory.merge(tempFolder);
+      tempFolder = dirFunction.merge(tempFolder);
       dirContents = fs.readdirSync(tempFolder);
 
       if (dirContents.length == 0 && looper <= 3) {

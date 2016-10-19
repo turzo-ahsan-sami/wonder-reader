@@ -9,7 +9,7 @@ function rarExtractor(fileName, tempFolder, looper) {
 
     if (dirContents.length == 0 && looper <= 3) {
       looper++;
-      console.log('Loop = ' + looper);
+      console.log(`Loop = ${looper}`);
       zipExtractor(fileName, tempFolder, looper);
     } else if (looper > 3) {
       alert('Possible broken file?');
@@ -31,7 +31,7 @@ function zipExtractor(fileName, tempFolder, looper) {
 
     if (dirContents.length == 0 && looper <= 3) {
       looper++;
-      console.log('Loop = ' + looper);
+      console.log(`Loop = ${looper}`);
       rarExtractor(fileName, tempFolder, looper);
     } else if (looper > 3) {
       alert('Possible broken file?');
