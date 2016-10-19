@@ -1,15 +1,15 @@
 // page.js turns pages.
 
-var $ = require('jquery');
-var bookmark = require('./bookmark.js');
-var center = require('./centerfold.js');
-var fs = require('fs');
-var os = require('os');
-var path = require('path');
-var sizeOf = require('image-size');
-var strain = require('./strain.js');
+const $ = require('jquery');
+const bookmark = require('./bookmark.js');
+const center = require('./centerfold.js');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const sizeOf = require('image-size');
+const strain = require('./strain.js');
 
-var centerFolds, dirContents, fileDir, fileName, filePath;
+let centerFolds, dirContents, fileDir, fileName, filePath;
 
 var inner = document.getElementById('innerWindow');
 var viewOne = document.getElementById('viewImgOne');
@@ -27,9 +27,9 @@ exports.load = (file) => {
 
   var index = 0;
   var continueIndex = Number(bookmark.onLoad(file, dirContents));
-  console.log('bookmark.onLoad() = ' + continueIndex)
+  console.log(`bookmark.onLoad() = ${continueIndex}`)
   if(continueIndex > 0) {
-    var r = confirm('Continue ' + path.basename(file) + ' at page ' + continueIndex);
+    var r = confirm(`Continue ${path.basename(file)} at page ${continueIndex}`);
     if (r == true) {
       index = continueIndex;
     } else {
@@ -136,7 +136,7 @@ function defaults(fileDir, dirContents, index, polarity) {
   } else if (Math.abs(val) == 1) { // If val == 1
     singlePage(fileDir, dirContents, index);
   } else {
-    alert('Danger! Danger! Will Robinson!\nErr: page.js @ ln 126 :: Invalid variable val: ' + val)
+    alert(`Danger! Danger! Will Robinson!\nErr: Invalid variable val: ${val}`)
   }
 };
 

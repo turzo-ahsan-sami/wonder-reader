@@ -1,8 +1,8 @@
 // libWatch.load(fileName) loads into #library.ul
 
-var $ = require('jquery');
-var fs = require('fs');
-var path = require('path');
+const $ = require('jquery');
+const fs = require('fs');
+const path = require('path');
 
 exports.load = (fileName) => {
   var baseName = path.basename(fileName);
@@ -14,9 +14,9 @@ exports.load = (fileName) => {
   for (i = 0; i < dirContents.length; i++) {
     if ( fs.statSync(path.join(filePath, dirContents[i])).isFile() && ['.cbr', '.cbz'].indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 ) {
       if (dirContents[i] == baseName) {
-        $("#dirLib").append('<li class="libFile current"><span><i class="fa fa-file" aria-hidden="true"></i> ' + dirContents[i].slice(0,-4) + '</span></li>');
+        $("#dirLib").append(`<li class="libFile current"><span><i class="fa fa-file" aria-hidden="true"></i> ${dirContents[i].slice(0,-4)}</span></li>`);
       } else {
-        $("#dirLib").append('<li class="libFile"><a href="#" onclick="file.loader(\'' + path.join(filePath, dirContents[i]) + '\')"><i class="fa fa-file" aria-hidden="true"></i> ' + dirContents[i].slice(0,-4) + '</a></li>');
+        $("#dirLib").append(`<li class="libFile"><a href="#" onclick="file.loader(\'' + path.join(filePath, dirContents[i]) + '\')"><i class="fa fa-file" aria-hidden="true"></i> ${dirContents[i].slice(0,-4)}</a></li>`);
       };
     };
   };

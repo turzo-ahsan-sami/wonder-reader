@@ -1,8 +1,8 @@
 // Loads Functions onto previous and next buttons
 
-var file = require('./file.js');
-var fs = require('fs');
-var path = require('path');
+const file = require('./file.js');
+const fs = require('fs');
+const path = require('path');
 
 function enable(id) {
   document.getElementById(id).disabled = false;

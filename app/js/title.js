@@ -1,8 +1,8 @@
 // title.js: sets title to comic name
 
-var path = require('path');
+const path = require('path');
 
 exports.load = (fileName) => {
   var file = path.basename(fileName, path.extname(fileName));
-  document.title = 'Wonder Reader : ' + file;
+  document.title = `Wonder Reader : ${file}`;
 };

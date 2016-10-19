@@ -2,22 +2,23 @@
 // extracting and sourcing images to where they need to go
 
 const $ = require('jquery');
-var cbr = require('cbr');
+const cbr = require('cbr');
 const {dialog} = require('electron').remote;
-var fs = require('fs');
-var isThere = require('is-there'); // https://www.npmjs.com/package/is-there
-var mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
-var os = require('os'); // https://nodejs.org/api/os.html
-var path = require('path');
-var unzip = require('unzip');
+const fs = require('fs');
+const isThere = require('is-there'); // https://www.npmjs.com/package/is-there
+const mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
+const os = require('os'); // https://nodejs.org/api/os.html
+const path = require('path');
+const unzip = require('unzip');
 
-// User Modules //
-var directory = require('./dir-merge.js');
-var miniLib = require('./libMini.js');
-var nextcomic = require('./nextcomic.js');
-var page = require('./page.js');
-var strain = require('./strain.js');
-var title = require('./title.js');
+// Wonder-Reader Specific Modules //
+const clean = require('./clean.js');
+const directory = require('./dir-merge.js');
+const miniLib = require('./libMini.js');
+const nextcomic = require('./nextcomic.js');
+const page = require('./page.js');
+const strain = require('./strain.js');
+const title = require('./title.js');
 
 var dirContents;
 
@@ -55,9 +56,10 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
   // tempFolder Variable for loaded comic
   var tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic);
   var looper = 0;
-  console.log('tempFolder = ' + tempFolder);
+  console.log(`tempFolder = ${tempFolder}`);
 
   if (isThere(tempFolder)) { // Checks for existing Directory
+    console.log(tempFolder);
     tempFolder = directory.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
     if (dirContents.length == 0) {
@@ -127,7 +129,7 @@ exports.loader = (fileName) => {
   if (isThere(fileName)) {
     fileLoad(fileName);
   } else {
-    alert('Missing or broken file: Could not open ' + fileName);
+    alert(`Missing or broken file: Could not open ${fileName}`);
   };
 };
 
@@ -146,7 +148,7 @@ function rarExtractor(fileName, tempFolder, looper) {
 
     if (dirContents.length == 0 && looper <= 3) {
       looper++;
-      console.log('Loop = ' + looper);
+      console.log(`Loop = ${looper}`);
       zipExtractor(fileName, tempFolder, looper);
     } else if (looper > 3) {
       alert('Possible broken file?');
@@ -159,16 +161,18 @@ function rarExtractor(fileName, tempFolder, looper) {
 };
 
 function zipExtractor(fileName, tempFolder, looper) {
+  console.log('Unzip extraction started.');
   fs.createReadStream(fileName).pipe(
     unzip.Extract({
       path: tempFolder
     }).on('close', function() {
+      console.log('Extraction complete!');
       tempFolder = directory.merge(tempFolder);
       dirContents = fs.readdirSync(tempFolder);
 
       if (dirContents.length == 0 && looper <= 3) {
         looper++;
-        console.log('Loop = ' + looper);
+        console.log(`Loop = ${looper}`);
         rarExtractor(fileName, tempFolder, looper);
       } else if (looper > 3) {
         alert('Possible broken file?');

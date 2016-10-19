@@ -1,9 +1,9 @@
 // centerfold.js returns an array with the index locations of supposed centerfolds
 
-var fs = require('fs');
-var path = require('path');
-var sizeOf = require('image-size');
-var strain = require('./strain.js');
+const fs = require('fs');
+const path = require('path');
+const sizeOf = require('image-size');
+const strain = require('./strain.js');
 
 exports.fold = (id) => {
   var filePath = decodeURIComponent(document.getElementById(id).src.substr(7));

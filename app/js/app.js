@@ -1,8 +1,8 @@
 const $ = require('jquery'); // https://www.npmjs.com/package/jquery
-var clean = require('./js/clean.js');
-var file = require('./js/file.js');
-var library = require('./js/library.js');
-var page = require('./js/page.js');
+const clean = require('./js/clean.js');
+const file = require('./js/file.js');
+const library = require('./js/library.js');
+const page = require('./js/page.js');
 
 $(document).keydown(function(event) {
   if (document.activeElement.id == 'zoomText' || document.activeElement.id == 'zoomSlider') {
@@ -19,9 +19,9 @@ $(document).keydown(function(event) {
 
 function handleError(evt) {
   if (evt.message) {
-    alert("Error: "+evt.message +"  at linenumber: "+evt.lineno+" of file: "+evt.filename);
+    alert(`Error: ${evt.message} at linenumber: ${evt.lineno} of file: ${evt.filename}`);
   } else {
-    alert("Error: "+evt.type+" from element: "+(evt.srcElement || evt.target));
+    alert(`Error: ${evt.type} from element: ${(evt.srcElement || evt.target)}`);
   }
 };
 window.addEventListener("error", handleError, true);
@@ -31,28 +31,28 @@ library.onLoad();
 
 $( document ).ready( function() {
   // On Load
-  document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
-  document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
-  document.getElementById('bgLoader').style.left = window.innerWidth/2 - 75 + 'px';
-  document.getElementById('bgLoader').style.top = window.innerHeight/2 - 75 + 'px';
-  document.getElementById('loader').style.left = window.innerWidth/2 - 75 + 'px';
-  document.getElementById('loader').style.top = window.innerHeight/2 - 75 + 'px';
-  document.getElementById('innerWindow').style.top = window.innerHeight - 56 + 'px';
-  document.getElementById('libDropDown').style.left = window.innerWidth/2 - 38.5 + 'px';
-  document.getElementById('mainLib').style.height = window.innerHeight - 86 + 'px';
-  document.getElementById('libList').style.height = window.innerHeight - 142 + 'px';
+  document.getElementById('dirLib').style.height = `${window.innerHeight - 56}px`;
+  document.getElementById('viewer').style.height = `${window.innerHeight - 56}px`;
+  document.getElementById('bgLoader').style.left = `${window.innerWidth/2 - 75}px`;
+  document.getElementById('bgLoader').style.top = `${window.innerHeight/2 - 75}px`;
+  document.getElementById('loader').style.left = `${window.innerWidth/2 - 75}px`;
+  document.getElementById('loader').style.top = `${window.innerHeight/2 - 75}px`;
+  document.getElementById('innerWindow').style.top = `${window.innerHeight - 56}px`;
+  document.getElementById('libDropDown').style.left = `${window.innerWidth/2 - 38.5}px`;
+  document.getElementById('mainLib').style.height = `${window.innerHeight - 86}px`;
+  document.getElementById('libList').style.height = `${window.innerHeight - 142}px`;
 
   // On Changes
   window.onresize = function() {
-    document.getElementById('dirLib').style.height = window.innerHeight - 56 + 'px';
-    document.getElementById('viewer').style.height = window.innerHeight - 56 + 'px';
-    document.getElementById('bgLoader').style.left = window.innerWidth/2 - 75 + 'px';
-    document.getElementById('bgLoader').style.top = window.innerHeight/2 - 75 + 'px';
-    document.getElementById('loader').style.left = window.innerWidth/2 - 75 + 'px';
-    document.getElementById('loader').style.top = window.innerHeight/2 - 75 + 'px';
-    document.getElementById('libDropDown').style.left = window.innerWidth/2 - 38.5 + 'px';
-    document.getElementById('mainLib').style.height = window.innerHeight - 86 + 'px';
-    document.getElementById('libList').style.height = window.innerHeight - 142 + 'px';
+    document.getElementById('dirLib').style.height = `${window.innerHeight - 56}px`;
+    document.getElementById('viewer').style.height = `${window.innerHeight - 56}px`;
+    document.getElementById('bgLoader').style.left = `${window.innerWidth/2 - 75}px`;
+    document.getElementById('bgLoader').style.top = `${window.innerHeight/2 - 75}px`;
+    document.getElementById('loader').style.left = `${window.innerWidth/2 - 75}px`;
+    document.getElementById('loader').style.top = `${window.innerHeight/2 - 75}px`;
+    document.getElementById('libDropDown').style.left = `${window.innerWidth/2 - 38.5}px`;
+    document.getElementById('mainLib').style.height = `${window.innerHeight - 86}px`;
+    document.getElementById('libList').style.height = `${window.innerHeight - 142}px`;
     imgDivResizer();
   };
 });
@@ -64,9 +64,9 @@ function imgDivResizer() {
   var imgTwo = document.getElementById('viewImgTwo');
 
   if(imgOne.clientHeight >= imgTwo.clientHeight) {
-    inner.style.height = imgOne.clientHeight + "px";
+    inner.style.height = `${imgOne.clientHeight}px`;
   } else {
-    inner.style.height = imgTwo.clientHeight + "px";
+    inner.style.height = `${imgTwo.clientHeight}px`;
   };
 };
 
@@ -92,9 +92,9 @@ function pageZoom() {
   var cPXR = cPX/inner.clientHeight;
   var cPYR = cPY/inner.clientWidth;
 
-  inner.style.width = zoomSlide.value + "%";
+  inner.style.width = `${zoomSlide.value}%`;
   if (zoomSlide.value < 100) {
-    inner.style.marginLeft = (100 - zoomSlide.value)/2 + "%";
+    inner.style.marginLeft = `${(100 - zoomSlide.value)/2}%`;
   } else {
     inner.style.marginLeft = 0;
   };
@@ -102,7 +102,7 @@ function pageZoom() {
   imgDivResizer();
 
   if (outer.clientHeight > inner.clientHeight) {
-    inner.style.marginTop = (outer.clientHeight - inner.clientHeight)/2 + 'px';
+    inner.style.marginTop = `${(outer.clientHeight - inner.clientHeight)/2}px`;
   } else {
     inner.style.marginTop = 0;
   }

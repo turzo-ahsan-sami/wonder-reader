@@ -1,9 +1,9 @@
-var fs = require('fs');
-var isThere = require('is-there');
-var jsonfile = require('jsonfile');
-var os = require('os');
-var page = require('./page.js')
-var path = require('path');
+const fs = require('fs');
+const isThere = require('is-there');
+const jsonfile = require('jsonfile');
+const os = require('os');
+const page = require('./page.js')
+const path = require('path');
 
 var template = {
   "name": "",
@@ -11,7 +11,7 @@ var template = {
   "fullIndex": "0"
 };
 
-var baseName, index, json, obj;
+let baseName, index, json, obj;
 var bookmark = path.join(os.tmpdir(), 'wonderReader', 'json', 'bookmark.json');
 
 exports.onLoad = (filePath, directoryContents) => { // returns a new index for <img> tags
@@ -27,7 +27,7 @@ exports.onLoad = (filePath, directoryContents) => { // returns a new index for <
     var obj = jsonfile.readFileSync(bookmark);
     console.log(obj[baseName]);
     if (obj[baseName] != undefined) { // if baseName is listed
-      console.log(baseName + ' located. Loading comic at index ' + obj[baseName][1]);
+      console.log(`${baseName} located. Loading comic at index ${obj[baseName][1]}`);
       return obj[baseName][1];
     } else { // if baseName isn't listed, adds item to bookmark.json
       obj[baseName] = template;
@@ -36,7 +36,7 @@ exports.onLoad = (filePath, directoryContents) => { // returns a new index for <
           console.log(err);
           return 0;
         };
-        console.log('Item, ' + baseName + ', added to bookmark.json.');
+        console.log(`Item, ${baseName}, added to bookmark.json.`);
         return 0;
       });
     };
@@ -66,7 +66,7 @@ exports.percent = (fileName) => {
   // console.log(fileName + " with obj[]: " + obj[fileName])
   if ( obj[fileName] ) {
     var percent = obj[fileName][1]/obj[fileName][2];
-    var xyz = '<span class="bookmark-percent">' + percent.toFixed(2)*100 + '%</span>';
+    var xyz = `<span class="bookmark-percent">${percent.toFixed(2)*100}%</span>`;
     return xyz;
-  } else { return '<span class="bookmark-percent">' + 0 + '%</span>' };
+  } else { return '<span class="bookmark-percent">0%</span>'};
 };
