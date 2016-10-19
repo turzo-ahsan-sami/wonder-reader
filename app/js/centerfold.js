@@ -14,7 +14,7 @@ exports.fold = (id) => {
   var dirContents = strain(fs.readdirSync(fileDir));
   var spread = [];
 
-  for (var i = 0; i < dirContents.length; i++) {
+  for (let i = 0; i < dirContents.length; i++) {
     (function(i) {
       var dimensions = sizeOf(path.join(fileDir, dirContents[i]));
       var width = dimensions.width;

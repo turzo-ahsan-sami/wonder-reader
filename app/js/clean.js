@@ -28,7 +28,7 @@ function clearCache(cache) {
   var currentDirArray = path.dirname(decodeURI(document.getElementById('viewImgOne').src.substr(7))).split(path.sep);
   var currentDir = currentDirArray[currentDirArray.indexOf('cache')+1];
 
-  for(i=0; i < cacheContents.length; i++) {
+  for(let i=0; i < cacheContents.length; i++) {
     if (cacheContents[i] != currentDir && fs.statSync(path.join(cache,cacheContents[i])).isDirectory()) {
       rimraf.sync(path.join(cache, cacheContents[i])); // Deletes older directories
     };

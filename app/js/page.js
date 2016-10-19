@@ -10,12 +10,11 @@ const sizeOf = require('image-size');
 const strain = require('./strain.js');
 
 let centerFolds, dirContents, fileDir, fileName, filePath;
-
-var inner = document.getElementById('innerWindow');
-var viewOne = document.getElementById('viewImgOne');
-var viewTwo = document.getElementById('viewImgTwo');
+let inner, viewOne, viewTwo;
 
 exports.load = (file) => {
+  let index, continueIndex, val, polarity, r;
+
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
   if (process.platform == "win32") {
     filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
@@ -25,19 +24,22 @@ exports.load = (file) => {
   dirContents = strain(fs.readdirSync(fileDir));
   centerFolds = center.fold('viewImgOne');
 
-  var index = 0;
-  var continueIndex = Number(bookmark.onLoad(file, dirContents));
-  console.log(`bookmark.onLoad() = ${continueIndex}`)
+  inner = document.getElementById('innerWindow');
+  viewOne = document.getElementById('viewImgOne');
+  viewTwo = document.getElementById('viewImgTwo');
+
+  index = 0;
+  continueIndex = Number(bookmark.onLoad(file, dirContents));
   if(continueIndex > 0) {
-    var r = confirm(`Continue ${path.basename(file)} at page ${continueIndex}`);
+    r = confirm(`Continue ${path.basename(file)} at page ${continueIndex}`);
     if (r == true) {
       index = continueIndex;
     } else {
       index = 0;
     };
   };
-  var val = Number(document.getElementById('column').dataset.val);
-  var polarity = 1;
+  val = Number(document.getElementById('column').dataset.val);
+  polarity = 1;
 
   if (val == 1) {
     singlePage(fileDir, dirContents, index);
@@ -47,17 +49,19 @@ exports.load = (file) => {
 };
 
 function pageTurn(val) {
+  let index, polarity;
+
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
   if (process.platform == "win32") {
     filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
   }
   fileName = path.basename(filePath);
-  var index = Number(dirContents.indexOf(fileName));
+  index = Number(dirContents.indexOf(fileName));
   val = Number(val);
 
-  var polarity = 1;
+  polarity = 1;
   if (val < 0) {
-    var polarity = -1;
+    polarity = -1;
   };
 
   // Limits Val to range
@@ -125,10 +129,10 @@ function defaults(fileDir, dirContents, index, polarity) {
       viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
       viewTwo.src = path.join(fileDir, encodeURIComponent(dirContents[index + 1]));
 
-      var imageOne = sizeOf(path.join(fileDir, dirContents[index]));
-      var imageTwo = sizeOf(path.join(fileDir, dirContents[index + 1]));
-      var ratioOne = imageOne.width/imageOne.height;
-      var ratioTwo = imageTwo.width/imageTwo.height;
+      var sizeOne = sizeOf(path.join(fileDir, dirContents[index]));
+      var sizeTwo = sizeOf(path.join(fileDir, dirContents[index + 1]));
+      var ratioOne = sizeOne.width/sizeOne.height;
+      var ratioTwo = sizeTwo.width/sizeTwo.height;
 
       viewOne.style.width = ratioOne/(ratioOne + ratioTwo)*100 + '%';
       viewTwo.style.width = ratioTwo/(ratioOne + ratioTwo)*100 + '%';

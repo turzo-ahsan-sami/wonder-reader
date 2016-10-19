@@ -72,7 +72,7 @@ function imgDivResizer() {
 
 // Adds an event listener to both images
 var images = document.querySelectorAll('img');
-for (var j = 0; j < images.length; j++) {
+for (let j = 0; j < images.length; j++) {
   images[j].addEventListener('load', imgDivResizer());
 };
 

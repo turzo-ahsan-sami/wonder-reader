@@ -6,13 +6,13 @@ const fs = require('fs');
 const path = require('path');
 
 exports.load = (fileName) => {
-  var baseName = path.basename(fileName);
-  var filePath = path.dirname(fileName);
-  var dirContents = fs.readdirSync(filePath);
+  let baseName = path.basename(fileName);
+  let filePath = path.dirname(fileName);
+  let dirContents = fs.readdirSync(filePath);
 
   $('.libFile').remove();
   $('.libDir').remove();
-  for (i = 0; i < dirContents.length; i++) {
+  for (let i = 0; i < dirContents.length; i++) {
     if ( fs.statSync(path.join(filePath, dirContents[i])).isFile() && ['.cbr', '.cbz'].indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 ) {
       if (dirContents[i] == baseName) {
         $("#dirLib").append(`<li class="libFile current"><span><i class="fa fa-file" aria-hidden="true"></i>${dirContents[i].slice(0,-4)}</span></li>`);

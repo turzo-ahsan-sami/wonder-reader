@@ -3,6 +3,6 @@
 const path = require('path');
 
 exports.load = (fileName) => {
-  var file = path.basename(fileName, path.extname(fileName));
+  let file = path.basename(fileName, path.extname(fileName));
   document.title = `Wonder Reader : ${file}`;
 };

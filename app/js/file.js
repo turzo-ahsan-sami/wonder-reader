@@ -20,7 +20,7 @@ const page = require('./page.js');
 const strain = require('./strain.js');
 const title = require('./title.js');
 
-var dirContents;
+let dirContents;
 
 function openFile() {
   dialog.showOpenDialog(
@@ -50,7 +50,7 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
       fileComic = path.win32.basename(fileName).replace(/#|!/g, "");
     }
   } else {
-    handleError(evt)
+    handleError(evt);
   };
 
   // tempFolder Variable for loaded comic
@@ -59,7 +59,6 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
   console.log(`tempFolder = ${tempFolder}`);
 
   if (isThere(tempFolder)) { // Checks for existing Directory
-    console.log(tempFolder);
     tempFolder = dirFunction.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
     if (dirContents.length == 0) {
