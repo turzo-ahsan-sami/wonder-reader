@@ -1,3 +1,4 @@
+const $ = require('jquery');
 const fs = require('fs');
 const isThere = require('is-there');
 const jsonfile = require('jsonfile');
@@ -13,6 +14,7 @@ let template = {
 
 let baseName, index, json, obj;
 var bookmark = path.join(os.tmpdir(), 'wonderReader', 'json', 'bookmark.json');
+var regex = /\s|%|#|\(|\)|\.|-|_/gi;
 
 exports.onLoad = (filePath, directoryContents) => { // returns a new index for <img> tags
   baseName = path.basename(filePath);
@@ -56,13 +58,18 @@ exports.onChange = (index) => {
     jsonfile.writeFile(bookmark, obj, {spaces: 2}, function(err) {
       if (err) { return err };
     });
+    var ss = obj[baseName][0].replace(regex, '');
+    var pp = obj[baseName][1]/obj[baseName][2]*100;
+    $(`.${ss}`).text(`${pp.toFixed(0)}%`);
   });
 };
 
 exports.percent = (fileName) => {
   obj = jsonfile.readFileSync(bookmark);
   if ( obj[fileName] ) {
-    var percent = obj[fileName][1]/obj[fileName][2];
-    return `<span class="bookmark-percent">${percent.toFixed(2)*100}%</span>`;
+    let percent = obj[fileName][1]/obj[fileName][2]*100;
+    let spanClass = obj[fileName][0].replace(regex, '');
+    return `<span class="bookmark-percent ${spanClass}">${percent.toFixed(0)}%</span>`;
+    console.log(`${percent.toFixed(2)*100}%`)
   } else { return '<span class="bookmark-percent">0%</span>'};
 };
