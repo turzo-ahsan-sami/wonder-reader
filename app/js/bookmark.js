@@ -58,9 +58,9 @@ exports.onChange = (index) => {
     jsonfile.writeFile(bookmark, obj, {spaces: 2}, function(err) {
       if (err) { return err };
     });
-    var ss = obj[baseName][0].replace(regex, '');
-    var pp = obj[baseName][1]/obj[baseName][2]*100;
-    $(`.${ss}`).text(`${pp.toFixed(0)}%`);
+    var percent = obj[baseName][1]/obj[baseName][2]*100;
+    var spanClass = obj[baseName][0].replace(regex, '');
+    $(`.${spanClass}`).text(`${percent.toFixed(0)}%`);
   });
 };
 

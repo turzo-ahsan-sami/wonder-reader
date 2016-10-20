@@ -110,7 +110,7 @@ function postExtract(fileName, tempFolder, dirContents) {
   enable("pageRight");
   enable("column");
   $('#viewer').addClass('active');
-  title.load(fileName);
+  title.onFileLoad(fileName);
   miniLib.load(fileName);
   nextcomic.load(fileName);
   $('#mainLib').slideUp(800);

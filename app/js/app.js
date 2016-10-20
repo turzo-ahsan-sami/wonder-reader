@@ -3,6 +3,7 @@ const clean = require('./js/clean.js');
 const file = require('./js/file.js');
 const library = require('./js/library.js');
 const page = require('./js/page.js');
+const title = require('./js/title.js');
 
 $(document).keydown(function(event) {
   if (document.activeElement.id == 'zoomText' || document.activeElement.id == 'zoomSlider') {
@@ -22,13 +23,17 @@ function handleError(evt) {
     alert(`Error: ${evt.message} at linenumber: ${evt.lineno} of file: ${evt.filename}`);
   } else {
     alert(`Error: ${evt.type} from element: ${(evt.srcElement || evt.target)}`);
-  }
+  };
 };
 window.addEventListener("error", handleError, true);
 
 // Builds library on load
 library.onLoad();
 
+// Updates title with version
+title.onLoad();
+
+// Formats page to variable window sizes
 $( document ).ready( function() {
   // On Load
   document.getElementById('dirLib').style.height = `${window.innerHeight - 56}px`;
