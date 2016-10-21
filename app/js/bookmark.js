@@ -1,4 +1,3 @@
-const $ = require('jquery');
 const fs = require('fs');
 const isThere = require('is-there');
 const jsonfile = require('jsonfile');
@@ -58,9 +57,13 @@ exports.onChange = (index) => {
     jsonfile.writeFile(bookmark, obj, {spaces: 2}, function(err) {
       if (err) { return err };
     });
-    var percent = obj[baseName][1]/obj[baseName][2]*100;
-    var spanClass = obj[baseName][0].replace(regex, '');
-    $(`.${spanClass}`).text(`${percent.toFixed(0)}%`);
+    let percent = obj[baseName][1]/obj[baseName][2]*100;
+    let spanClass = obj[baseName][0].replace(regex, '');
+
+    let elem = document.getElementsByClassName(spanClass);
+    for(let i = 0; i < elem.length; i++) {
+      elem[i].innerHTML = `${percent.toFixed(0)}%`;
+    };
   });
 };
 
