@@ -7,30 +7,30 @@ const path = require('path');
 const rimraf = require('rimraf');
 
 exports.trash = () => {
-  var cache = path.join(os.tmpdir(), 'wonderReader', 'cache');
-  getSize(cache, function(err,size) {
+  var tempDir = path.join(os.tmpdir(), 'wonderReader', 'cache');
+  getSize(tempDir, function(err,size) {
     var cacheSize = size / 1024 / 1024
     var r = confirm(`This will clear your Wonder Reader cache (Currently ${cacheSize.toFixed(2)} Mb. \n\nContinue?`)
     if (r == true) {
-      clearCache(cache)
+      clearCache(tempDir)
     };
   });
 };
 
 exports.autoTrash = () => {
-  var cache = path.join(os.tmpdir(), 'wonderReader', 'cache');
-  clearCache();
+  var tempDir = path.join(os.tmpdir(), 'wonderReader', 'cache');
+  clearCache(tempDir);
 }
 
-function clearCache(cache) {
-  console.log(cache)
-  var cacheContents = fs.readdirSync(cache);
+function clearCache(tempDir) {
+  console.log(tempDir)
+  var cacheContents = fs.readdirSync(tempDir);
   var currentDirArray = path.dirname(decodeURI(document.getElementById('viewImgOne').src.substr(7))).split(path.sep);
   var currentDir = currentDirArray[currentDirArray.indexOf('cache')+1];
 
   for(let i=0; i < cacheContents.length; i++) {
-    if (cacheContents[i] != currentDir && fs.statSync(path.join(cache,cacheContents[i])).isDirectory()) {
-      rimraf.sync(path.join(cache, cacheContents[i])); // Deletes older directories
+    if (cacheContents[i] != currentDir && fs.statSync( path.join(tempDir,cacheContents[i])).isDirectory() ) {
+      rimraf.sync(path.join(tempDir, cacheContents[i])); // Deletes older directories
     };
   };
 };

@@ -342,9 +342,10 @@ button#trash {
 .library li {
   cursor: pointer;
   clear: both;
-  font-size: 12px;
+  font-size: 10px;
   font-family: Ubuntu;
   line-height: 1.42857143;
+  white-space: nowrap;
 }
 .library li:nth-child(even) {
   background-color: rgba(255, 255, 255, 0.1);
@@ -409,6 +410,9 @@ button#trash {
 
 .directory {
   background-color: rgba(0, 0, 0, 0.8);
+}
+.directory .fa {
+  padding-right: 5px;
 }
 
 .directory::-webkit-scrollbar-track {
