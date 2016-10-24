@@ -12,7 +12,7 @@ exports.trash = () => {
     var cacheSize = size / 1024 / 1024
     var r = confirm(`This will clear your Wonder Reader cache (Currently ${cacheSize.toFixed(2)} Mb. \n\nContinue?`)
     if (r == true) {
-      clearCache(tempDir)
+      clearCache(tempDir);
     };
   });
 };
@@ -23,7 +23,7 @@ exports.autoTrash = () => {
 }
 
 function clearCache(tempDir) {
-  console.log(tempDir)
+  console.log(tempDir);
   var cacheContents = fs.readdirSync(tempDir);
   var currentDirArray = path.dirname(decodeURI(document.getElementById('viewImgOne').src.substr(7))).split(path.sep);
   var currentDir = currentDirArray[currentDirArray.indexOf('cache')+1];

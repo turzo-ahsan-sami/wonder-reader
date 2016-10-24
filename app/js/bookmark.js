@@ -2,7 +2,7 @@ const fs = require('fs');
 const isThere = require('is-there');
 const jsonfile = require('jsonfile');
 const os = require('os');
-const page = require('./page.js')
+const page = require('./page.js');
 const path = require('path');
 
 let template = {

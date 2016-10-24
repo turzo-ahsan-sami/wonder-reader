@@ -6,7 +6,7 @@ const path = require('path');
 const rimraf = require('rimraf');
 
 const platform = process.platform;
-var build = './build'
+var build = './build';
 mkdirp.sync(build);
 var files = fs.readdirSync(build);
 for (let i = 0; i < files.length; i++) {

@@ -83,7 +83,7 @@ function pageTurn(val) {
         singlePage(fileDir, dirContents, index);
       } else {
         defaults(fileDir, dirContents, index, polarity);
-      }
+      };
     } else {
     // For when any CenterFold exists //
       if (centerFolds.indexOf(index + polarity) > -1) {
@@ -97,7 +97,7 @@ function pageTurn(val) {
           index = index + polarity;
         } else {
           index = index + val;
-        }
+        };
         defaults(fileDir, dirContents, index, polarity);
       } else {
         index = index + val;
@@ -140,8 +140,8 @@ function defaults(fileDir, dirContents, index, polarity) {
   } else if (Math.abs(val) == 1) { // If val == 1
     singlePage(fileDir, dirContents, index);
   } else {
-    alert(`Danger! Danger! Will Robinson!\nErr: Invalid variable val: ${val}`)
-  }
+    alert(`Danger! Danger! Will Robinson!\nErr: Invalid variable val: ${val}`);
+  };
 };
 
 exports.Right = () => { // See page.spread()
