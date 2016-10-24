@@ -67,8 +67,9 @@ exports.percent = (fileName) => {
   if (isThere (bookmark) ) {
     obj = jsonfile.readFileSync(bookmark);
     if ( obj[fileName] ) {
-      console.log(`${obj[fileName].currentIndex} of ${obj[fileName].currentIndex}`)
-      let percent = (obj[fileName].currentIndex/obj[fileName].currentIndex)*100;
+      console.dir(obj[fileName])
+      console.log(`${obj[fileName].currentIndex} of ${obj[fileName].fullIndex}`)
+      let percent = (obj[fileName].currentIndex/obj[fileName].fullIndex)*100;
       return `<span class="bookmark-percent ${spanClass}">${percent.toFixed(0)}%</span>`;
     } else { return `<span class="bookmark-percent ${spanClass}">0%</span>`};
   } else {
