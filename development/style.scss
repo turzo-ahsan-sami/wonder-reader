@@ -352,7 +352,7 @@ button#trash {
       display: block;
       text-decoration: none;
       transition: all 0.25s;
-      color: $whiteOpaqueDeg;
+      color: $white;
       box-shadow: inset 3px 0 0 0 $libColor;
     }
     a:hover {
@@ -368,7 +368,7 @@ button#trash {
       text-decoration: none;
       transition: all 0.25s;
       padding: 3px 0 3px 10px;
-      color: $whiteOpaqueDeg;
+      color: $white;
       box-shadow: inset 2px 0 0 1px $libColor;
     }
     span:hover {

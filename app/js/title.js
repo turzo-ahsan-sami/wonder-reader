@@ -7,10 +7,8 @@ let version;
 
 exports.onLoad = () => {
   let packageFile = 'package.json';
-  console.log(packageFile);
   jsonfile.readFile(packageFile, function(err, obj) {
     if (err) { document.title = 'Wonder Reader' };
-    console.dir(obj);
     version = obj.version;
     document.title = `Wonder Reader ${version}`;
   });

@@ -356,7 +356,7 @@ button#trash {
   display: block;
   text-decoration: none;
   transition: all 0.25s;
-  color: rgba(255, 255, 255, 0.8);
+  color: #fff;
   box-shadow: inset 3px 0 0 0 #ddbfeb;
 }
 .library .libDir a:hover,
@@ -371,7 +371,7 @@ button#trash {
   text-decoration: none;
   transition: all 0.25s;
   padding: 3px 0 3px 10px;
-  color: rgba(255, 255, 255, 0.8);
+  color: #fff;
   box-shadow: inset 2px 0 0 1px #ddbfeb;
 }
 .library .current span:hover {

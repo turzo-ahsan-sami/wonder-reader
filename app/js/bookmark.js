@@ -26,7 +26,6 @@ exports.onLoad = (filePath, directoryContents) => { // returns a new index for <
 
   if ( isThere(bookmark) ) {
     obj = jsonfile.readFileSync(bookmark);
-    // console.log(obj[baseName]);
     if (obj[baseName] != undefined) { // if baseName is listed
       console.log(`${baseName} located. Loading comic at index ${obj[baseName][1]}`);
       return obj[baseName][1];
@@ -68,11 +67,16 @@ exports.onChange = (index) => {
 };
 
 exports.percent = (fileName) => {
-  obj = jsonfile.readFileSync(bookmark);
-  if ( obj[fileName] ) {
-    let percent = obj[fileName][1]/obj[fileName][2]*100;
-    let spanClass = obj[fileName][0].replace(regex, '');
-    return `<span class="bookmark-percent ${spanClass}">${percent.toFixed(0)}%</span>`;
-    console.log(`${percent.toFixed(2)*100}%`)
-  } else { return '<span class="bookmark-percent">0%</span>'};
+  let spanClass = fileName.replace(regex, '');
+  if (isThere (bookmark) ) {
+    obj = jsonfile.readFileSync(bookmark);
+    if ( obj[fileName] ) {
+      let percent = obj[fileName][1]/obj[fileName][2]*100;
+      return `<span class="bookmark-percent ${spanClass}">${percent.toFixed(0)}%</span>`;
+    } else { return `<span class="bookmark-percent ${spanClass}">0%</span>`};
+  } else {
+    obj = {};
+    jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
+    return `<span class="bookmark-percent ${spanClass}">0%</span>`;
+  };
 };
