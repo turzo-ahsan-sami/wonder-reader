@@ -8,9 +8,13 @@ let version;
 exports.onLoad = () => {
   let packageFile = 'package.json';
   jsonfile.readFile(packageFile, function(err, obj) {
-    if (err) { document.title = 'Wonder Reader' };
-    version = obj.version;
-    document.title = `Wonder Reader ${version}`;
+    if (err) {
+      document.title = 'Wonder Reader';
+      version = '';
+    } else {
+      version = obj.version;
+      document.title = `Wonder Reader ${version}`;
+    };
   });
 };
 

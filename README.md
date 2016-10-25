@@ -1,19 +1,26 @@
 # Wonder-Reader
 
-Version 0.3.4
+Version 0.3.5
 
 ## Downloads
 
 [Downloads](http://alice-em.github.io/Wonder-Reader/)
 
 ## Installation and Starting
-__Requirements__: Git, Node, and NPM
+__Requirements__: Git, Node, and NPM or Yarn
 
 ```shell
 git clone https://github.com/alice-em/Wonder-Reader.git
 cd Wonder-Reader
 npm install
 npm start
+```
+__or__
+```shell
+git clone https://github.com/alice-em/Wonder-Reader.git
+cd Wonder-Reader
+yarn
+yarn start
 ```
 
 ## Compiling
@@ -26,15 +33,20 @@ __Requirements__: electron-packager
 npm install
 npm run packager
 ````
+__or__
+````
+yarn
+yarn run packager
+````
+
 
 ## Development
 __Requirements__: Grunt-cli, Sass, and some sort of text-editor
 
 TODO:
 * Any other neat ideas that could work go here too.
-	* Create a bookmarking system
 	* Double click zoom in function!
-  * Comics at either __firstPage__ or __lastPage__ can open up the next file in library folder.
+	* Comics at either __firstPage__ or __lastPage__ can open up the next file in library folder.
 
 ## Notes
 * node.fs API :: ( https://nodejs.org/api/fs.html )

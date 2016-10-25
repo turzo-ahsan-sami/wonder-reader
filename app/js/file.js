@@ -139,7 +139,7 @@ exports.loader = (fileName) => {
 function rarExtractor(fileName, tempFolder, looper) {
   cbr(fileName, tempFolder, function (error) {
     if (error) {
-      alert(error);
+      console.log(error);
     };
 
     tempFolder = dirFunction.merge(tempFolder);
@@ -151,6 +151,7 @@ function rarExtractor(fileName, tempFolder, looper) {
       zipExtractor(fileName, tempFolder, looper);
     } else if (looper > 3) {
       alert('Possible broken file?');
+      return;
     } else {
       $('#loader').addClass('hidden').removeClass('loader');
       $('#bgLoader').addClass('hidden');
@@ -175,6 +176,7 @@ function zipExtractor(fileName, tempFolder, looper) {
         rarExtractor(fileName, tempFolder, looper);
       } else if (looper > 3) {
         alert('Possible broken file?');
+        return;
       } else {
         $('#loader').addClass('hidden').removeClass('loader');
         $('#bgLoader').addClass('hidden');
