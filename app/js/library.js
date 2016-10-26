@@ -28,10 +28,10 @@ libBuilder = (directory, array, listID) => {
       );
 
     // Deep scans interior folders
-    } else if ( fs.statSync(file).isDirectory() ) {
+  } else if ( fs.statSync(filePath).isDirectory() ) {
       let newListID = (listID + file).replace(/\s|#|\(|\)|\'|,|&|\+|-/g, "");
       $(`#${listID}`).append(`<li class="folder"><a href="#" onclick="libFolders('${newListID}')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${file}</a></li><ul id=${newListID}>`);
-      libBuilder(file, array[i].children, newListID);
+      libBuilder(filePath, array[i].children, newListID);
       $(`#${listID}`).append('</ul>');
     } else {
       console.log(`${file} skipped`);
