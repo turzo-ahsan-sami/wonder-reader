@@ -4,13 +4,14 @@ const file = require('./file.js');
 const fs = require('fs');
 const path = require('path');
 
-function enable(id) {
+enable = (id) => {
   document.getElementById(id).disabled = false;
 };
-function disable(id) {
+disable = (id) => {
   document.getElementById(id).disabled = true;
 };
 
+// Configures Next/Prev comic buttons
 exports.load = (fileName) => {
   disable('nextComic');
   disable('prevComic');

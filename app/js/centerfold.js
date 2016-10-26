@@ -5,6 +5,7 @@ const path = require('path');
 const sizeOf = require('image-size');
 const strain = require('./strain.js');
 
+// Returns with an array of indices for double page images for core array of image files
 exports.fold = (id) => {
   let filePath = decodeURIComponent(document.getElementById(id).src.substr(7));
   if (process.platform == "win32") {
@@ -25,7 +26,7 @@ exports.fold = (id) => {
       }
     })(i);
   };
-  function sortNumber(a,b) {
+  sortNumber = (a,b) => {
     return a - b;
   };
   spread = spread.sort(sortNumber);

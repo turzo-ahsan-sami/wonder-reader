@@ -5,6 +5,7 @@ const jsonfile = require('jsonfile');
 
 let version;
 
+// Loads title and version number
 exports.onLoad = () => {
   let packageFile = 'package.json';
   jsonfile.readFile(packageFile, function(err, obj) {
@@ -18,6 +19,7 @@ exports.onLoad = () => {
   });
 };
 
+// Updates title with comic name
 exports.onFileLoad = (fileName) => {
   let file = path.basename(fileName, path.extname(fileName));
   document.title = `Wonder Reader ${version}: ${file}`;

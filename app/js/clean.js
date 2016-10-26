@@ -6,6 +6,7 @@ const os = require('os');
 const path = require('path');
 const rimraf = require('rimraf');
 
+// Cleans out the crap
 exports.trash = () => {
   let tempDir = path.join(os.tmpdir(), 'wonderReader', 'cache');
   getSize(tempDir, function(err,size) {
@@ -17,12 +18,14 @@ exports.trash = () => {
   });
 };
 
+// For when I ever plan to introduce an autoCleaning feature
 exports.autoTrash = () => {
   let tempDir = path.join(os.tmpdir(), 'wonderReader', 'cache');
   clearCache(tempDir);
 }
 
-function clearCache(tempDir) {
+// The crap cleaner function itself
+clearCache = (tempDir) => {
   console.log(tempDir);
   let cacheContents = fs.readdirSync(tempDir);
   let currentDirArray = path.dirname(decodeURI(document.getElementById('viewImgOne').src.substr(7))).split(path.sep);

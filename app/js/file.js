@@ -22,7 +22,8 @@ const title = require('./title.js');
 
 let dirContents;
 
-function openFile() {
+// Dialog box to load the file
+openFile = () => {
   dialog.showOpenDialog(
     { filters: [{
       name: 'Comic Files',
@@ -39,7 +40,8 @@ function openFile() {
   );
 };
 
-function fileLoad(fileName, err) { // checks and extracts files and then loads them
+// The function that loads each file
+fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   if (err) {
     handleError(err);
   };
@@ -88,14 +90,16 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
   }; // End Directory checker
 };
 
-function enable(id) {
+// Enable et Disable ID's
+enable = (id) => {
   document.getElementById(id).disabled = false;
 };
-function disable(id) {
+disable = (id) => {
   document.getElementById(id).disabled = true;
 };
 
-function postExtract(fileName, tempFolder, dirContents) {
+// After extraction, loads stuff into img tags, as well as other junk
+postExtract = (fileName, tempFolder, dirContents) => {
   let inner = document.getElementById('innerWindow');
   let viewOne = document.getElementById('viewImgOne');
   let viewTwo = document.getElementById('viewImgTwo');
@@ -136,12 +140,13 @@ exports.loader = (fileName) => {
 //-| File Extractors |
 //-\-----------------/
 
-function rarExtractor(fileName, tempFolder, looper) {
+rarExtractor = (fileName, tempFolder, looper) => {
+  console.log('Unrar extraction started.')
   cbr(fileName, tempFolder, function (error) {
     if (error) {
       console.log(error);
     };
-
+    console.log('Extraction complete!');
     tempFolder = dirFunction.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
 
@@ -160,7 +165,7 @@ function rarExtractor(fileName, tempFolder, looper) {
   });
 };
 
-function zipExtractor(fileName, tempFolder, looper) {
+zipExtractor = (fileName, tempFolder, looper) => {
   console.log('Unzip extraction started.');
   fs.createReadStream(fileName).pipe(
     unzip.Extract({

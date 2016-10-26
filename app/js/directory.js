@@ -5,6 +5,7 @@ const fs = require('fs');
 
 const imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
 
+// Returns a path of the extracted comic up until the first image file appears
 exports.merge = (directory) => {
   let dirContents = fs.readdirSync(directory);
   let filtered = [];
@@ -31,6 +32,7 @@ exports.merge = (directory) => {
   return directory;
 };
 
+// Splits a path, encodes each index, and merges it all for a URI compatible file path
 exports.encode = (oldPath) => {
   let newPath = '';
   let tempPath = oldPath.split(path.sep);

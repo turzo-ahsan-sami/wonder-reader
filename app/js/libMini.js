@@ -5,6 +5,7 @@ const directory = require('./directory.js');
 const fs = require('fs');
 const path = require('path');
 
+// Autoloads the sidebar library
 exports.load = (fileName) => {
   let baseName = path.basename(fileName);
   let filePath = path.dirname(fileName);

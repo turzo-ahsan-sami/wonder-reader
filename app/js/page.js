@@ -48,7 +48,7 @@ exports.load = (file) => {
   };
 };
 
-function pageTurn(val) {
+pageTurn = (val) => {
   let index, polarity;
 
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
@@ -110,14 +110,14 @@ function pageTurn(val) {
   document.getElementById('viewer').scrollLeft = 0;
 };
 
-function singlePage(fileDir, dirContents, index) { // For Single page viewing and styling
+singlePage = (fileDir, dirContents, index) => { // For Single page viewing and styling
   viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
   viewOne.style.width = '100%';
   viewTwo.style.display = 'none';
   viewTwo.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
 };
 
-function defaults(fileDir, dirContents, index, polarity) {
+defaults = (fileDir, dirContents, index, polarity) => {
   let val = Number(document.getElementById('column').dataset.val);
 
   if (Math.abs(val) == 2) {

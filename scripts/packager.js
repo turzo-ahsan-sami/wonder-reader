@@ -29,6 +29,6 @@ packager(
   }
 );
 
-function postPackage(appPaths) {
+postPackage = (appPaths) => {
   console.log(colors.magenta('Wonder Reader packaging successful! Files can be found at ' + appPaths));
 };

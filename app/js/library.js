@@ -12,7 +12,8 @@ const mkdirp = require('mkdirp');
 const os = require('os');
 const path = require('path');
 
-function libBuilder(directory, array, listID) {
+// Builds the library with proper HTML
+libBuilder = (directory, array, listID) => {
   $('#libStatus').remove();
   // console.log(directory)
   for (let i=0; i < array.length; i++) {
@@ -35,6 +36,7 @@ function libBuilder(directory, array, listID) {
   $('#repeat').removeClass('rotater');
 };
 
+// Dialog to open up directory
 exports.openDir = () => {
   dialog.showOpenDialog({
     properties: [
@@ -61,6 +63,7 @@ exports.openDir = () => {
   });
 };
 
+// Exported version of libBuilder()
 exports.builder = () => {
   let config = jsonfile.readFileSync(path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json'));
   let directory = config.library;
@@ -73,6 +76,7 @@ exports.builder = () => {
   libBuilder(directory, dirArray.children, listID);
 };
 
+// Loads library on program start
 exports.onLoad = () => {
   let configFile = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
   if ( isThere(configFile) ) {

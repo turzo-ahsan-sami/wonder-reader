@@ -5,6 +5,7 @@ const library = require('./js/library.js');
 const page = require('./js/page.js');
 const title = require('./js/title.js');
 
+// Key press Checker
 $(document).keydown(function(event) {
   if (document.activeElement.id == 'zoomText' || document.activeElement.id == 'zoomSlider') {
     // Do nothing when focused on zoom input
@@ -18,7 +19,8 @@ $(document).keydown(function(event) {
   };
 });
 
-function handleError(evt) {
+// Error Handling
+handleError = (evt) => {
   if (evt.message) {
     alert(`Error: ${evt.message} at linenumber: ${evt.lineno} of file: ${evt.filename}`);
   } else {
@@ -63,7 +65,7 @@ $( document ).ready( function() {
 });
 
 // Function that resizes innerWindow div
-function imgDivResizer() {
+imgDivResizer = () => {
   let inner = document.getElementById('innerWindow');
   let imgOne = document.getElementById('viewImgOne');
   let imgTwo = document.getElementById('viewImgTwo');
@@ -82,7 +84,7 @@ for (let j = 0; j < images.length; j++) {
 };
 
 // Handles the zoom
-function pageZoom() {
+pageZoom = () => {
   let outer = document.getElementById('viewer');
   let inner = document.getElementById('innerWindow');
   let zoomSlide = document.getElementById('zoomSlider');
@@ -105,7 +107,6 @@ function pageZoom() {
   };
 
   imgDivResizer();
-
   if (outer.clientHeight > inner.clientHeight) {
     inner.style.marginTop = `${(outer.clientHeight - inner.clientHeight)/2}px`;
   } else {
@@ -116,7 +117,7 @@ function pageZoom() {
 };
 
 // Main Library folder collapsing
-function libFolders(id) {
+libFolders = (id) => {
   id = $(`#${id}`);
   if (id.is(':animated')) return;
   id.prev('.folder').children().children('.fa-caret-down').toggleClass('rotate');
@@ -124,10 +125,10 @@ function libFolders(id) {
 };
 
 // Library Windows collapsing
-function libSlider() {
+libSlider = () => {
   $('#sideLib').toggleClass('shift-left');
 };
-function dropDown() {
+dropDown = () => {
   $('#mainLib').slideToggle(800);
 };
 

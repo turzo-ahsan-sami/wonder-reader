@@ -11,6 +11,7 @@ let baseName, index, json, obj;
 let bookmark = path.join(os.tmpdir(), 'wonderReader', 'json', 'bookmark.json');
 let regex = /\s|%|#|\(|\)|\.|-|_/gi; // Reg Ex for classes
 
+// Invoked on Comic.onLoad(), returns with current page
 exports.onLoad = (filePath, directoryContents) => { // returns a new index for <img> tags
   baseName = path.basename(filePath);
 
@@ -44,6 +45,7 @@ exports.onLoad = (filePath, directoryContents) => { // returns a new index for <
   };
 };
 
+// Updates JSON with current page
 exports.onChange = (index) => {
   jsonfile.readFile(bookmark, function(err, obj) {
     if (err) {return err};
@@ -61,6 +63,7 @@ exports.onChange = (index) => {
   });
 };
 
+// Fills library with percentage read
 exports.percent = (fileName) => {
   let spanClass = fileName.replace(regex, '');
   if (isThere (bookmark) ) {
