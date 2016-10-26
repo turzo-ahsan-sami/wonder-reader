@@ -19,7 +19,7 @@ exports.load = (fileName) => {
   let filePath = path.dirname(fileName);
   let dirContents = fs.readdirSync(filePath);
 
-  let dirComics = dirContents.filter(function(x,i) { return fs.statSync(path.join(filePath, dirContents[i])).isFile() && ['.cbr', '.cbz'].indexOf(path.extname(dirContents[i]).toLowerCase()) > -1});
+  let dirComics = dirContents.filter(function(x,i) { return fs.statSync(path.join(filePath, dirContents[i])).isFile() && ['.cbr', '.cbz'].indexOf(path.extname(dirContents[i]).toLowerCase()) > -1}); // Cleans out folders and non ['cbr', 'cbz'] files
 
   let fileIndex = dirComics.indexOf(baseName); // Gets index position of file inside directory array
 

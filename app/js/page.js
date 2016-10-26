@@ -118,7 +118,7 @@ function singlePage(fileDir, dirContents, index) { // For Single page viewing an
 };
 
 function defaults(fileDir, dirContents, index, polarity) {
-  var val = Number(document.getElementById('column').dataset.val);
+  let val = Number(document.getElementById('column').dataset.val);
 
   if (Math.abs(val) == 2) {
     if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + polarity) > -1) {
@@ -129,10 +129,10 @@ function defaults(fileDir, dirContents, index, polarity) {
       viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
       viewTwo.src = path.join(fileDir, encodeURIComponent(dirContents[index + 1]));
 
-      var sizeOne = sizeOf(path.join(fileDir, dirContents[index]));
-      var sizeTwo = sizeOf(path.join(fileDir, dirContents[index + 1]));
-      var ratioOne = sizeOne.width/sizeOne.height;
-      var ratioTwo = sizeTwo.width/sizeTwo.height;
+      let sizeOne = sizeOf(path.join(fileDir, dirContents[index]));
+      let sizeTwo = sizeOf(path.join(fileDir, dirContents[index + 1]));
+      let ratioOne = sizeOne.width/sizeOne.height;
+      let ratioTwo = sizeTwo.width/sizeTwo.height;
 
       viewOne.style.width = ratioOne/(ratioOne + ratioTwo)*100 + '%';
       viewTwo.style.width = ratioTwo/(ratioOne + ratioTwo)*100 + '%';
@@ -145,12 +145,12 @@ function defaults(fileDir, dirContents, index, polarity) {
 };
 
 exports.Right = () => { // See page.spread()
-  var val = document.getElementById('column').dataset.val;
+  let val = document.getElementById('column').dataset.val;
   pageTurn(val);
 }
 
 exports.Left = () => {
-  var val = document.getElementById('column').dataset.val * -1;
+  let val = document.getElementById('column').dataset.val * -1;
   pageTurn(val);
 }
 
@@ -159,8 +159,8 @@ exports.spread = () => {
   if (process.platform == "win32") {
     filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
   }
-  var index = dirContents.indexOf(path.basename(filePath));
-  var polarity = 1;
+  let index = dirContents.indexOf(path.basename(filePath));
+  let polarity = 1;
 
   if($('#column').hasClass('disabled')) {
     $('#column').removeClass('disabled');

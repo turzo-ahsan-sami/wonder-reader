@@ -44,12 +44,12 @@ exports.openDir = () => {
   function(fileNames) {
     if (fileNames === undefined) return;
 
-    var directory = fileNames[0];
-    var config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
-    var comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
-    var obj = {'library': directory};
-    var dirArray = dirTree(directory, ['.cbr', '.cbz']);
-    var listID = 'ulLib';
+    let directory = fileNames[0];
+    let config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
+    let comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
+    let obj = {'library': directory};
+    let dirArray = dirTree(directory, ['.cbr', '.cbz']);
+    let listID = 'ulLib';
 
     jsonfile.writeFileSync(comics, dirArray, {'spaces': 2});
     jsonfile.writeFileSync(config, obj);
@@ -62,10 +62,10 @@ exports.openDir = () => {
 };
 
 exports.builder = () => {
-  var config = jsonfile.readFileSync(path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json'));
-  var directory = config.library;
-  var dirArray = dirTree(directory, ['.cbr', '.cbz']);
-  var listID = 'ulLib';
+  let config = jsonfile.readFileSync(path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json'));
+  let directory = config.library;
+  let dirArray = dirTree(directory, ['.cbr', '.cbz']);
+  let listID = 'ulLib';
   $('#ulLib li').remove();
   $('#ulLib ul').remove();
 
@@ -74,12 +74,12 @@ exports.builder = () => {
 };
 
 exports.onLoad = () => {
-  var configFile = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
+  let configFile = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
   if ( isThere(configFile) ) {
-    var config = jsonfile.readFileSync(configFile);
+    let config = jsonfile.readFileSync(configFile);
     if (config.library != undefined) {
-      var dirArray = dirTree(config.library, ['.cbr', '.cbz']);
-      var listID = 'ulLib';
+      let dirArray = dirTree(config.library, ['.cbr', '.cbz']);
+      let listID = 'ulLib';
       libBuilder(config.library, dirArray.children, listID);
     } else {
       $('#libStatus').append('The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.');

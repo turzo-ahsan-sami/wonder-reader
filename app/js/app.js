@@ -64,9 +64,9 @@ $( document ).ready( function() {
 
 // Function that resizes innerWindow div
 function imgDivResizer() {
-  var inner = document.getElementById('innerWindow');
-  var imgOne = document.getElementById('viewImgOne');
-  var imgTwo = document.getElementById('viewImgTwo');
+  let inner = document.getElementById('innerWindow');
+  let imgOne = document.getElementById('viewImgOne');
+  let imgTwo = document.getElementById('viewImgTwo');
 
   if(imgOne.clientHeight >= imgTwo.clientHeight) {
     inner.style.height = `${imgOne.clientHeight}px`;
@@ -76,26 +76,26 @@ function imgDivResizer() {
 };
 
 // Adds an event listener to both images
-var images = document.querySelectorAll('img');
+let images = document.querySelectorAll('img');
 for (let j = 0; j < images.length; j++) {
   images[j].addEventListener('load', imgDivResizer());
 };
 
 // Handles the zoom
 function pageZoom() {
-  var outer = document.getElementById('viewer');
-  var inner = document.getElementById('innerWindow');
-  var zoomSlide = document.getElementById('zoomSlider');
-  var imgOne = document.getElementById('viewImgOne');
-  var imgTwo = document.getElementById('viewImgTwo');
+  let outer = document.getElementById('viewer');
+  let inner = document.getElementById('innerWindow');
+  let zoomSlide = document.getElementById('zoomSlider');
+  let imgOne = document.getElementById('viewImgOne');
+  let imgTwo = document.getElementById('viewImgTwo');
 
   // Center Points
-  var cPX = outer.scrollTop + outer.clientHeight/2;
-  var cPY = outer.scrollLeft + outer.clientWidth/2;
+  let cPX = outer.scrollTop + outer.clientHeight/2;
+  let cPY = outer.scrollLeft + outer.clientWidth/2;
 
   // Position Ratios to whole
-  var cPXR = cPX/inner.clientHeight;
-  var cPYR = cPY/inner.clientWidth;
+  let cPXR = cPX/inner.clientHeight;
+  let cPYR = cPY/inner.clientWidth;
 
   inner.style.width = `${zoomSlide.value}%`;
   if (zoomSlide.value < 100) {

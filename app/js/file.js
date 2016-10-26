@@ -33,7 +33,7 @@ function openFile() {
     // Open File function
     function(fileNames) {
       if (fileNames === undefined) return; // Breaks on error
-      var fileName = fileNames[0]; // Filepath name
+      let fileName = fileNames[0]; // Filepath name
       fileLoad(fileName); // Extracts files to their proper locations
 		}
   );
@@ -45,7 +45,7 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
   };
 
   if ([".cbr", ".cbz"].indexOf(path.extname(fileName).toLowerCase()) > -1) {
-    var fileComic = path.posix.basename(fileName).replace(/#|!/g, "");
+    let fileComic = path.posix.basename(fileName).replace(/#|!/g, "");
     if (process.platform == 'win32') {
       fileComic = path.win32.basename(fileName).replace(/#|!/g, "");
     }
@@ -54,8 +54,8 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
   };
 
   // tempFolder Variable for loaded comic
-  var tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic);
-  var looper = 0;
+  let tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic);
+  let looper = 0;
   console.log(`tempFolder = ${tempFolder}`);
 
   if (isThere(tempFolder)) { // Checks for existing Directory
@@ -96,9 +96,9 @@ function disable(id) {
 };
 
 function postExtract(fileName, tempFolder, dirContents) {
-  var inner = document.getElementById('innerWindow');
-  var viewOne = document.getElementById('viewImgOne');
-  var viewTwo = document.getElementById('viewImgTwo');
+  let inner = document.getElementById('innerWindow');
+  let viewOne = document.getElementById('viewImgOne');
+  let viewTwo = document.getElementById('viewImgTwo');
 
   dirContents = strain(dirContents);
 

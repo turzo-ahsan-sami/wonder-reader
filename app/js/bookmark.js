@@ -8,8 +8,8 @@ const path = require('path');
 
 let template = {}; // {"name": "", "currentIndex": "0", "fullIndex": "0"};
 let baseName, index, json, obj;
-var bookmark = path.join(os.tmpdir(), 'wonderReader', 'json', 'bookmark.json');
-var regex = /\s|%|#|\(|\)|\.|-|_/gi;
+let bookmark = path.join(os.tmpdir(), 'wonderReader', 'json', 'bookmark.json');
+let regex = /\s|%|#|\(|\)|\.|-|_/gi; // Reg Ex for classes
 
 exports.onLoad = (filePath, directoryContents) => { // returns a new index for <img> tags
   baseName = path.basename(filePath);
@@ -18,7 +18,6 @@ exports.onLoad = (filePath, directoryContents) => { // returns a new index for <
   template.name = baseName;
   template.currentIndex = 0;
   template.fullIndex = directoryContents.length - 1;
-  console.log(template)
 
   if ( isThere(bookmark) ) {
     obj = jsonfile.readFileSync(bookmark);
@@ -67,7 +66,7 @@ exports.percent = (fileName) => {
   if (isThere (bookmark) ) {
     obj = jsonfile.readFileSync(bookmark);
     if ( obj[fileName] ) {
-      console.log(`${obj[fileName].name}: ${obj[fileName].currentIndex} of ${obj[fileName].fullIndex}`)
+      console.log(`${obj[fileName].name}: ${obj[fileName].currentIndex} of ${obj[fileName].fullIndex}`);
       let percent = (obj[fileName].currentIndex/obj[fileName].fullIndex)*100;
       return `<span class="bookmark-percent ${spanClass}">${percent.toFixed(0)}%</span>`;
     } else { return `<span class="bookmark-percent ${spanClass}">0%</span>`};

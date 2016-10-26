@@ -6,19 +6,19 @@ const sizeOf = require('image-size');
 const strain = require('./strain.js');
 
 exports.fold = (id) => {
-  var filePath = decodeURIComponent(document.getElementById(id).src.substr(7));
+  let filePath = decodeURIComponent(document.getElementById(id).src.substr(7));
   if (process.platform == "win32") {
     filePath = decodeURIComponent(document.getElementById(id).src.substr(8));
   }
-  var fileDir = path.dirname(filePath);
-  var dirContents = strain(fs.readdirSync(fileDir));
-  var spread = [];
+  let fileDir = path.dirname(filePath);
+  let dirContents = strain(fs.readdirSync(fileDir));
+  let spread = [];
 
   for (let i = 0; i < dirContents.length; i++) {
     (function(i) {
-      var dimensions = sizeOf(path.join(fileDir, dirContents[i]));
-      var width = dimensions.width;
-      var height = dimensions.height;
+      let dimensions = sizeOf(path.join(fileDir, dirContents[i]));
+      let width = dimensions.width;
+      let height = dimensions.height;
 
       if (width >= height) {
         spread.push(i);

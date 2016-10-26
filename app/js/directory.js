@@ -6,9 +6,8 @@ const fs = require('fs');
 const imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
 
 exports.merge = (directory) => {
-  var dirContents = fs.readdirSync(directory);
-
-  var filtered = [];
+  let dirContents = fs.readdirSync(directory);
+  let filtered = [];
 
   for(let i=0; i < dirContents.length; i++) {
     if( imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(directory,dirContents[i])).isDirectory() ) {
@@ -33,8 +32,8 @@ exports.merge = (directory) => {
 };
 
 exports.encode = (oldPath) => {
-  var newPath = '';
-  var tempPath = oldPath.split(path.sep);
+  let newPath = '';
+  let tempPath = oldPath.split(path.sep);
 
   if (process.platform != "win32") {
     for(let j=0; j < tempPath.length; j++) {
