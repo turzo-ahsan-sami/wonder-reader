@@ -12,6 +12,9 @@ const mkdirp = require('mkdirp');
 const os = require('os');
 const path = require('path');
 
+let config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
+let comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
+
 // Builds the library with proper HTML
 libBuilder = (directory, array, listID) => {
   $('#libStatus').remove();
@@ -28,9 +31,11 @@ libBuilder = (directory, array, listID) => {
       );
 
     // Deep scans interior folders
-  } else if ( fs.statSync(filePath).isDirectory() ) {
-      let newListID = (listID + file).replace(/\s|#|\(|\)|\'|,|&|\+|-/g, "");
-      $(`#${listID}`).append(`<li class="folder"><a href="#" onclick="libFolders('${newListID}')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${file}</a></li><ul id=${newListID}>`);
+    } else if ( fs.statSync(filePath).isDirectory() ) {
+      let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-/g, "");
+      $(`#${listID}`).append(
+        `<li class="folder"><a href="#" onclick="libFolders('${newListID}')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${file}</a></li><ul id=${newListID}>`
+      );
       libBuilder(filePath, array[i].children, newListID);
       $(`#${listID}`).append('</ul>');
     } else {
@@ -49,52 +54,41 @@ exports.openDir = () => {
   },
   function(fileNames) {
     if (fileNames === undefined) return;
-
-    let directory = fileNames[0];
-    let config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
-    let comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
-    let obj = {'library': directory};
-    let dirArray = dirTree(directory, ['.cbr', '.cbz']);
-    let listID = 'ulLib';
+    
+    let obj = {'library': fileNames[0]};
+    let dirArray = dirTree(fileNames[0], ['.cbr', '.cbz']);
 
     jsonfile.writeFileSync(comics, dirArray, {'spaces': 2});
     jsonfile.writeFileSync(config, obj);
-    $('#ulLib li').remove();
-    $('#ulLib ul').remove();
-
+    $('#ulLib li, #ulLib ul').remove();
     $('#repeat').addClass('rotater');
-    libBuilder(directory, dirArray.children, listID);
+    libBuilder(fileNames[0], dirArray.children, 'ulLib');
   });
 };
 
 // Exported version of libBuilder()
 exports.builder = () => {
-  let config = jsonfile.readFileSync(path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json'));
-  let directory = config.library;
-  let dirArray = dirTree(directory, ['.cbr', '.cbz']);
-  let listID = 'ulLib';
-  $('#ulLib li').remove();
-  $('#ulLib ul').remove();
+  let configJSON = jsonfile.readFileSync(config);
+  let dirArray = dirTree(configJSON.library, ['.cbr', '.cbz']);
+  $('#ulLib li, #ulLib ul').remove();
 
   $('#repeat').addClass('rotater');
-  libBuilder(directory, dirArray.children, listID);
+  libBuilder(configJSON.library, dirArray.children, 'ulLib');
 };
 
 // Loads library on program start
 exports.onLoad = () => {
-  let configFile = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
-  if ( isThere(configFile) ) {
-    let config = jsonfile.readFileSync(configFile);
-    if (config.library != undefined) {
-      let dirArray = dirTree(config.library, ['.cbr', '.cbz']);
-      let listID = 'ulLib';
-      libBuilder(config.library, dirArray.children, listID);
+  if ( isThere(config) ) {
+    let configJSON = jsonfile.readFileSync(config);
+    if (configJSON.library != undefined) {
+      let dirArray = dirTree(configJSON.library, ['.cbr', '.cbz']);
+      libBuilder(configJSON.library, dirArray.children, 'ulLib');
     } else {
       $('#libStatus').append('The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.');
     };
   } else {
     mkdirp.sync(path.join(os.tmpdir(), 'wonderReader', 'json'));
-    fs.writeFileSync(configFile, '{}');
+    fs.writeFileSync(config, '{}');
     $('#libStatus').append('The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.');
   };
 };
