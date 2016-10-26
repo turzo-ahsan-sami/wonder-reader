@@ -25,7 +25,7 @@ libBuilder = (directory, array, listID) => {
     // Inserts file.loader() for files
     if ( fs.statSync(filePath).isFile() ) {
 
-      newDirectory = dirFunction.encode(directory);
+      let newDirectory = dirFunction.encode(directory);
       $(`#${listID}`).append(
         `<li class="file"><a href="#" onclick="file.loader('${path.join(newDirectory, encodeURIComponent(file))}')"><i class="fa fa-file" aria-hidden="true"></i>${file} ${bookmark.percent(file)}</a></li>`
       );
@@ -54,7 +54,7 @@ exports.openDir = () => {
   },
   function(fileNames) {
     if (fileNames === undefined) return;
-    
+
     let obj = {'library': fileNames[0]};
     let dirArray = dirTree(fileNames[0], ['.cbr', '.cbz']);
 
