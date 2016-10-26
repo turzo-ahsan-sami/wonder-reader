@@ -15,22 +15,26 @@ const path = require('path');
 // Builds the library with proper HTML
 libBuilder = (directory, array, listID) => {
   $('#libStatus').remove();
-  // console.log(directory)
   for (let i=0; i < array.length; i++) {
-    let file = path.join(directory, array[i].name);
-    if ( fs.statSync(file).isFile() ) {
+    let file = array[i].name;
+    let filePath = path.join(directory, file);
+
+    // Inserts file.loader() for files
+    if ( fs.statSync(filePath).isFile() ) {
 
       newDirectory = dirFunction.encode(directory);
       $(`#${listID}`).append(
-        `<li class="file"><a href="#" onclick="file.loader('${path.join(newDirectory, encodeURIComponent(array[i].name))}')"><i class="fa fa-file" aria-hidden="true"></i>${array[i].name} ${bookmark.percent(array[i].name)}</a></li>`
+        `<li class="file"><a href="#" onclick="file.loader('${path.join(newDirectory, encodeURIComponent(file))}')"><i class="fa fa-file" aria-hidden="true"></i>${file} ${bookmark.percent(file)}</a></li>`
       );
-    } else if ( fs.statSync(file).isDirectory() ) { // Deep scans interior folders
-      let newListID = (listID + array[i].name).replace(/\s|#|\(|\)|\'|,|&|\+|-/g, "");
-      $(`#${listID}`).append(`<li class="folder"><a href="#" onclick="libFolders('${newListID}')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${array[i].name}</a></li><ul id=${newListID}>`);
+
+    // Deep scans interior folders
+    } else if ( fs.statSync(file).isDirectory() ) {
+      let newListID = (listID + file).replace(/\s|#|\(|\)|\'|,|&|\+|-/g, "");
+      $(`#${listID}`).append(`<li class="folder"><a href="#" onclick="libFolders('${newListID}')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${file}</a></li><ul id=${newListID}>`);
       libBuilder(file, array[i].children, newListID);
       $(`#${listID}`).append('</ul>');
     } else {
-      console.log(`${array[i].name} skipped`);
+      console.log(`${file} skipped`);
     };
   };
   $('#repeat').removeClass('rotater');

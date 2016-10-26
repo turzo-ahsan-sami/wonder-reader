@@ -26,14 +26,21 @@ exports.autoTrash = () => {
 
 // The crap cleaner function itself
 clearCache = (tempDir) => {
-  console.log(tempDir);
-  let cacheContents = fs.readdirSync(tempDir);
-  let currentDirArray = path.dirname(decodeURI(document.getElementById('viewImgOne').src.substr(7))).split(path.sep);
-  let currentDir = currentDirArray[currentDirArray.indexOf('cache')+1]; // Finds /path/to/wonderReader/cache, and pulls the next folder in
+  let cacheContents, pathArray, currentDir, imgOne;
+
+  imgOne = document.getElementById('viewImgOne');
+  cacheContents = fs.readdirSync(tempDir);
+  pathArray = path.dirname(decodeURI(imgOne.src.substr(7))).split(path.sep);
+  if (process.platform == "win32") {
+    pathArray = path.dirname(decodeURI(imgOne.src.substr(8))).split(path.sep);
+  };
+  // Finds /path/to/wonderReader/cache, and calls the next folder in
+  currentDir = pathArray[pathArray.indexOf('cache')+1];
 
   for(let i=0; i < cacheContents.length; i++) {
-    if (cacheContents[i] != currentDir && fs.statSync( path.join(tempDir,cacheContents[i])).isDirectory() ) {
-      rimraf.sync(path.join(tempDir, cacheContents[i])); // Deletes older directories
+    let item = path.join(tempDir,cacheContents[i]);
+    if (cacheContents[i] != currentDir && fs.statSync(item).isDirectory() ) {
+      rimraf.sync(item); // Deletes older directories for cached comics
     };
   };
 };

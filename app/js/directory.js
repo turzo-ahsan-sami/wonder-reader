@@ -20,7 +20,7 @@ exports.merge = (directory) => {
   if (dirContents.length > 0) {
     while ( fs.statSync(path.join(directory, dirContents[0])).isDirectory() ) {
       filtered = [];
-      for(let i=0; i < dirContents.length; i++) {
+      for(let i = 0; i < dirContents.length; i++) {
         if( imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync( path.join(directory,dirContents[i])).isDirectory() ) {
           filtered.push(dirContents[i]);
         };

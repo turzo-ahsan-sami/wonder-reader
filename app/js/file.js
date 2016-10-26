@@ -45,9 +45,9 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   if (err) {
     handleError(err);
   };
-
+  let fileComic, tempFolder, looper;
   if ([".cbr", ".cbz"].indexOf(path.extname(fileName).toLowerCase()) > -1) {
-    let fileComic = path.posix.basename(fileName).replace(/#|!/g, "");
+    fileComic = path.posix.basename(fileName).replace(/#|!/g, "");
     if (process.platform == 'win32') {
       fileComic = path.win32.basename(fileName).replace(/#|!/g, "");
     }
@@ -56,8 +56,8 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   };
 
   // tempFolder Variable for loaded comic
-  let tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic);
-  let looper = 0;
+  tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic);
+  looper = 0;
   console.log(`tempFolder = ${tempFolder}`);
 
   if (isThere(tempFolder)) { // Checks for existing Directory
