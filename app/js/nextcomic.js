@@ -12,6 +12,9 @@ function disable(id) {
 };
 
 exports.load = (fileName) => {
+  disable('nextComic');
+  disable('prevComic');
+
   let baseName = path.basename(fileName);
   let filePath = path.dirname(fileName);
   let dirContents = fs.readdirSync(filePath);

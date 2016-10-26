@@ -121,7 +121,7 @@ function defaults(fileDir, dirContents, index, polarity) {
   var val = Number(document.getElementById('column').dataset.val);
 
   if (Math.abs(val) == 2) {
-    if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1*polarity) > -1) {
+    if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + polarity) > -1) {
       singlePage(fileDir, dirContents, index);
     } else {
       viewOne.style.display = 'initial';
