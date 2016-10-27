@@ -66,10 +66,15 @@ pageTurn = (val) => {
 
   // Limits Val to range
   if (index + val >= dirContents.length -1) { // For last page
-    index = dirContents.length -1;
-    val = 0;
-    polarity = 0;
-    singlePage(fileDir, dirContents, index);
+    if (Math.abs(val) == 2 && index == dirContents.length -2) {
+      index = dirContents.length -2;
+      defaults(fileDir, dirContents, index, polarity);
+    } else {
+      index = dirContents.length -1;
+      val = 0;
+      polarity = 0;
+      singlePage(fileDir, dirContents, index);  
+    }
   } else if (index + val <= 0) { // For first page
     index = 0;
     val = 0;
