@@ -23,7 +23,7 @@ libBuilder = (directory, array, listID) => {
     let filePath = path.join(directory, file);
 
     // Inserts file.loader() for files
-    if ( fs.statSync(filePath).isFile() ) {
+    if (fs.statSync(filePath).isFile()) {
 
       let newDirectory = dirFunction.encode(directory);
       $(`#${listID}`).append(
@@ -31,7 +31,7 @@ libBuilder = (directory, array, listID) => {
       );
 
     // Deep scans interior folders
-    } else if ( fs.statSync(filePath).isDirectory() ) {
+    } else if (fs.statSync(filePath).isDirectory()) {
       let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-/g, "");
       $(`#${listID}`).append(
         `<li class="folder"><a href="#" onclick="libFolders('${newListID}')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${file}</a></li><ul id=${newListID}>`
@@ -78,7 +78,7 @@ exports.builder = () => {
 
 // Loads library on program start
 exports.onLoad = () => {
-  if ( isThere(config) ) {
+  if (isThere(config)) {
     let configJSON = jsonfile.readFileSync(config);
     if (configJSON.library != undefined) {
       let dirArray = dirTree(configJSON.library, ['.cbr', '.cbz']);

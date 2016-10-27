@@ -30,7 +30,7 @@ exports.load = (file) => {
 
   index = 0;
   continueIndex = Number(bookmark.onLoad(file, dirContents));
-  if(continueIndex > 0) {
+  if (continueIndex > 0) {
     r = confirm(`Continue ${path.basename(file)} at page ${continueIndex}`);
     if (r == true) {
       index = continueIndex;
@@ -162,7 +162,7 @@ exports.spread = () => {
   let index = dirContents.indexOf(path.basename(filePath));
   let polarity = 1;
 
-  if($('#column').hasClass('disabled')) {
+  if ($('#column').hasClass('disabled')) {
     $('#column').removeClass('disabled');
     document.getElementById('column').dataset.val = 2;
     defaults(fileDir, dirContents, index, polarity);

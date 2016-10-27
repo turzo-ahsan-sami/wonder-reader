@@ -9,7 +9,7 @@ const title = require('./js/title.js');
 $(document).keydown(function(event) {
   if (document.activeElement.id == 'zoomText' || document.activeElement.id == 'zoomSlider') {
     // Do nothing when focused on zoom input
-  } else if ( $('#viewer').hasClass('active') ) {
+  } else if ($('#viewer').hasClass('active')) {
     // Check if file is loaded. See file.js: postExtract()
     if (event.which == 37) { // left key
       page.Left();
@@ -36,7 +36,7 @@ library.onLoad();
 title.onLoad();
 
 // Formats page to variable window sizes
-$( document ).ready( function() {
+$(document).ready(function() {
   // On Load
   document.getElementById('dirLib').style.height = `${window.innerHeight - 56}px`;
   document.getElementById('viewer').style.height = `${window.innerHeight - 56}px`;
@@ -70,7 +70,7 @@ imgDivResizer = () => {
   let imgOne = document.getElementById('viewImgOne');
   let imgTwo = document.getElementById('viewImgTwo');
 
-  if(imgOne.clientHeight >= imgTwo.clientHeight) {
+  if (imgOne.clientHeight >= imgTwo.clientHeight) {
     inner.style.height = `${imgOne.clientHeight}px`;
   } else {
     inner.style.height = `${imgTwo.clientHeight}px`;
@@ -133,10 +133,10 @@ dropDown = () => {
 };
 
 // dragscroll things
-$('#zoomSlider').mouseenter( function() {
+$('#zoomSlider').mouseenter(function() {
   $('#viewer').removeClass('dragscroll');
   $('#zoomSlider').focus();
-}).mouseleave( function() {
+}).mouseleave(function() {
   $('#viewer').addClass('dragscroll');
   $('#zoomSlider').blur();
 });

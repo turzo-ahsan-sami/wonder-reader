@@ -6,12 +6,13 @@ const os = require('os');
 const path = require('path');
 const rimraf = require('rimraf');
 
+const tempDir = path.join(os.tmpdir(), 'wonderReader', 'cache');
+
 // Cleans out the crap
 exports.trash = () => {
-  let tempDir = path.join(os.tmpdir(), 'wonderReader', 'cache');
   getSize(tempDir, function(err,size) {
     let cacheSize = size / 1024 / 1024;
-    let r = confirm(`This will clear your Wonder Reader cache (Currently ${cacheSize.toFixed(2)} Mb. \n\nContinue?`)
+    let r = confirm(`This will clear your Wonder Reader cache (Currently ${cacheSize.toFixed(2)} Mb). \n\nContinue?`)
     if (r == true) {
       clearCache(tempDir);
     };
@@ -20,16 +21,15 @@ exports.trash = () => {
 
 // For when I ever plan to introduce an autoCleaning feature
 exports.autoTrash = () => {
-  let tempDir = path.join(os.tmpdir(), 'wonderReader', 'cache');
   clearCache(tempDir);
 }
 
 // The crap cleaner function itself
-clearCache = (tempDir) => {
+clearCache = (directory) => {
   let cacheContents, pathArray, currentDir, imgOne;
 
   imgOne = document.getElementById('viewImgOne');
-  cacheContents = fs.readdirSync(tempDir);
+  cacheContents = fs.readdirSync(directory);
   pathArray = path.dirname(decodeURI(imgOne.src.substr(7))).split(path.sep);
   if (process.platform == "win32") {
     pathArray = path.dirname(decodeURI(imgOne.src.substr(8))).split(path.sep);
@@ -38,8 +38,8 @@ clearCache = (tempDir) => {
   currentDir = pathArray[pathArray.indexOf('cache')+1];
 
   for(let i=0; i < cacheContents.length; i++) {
-    let item = path.join(tempDir,cacheContents[i]);
-    if (cacheContents[i] != currentDir && fs.statSync(item).isDirectory() ) {
+    let item = path.join(directory,cacheContents[i]);
+    if (cacheContents[i] != currentDir && fs.statSync(item).isDirectory()) {
       rimraf.sync(item); // Deletes older directories for cached comics
     };
   };

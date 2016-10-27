@@ -20,7 +20,7 @@ exports.onLoad = (filePath, directoryContents) => { // returns a new index for <
   template.currentIndex = 0;
   template.fullIndex = directoryContents.length - 1;
 
-  if ( isThere(bookmark) ) {
+  if (isThere(bookmark)) {
     obj = jsonfile.readFileSync(bookmark);
     if (obj[baseName] != undefined) { // if baseName is listed
       console.log(`${baseName} located. Loading comic at index ${obj[baseName].currentIndex}`);
@@ -66,9 +66,9 @@ exports.onChange = (index) => {
 // Fills library with percentage read
 exports.percent = (fileName) => {
   let spanClass = fileName.replace(regex, '');
-  if (isThere (bookmark) ) {
+  if (isThere (bookmark)) {
     obj = jsonfile.readFileSync(bookmark);
-    if ( obj[fileName] ) {
+    if (obj[fileName]) {
       console.log(`${obj[fileName].name}: ${obj[fileName].currentIndex} of ${obj[fileName].fullIndex}`);
       let percent = (obj[fileName].currentIndex/obj[fileName].fullIndex)*100;
       return `<span class="bookmark-percent ${spanClass}">${percent.toFixed(0)}%</span>`;
