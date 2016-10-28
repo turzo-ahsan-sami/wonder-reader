@@ -44,7 +44,7 @@ exports.load = (fileName) => {
       prevComic.onclick=function() {file.loader(prevSrc)};
       enable('nextComic');
       enable('prevComic');
-    }
+    };
   } else {
     // Do nothing
   };

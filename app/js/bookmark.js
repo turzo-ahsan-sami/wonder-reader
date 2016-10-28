@@ -23,7 +23,7 @@ exports.onLoad = (filePath, directoryContents) => { // returns a new index for <
   if (isThere(bookmark)) {
     obj = jsonfile.readFileSync(bookmark);
     if (obj[baseName] != undefined) { // if baseName is listed
-      console.log(`${baseName} located. Loading comic at index ${obj[baseName].currentIndex}`);
+      // console.log(`${baseName} located. Loading comic at index ${obj[baseName].currentIndex}`);
       return obj[baseName].currentIndex;
     } else { // if baseName isn't listed, adds item to bookmark.json
       obj[baseName] = template;
@@ -32,7 +32,7 @@ exports.onLoad = (filePath, directoryContents) => { // returns a new index for <
           console.log(err);
           return 0;
         };
-        console.log(`Item, ${baseName}, added to bookmark.json.`);
+        // console.log(`Item, ${baseName}, added to bookmark.json.`);
         return 0;
       });
     };
@@ -40,7 +40,7 @@ exports.onLoad = (filePath, directoryContents) => { // returns a new index for <
     obj = {};
     obj[baseName] = template; // Pushes into Array
     jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
-    console.log('New bookmark.json created. Loading Comic at index 0');
+    // console.log('New bookmark.json created. Loading Comic at index 0');
     return 0;
   };
 };
@@ -69,7 +69,7 @@ exports.percent = (fileName) => {
   if (isThere (bookmark)) {
     obj = jsonfile.readFileSync(bookmark);
     if (obj[fileName]) {
-      console.log(`${obj[fileName].name}: ${obj[fileName].currentIndex} of ${obj[fileName].fullIndex}`);
+      // console.log(`${obj[fileName].name}: ${obj[fileName].currentIndex} of ${obj[fileName].fullIndex}`);
       let percent = (obj[fileName].currentIndex/obj[fileName].fullIndex)*100;
       return `<span class="bookmark-percent ${spanClass}">${percent.toFixed(0)}%</span>`;
     } else { return `<span class="bookmark-percent ${spanClass}">0%</span>`};

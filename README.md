@@ -1,6 +1,6 @@
 # Wonder-Reader
 
-Version 0.3.5
+Version 0.3.6
 
 ## Downloads
 

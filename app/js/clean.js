@@ -22,7 +22,7 @@ exports.trash = () => {
 // For when I ever plan to introduce an autoCleaning feature
 exports.autoTrash = () => {
   clearCache(tempDir);
-}
+};
 
 // The crap cleaner function itself
 clearCache = (directory) => {

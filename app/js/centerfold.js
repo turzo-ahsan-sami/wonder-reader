@@ -11,7 +11,7 @@ exports.fold = (id) => {
   filePath = decodeURIComponent(document.getElementById(id).src.substr(7));
   if (process.platform == "win32") {
     filePath = decodeURIComponent(document.getElementById(id).src.substr(8));
-  }
+  };
   fileDir = path.dirname(filePath);
   dirContents = strain(fs.readdirSync(fileDir));
   spread = [];

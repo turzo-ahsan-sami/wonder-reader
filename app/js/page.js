@@ -9,8 +9,7 @@ const path = require('path');
 const sizeOf = require('image-size');
 const strain = require('./strain.js');
 
-let centerFolds, dirContents, fileDir, fileName, filePath;
-let inner, viewOne, viewTwo;
+let centerFolds, dirContents, fileDir, fileName, filePath, inner, viewOne, viewTwo;
 
 exports.load = (file) => {
   let index, continueIndex, val, polarity, r;
@@ -18,7 +17,7 @@ exports.load = (file) => {
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
   if (process.platform == "win32") {
     filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
-  }
+  };
   fileName = path.basename(filePath);
   fileDir = path.dirname(filePath);
   dirContents = strain(fs.readdirSync(fileDir));
@@ -54,7 +53,7 @@ pageTurn = (val) => {
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
   if (process.platform == "win32") {
     filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
-  }
+  };
   fileName = path.basename(filePath);
   index = Number(dirContents.indexOf(fileName));
   val = Number(val);
@@ -73,7 +72,7 @@ pageTurn = (val) => {
       index = dirContents.length -1;
       val = 0;
       polarity = 0;
-      singlePage(fileDir, dirContents, index);  
+      singlePage(fileDir, dirContents, index);
     }
   } else if (index + val <= 0) { // For first page
     index = 0;
@@ -141,7 +140,7 @@ defaults = (fileDir, dirContents, index, polarity) => {
 
       viewOne.style.width = ratioOne/(ratioOne + ratioTwo)*100 + '%';
       viewTwo.style.width = ratioTwo/(ratioOne + ratioTwo)*100 + '%';
-    }
+    };
   } else if (Math.abs(val) == 1) { // If val == 1
     singlePage(fileDir, dirContents, index);
   } else {
@@ -152,18 +151,18 @@ defaults = (fileDir, dirContents, index, polarity) => {
 exports.Right = () => { // See page.spread()
   let val = document.getElementById('column').dataset.val;
   pageTurn(val);
-}
+};
 
 exports.Left = () => {
   let val = document.getElementById('column').dataset.val * -1;
   pageTurn(val);
-}
+};
 
 exports.spread = () => {
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
   if (process.platform == "win32") {
     filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
-  }
+  };
   let index = dirContents.indexOf(path.basename(filePath));
   let polarity = 1;
 

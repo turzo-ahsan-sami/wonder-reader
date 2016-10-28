@@ -1,3 +1,5 @@
+// Central JS Controller: for main app functions as well as calling modules
+
 const $ = require('jquery'); // https://www.npmjs.com/package/jquery
 const clean = require('./js/clean.js');
 const file = require('./js/file.js');
@@ -111,7 +113,7 @@ pageZoom = () => {
     inner.style.marginTop = `${(outer.clientHeight - inner.clientHeight)/2}px`;
   } else {
     inner.style.marginTop = 0;
-  }
+  };
   outer.scrollTop = inner.clientHeight*cPXR - outer.clientHeight/2;
   outer.scrollLeft = inner.clientWidth*cPYR - outer.clientWidth/2;
 };
