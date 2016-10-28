@@ -50,7 +50,7 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
     fileComic = path.posix.basename(fileName).replace(/#|!/g, "");
     if (process.platform == 'win32') {
       fileComic = path.win32.basename(fileName).replace(/#|!/g, "");
-    }
+    };
   } else {
     handleError(evt);
   };
