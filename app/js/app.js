@@ -1,3 +1,5 @@
+// Central JS Controller: for main app functions as well as calling modules
+
 const $ = require('jquery'); // https://www.npmjs.com/package/jquery
 const clean = require('./js/clean.js');
 const file = require('./js/file.js');
@@ -5,10 +7,11 @@ const library = require('./js/library.js');
 const page = require('./js/page.js');
 const title = require('./js/title.js');
 
+// Key press Checker
 $(document).keydown(function(event) {
   if (document.activeElement.id == 'zoomText' || document.activeElement.id == 'zoomSlider') {
     // Do nothing when focused on zoom input
-  } else if ( $('#viewer').hasClass('active') ) {
+  } else if ($('#viewer').hasClass('active')) {
     // Check if file is loaded. See file.js: postExtract()
     if (event.which == 37) { // left key
       page.Left();
@@ -18,7 +21,8 @@ $(document).keydown(function(event) {
   };
 });
 
-function handleError(evt) {
+// Error Handling
+handleError = (evt) => {
   if (evt.message) {
     alert(`Error: ${evt.message} at linenumber: ${evt.lineno} of file: ${evt.filename}`);
   } else {
@@ -34,7 +38,7 @@ library.onLoad();
 title.onLoad();
 
 // Formats page to variable window sizes
-$( document ).ready( function() {
+$(document).ready(function() {
   // On Load
   document.getElementById('dirLib').style.height = `${window.innerHeight - 56}px`;
   document.getElementById('viewer').style.height = `${window.innerHeight - 56}px`;
@@ -63,12 +67,12 @@ $( document ).ready( function() {
 });
 
 // Function that resizes innerWindow div
-function imgDivResizer() {
-  var inner = document.getElementById('innerWindow');
-  var imgOne = document.getElementById('viewImgOne');
-  var imgTwo = document.getElementById('viewImgTwo');
+imgDivResizer = () => {
+  let inner = document.getElementById('innerWindow');
+  let imgOne = document.getElementById('viewImgOne');
+  let imgTwo = document.getElementById('viewImgTwo');
 
-  if(imgOne.clientHeight >= imgTwo.clientHeight) {
+  if (imgOne.clientHeight >= imgTwo.clientHeight) {
     inner.style.height = `${imgOne.clientHeight}px`;
   } else {
     inner.style.height = `${imgTwo.clientHeight}px`;
@@ -76,26 +80,26 @@ function imgDivResizer() {
 };
 
 // Adds an event listener to both images
-var images = document.querySelectorAll('img');
+let images = document.querySelectorAll('img');
 for (let j = 0; j < images.length; j++) {
   images[j].addEventListener('load', imgDivResizer());
 };
 
 // Handles the zoom
-function pageZoom() {
-  var outer = document.getElementById('viewer');
-  var inner = document.getElementById('innerWindow');
-  var zoomSlide = document.getElementById('zoomSlider');
-  var imgOne = document.getElementById('viewImgOne');
-  var imgTwo = document.getElementById('viewImgTwo');
+pageZoom = () => {
+  let outer = document.getElementById('viewer');
+  let inner = document.getElementById('innerWindow');
+  let zoomSlide = document.getElementById('zoomSlider');
+  let imgOne = document.getElementById('viewImgOne');
+  let imgTwo = document.getElementById('viewImgTwo');
 
   // Center Points
-  var cPX = outer.scrollTop + outer.clientHeight/2;
-  var cPY = outer.scrollLeft + outer.clientWidth/2;
+  let cPX = outer.scrollTop + outer.clientHeight/2;
+  let cPY = outer.scrollLeft + outer.clientWidth/2;
 
   // Position Ratios to whole
-  var cPXR = cPX/inner.clientHeight;
-  var cPYR = cPY/inner.clientWidth;
+  let cPXR = cPX/inner.clientHeight;
+  let cPYR = cPY/inner.clientWidth;
 
   inner.style.width = `${zoomSlide.value}%`;
   if (zoomSlide.value < 100) {
@@ -105,18 +109,17 @@ function pageZoom() {
   };
 
   imgDivResizer();
-
   if (outer.clientHeight > inner.clientHeight) {
     inner.style.marginTop = `${(outer.clientHeight - inner.clientHeight)/2}px`;
   } else {
     inner.style.marginTop = 0;
-  }
+  };
   outer.scrollTop = inner.clientHeight*cPXR - outer.clientHeight/2;
   outer.scrollLeft = inner.clientWidth*cPYR - outer.clientWidth/2;
 };
 
 // Main Library folder collapsing
-function libFolders(id) {
+libFolders = (id) => {
   id = $(`#${id}`);
   if (id.is(':animated')) return;
   id.prev('.folder').children().children('.fa-caret-down').toggleClass('rotate');
@@ -124,18 +127,18 @@ function libFolders(id) {
 };
 
 // Library Windows collapsing
-function libSlider() {
+libSlider = () => {
   $('#sideLib').toggleClass('shift-left');
 };
-function dropDown() {
+dropDown = () => {
   $('#mainLib').slideToggle(800);
 };
 
 // dragscroll things
-$('#zoomSlider').mouseenter( function() {
+$('#zoomSlider').mouseenter(function() {
   $('#viewer').removeClass('dragscroll');
   $('#zoomSlider').focus();
-}).mouseleave( function() {
+}).mouseleave(function() {
   $('#viewer').addClass('dragscroll');
   $('#zoomSlider').blur();
 });

@@ -22,7 +22,8 @@ const title = require('./title.js');
 
 let dirContents;
 
-function openFile() {
+// Dialog box to load the file
+openFile = () => {
   dialog.showOpenDialog(
     { filters: [{
       name: 'Comic Files',
@@ -33,29 +34,30 @@ function openFile() {
     // Open File function
     function(fileNames) {
       if (fileNames === undefined) return; // Breaks on error
-      var fileName = fileNames[0]; // Filepath name
+      let fileName = fileNames[0]; // Filepath name
       fileLoad(fileName); // Extracts files to their proper locations
 		}
   );
 };
 
-function fileLoad(fileName, err) { // checks and extracts files and then loads them
+// The function that loads each file
+fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   if (err) {
     handleError(err);
   };
-
+  let fileComic, tempFolder, looper;
   if ([".cbr", ".cbz"].indexOf(path.extname(fileName).toLowerCase()) > -1) {
-    var fileComic = path.posix.basename(fileName).replace(/#|!/g, "");
+    fileComic = path.posix.basename(fileName).replace(/#|!/g, "");
     if (process.platform == 'win32') {
       fileComic = path.win32.basename(fileName).replace(/#|!/g, "");
-    }
+    };
   } else {
     handleError(evt);
   };
 
   // tempFolder Variable for loaded comic
-  var tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic);
-  var looper = 0;
+  tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic);
+  looper = 0;
   console.log(`tempFolder = ${tempFolder}`);
 
   if (isThere(tempFolder)) { // Checks for existing Directory
@@ -88,17 +90,19 @@ function fileLoad(fileName, err) { // checks and extracts files and then loads t
   }; // End Directory checker
 };
 
-function enable(id) {
+// Enable et Disable ID's
+enable = (id) => {
   document.getElementById(id).disabled = false;
 };
-function disable(id) {
+disable = (id) => {
   document.getElementById(id).disabled = true;
 };
 
-function postExtract(fileName, tempFolder, dirContents) {
-  var inner = document.getElementById('innerWindow');
-  var viewOne = document.getElementById('viewImgOne');
-  var viewTwo = document.getElementById('viewImgTwo');
+// After extraction, loads stuff into img tags, as well as other junk
+postExtract = (fileName, tempFolder, dirContents) => {
+  let inner = document.getElementById('innerWindow');
+  let viewOne = document.getElementById('viewImgOne');
+  let viewTwo = document.getElementById('viewImgTwo');
 
   dirContents = strain(dirContents);
 
@@ -136,12 +140,13 @@ exports.loader = (fileName) => {
 //-| File Extractors |
 //-\-----------------/
 
-function rarExtractor(fileName, tempFolder, looper) {
+rarExtractor = (fileName, tempFolder, looper) => {
+  console.log('Unrar extraction started.')
   cbr(fileName, tempFolder, function (error) {
     if (error) {
       console.log(error);
     };
-
+    console.log('Extraction complete!');
     tempFolder = dirFunction.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
 
@@ -160,7 +165,7 @@ function rarExtractor(fileName, tempFolder, looper) {
   });
 };
 
-function zipExtractor(fileName, tempFolder, looper) {
+zipExtractor = (fileName, tempFolder, looper) => {
   console.log('Unzip extraction started.');
   fs.createReadStream(fileName).pipe(
     unzip.Extract({

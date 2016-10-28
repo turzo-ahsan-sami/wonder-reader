@@ -5,27 +5,29 @@ const path = require('path');
 const sizeOf = require('image-size');
 const strain = require('./strain.js');
 
+// Returns with an array of indices for double page images for core array of image files
 exports.fold = (id) => {
-  var filePath = decodeURIComponent(document.getElementById(id).src.substr(7));
+  let filePath, fileDir, dirContents, spread, dimensions, width, height;
+  filePath = decodeURIComponent(document.getElementById(id).src.substr(7));
   if (process.platform == "win32") {
     filePath = decodeURIComponent(document.getElementById(id).src.substr(8));
-  }
-  var fileDir = path.dirname(filePath);
-  var dirContents = strain(fs.readdirSync(fileDir));
-  var spread = [];
+  };
+  fileDir = path.dirname(filePath);
+  dirContents = strain(fs.readdirSync(fileDir));
+  spread = [];
 
   for (let i = 0; i < dirContents.length; i++) {
     (function(i) {
-      var dimensions = sizeOf(path.join(fileDir, dirContents[i]));
-      var width = dimensions.width;
-      var height = dimensions.height;
+      dimensions = sizeOf(path.join(fileDir, dirContents[i]));
+      width = dimensions.width;
+      height = dimensions.height;
 
       if (width >= height) {
         spread.push(i);
       }
     })(i);
   };
-  function sortNumber(a,b) {
+  sortNumber = (a,b) => {
     return a - b;
   };
   spread = spread.sort(sortNumber);

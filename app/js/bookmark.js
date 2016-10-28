@@ -8,9 +8,10 @@ const path = require('path');
 
 let template = {}; // {"name": "", "currentIndex": "0", "fullIndex": "0"};
 let baseName, index, json, obj;
-var bookmark = path.join(os.tmpdir(), 'wonderReader', 'json', 'bookmark.json');
-var regex = /\s|%|#|\(|\)|\.|-|_/gi;
+let bookmark = path.join(os.tmpdir(), 'wonderReader', 'json', 'bookmark.json');
+let regex = /\s|%|#|\(|\)|\.|-|_/gi; // Reg Ex for classes
 
+// Invoked on Comic.onLoad(), returns with current page
 exports.onLoad = (filePath, directoryContents) => { // returns a new index for <img> tags
   baseName = path.basename(filePath);
 
@@ -18,12 +19,11 @@ exports.onLoad = (filePath, directoryContents) => { // returns a new index for <
   template.name = baseName;
   template.currentIndex = 0;
   template.fullIndex = directoryContents.length - 1;
-  console.log(template)
 
-  if ( isThere(bookmark) ) {
+  if (isThere(bookmark)) {
     obj = jsonfile.readFileSync(bookmark);
     if (obj[baseName] != undefined) { // if baseName is listed
-      console.log(`${baseName} located. Loading comic at index ${obj[baseName].currentIndex}`);
+      // console.log(`${baseName} located. Loading comic at index ${obj[baseName].currentIndex}`);
       return obj[baseName].currentIndex;
     } else { // if baseName isn't listed, adds item to bookmark.json
       obj[baseName] = template;
@@ -32,7 +32,7 @@ exports.onLoad = (filePath, directoryContents) => { // returns a new index for <
           console.log(err);
           return 0;
         };
-        console.log(`Item, ${baseName}, added to bookmark.json.`);
+        // console.log(`Item, ${baseName}, added to bookmark.json.`);
         return 0;
       });
     };
@@ -40,11 +40,12 @@ exports.onLoad = (filePath, directoryContents) => { // returns a new index for <
     obj = {};
     obj[baseName] = template; // Pushes into Array
     jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
-    console.log('New bookmark.json created. Loading Comic at index 0');
+    // console.log('New bookmark.json created. Loading Comic at index 0');
     return 0;
   };
 };
 
+// Updates JSON with current page
 exports.onChange = (index) => {
   jsonfile.readFile(bookmark, function(err, obj) {
     if (err) {return err};
@@ -62,12 +63,13 @@ exports.onChange = (index) => {
   });
 };
 
+// Fills library with percentage read
 exports.percent = (fileName) => {
   let spanClass = fileName.replace(regex, '');
-  if (isThere (bookmark) ) {
+  if (isThere (bookmark)) {
     obj = jsonfile.readFileSync(bookmark);
-    if ( obj[fileName] ) {
-      console.log(`${obj[fileName].name}: ${obj[fileName].currentIndex} of ${obj[fileName].fullIndex}`)
+    if (obj[fileName]) {
+      // console.log(`${obj[fileName].name}: ${obj[fileName].currentIndex} of ${obj[fileName].fullIndex}`);
       let percent = (obj[fileName].currentIndex/obj[fileName].fullIndex)*100;
       return `<span class="bookmark-percent ${spanClass}">${percent.toFixed(0)}%</span>`;
     } else { return `<span class="bookmark-percent ${spanClass}">0%</span>`};

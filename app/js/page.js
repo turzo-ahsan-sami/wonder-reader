@@ -9,8 +9,7 @@ const path = require('path');
 const sizeOf = require('image-size');
 const strain = require('./strain.js');
 
-let centerFolds, dirContents, fileDir, fileName, filePath;
-let inner, viewOne, viewTwo;
+let centerFolds, dirContents, fileDir, fileName, filePath, inner, viewOne, viewTwo;
 
 exports.load = (file) => {
   let index, continueIndex, val, polarity, r;
@@ -18,7 +17,7 @@ exports.load = (file) => {
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
   if (process.platform == "win32") {
     filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
-  }
+  };
   fileName = path.basename(filePath);
   fileDir = path.dirname(filePath);
   dirContents = strain(fs.readdirSync(fileDir));
@@ -30,7 +29,7 @@ exports.load = (file) => {
 
   index = 0;
   continueIndex = Number(bookmark.onLoad(file, dirContents));
-  if(continueIndex > 0) {
+  if (continueIndex > 0) {
     r = confirm(`Continue ${path.basename(file)} at page ${continueIndex}`);
     if (r == true) {
       index = continueIndex;
@@ -48,13 +47,13 @@ exports.load = (file) => {
   };
 };
 
-function pageTurn(val) {
+pageTurn = (val) => {
   let index, polarity;
 
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
   if (process.platform == "win32") {
     filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
-  }
+  };
   fileName = path.basename(filePath);
   index = Number(dirContents.indexOf(fileName));
   val = Number(val);
@@ -66,10 +65,15 @@ function pageTurn(val) {
 
   // Limits Val to range
   if (index + val >= dirContents.length -1) { // For last page
-    index = dirContents.length -1;
-    val = 0;
-    polarity = 0;
-    singlePage(fileDir, dirContents, index);
+    if (Math.abs(val) == 2 && index == dirContents.length -2) {
+      index = dirContents.length -2;
+      defaults(fileDir, dirContents, index, polarity);
+    } else {
+      index = dirContents.length -1;
+      val = 0;
+      polarity = 0;
+      singlePage(fileDir, dirContents, index);
+    }
   } else if (index + val <= 0) { // For first page
     index = 0;
     val = 0;
@@ -110,15 +114,15 @@ function pageTurn(val) {
   document.getElementById('viewer').scrollLeft = 0;
 };
 
-function singlePage(fileDir, dirContents, index) { // For Single page viewing and styling
+singlePage = (fileDir, dirContents, index) => { // For Single page viewing and styling
   viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
   viewOne.style.width = '100%';
   viewTwo.style.display = 'none';
   viewTwo.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
 };
 
-function defaults(fileDir, dirContents, index, polarity) {
-  var val = Number(document.getElementById('column').dataset.val);
+defaults = (fileDir, dirContents, index, polarity) => {
+  let val = Number(document.getElementById('column').dataset.val);
 
   if (Math.abs(val) == 2) {
     if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + polarity) > -1) {
@@ -129,14 +133,14 @@ function defaults(fileDir, dirContents, index, polarity) {
       viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
       viewTwo.src = path.join(fileDir, encodeURIComponent(dirContents[index + 1]));
 
-      var sizeOne = sizeOf(path.join(fileDir, dirContents[index]));
-      var sizeTwo = sizeOf(path.join(fileDir, dirContents[index + 1]));
-      var ratioOne = sizeOne.width/sizeOne.height;
-      var ratioTwo = sizeTwo.width/sizeTwo.height;
+      let sizeOne = sizeOf(path.join(fileDir, dirContents[index]));
+      let sizeTwo = sizeOf(path.join(fileDir, dirContents[index + 1]));
+      let ratioOne = sizeOne.width/sizeOne.height;
+      let ratioTwo = sizeTwo.width/sizeTwo.height;
 
       viewOne.style.width = ratioOne/(ratioOne + ratioTwo)*100 + '%';
       viewTwo.style.width = ratioTwo/(ratioOne + ratioTwo)*100 + '%';
-    }
+    };
   } else if (Math.abs(val) == 1) { // If val == 1
     singlePage(fileDir, dirContents, index);
   } else {
@@ -145,24 +149,24 @@ function defaults(fileDir, dirContents, index, polarity) {
 };
 
 exports.Right = () => { // See page.spread()
-  var val = document.getElementById('column').dataset.val;
+  let val = document.getElementById('column').dataset.val;
   pageTurn(val);
-}
+};
 
 exports.Left = () => {
-  var val = document.getElementById('column').dataset.val * -1;
+  let val = document.getElementById('column').dataset.val * -1;
   pageTurn(val);
-}
+};
 
 exports.spread = () => {
   filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
   if (process.platform == "win32") {
     filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
-  }
-  var index = dirContents.indexOf(path.basename(filePath));
-  var polarity = 1;
+  };
+  let index = dirContents.indexOf(path.basename(filePath));
+  let polarity = 1;
 
-  if($('#column').hasClass('disabled')) {
+  if ($('#column').hasClass('disabled')) {
     $('#column').removeClass('disabled');
     document.getElementById('column').dataset.val = 2;
     defaults(fileDir, dirContents, index, polarity);

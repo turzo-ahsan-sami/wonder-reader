@@ -6,9 +6,9 @@ const path = require('path');
 const rimraf = require('rimraf');
 
 const platform = process.platform;
-var build = './build';
+let build = './build';
 mkdirp.sync(build);
-var files = fs.readdirSync(build);
+let files = fs.readdirSync(build);
 for (let i = 0; i < files.length; i++) {
   console.log(`Removing ${files[i]}.`)
   rimraf.sync(path.join(build, files[i]));
@@ -29,6 +29,6 @@ packager(
   }
 );
 
-function postPackage(appPaths) {
+postPackage = (appPaths) => {
   console.log(colors.magenta('Wonder Reader packaging successful! Files can be found at ' + appPaths));
 };
