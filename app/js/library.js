@@ -12,8 +12,8 @@ const mkdirp = require('mkdirp');
 const os = require('os');
 const path = require('path');
 
-let config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
-let comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
+const config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
+const comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
 
 // Builds the library with proper HTML
 libBuilder = (directory, array, listID) => {
@@ -24,7 +24,6 @@ libBuilder = (directory, array, listID) => {
 
     // Inserts file.loader() for files
     if (fs.statSync(filePath).isFile()) {
-
       let newDirectory = dirFunction.encode(directory);
       $(`#${listID}`).append(
         `<li class="file"><a href="#" onclick="file.loader('${path.join(newDirectory, encodeURIComponent(file))}')"><i class="fa fa-file" aria-hidden="true"></i>${file} ${bookmark.percent(file)}</a></li>`

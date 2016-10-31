@@ -70,7 +70,7 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
         zipExtractor(fileName, tempFolder, looper);
       } else {
         handleError(evt);
-      }
+      };
     } else {
       postExtract(fileName, tempFolder, dirContents);
     };

@@ -13,7 +13,7 @@ exports.merge = (directory) => {
   for(let i=0; i < dirContents.length; i++) {
     if (imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(directory,dirContents[i])).isDirectory()) {
       filtered.push(dirContents[i]);
-    }
+    };
   };
   dirContents = filtered;
 
