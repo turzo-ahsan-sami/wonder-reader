@@ -36,7 +36,7 @@ openFile = () => {
       if (fileNames === undefined) return; // Breaks on error
       let fileName = fileNames[0]; // Filepath name
       fileLoad(fileName); // Extracts files to their proper locations
-		}
+    }
   );
 };
 
