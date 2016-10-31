@@ -2,87 +2,84 @@
 <html>
 
 <head>
-	<title>Wonder Reader</title>
-	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="css/fonts.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+  <title>Wonder Reader</title>
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/fonts.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
-	<div id="bgColor"></div>
-	<div class="header">
-		<h1 class="title">Wonder Reader</h1>
-		<div id="cpanel" class="top-div">
+<div id="bgColor"></div>
+  <div class="header">
+    <h1 class="title">Wonder Reader</h1>
+    <div id="cpanel" class="top-div">
+      <label for="zoomSlider">Zoom</label>
+      <input type="range" min="25" max="300" value="100" step="1" id="zoomSlider" oninput="pageZoom(); zoomTextUpdate(value)" for="zoomText">
+      <output type="text" for="zoomSlider" id="zoomText">100</output>
+      <span id="percent">%</span>
+      <script>
+        function zoomTextUpdate(val) {
+          document.querySelector('#zoomText').value = val;
+        };
+        function zoomSliderUpdate(val) {
+          document.querySelector('#zoomSlider').value = val;
+        };
+      </script>
+    </div>
+    <ul class="navigation">
+      <li>
+        <button id="column" onclick="page.spread()" data-val="2" disabled><i class="fa fa-columns"></i></button>
+      </li>
+      <li>
+        <button id="prevComic" onclick="" disabled><i class="fa fa-angle-double-left"></i></button>
+      </li>
+      <li>
+        <button id="pageLeft" onclick="page.Left()" disabled><i class="fa fa-angle-left"></i></button>
+      </li>
+      <li>
+        <button id="pageRight" onclick="page.Right()" disabled><i class="fa fa-angle-right"></i></button>
+      </li>
+      <li>
+        <button id="nextComic" onclick="" disabled><i class="fa fa-angle-double-right"></i></button>
+      </li>
+      <li>
+        <button id="openFile" onclick="file.dialog()"><i class="fa fa-folder-open-o"></i></button>
+      </li>
+      <li>
+        <button id="trash" onclick="clean.trash()"><i class="fa fa-trash-o"></i></button>
+      </li>
+    </ul>
+  </div>
+  <div class="library shift-left" id="sideLib">
+    <h1>Series</h1>
+    <ul id="dirLib" class="directory"></ul>
+    <button onclick="libSlider()" id="libSlider"><i class="fa fa-caret-right"></i></button>
+  </div>
 
-			<label for="zoomSlider">Zoom</label>
-			<input type="range" min="25" max="300" value="100" step="1" id="zoomSlider" oninput="pageZoom(); zoomTextUpdate(value)" for="zoomText">
-			<output type="text" for="zoomSlider" id="zoomText">100</output>
-			<span id="percent">%</span>
-			<script>
-				function zoomTextUpdate(val) {
-					document.querySelector('#zoomText').value = val;
-				};
-				function zoomSliderUpdate(val) {
-					document.querySelector('#zoomSlider').value = val;
-				};
-			</script>
-		</div>
-		<ul class="navigation">
-			<li>
-				<button id="column" onclick="page.spread()" data-val="2" disabled><i class="fa fa-columns"></i></button>
-			</li>
-			<li>
-				<button id="prevComic" onclick="" disabled><i class="fa fa-angle-double-left"></i></button>
-			</li>
-			<li>
-				<button id="pageLeft" onclick="page.Left()" disabled><i class="fa fa-angle-left"></i></button>
-			</li>
-			<li>
-				<button id="pageRight" onclick="page.Right()" disabled><i class="fa fa-angle-right"></i></button>
-			</li>
-			<li>
-				<button id="nextComic" onclick="" disabled><i class="fa fa-angle-double-right"></i></button>
-			</li>
-			<li>
-				<button id="openFile" onclick="file.dialog()"><i class="fa fa-folder-open-o"></i></button>
-			</li>
-			<li>
-				<button id="trash" onclick="clean.trash()"><i class="fa fa-trash-o"></i></button>
-			</li>
-		</ul>
-	</div>
-
-	<div class="library shift-left" id="sideLib">
-		<h1>Series</h1>
-		<ul id="dirLib" class="directory"></ul>
-		<button onclick="libSlider()" id="libSlider"><i class="fa fa-caret-right"></i></button>
-	</div>
-
-	<div class="mainWindow dragscroll" id="viewer">
-		<div class="mainLib" id="mainLib">
-			<div class="libHeader" id="libHeader">
-				<h1>Library</h1>
-				<button onclick="library.openDir()"><i class="fa fa-search"></i></button>
-				<button id="repeat" onclick="library.builder()"><i class="fa fa-repeat"></i></button>
-				<span id="libStatus"></span>
-			</div>
-			<div class="libList" id="libList">
-				<ul id="ulLib">
-				</ul>
-			</div>
-		</div>
-		<button id="libDropDown" onclick="dropDown()">
-			<i class="fa fa-sort-desc" aria-hidden="true"></i>
-		</button>
-		<div id="innerWindow">
-			<img id="viewImgOne" draggable="false"/>
-			<img id="viewImgTwo" draggable="false"/>
-			<div id="bgLoader" class="hidden"></div>
-			<div id="loader" class="loader hidden">Loading...</div>
-		</div>
-	</div>
-	<script src="js/app.js"></script>
-	<script src="js/dragscroll.js"></script>
+  <div class="mainWindow dragscroll" id="viewer">
+    <div class="mainLib" id="mainLib">
+      <div class="libHeader" id="libHeader">
+        <h1>Library</h1>
+        <button onclick="library.openDir()"><i class="fa fa-search"></i></button>
+        <button id="repeat" onclick="library.builder()"><i class="fa fa-repeat"></i></button>
+        <span id="libStatus"></span>
+      </div>
+      <div class="libList" id="libList">
+        <ul id="ulLib">
+        </ul>
+      </div>
+    </div>
+    <button id="libDropDown" onclick="dropDown()">
+      <i class="fa fa-sort-desc" aria-hidden="true"></i>
+    </button>
+    <div id="innerWindow">
+      <img id="viewImgOne" draggable="false"/>
+      <img id="viewImgTwo" draggable="false"/>
+      <div id="bgLoader" class="hidden"></div>
+      <div id="loader" class="loader hidden">Loading...</div>
+    </div>
+  </div>
+  <script src="js/app.js"></script>
+  <script src="js/dragscroll.js"></script>
 </body>
-
 </html>
