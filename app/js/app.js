@@ -7,6 +7,13 @@ const library = require('./js/library.js');
 const page = require('./js/page.js');
 const title = require('./js/title.js');
 
+// Variables
+let imgOne = document.getElementById('viewImgOne');
+let imgTwo = document.getElementById('viewImgTwo');
+let inner = document.getElementById('innerWindow');
+let viewer = document.getElementById('viewer');
+let zoomSlide = document.getElementById('zoomSlider');
+
 // Key press Checker
 $(document).keydown(function(event) {
   if (document.activeElement.id == 'zoomText' || document.activeElement.id == 'zoomSlider') {
@@ -68,10 +75,6 @@ $(document).ready(function() {
 
 // Function that resizes innerWindow div
 imgDivResizer = () => {
-  let inner = document.getElementById('innerWindow');
-  let imgOne = document.getElementById('viewImgOne');
-  let imgTwo = document.getElementById('viewImgTwo');
-
   if (imgOne.clientHeight >= imgTwo.clientHeight) {
     inner.style.height = `${imgOne.clientHeight}px`;
   } else {
@@ -84,22 +87,17 @@ let images = document.querySelectorAll('img');
 for (let j = 0; j < images.length; j++) {
   images[j].addEventListener('load', function() {
     imgDivResizer();
-    document.getElementById('viewer').scrollTop = 0;
-    document.getElementById('viewer').scrollLeft = 0;
+    viewer.scrollTop = 0;
+    viewer.scrollLeft = 0;
   });
 };
 
 // Handles the zoom
 pageZoom = () => {
-  let outer = document.getElementById('viewer');
-  let inner = document.getElementById('innerWindow');
-  let zoomSlide = document.getElementById('zoomSlider');
-  let imgOne = document.getElementById('viewImgOne');
-  let imgTwo = document.getElementById('viewImgTwo');
 
   // Center Points
-  let cPX = outer.scrollTop + outer.clientHeight/2;
-  let cPY = outer.scrollLeft + outer.clientWidth/2;
+  let cPX = viewer.scrollTop + viewer.clientHeight/2;
+  let cPY = viewer.scrollLeft + viewer.clientWidth/2;
 
   // Position Ratios to whole
   let cPXR = cPX/inner.clientHeight;
@@ -113,13 +111,13 @@ pageZoom = () => {
   };
 
   imgDivResizer();
-  if (outer.clientHeight > inner.clientHeight) {
-    inner.style.marginTop = `${(outer.clientHeight - inner.clientHeight)/2}px`;
+  if (viewer.clientHeight > inner.clientHeight) {
+    inner.style.marginTop = `${(viewer.clientHeight - inner.clientHeight)/2}px`;
   } else {
     inner.style.marginTop = 0;
   };
-  outer.scrollTop = inner.clientHeight*cPXR - outer.clientHeight/2;
-  outer.scrollLeft = inner.clientWidth*cPYR - outer.clientWidth/2;
+  viewer.scrollTop = inner.clientHeight*cPXR - viewer.clientHeight/2;
+  viewer.scrollLeft = inner.clientWidth*cPYR - viewer.clientWidth/2;
 };
 
 // Main Library folder collapsing

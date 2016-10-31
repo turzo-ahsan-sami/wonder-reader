@@ -9,23 +9,23 @@ const path = require('path');
 const sizeOf = require('image-size');
 const strain = require('./strain.js');
 
-let centerFolds, dirContents, fileDir, fileName, filePath, inner, viewOne, viewTwo;
+let centerFolds, dirContents, fileDir, fileName, filePath;
+
+const inner = document.getElementById('innerWindow');
+const viewOne = document.getElementById('viewImgOne');
+const viewTwo = document.getElementById('viewImgTwo');
 
 exports.load = (file) => {
   let index, continueIndex, val, polarity, r;
 
-  filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
+  filePath = decodeURIComponent(viewOne.src.substr(7));
   if (process.platform == "win32") {
-    filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
+    filePath = decodeURIComponent(viewOne.src.substr(8));
   };
   fileName = path.basename(filePath);
   fileDir = path.dirname(filePath);
   dirContents = strain(fs.readdirSync(fileDir));
   centerFolds = center.fold('viewImgOne');
-
-  inner = document.getElementById('innerWindow');
-  viewOne = document.getElementById('viewImgOne');
-  viewTwo = document.getElementById('viewImgTwo');
 
   index = 0;
   continueIndex = Number(bookmark.onLoad(file, dirContents));
@@ -50,9 +50,9 @@ exports.load = (file) => {
 pageTurn = (val) => {
   let index, polarity;
 
-  filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
+  filePath = decodeURIComponent(viewOne.src.substr(7));
   if (process.platform == "win32") {
-    filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
+    filePath = decodeURIComponent(viewOne.src.substr(8));
   };
   fileName = path.basename(filePath);
   index = Number(dirContents.indexOf(fileName));
@@ -110,8 +110,6 @@ pageTurn = (val) => {
     };
   };
   bookmark.onChange(index); // Updates bookmark.json
-  document.getElementById('viewer').scrollTop = 0;
-  document.getElementById('viewer').scrollLeft = 0;
 };
 
 singlePage = (fileDir, dirContents, index) => { // For Single page viewing and styling
@@ -159,9 +157,9 @@ exports.Left = () => {
 };
 
 exports.spread = () => {
-  filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(7));
+  filePath = decodeURIComponent(viewOne.src.substr(7));
   if (process.platform == "win32") {
-    filePath = decodeURIComponent(document.getElementById('viewImgOne').src.substr(8));
+    filePath = decodeURIComponent(viewOne.src.substr(8));
   };
   let index = dirContents.indexOf(path.basename(filePath));
   let polarity = 1;
