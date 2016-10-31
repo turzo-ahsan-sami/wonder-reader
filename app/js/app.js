@@ -82,7 +82,11 @@ imgDivResizer = () => {
 // Adds an event listener to both images
 let images = document.querySelectorAll('img');
 for (let j = 0; j < images.length; j++) {
-  images[j].addEventListener('load', imgDivResizer());
+  images[j].addEventListener('load', function() {
+    imgDivResizer();
+    document.getElementById('viewer').scrollTop = 0;
+    document.getElementById('viewer').scrollLeft = 0;
+  });
 };
 
 // Handles the zoom
