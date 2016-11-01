@@ -28,11 +28,11 @@
     </h1>
 
     <p>
-      <img src="https://raw.githubusercontent.com/alice-em/Wonder-Reader/master/shieldIcon.png" height="100" width="100"> Version 0.3.0
+      <img src="https://raw.githubusercontent.com/alice-em/Wonder-Reader/master/shieldIcon.png" height="100" width="100"> Version 0.3.6
     </p>
 
     <p>
-      <strong>Requirements</strong>: Git, Node, and NPM
+      <strong>Requirements</strong>: Git, Node, and NPM or Yarn
     </p>
 
     <h2>
@@ -57,9 +57,12 @@
     </h2>
 
     <div class="highlight highlight-source-shell">
-      <pre>git clone https://github.com/alice-em/Wonder-Reader.git <br /><span class="pl-c1">cd</span> Wonder-Reader npm install npm start</pre>
+      <pre>git clone https://github.com/alice-em/Wonder-Reader.git <br /><span class="pl-c1">cd</span> Wonder-Reader <br />npm install <br />npm start</pre>
     </div>
-
+    <h3>OR</h3>
+    <div class="highlight highlight-source-shell">
+      <pre>git clone https://github.com/alice-em/Wonder-Reader.git <br /><span class="pl-c1">cd</span> Wonder-Reader <br />yarn install <br />yarn start</pre>
+    </div>
     <h2>
       <a id="compiling" class="anchor" href="#compiling" aria-hidden="true">
         <span aria-hidden="true" class="octicon octicon-link"></span>
@@ -70,18 +73,9 @@
 
     <ul>
       <li>
-        <p>OSX / Darwin</p>
-        <pre> <code> $ electron-packager ./ --platform=darwin --arch=x64 --out=../Wonder-Reader-Releases --prune=true --icon=./shieldIcon.icns</code></pre>
-      </li>
-      <li>
-        <p>Windows</p>
-
-        <pre><code> $ electron-packager ./ --platform=win32 --arch=x64 --out=../Wonder-Reader-Releases --prune=true --icon=./shieldIcon.ico</code></pre>
-      </li>
-      <li>
-        <p>Linux</p>
-
-        <pre><code> $ electron-packager ./ --platform=linux --arch=x64 --out=../Wonder-Reader-Releases --prune=true</code></pre>
+        <p>Windows, OSX / Darwin, and Linux</p>
+        <pre><code> $ npm run packager</code></pre>
+        <pre><code> $ yarn run packager</code></pre>
       </li>
     </ul>
 
