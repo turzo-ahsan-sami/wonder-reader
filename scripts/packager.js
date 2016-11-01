@@ -11,6 +11,7 @@ const version = jsonfile.readFileSync('package.json').version;
 
 console.log(colors.red(`Compiling Wonder Reader ${version}.`));
 let build = path.join('.', 'build', version);
+let ignoredPaths = fs.readdirSync(path.join('.','build'))
 mkdirp.sync(build);
 let files = fs.readdirSync(build);
 for (let i = 0; i < files.length; i++) {
@@ -26,6 +27,7 @@ packager(
     arch: 'x64',
     prune: true,
     out: build,
+    ignore: ignoredPaths,
     icon: './shieldIcon'
   },
   function cb(err, appPaths) {
