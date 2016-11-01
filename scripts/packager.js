@@ -1,19 +1,23 @@
 const colors = require('colors');
 const fs = require('fs');
+const jsonfile = require('jsonfile');
 const mkdirp = require('mkdirp');
 const packager = require('electron-packager');
 const path = require('path');
 const rimraf = require('rimraf');
 
 const platform = process.platform;
-let build = './build';
+const version = jsonfile.readFileSync('package.json').version;
+
+console.log(colors.red(`Compiling Wonder Reader ${version}.`));
+let build = path.join('.', 'build', version);
 mkdirp.sync(build);
 let files = fs.readdirSync(build);
 for (let i = 0; i < files.length; i++) {
-  console.log(`Removing ${files[i]}.`)
+  console.log(`Removing ${files[i]}.`);
   rimraf.sync(path.join(build, files[i]));
 };
-console.log(colors.red('Compiling Wonder Reader.  This may take a few minutes.'))
+console.log(colors.red('This may take a few minutes.'));
 packager(
   {
     dir: './',
@@ -21,7 +25,7 @@ packager(
     platform: platform,
     arch: 'x64',
     prune: true,
-    out: './build',
+    out: build,
     icon: './shieldIcon'
   },
   function cb(err, appPaths) {
@@ -30,5 +34,5 @@ packager(
 );
 
 postPackage = (appPaths) => {
-  console.log(colors.magenta('Wonder Reader packaging successful! Files can be found at ' + appPaths));
+  console.log(colors.magenta(`Wonder Reader packaging successful! Files can be found at ${appPaths}`));
 };
