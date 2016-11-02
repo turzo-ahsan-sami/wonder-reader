@@ -65,26 +65,13 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
     tempFolder = dirFunction.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
     if (dirContents.length == 0) {
-      if (path.extname(fileName).toLowerCase() == ".cbr") {
-        rarExtractor(fileName, tempFolder, looper);
-      } else if (path.extname(fileName).toLowerCase() == ".cbz") {
-        zipExtractor(fileName, tempFolder, looper);
-      } else {
-        handleError(evt);
-      };
+      fileRouter(fileName, tempFolder, looper);
     } else {
       postExtract(fileName, tempFolder, dirContents);
     };
   } else { // If no Directory exists
     mkdirp.sync(tempFolder, {'mode': '0777'});
-
-    if (path.extname(fileName).toLowerCase() == ".cbr") {
-      rarExtractor(fileName, tempFolder, looper);
-    } else if (path.extname(fileName).toLowerCase() == ".cbz") {
-      zipExtractor(fileName, tempFolder, looper);
-    } else {
-      handleError(evt);
-    };
+    fileRouter(fileName, tempFolder, looper);
     // Async class adding then hidden on final load
     $('#loader').addClass('loader').removeClass('hidden');
     $('#bgLoader').removeClass('hidden');
@@ -141,31 +128,36 @@ exports.loader = (fileName) => {
 //-| File Extractors |
 //-\-----------------/
 
+fileRouter = (fileName, tempFolder, looper) => {
+  looper = 0;
+  if (path.extname(fileName).toLowerCase() == ".cbr") {
+    if (process.platform == 'linux') { //
+      rarExLinux(fileName, tempFolder, looper);
+    } else {
+      rarExtractor(fileName, tempFolder, looper);
+    };
+  } else if (path.extname(fileName).toLowerCase() == ".cbz") {
+    zipExtractor(fileName, tempFolder, looper);
+  } else {
+    console.log('How did you get this error?');
+    throw error;
+  };
+};
+
 rarExtractor = (fileName, tempFolder, looper) => {
   console.log('Unrar extraction started.')
   cbr(fileName, tempFolder, function (error) {
-    if (error) {
-      let rar = new Unrar(fileName);
-      rar.extract(tempFolder, null, function (err) {
-        if (err) {console.log(err);};
-      });
-    };
-    console.log('Extraction complete!');
-    tempFolder = dirFunction.merge(tempFolder);
-    dirContents = fs.readdirSync(tempFolder);
+    if (error) {console.log(error);};
+    extractOptions(fileName, tempFolder, looper);
+  });
+};
 
-    if (dirContents.length == 0 && looper <= 3) {
-      looper++;
-      console.log(`Loop = ${looper}`);
-      zipExtractor(fileName, tempFolder, looper);
-    } else if (looper > 3) {
-      alert('Possible broken file?');
-      return;
-    } else {
-      $('#loader').addClass('hidden').removeClass('loader');
-      $('#bgLoader').addClass('hidden');
-      postExtract(fileName, tempFolder, dirContents);
-    };
+rarExLinux = (fileName, tempFolder, looper) => {
+  console.log('Unrar extraction started.')
+  let rar = new Unrar(fileName);
+  rar.extract(tempFolder, null, function (err) {
+    if (err) {console.log(err);};
+    extractOptions(fileName, tempFolder, looper);
   });
 };
 
@@ -175,22 +167,37 @@ zipExtractor = (fileName, tempFolder, looper) => {
     unzip.Extract({
       path: tempFolder
     }).on('close', function() {
-      console.log('Extraction complete!');
-      tempFolder = dirFunction.merge(tempFolder);
-      dirContents = fs.readdirSync(tempFolder);
-
-      if (dirContents.length == 0 && looper <= 3) {
-        looper++;
-        console.log(`Loop = ${looper}`);
-        rarExtractor(fileName, tempFolder, looper);
-      } else if (looper > 3) {
-        alert('Possible broken file?');
-        return;
-      } else {
-        $('#loader').addClass('hidden').removeClass('loader');
-        $('#bgLoader').addClass('hidden');
-        postExtract(fileName, tempFolder, dirContents);
-      };
+      extractOptions(fileName, tempFolder, looper);
     })
   );
 };
+
+extractOptions = (fileName, tempFolder, looper) => {
+  tempFolder = dirFunction.merge(tempFolder);
+  dirContents = fs.readdirSync(tempFolder);
+
+  if (dirContents.length == 0 && looper <= 3) {
+    looper++;
+    console.log(`Loop = ${looper}`);
+    if (path.extname(fileName).toLowerCase() == "cbz") {
+      if (process.platform == 'linux') { //
+        rarExLinux(fileName, tempFolder, looper);
+      } else {
+        rarExtractor(fileName, tempFolder, looper);
+      };
+    } else if (path.extname(fileName).toLowerCase == "cbr") {
+      zipExtractor(fileName, tempFolder, looper);
+    } else {
+      console.log('How did you manage to get this error?');
+      throw error;
+    };
+  } else if (looper > 3) {
+    alert('Possible broken file?');
+    return;
+  } else {
+    console.log('Extraction complete!');
+    $('#loader').addClass('hidden').removeClass('loader');
+    $('#bgLoader').addClass('hidden');
+    postExtract(fileName, tempFolder, dirContents);
+  };
+}
