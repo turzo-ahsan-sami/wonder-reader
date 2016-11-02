@@ -9,7 +9,8 @@ const isThere = require('is-there'); // https://www.npmjs.com/package/is-there
 const mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
 const os = require('os'); // https://nodejs.org/api/os.html
 const path = require('path');
-const unzip = require('unzip');
+const Unrar = require('node-unrar');
+const unzip = require('unzip2');
 
 // Wonder-Reader Specific Modules //
 const clean = require('./clean.js');
@@ -144,7 +145,10 @@ rarExtractor = (fileName, tempFolder, looper) => {
   console.log('Unrar extraction started.')
   cbr(fileName, tempFolder, function (error) {
     if (error) {
-      console.log(error);
+      let rar = new Unrar(fileName);
+      rar.extract(tempFolder, null, function (err) {
+        if (err) {console.log(err);};
+      });
     };
     console.log('Extraction complete!');
     tempFolder = dirFunction.merge(tempFolder);
