@@ -234,7 +234,8 @@ button#trash {
     border-top-left-radius: 2px;
     border-bottom: 1px solid $whiteTransDeg;
   }
-  li.file:hover {
+  li.file:hover,
+  li.folder:hover {
     box-shadow: inset 0 0 0 1px $whiteOpaqueDeg;
   }
   #libHeader {

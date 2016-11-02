@@ -231,7 +231,8 @@ button#trash {
   border-top-left-radius: 2px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-#mainLib li.file:hover {
+#mainLib li.file:hover,
+#mainLib li.folder:hover {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
 }
 #mainLib #libHeader {
