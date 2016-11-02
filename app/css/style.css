@@ -218,6 +218,7 @@ button#trash {
   padding: 2px 0 2px 15px;
   background: rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.15s;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
 #mainLib li:nth-child(even) {
   background-color: transparent;
@@ -228,6 +229,7 @@ button#trash {
   background: rgba(255, 255, 255, 0.1);
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 #mainLib li.file:hover {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
@@ -238,6 +240,12 @@ button#trash {
 #mainLib #libList {
   height: 544px;
   overflow-y: auto;
+}
+#mainLib #libList .fa-file {
+  color: #91d5fd;
+}
+#mainLib #libList .fa-folder {
+  color: #ecc76f;
 }
 #mainLib #ulLib .fa {
   font-size: 12px;

@@ -17,6 +17,7 @@ $comicBleu: rgb(20, 139, 181);
 $inputBleu: #91d5fd;
 $libColor: #ddbfeb;
 $trashColor: #ff0000;
+$manila: #ecc76f;
 /* ---- GLOBAL VALUES ---- */
 body {
   margin: 0;
@@ -220,6 +221,7 @@ button#trash {
     padding: 2px 0 2px 15px;
     background: $darkTransDeg;
     transition: box-shadow 0.15s;
+    border-bottom: 1px solid $darkTransMid;
   }
   li:nth-child(even) {
     background-color: $transparent;
@@ -230,6 +232,7 @@ button#trash {
     background: $whiteTransDeg;
     border-bottom-left-radius: 2px;
     border-top-left-radius: 2px;
+    border-bottom: 1px solid $whiteTransDeg;
   }
   li.file:hover {
     box-shadow: inset 0 0 0 1px $whiteOpaqueDeg;
@@ -240,6 +243,12 @@ button#trash {
   #libList {
     height: 544px;
     overflow-y: auto;
+    .fa-file {
+      color: $inputBleu;
+    }
+    .fa-folder {
+      color: $manila;
+    }
   }
   #ulLib {
     .fa {

@@ -21,7 +21,10 @@ const page = require('./page.js');
 const strain = require('./strain.js');
 const title = require('./title.js');
 
-let dirContents;
+let dirContents, fileName;
+
+const viewOne = document.getElementById('viewImgOne');
+const viewTwo = document.getElementById('viewImgTwo');
 
 // Dialog box to load the file
 openFile = () => {
@@ -34,8 +37,8 @@ openFile = () => {
 
     // Open File function
     function(fileNames) {
-      if (fileNames === undefined) return; // Breaks on error
-      let fileName = fileNames[0]; // Filepath name
+      if (fileNames === undefined) return; // Returns on error
+      fileName = fileNames[0]; // Filepath name
       fileLoad(fileName); // Extracts files to their proper locations
     }
   );
@@ -82,16 +85,9 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
 enable = (id) => {
   document.getElementById(id).disabled = false;
 };
-disable = (id) => {
-  document.getElementById(id).disabled = true;
-};
 
 // After extraction, loads stuff into img tags, as well as other junk
 postExtract = (fileName, tempFolder, dirContents) => {
-  let inner = document.getElementById('innerWindow');
-  let viewOne = document.getElementById('viewImgOne');
-  let viewTwo = document.getElementById('viewImgTwo');
-
   dirContents = strain(dirContents);
 
   viewOne.src = path.join(tempFolder, encodeURIComponent(dirContents[0]));
@@ -129,7 +125,6 @@ exports.loader = (fileName) => {
 //-\-----------------/
 
 fileRouter = (fileName, tempFolder, looper) => {
-  looper = 0;
   if (path.extname(fileName).toLowerCase() == ".cbr") {
     if (process.platform == 'linux') { //
       rarExLinux(fileName, tempFolder, looper);
