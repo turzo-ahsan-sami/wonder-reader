@@ -214,7 +214,8 @@ button#trash {
     font-size: 10px;
     color: $white;
     ul {
-      padding-left: 10px;
+      margin-left: 10px;
+      border-left: 3px double $whiteTransDeg;
     }
   }
   li {
@@ -230,8 +231,6 @@ button#trash {
     font-weight: bold;
     padding: 2px 0 2px 15px;
     background: $whiteTransDeg;
-    border-bottom-left-radius: 2px;
-    border-top-left-radius: 2px;
     border-bottom: 1px solid $whiteTransDeg;
   }
   li.file:hover,

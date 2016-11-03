@@ -212,7 +212,8 @@ button#trash {
   color: #fff;
 }
 #mainLib ul ul {
-  padding-left: 10px;
+  margin-left: 10px;
+  border-left: 3px double rgba(255, 255, 255, 0.1);
 }
 #mainLib li {
   padding: 2px 0 2px 15px;
@@ -227,8 +228,6 @@ button#trash {
   font-weight: bold;
   padding: 2px 0 2px 15px;
   background: rgba(255, 255, 255, 0.1);
-  border-bottom-left-radius: 2px;
-  border-top-left-radius: 2px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 #mainLib li.file:hover,
