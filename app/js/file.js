@@ -127,7 +127,7 @@ exports.loader = (fileName) => {
 fileRouter = (fileName, tempFolder, looper) => {
   if (path.extname(fileName).toLowerCase() == ".cbr") {
     if (process.platform == 'linux') { //
-      rarExLinux(fileName, tempFolder, looper);
+      rarLinux(fileName, tempFolder, looper);
     } else {
       rarExtractor(fileName, tempFolder, looper);
     };
@@ -147,7 +147,7 @@ rarExtractor = (fileName, tempFolder, looper) => {
   });
 };
 
-rarExLinux = (fileName, tempFolder, looper) => {
+rarLinux = (fileName, tempFolder, looper) => {
   console.log('Unrar extraction started.')
   let rar = new Unrar(fileName);
   rar.extract(tempFolder, null, function (err) {
@@ -176,7 +176,7 @@ extractOptions = (fileName, tempFolder, looper) => {
     console.log(`Loop = ${looper}`);
     if (path.extname(fileName).toLowerCase() == "cbz") {
       if (process.platform == 'linux') { //
-        rarExLinux(fileName, tempFolder, looper);
+        rarLinux(fileName, tempFolder, looper);
       } else {
         rarExtractor(fileName, tempFolder, looper);
       };

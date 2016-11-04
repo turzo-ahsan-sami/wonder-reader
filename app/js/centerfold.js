@@ -24,7 +24,7 @@ exports.fold = (id) => {
 
       if (width >= height) {
         spread.push(i);
-      }
+      };
     })(i);
   };
   sortNumber = (a,b) => {
