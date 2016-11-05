@@ -44,6 +44,14 @@ library.onLoad();
 // Updates title with version
 title.onLoad();
 
+// Syncs dial to output box
+function zoomTextUpdate(val) {
+  document.querySelector('#zoomText').value = val;
+};
+function zoomSliderUpdate(val) {
+  document.querySelector('#zoomSlider').value = val;
+};
+
 // Formats page to variable window sizes
 $(document).ready(function() {
   // On Load
@@ -95,7 +103,6 @@ for (let j = 0; j < images.length; j++) {
 
 // Handles the zoom
 pageZoom = () => {
-
   // Center Points
   let cPX = viewer.scrollTop + viewer.clientHeight/2;
   let cPY = viewer.scrollLeft + viewer.clientWidth/2;
@@ -104,6 +111,7 @@ pageZoom = () => {
   let cPXR = cPX/inner.clientHeight;
   let cPYR = cPY/inner.clientWidth;
 
+  // Sets the width for the viewer window
   inner.style.width = `${zoomSlide.value}%`;
   if (zoomSlide.value < 100) {
     inner.style.marginLeft = `${(100 - zoomSlide.value)/2}%`;
@@ -112,6 +120,8 @@ pageZoom = () => {
   };
 
   imgDivResizer();
+
+  // Sets margins as necessary
   if (viewer.clientHeight > inner.clientHeight) {
     inner.style.marginTop = `${(viewer.clientHeight - inner.clientHeight)/2}px`;
   } else {
