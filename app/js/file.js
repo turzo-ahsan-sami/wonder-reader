@@ -151,7 +151,7 @@ rarLinux = (fileName, tempFolder, looper) => {
   console.log('Unrar extraction started.')
   let rar = new Unrar(fileName);
   rar.extract(tempFolder, null, function (err) {
-    if (err) {console.log(err);};
+    if (err) console.log(err);
     extractOptions(fileName, tempFolder, looper);
   });
 };
@@ -195,4 +195,4 @@ extractOptions = (fileName, tempFolder, looper) => {
     $('#bgLoader').addClass('hidden');
     postExtract(fileName, tempFolder, dirContents);
   };
-}
+};

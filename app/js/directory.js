@@ -47,5 +47,6 @@ exports.encode = (oldPath) => {
       newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
     };
   };
+  newPath = newPath.replace(/\'/g, "\\'");
   return newPath;
 };
