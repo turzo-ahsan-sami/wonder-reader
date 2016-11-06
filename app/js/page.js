@@ -124,10 +124,10 @@ pageTurn = (val) => {
 };
 
 singlePage = (fileDir, dirContents, index) => { // For Single page viewing and styling
-  viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
   viewOne.style.width = '100%';
   viewTwo.style.display = 'none';
-  viewTwo.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
+  viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
+  viewTwo.src = path.join('images', 'FFFFFF-0.0.png');
 };
 
 defaults = (fileDir, dirContents, index, polarity) => {
