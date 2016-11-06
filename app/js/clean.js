@@ -12,7 +12,7 @@ const tempDir = path.join(os.tmpdir(), 'wonderReader', 'cache');
 exports.trash = () => {
   getSize(tempDir, function(err,size) {
     let cacheSize = size / 1024 / 1024;
-    let r = confirm(`This will clear your Wonder Reader cache (Currently ${cacheSize.toFixed(2)} Mb). \n\nContinue?`)
+    let r = confirm(`This will clear your Wonder Reader cache (Currently ${cacheSize.toFixed(2)} Mb). \n\nContinue?`);
     if (r == true) {
       clearCache(tempDir);
     };

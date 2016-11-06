@@ -17,6 +17,7 @@ $comicBleu: rgb(20, 139, 181);
 $inputBleu: #91d5fd;
 $libColor: #ddbfeb;
 $trashColor: #ff0000;
+$manila: #ecc76f;
 /* ---- GLOBAL VALUES ---- */
 body {
   margin: 0;
@@ -213,13 +214,16 @@ button#trash {
     font-size: 10px;
     color: $white;
     ul {
-      padding-left: 10px;
+      margin-left: 10px;
+      border-left: 2px solid $black;
+      box-shadow: -7px 0 10px -6px $black;
     }
   }
   li {
     padding: 2px 0 2px 15px;
     background: $darkTransDeg;
     transition: box-shadow 0.15s;
+    border-bottom: 1px solid $darkTransMid;
   }
   li:nth-child(even) {
     background-color: $transparent;
@@ -228,10 +232,10 @@ button#trash {
     font-weight: bold;
     padding: 2px 0 2px 15px;
     background: $whiteTransDeg;
-    border-bottom-left-radius: 2px;
-    border-top-left-radius: 2px;
+    border-bottom: 1px solid $whiteTransDeg;
   }
-  li.file:hover {
+  li.file:hover,
+  li.folder:hover {
     box-shadow: inset 0 0 0 1px $whiteOpaqueDeg;
   }
   #libHeader {
@@ -240,6 +244,12 @@ button#trash {
   #libList {
     height: 544px;
     overflow-y: auto;
+    .fa-file {
+      color: $inputBleu;
+    }
+    .fa-folder {
+      color: $manila;
+    }
   }
   #ulLib {
     .fa {
@@ -431,7 +441,6 @@ button#trash {
   img {
     float: left;
     width: 50%;
-    transition: width .1s;
   }
 }
 .mainWindow::-webkit-scrollbar-track {

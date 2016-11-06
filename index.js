@@ -3,7 +3,7 @@ const app = electron.app; // http://electron.atom.io/docs/api/app/
 const BrowserWindow = electron.BrowserWindow; // http://electron.atom.io/docs/api/browser-window/
 const nativeImage = electron.nativeImage;
 
-let win // Global 'win' variable
+let win; // Global 'win' variable
 function createWindow() {
   win = new BrowserWindow({
     width: 1000,
@@ -29,7 +29,7 @@ if (process.platform == 'darwin') {
   app.dock.setIcon(icon);
 };
 app.on('ready', () => {
-  createWindow()
+  createWindow();
 });
 
 app.on('window-all-closed', () => {

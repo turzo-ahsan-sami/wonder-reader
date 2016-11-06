@@ -17,14 +17,6 @@
       <input type="range" min="25" max="300" value="100" step="1" id="zoomSlider" oninput="pageZoom(); zoomTextUpdate(value)" for="zoomText">
       <output type="text" for="zoomSlider" id="zoomText">100</output>
       <span id="percent">%</span>
-      <script>
-        function zoomTextUpdate(val) {
-          document.querySelector('#zoomText').value = val;
-        };
-        function zoomSliderUpdate(val) {
-          document.querySelector('#zoomSlider').value = val;
-        };
-      </script>
     </div>
     <ul class="navigation">
       <li>

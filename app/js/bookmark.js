@@ -50,7 +50,7 @@ exports.onChange = (index) => {
     if (err) {return err};
     obj[baseName].currentIndex = index;
     jsonfile.writeFile(bookmark, obj, {spaces: 2}, function(err) {
-      if (err) { return err };
+      if (err) { return err; };
     });
     let percent = (obj[baseName].currentIndex/obj[baseName].fullIndex)*100;
     let spanClass = obj[baseName].name.replace(regex, '');

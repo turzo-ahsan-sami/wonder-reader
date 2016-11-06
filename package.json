@@ -1,6 +1,6 @@
 {
   "name": "Wonder-Reader",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,16 +19,20 @@
   },
   "homepage": "https://github.com/alice-em/Wonder-Reader#readme",
   "dependencies": {
+    "buffers": "^0.1.1",
     "cbr": "1.0.3",
     "directory-tree": "1.1.0",
+    "electron-settings": "^2.2.2",
+    "file-exists": "^2.0.0",
     "get-folder-size": "1.0.0",
     "image-size": "0.5.0",
     "is-there": "4.3.3",
     "jquery": "2.2.x",
     "jsonfile": "2.3.1",
     "mkdirp": "0.5.1",
+    "node-unrar": "^0.1.5",
     "rimraf": "2.5.4",
-    "unzip": "0.1.11"
+    "unzip2": "0.2.5"
   },
   "devDependencies": {
     "colors": "1.1.2",
