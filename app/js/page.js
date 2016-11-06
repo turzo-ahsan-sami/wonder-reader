@@ -134,7 +134,7 @@ defaults = (fileDir, dirContents, index, polarity) => {
   let val = Number(document.getElementById('column').dataset.val);
 
   if (Math.abs(val) == 2) {
-    if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1/* || centerFolds.indexOf(index + polarity) > -1*/) {
+    if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1) > -1/* || centerFolds.indexOf(index + polarity) > -1*/) {
       // console.log(`index = ${index} || ${centerFolds.indexOf(index)} || ${centerFolds.indexOf(index + polarity)}`)
       // console.log(`CenterFolds = ${centerFolds}`)
 
