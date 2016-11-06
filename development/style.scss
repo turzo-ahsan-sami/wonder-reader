@@ -215,7 +215,8 @@ button#trash {
     color: $white;
     ul {
       margin-left: 10px;
-      border-left: 3px double $whiteTransDeg;
+      border-left: 2px solid $black;
+      box-shadow: -7px 0 10px -6px $black;
     }
   }
   li {
