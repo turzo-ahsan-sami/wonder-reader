@@ -35,7 +35,7 @@ npm run packager
 ````
 __or__
 ````
-yarn
+yarn install
 yarn run packager
 ````
 
