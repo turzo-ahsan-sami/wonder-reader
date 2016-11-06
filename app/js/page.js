@@ -66,56 +66,56 @@ pageTurn = (val) => {
   // Limits Val to range
   if (index + val >= dirContents.length -1) { // For last page
     if (Math.abs(val) == 2 && index == dirContents.length -2) {
-      console.log('bonk')
+      // console.log(`pageTurn: index = ${index} || val = ${val}`)
       index = dirContents.length -2;
       defaults(fileDir, dirContents, index, polarity);
     } else {
-      console.log('bonk')
+      // console.log(`pageTurn: index = ${index} || val = ${val}`)
       index = dirContents.length -1;
       val = 0;
       polarity = 0;
       singlePage(fileDir, dirContents, index);
     }
   } else if (index + val <= 0) { // For first page
-    console.log('bonk')
+    // console.log(`pageTurn: index = ${index} || val = ${val}`)
     index = 0;
     val = 0;
     polarity = 0;
     defaults(fileDir, dirContents, index, polarity);
   } else {
     if (centerFolds.length == 0) {
-      console.log('bonk')
+      // console.log(`pageTurn: index = ${index} || val = ${val}`)
     // For no centerFolds. This is easy
       index = index + val;
       if (index == dirContents.length - 1) {
-        console.log('bonk')
+        // console.log(`pageTurn: index = ${index} || val = ${val}`)
         singlePage(fileDir, dirContents, index);
       } else {
-        console.log('bonk')
+        // console.log(`pageTurn: index = ${index} || val = ${val}`)
         defaults(fileDir, dirContents, index, polarity);
       };
     } else {
     // For when any CenterFold exists //
       if (centerFolds.indexOf(index + polarity) > -1) {
-        console.log('bonk')
+        // console.log(`pageTurn: index = ${index} || val = ${val}`)
         index = index + polarity;
         singlePage(fileDir, dirContents, index);
       } else if (centerFolds.indexOf(index + val) > -1) {
-        console.log('bonk')
+        // console.log(`pageTurn: index = ${index} || val = ${val}`)
         index = index + val;
         singlePage(fileDir, dirContents, index);
       } else if (centerFolds.indexOf(index) > -1) {
         if (polarity > 0) {
-          console.log('bonk')
+          // console.log(`pageTurn: index = ${index} || val = ${val}`)
           index = index + polarity;
         } else {
-          console.log('bonk')
+          // console.log(`pageTurn: index = ${index} || val = ${val}`)
           index = index + val;
         };
         defaults(fileDir, dirContents, index, polarity);
       } else {
         index = index + val;
-        console.log(`bonk ${val} || ${index}`)
+        // console.log(`pageTurn: index = ${index} || val = ${val}`)
         defaults(fileDir, dirContents, index, polarity);
       };
     };
@@ -135,8 +135,8 @@ defaults = (fileDir, dirContents, index, polarity) => {
 
   if (Math.abs(val) == 2) {
     if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1/* || centerFolds.indexOf(index + polarity) > -1*/) {
-      console.log(`index = ${index} || ${centerFolds.indexOf(index)} || ${centerFolds.indexOf(index + polarity)}`)
-      console.log(`CenterFolds = ${centerFolds}`)
+      // console.log(`index = ${index} || ${centerFolds.indexOf(index)} || ${centerFolds.indexOf(index + polarity)}`)
+      // console.log(`CenterFolds = ${centerFolds}`)
 
       singlePage(fileDir, dirContents, index);
     } else {
