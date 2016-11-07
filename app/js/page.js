@@ -67,15 +67,18 @@ pageTurn = (val) => {
   if (index + val >= dirContents.length -1) { // For last page
     if (Math.abs(val) == 2 && index == dirContents.length -2) {
       // console.log(`pageTurn: index = ${index} || val = ${val}`)
-      index = dirContents.length -2;
-      defaults(fileDir, dirContents, index, polarity);
+      if (centerFolds.indexOf(dirContents.length-1) > -1) {
+        index = dirContents.length -1;
+        singlePage(fileDir, dirContents, index);
+      } else {
+        index = dirContents.length -2;
+        defaults(fileDir, dirContents, index, polarity);
+      };
     } else {
       // console.log(`pageTurn: index = ${index} || val = ${val}`)
       index = dirContents.length -1;
-      val = 0;
-      polarity = 0;
       singlePage(fileDir, dirContents, index);
-    }
+    };
   } else if (index + val <= 0) { // For first page
     // console.log(`pageTurn: index = ${index} || val = ${val}`)
     index = 0;
