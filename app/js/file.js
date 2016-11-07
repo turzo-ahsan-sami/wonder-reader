@@ -130,7 +130,9 @@ fileRouter = (fileName, tempFolder, looper) => {
   } else if (path.extname(fileName).toLowerCase() == ".cbz") {
     zipExtractor(fileName, tempFolder, looper);
   } else {
-    console.log('How did you get this error?');
+    alert('Possible broken file?');
+    $('#loader').addClass('hidden').removeClass('loader');
+    $('#bgLoader').addClass('hidden');
   };
 };
 
@@ -138,7 +140,7 @@ rarExtractor = (fileName, tempFolder, looper) => {
   console.log('Unrar extraction started.')
   cbr(fileName, tempFolder, function (error) {
     if (error) console.log(error);
-    extractOptions(fileName, tempFolder, looper);
+    extractRouter(fileName, tempFolder, looper);
   });
 };
 
@@ -147,7 +149,7 @@ rarLinux = (fileName, tempFolder, looper) => {
   let rar = new Unrar(fileName);
   rar.extract(tempFolder, null, function (err) {
     if (err) console.log(err);
-    extractOptions(fileName, tempFolder, looper);
+    extractRouter(fileName, tempFolder, looper);
   });
 };
 
@@ -157,12 +159,12 @@ zipExtractor = (fileName, tempFolder, looper) => {
     unzip.Extract({
       path: tempFolder
     }).on('close', function() {
-      extractOptions(fileName, tempFolder, looper);
+      extractRouter(fileName, tempFolder, looper);
     })
   );
 };
 
-extractOptions = (fileName, tempFolder, looper) => {
+extractRouter = (fileName, tempFolder, looper) => {
   tempFolder = dirFunction.merge(tempFolder);
   dirContents = fs.readdirSync(tempFolder);
 
@@ -179,11 +181,15 @@ extractOptions = (fileName, tempFolder, looper) => {
     } else if (path.extname(fileName).toLowerCase() == ".cbr") {
       zipExtractor(fileName, tempFolder, looper);
     } else {
-      console.log('How did you manage to get this error?');
+      alert('Possible broken file?');
+      $('#loader').addClass('hidden').removeClass('loader');
+      $('#bgLoader').addClass('hidden');
       return;
     };
   } else if (looper > 3) {
     alert('Possible broken file?');
+    $('#loader').addClass('hidden').removeClass('loader');
+    $('#bgLoader').addClass('hidden');
     return;
   } else {
     console.log('Extraction complete!');
