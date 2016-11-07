@@ -52,10 +52,7 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   };
   let fileComic, tempFolder, looper;
   if ([".cbr", ".cbz"].indexOf(path.extname(fileName).toLowerCase()) > -1) {
-    fileComic = path.posix.basename(fileName).replace(/#|!/g, "");
-    if (process.platform == 'win32') {
-      fileComic = path.win32.basename(fileName).replace(/#|!/g, "");
-    };
+    fileComic = path.basename(fileName).replace(/#|!/g, "");
   } else {
     handleError(evt);
   };
@@ -121,9 +118,7 @@ exports.loader = (fileName) => {
   };
 };
 
-//-/-----------------\
-//-| File Extractors |
-//-\-----------------/
+// File Extractors
 
 fileRouter = (fileName, tempFolder, looper) => {
   if (path.extname(fileName).toLowerCase() == ".cbr") {
@@ -143,7 +138,7 @@ fileRouter = (fileName, tempFolder, looper) => {
 rarExtractor = (fileName, tempFolder, looper) => {
   console.log('Unrar extraction started.')
   cbr(fileName, tempFolder, function (error) {
-    if (error) {console.log(error);};
+    if (error) console.log(error);
     extractOptions(fileName, tempFolder, looper);
   });
 };

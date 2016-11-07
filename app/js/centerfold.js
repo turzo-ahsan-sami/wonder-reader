@@ -7,10 +7,11 @@ const strain = require('./strain.js');
 
 // Returns with an array of indices for double page images for core array of image files
 exports.fold = (id) => {
+  id = document.getElementById(id);
   let filePath, fileDir, dirContents, spread, dimensions, width, height;
-  filePath = decodeURIComponent(document.getElementById(id).src.substr(7));
+  filePath = decodeURIComponent(id.src.substr(7));
   if (process.platform == "win32") {
-    filePath = decodeURIComponent(document.getElementById(id).src.substr(8));
+    filePath = decodeURIComponent(id.src.substr(8));
   };
   fileDir = path.dirname(filePath);
   dirContents = strain(fs.readdirSync(fileDir));

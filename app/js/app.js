@@ -45,16 +45,14 @@ library.onLoad();
 title.onLoad();
 
 // Syncs dial to output box
-function zoomTextUpdate(val) {
+zoomTextUpdate = (val) => {
   document.querySelector('#zoomText').value = val;
 };
-function zoomSliderUpdate(val) {
+zoomSliderUpdate = (val) => {
   document.querySelector('#zoomSlider').value = val;
 };
 
-// Formats page to variable window sizes
-$(document).ready(function() {
-  // On Load
+objPositioner = () => {
   document.getElementById('dirLib').style.height = `${window.innerHeight - 56}px`;
   document.getElementById('viewer').style.height = `${window.innerHeight - 56}px`;
   document.getElementById('bgLoader').style.left = `${window.innerWidth/2 - 75}px`;
@@ -65,19 +63,13 @@ $(document).ready(function() {
   document.getElementById('libDropDown').style.left = `${window.innerWidth/2 - 38.5}px`;
   document.getElementById('mainLib').style.height = `${window.innerHeight - 86}px`;
   document.getElementById('libList').style.height = `${window.innerHeight - 142}px`;
+};
 
-  // On Changes
-  window.onresize = function() {
-    document.getElementById('dirLib').style.height = `${window.innerHeight - 56}px`;
-    document.getElementById('viewer').style.height = `${window.innerHeight - 56}px`;
-    document.getElementById('bgLoader').style.left = `${window.innerWidth/2 - 75}px`;
-    document.getElementById('bgLoader').style.top = `${window.innerHeight/2 - 75}px`;
-    document.getElementById('loader').style.left = `${window.innerWidth/2 - 75}px`;
-    document.getElementById('loader').style.top = `${window.innerHeight/2 - 75}px`;
-    document.getElementById('innerWindow').style.top = `${window.innerHeight - 56}px`;
-    document.getElementById('libDropDown').style.left = `${window.innerWidth/2 - 38.5}px`;
-    document.getElementById('mainLib').style.height = `${window.innerHeight - 86}px`;
-    document.getElementById('libList').style.height = `${window.innerHeight - 142}px`;
+// Formats page to variable window sizes
+$(document).ready(function() { // On Load
+  objPositioner();
+  window.onresize = function() { // On Change
+    objPositioner();
     imgDivResizer();
   };
 });

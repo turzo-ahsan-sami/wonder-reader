@@ -6,22 +6,22 @@ const os = require('os');
 const path = require('path');
 const rimraf = require('rimraf');
 
-const tempDir = path.join(os.tmpdir(), 'wonderReader', 'cache');
+const cacheDir = path.join(os.tmpdir(), 'wonderReader', 'cache');
 
 // Cleans out the crap
 exports.trash = () => {
-  getSize(tempDir, function(err,size) {
+  getSize(cacheDir, function(err,size) {
     let cacheSize = size / 1024 / 1024;
     let r = confirm(`This will clear your Wonder Reader cache (Currently ${cacheSize.toFixed(2)} Mb). \n\nContinue?`);
     if (r == true) {
-      clearCache(tempDir);
+      clearCache(cacheDir);
     };
   });
 };
 
 // For when I ever plan to introduce an autoCleaning feature
 exports.autoTrash = () => {
-  clearCache(tempDir);
+  clearCache(cacheDir);
 };
 
 // The crap cleaner function itself
