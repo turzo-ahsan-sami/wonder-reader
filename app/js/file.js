@@ -25,6 +25,7 @@ let dirContents, fileName;
 
 const viewOne = document.getElementById('viewImgOne');
 const viewTwo = document.getElementById('viewImgTwo');
+const viewer = document.getElementById('viewer');
 
 // Dialog box to load the file
 openFile = () => {
@@ -103,8 +104,8 @@ postExtract = (fileName, tempFolder, dirContents) => {
   nextcomic.load(fileName);
   $('#mainLib').slideUp(800);
 
-  document.getElementById('viewer').scrollTop = 0;
-  document.getElementById('viewer').scrollLeft = 0;
+  viewer.scrollTop = 0;
+  viewer.scrollLeft = 0;
 };
 
 exports.dialog = () => {
