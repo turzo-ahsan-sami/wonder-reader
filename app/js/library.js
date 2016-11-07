@@ -88,6 +88,6 @@ exports.onLoad = () => {
   } else {
     mkdirp.sync(path.join(os.tmpdir(), 'wonderReader', 'json'));
     fs.writeFileSync(config, '{}');
-    $('#libStatus').append(libEmpty);
+    $('#libStatus').append(text);
   };
 };

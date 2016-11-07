@@ -131,7 +131,6 @@ fileRouter = (fileName, tempFolder, looper) => {
     zipExtractor(fileName, tempFolder, looper);
   } else {
     console.log('How did you get this error?');
-    throw error;
   };
 };
 
@@ -170,17 +169,18 @@ extractOptions = (fileName, tempFolder, looper) => {
   if (dirContents.length == 0 && looper <= 3) {
     looper++;
     console.log(`Loop = ${looper}`);
-    if (path.extname(fileName).toLowerCase() == "cbz") {
+    console.log(path.extname(fileName).toLowerCase())
+    if (path.extname(fileName).toLowerCase() == ".cbz") {
       if (process.platform == 'linux') { //
         rarLinux(fileName, tempFolder, looper);
       } else {
         rarExtractor(fileName, tempFolder, looper);
       };
-    } else if (path.extname(fileName).toLowerCase == "cbr") {
+    } else if (path.extname(fileName).toLowerCase() == ".cbr") {
       zipExtractor(fileName, tempFolder, looper);
     } else {
       console.log('How did you manage to get this error?');
-      throw error;
+      return;
     };
   } else if (looper > 3) {
     alert('Possible broken file?');
