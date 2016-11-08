@@ -8,11 +8,11 @@ const page = require('./js/page.js');
 const title = require('./js/title.js');
 
 // Variables
-let imgOne = document.getElementById('viewImgOne');
-let imgTwo = document.getElementById('viewImgTwo');
-let inner = document.getElementById('innerWindow');
-let viewer = document.getElementById('viewer');
-let zoomSlide = document.getElementById('zoomSlider');
+const imgOne = document.getElementById('viewImgOne');
+const imgTwo = document.getElementById('viewImgTwo');
+const inner = document.getElementById('innerWindow');
+const viewer = document.getElementById('viewer');
+const zoomSlide = document.getElementById('zoomSlider');
 
 // Key press Checker
 $(document).keydown(function(event) {
