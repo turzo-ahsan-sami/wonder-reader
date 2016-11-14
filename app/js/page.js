@@ -14,6 +14,7 @@ let centerFolds, dirContents, fileDir, fileName, filePath;
 const inner = document.getElementById('innerWindow');
 const viewOne = document.getElementById('viewImgOne');
 const viewTwo = document.getElementById('viewImgTwo');
+const column = document.getElementById('column');
 
 exports.load = (file) => {
   let index, continueIndex, val, polarity, r;
@@ -37,7 +38,7 @@ exports.load = (file) => {
       index = 0;
     };
   };
-  val = Number(document.getElementById('column').dataset.val);
+  val = Number(column.dataset.val);
   polarity = 1;
 
   if (val == 1) {
@@ -67,20 +68,21 @@ pageTurn = (val) => {
   if (index + val >= dirContents.length -1) { // For last page
     if (Math.abs(val) == 2 && index == dirContents.length -2) {
       // console.log(`pageTurn: index = ${index} || val = ${val}`)
-      index = dirContents.length -2;
-      defaults(fileDir, dirContents, index, polarity);
+      if (centerFolds.indexOf(dirContents.length-1) > -1) {
+        index = dirContents.length -1;
+        singlePage(fileDir, dirContents, index);
+      } else {
+        index = dirContents.length -2;
+        defaults(fileDir, dirContents, index, polarity);
+      };
     } else {
       // console.log(`pageTurn: index = ${index} || val = ${val}`)
       index = dirContents.length -1;
-      val = 0;
-      polarity = 0;
       singlePage(fileDir, dirContents, index);
-    }
+    };
   } else if (index + val <= 0) { // For first page
     // console.log(`pageTurn: index = ${index} || val = ${val}`)
     index = 0;
-    val = 0;
-    polarity = 0;
     defaults(fileDir, dirContents, index, polarity);
   } else {
     if (centerFolds.length == 0) {
@@ -131,10 +133,10 @@ singlePage = (fileDir, dirContents, index) => { // For Single page viewing and s
 };
 
 defaults = (fileDir, dirContents, index, polarity) => {
-  let val = Number(document.getElementById('column').dataset.val);
+  let val = Number(column.dataset.val);
 
   if (Math.abs(val) == 2) {
-    if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1/* || centerFolds.indexOf(index + polarity) > -1*/) {
+    if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1) > -1/* || centerFolds.indexOf(index + polarity) > -1*/) {
       // console.log(`index = ${index} || ${centerFolds.indexOf(index)} || ${centerFolds.indexOf(index + polarity)}`)
       // console.log(`CenterFolds = ${centerFolds}`)
 
@@ -150,8 +152,8 @@ defaults = (fileDir, dirContents, index, polarity) => {
       let ratioOne = sizeOne.width/sizeOne.height;
       let ratioTwo = sizeTwo.width/sizeTwo.height;
 
-      viewOne.style.width = ratioOne/(ratioOne + ratioTwo)*100 + '%';
-      viewTwo.style.width = ratioTwo/(ratioOne + ratioTwo)*100 + '%';
+      viewOne.style.width = `${ratioOne/(ratioOne + ratioTwo)*100}%`;
+      viewTwo.style.width = `${ratioTwo/(ratioOne + ratioTwo)*100}%`;
     };
   } else if (Math.abs(val) == 1) { // If val == 1
     singlePage(fileDir, dirContents, index);
@@ -161,12 +163,12 @@ defaults = (fileDir, dirContents, index, polarity) => {
 };
 
 exports.Right = () => { // See page.spread()
-  let val = document.getElementById('column').dataset.val;
+  let val = column.dataset.val;
   pageTurn(val);
 };
 
 exports.Left = () => {
-  let val = document.getElementById('column').dataset.val * -1;
+  let val = column.dataset.val * -1;
   pageTurn(val);
 };
 
@@ -180,11 +182,11 @@ exports.spread = () => {
 
   if ($('#column').hasClass('disabled')) {
     $('#column').removeClass('disabled');
-    document.getElementById('column').dataset.val = 2;
+    column.dataset.val = 2;
     defaults(fileDir, dirContents, index, polarity);
   } else {
     $('#column').addClass('disabled');
-    document.getElementById('column').dataset.val = 1;
+    column.dataset.val = 1;
     singlePage(fileDir, dirContents, index);
   };
 };

@@ -76,18 +76,18 @@ exports.builder = () => {
 
 // Loads library on program start
 exports.onLoad = () => {
-  let libEmpty = 'The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.';
+  let text = 'The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.';
   if (isThere(config)) {
     let configJSON = jsonfile.readFileSync(config);
     if (configJSON.library != undefined) {
       let dirArray = dirTree(configJSON.library, ['.cbr', '.cbz']);
       libBuilder(configJSON.library, dirArray.children, 'ulLib');
     } else {
-      $('#libStatus').append(libEmpty);
+      $('#libStatus').append(text);
     };
   } else {
     mkdirp.sync(path.join(os.tmpdir(), 'wonderReader', 'json'));
     fs.writeFileSync(config, '{}');
-    $('#libStatus').append(libEmpty);
+    $('#libStatus').append(text);
   };
 };
