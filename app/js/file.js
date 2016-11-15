@@ -103,6 +103,11 @@ postExtract = (fileName, tempFolder, dirContents) => {
 
   viewer.scrollTop = 0;
   viewer.scrollLeft = 0;
+
+  let preload = document.getElementById('imagePreload');
+  for (let i = 2; i < dirContents.length; i++) {
+    preload.src = path.join(tempFolder, encodeURIComponent(dirContents[i]));
+  };
 };
 
 exports.dialog = () => {
