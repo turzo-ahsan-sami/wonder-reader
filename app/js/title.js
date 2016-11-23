@@ -7,20 +7,20 @@ let version
 
 // Loads title and version number
 exports.onLoad = () => {
-    let packageFile = 'package.json'
-    jsonfile.readFile(packageFile, function (err, obj) {
-        if (err) {
-            document.title = 'Wonder Reader'
-            version = ''
-        } else {
-            version = obj.version
-            document.title = `Wonder Reader ${version}`
-        }
-    })
+  let packageFile = 'package.json'
+  jsonfile.readFile(packageFile, function (err, obj) {
+    if (err) {
+      document.title = 'Wonder Reader'
+      version = ''
+    } else {
+      version = obj.version
+      document.title = `Wonder Reader ${version}`
+    }
+  })
 }
 
 // Updates title with comic name
 exports.onFileLoad = (fileName) => {
-    let file = path.basename(fileName, path.extname(fileName))
-    document.title = `Wonder Reader ${version}: ${file}`
+  let file = path.basename(fileName, path.extname(fileName))
+  document.title = `Wonder Reader ${version}: ${file}`
 }
