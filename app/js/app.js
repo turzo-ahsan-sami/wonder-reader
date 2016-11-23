@@ -16,13 +16,13 @@ const zoomSlide = document.getElementById('zoomSlider')
 
 // Key press Checker
 $(document).keydown(function (event) {
-  if (document.activeElement.id == 'zoomText' || document.activeElement.id == 'zoomSlider') {
+  if (document.activeElement.id === 'zoomText' || document.activeElement.id === 'zoomSlider') {
     // Do nothing when focused on zoom input
   } else if ($('#viewer').hasClass('active')) {
     // Check if file is loaded. See file.js: postExtract()
-    if (event.which == 37) { // left key
+    if (event.which === 37) { // left key
       page.Left()
-    } else if (event.which == 39) { // right key
+    } else if (event.which === 39) { // right key
       page.Right()
     }
   }
