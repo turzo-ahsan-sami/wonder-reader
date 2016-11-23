@@ -7,46 +7,46 @@ const imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'] // Allowable File Typ
 
 // Returns a path of the extracted comic up until the first image file appears
 exports.merge = (directory) => {
-  let dirContents = fs.readdirSync(directory)
-  let filtered = []
+    let dirContents = fs.readdirSync(directory)
+    let filtered = []
 
-  for (let i = 0; i < dirContents.length; i++) {
-    if (imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(directory, dirContents[i])).isDirectory()) {
-      filtered.push(dirContents[i])
-    }
-  }
-  dirContents = filtered
-
-  if (dirContents.length > 0) {
-    while (fs.statSync(path.join(directory, dirContents[0])).isDirectory()) {
-      filtered = []
-      for (let i = 0; i < dirContents.length; i++) {
+    for (let i = 0; i < dirContents.length; i++) {
         if (imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(directory, dirContents[i])).isDirectory()) {
-          filtered.push(dirContents[i])
+            filtered.push(dirContents[i])
         }
-      }
-      directory = path.join(directory, filtered[0])
-      dirContents = fs.readdirSync(directory)
     }
-  }
-  return directory
+    dirContents = filtered
+
+    if (dirContents.length > 0) {
+        while (fs.statSync(path.join(directory, dirContents[0])).isDirectory()) {
+            filtered = []
+            for (let i = 0; i < dirContents.length; i++) {
+                if (imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(directory, dirContents[i])).isDirectory()) {
+                    filtered.push(dirContents[i])
+                }
+            }
+            directory = path.join(directory, filtered[0])
+            dirContents = fs.readdirSync(directory)
+        }
+    }
+    return directory
 }
 
 // Splits a path, encodes each index, and merges it all for a URI compatible file path
 exports.encode = (oldPath) => {
-  let newPath = ''
-  let tempPath = oldPath.split(path.sep)
+    let newPath = ''
+    let tempPath = oldPath.split(path.sep)
 
-  if (process.platform !== 'win32') {
-    for (let j = 0; j < tempPath.length; j++) {
-      newPath = path.join(newPath, encodeURIComponent(tempPath[j]))
+    if (process.platform !== 'win32') {
+        for (let j = 0; j < tempPath.length; j++) {
+            newPath = path.join(newPath, encodeURIComponent(tempPath[j]))
+        }
+        newPath = `/${newPath}`
+    } else {
+        for (let j = 1; j < tempPath.length; j++) {
+            newPath = path.join(newPath, encodeURIComponent(tempPath[j]))
+        }
     }
-    newPath = `/${newPath}`
-  } else {
-    for (let j = 1; j < tempPath.length; j++) {
-      newPath = path.join(newPath, encodeURIComponent(tempPath[j]))
-    }
-  }
-  newPath = newPath.replace(/\'/g, "\\'")
-  return newPath
+    newPath = newPath.replace(/\'/g, '\\\'')
+    return newPath
 }
