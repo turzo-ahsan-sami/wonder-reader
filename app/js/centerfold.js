@@ -1,36 +1,36 @@
 // centerfold.js returns an array with the index locations of supposed centerfolds
 
-const fs = require('fs')
-const path = require('path')
-const sizeOf = require('image-size')
-const strain = require('./strain.js')
+const fs = require('fs');
+const path = require('path');
+const sizeOf = require('image-size');
+const strain = require('./strain.js');
 
 // Returns with an array of indices for double page images for core array of image files
 exports.fold = (id) => {
-  id = document.getElementById(id)
-  let filePath, fileDir, dirContents, spread, dimensions, width, height
-  filePath = decodeURIComponent(id.src.substr(7))
+  id = document.getElementById(id);
+  let filePath, fileDir, dirContents, spread, dimensions, width, height;
+  filePath = decodeURIComponent(id.src.substr(7));
   if (process.platform === 'win32') {
-    filePath = decodeURIComponent(id.src.substr(8))
+    filePath = decodeURIComponent(id.src.substr(8));
   }
-  fileDir = path.dirname(filePath)
-  dirContents = strain(fs.readdirSync(fileDir))
-  spread = []
+  fileDir = path.dirname(filePath);
+  dirContents = strain(fs.readdirSync(fileDir));
+  spread = [];
 
   for (let i = 0; i < dirContents.length; i++) {
     (function (i) {
-      dimensions = sizeOf(path.join(fileDir, dirContents[i]))
-      width = dimensions.width
-      height = dimensions.height
+      dimensions = sizeOf(path.join(fileDir, dirContents[i]));
+      width = dimensions.width;
+      height = dimensions.height;
 
       if (width >= height) {
-        spread.push(i)
+        spread.push(i);
       }
-    })(i)
+    })(i);
   }
   sortNumber = (a, b) => {
-    return a - b
-  }
-  spread = spread.sort(sortNumber)
-  return spread
-}
+    return a - b;
+  };
+  spread = spread.sort(sortNumber);
+  return spread;
+};

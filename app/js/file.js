@@ -46,20 +46,17 @@ openFile = () => {
 
 // The function that loads each file
 fileLoad = (fileName, err) => { // checks and extracts files and then loads them
-  if (err) {
-    handleError(err)
-  }
+  if (err) { console.error(err) }
   let fileComic, tempFolder, looper
   if (['.cbr', '.cbz'].indexOf(path.extname(fileName).toLowerCase()) > -1) {
     fileComic = path.basename(fileName).replace(/#|!/g, '')
   } else {
-    handleError(evt)
+    return
   }
 
   // tempFolder Variable for loaded comic
   tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic)
   looper = 0
-  console.log(`tempFolder = ${tempFolder}`)
 
   if (isThere(tempFolder)) { // Checks for existing Directory
     tempFolder = dirFunction.merge(tempFolder)
@@ -107,6 +104,7 @@ postExtract = (fileName, tempFolder, dirContents) => {
   for (let i = 2; i < dirContents.length; i++) {
     preload.src = path.join(tempFolder, encodeURIComponent(dirContents[i]))
   }
+  preload.src = path.join('.', 'images', 'FFFFFF-0.0.png')
 }
 
 exports.dialog = () => {
@@ -141,24 +139,22 @@ fileRouter = (fileName, tempFolder, looper) => {
 }
 
 rarExtractor = (fileName, tempFolder, looper) => {
-  console.log('Unrar extraction started.')
+  console.error('Unrar extraction started.')
   cbr(fileName, tempFolder, function (error) {
-    if (error) { console.log(error) }
+    if (error) { console.error(error) }
     extractRouter(fileName, tempFolder, looper)
   })
 }
 
 rarLinux = (fileName, tempFolder, looper) => {
-  console.log('Unrar extraction started.')
   let rar = new Unrar(fileName)
   rar.extract(tempFolder, null, function (err) {
-    if (err) { console.log(err) }
+    if (err) { console.error(err) }
     extractRouter(fileName, tempFolder, looper)
   })
 }
 
 zipExtractor = (fileName, tempFolder, looper) => {
-  console.log('Unzip extraction started.')
   fs.createReadStream(fileName).pipe(
     unzip.Extract({
       path: tempFolder
@@ -174,8 +170,6 @@ extractRouter = (fileName, tempFolder, looper) => {
 
   if (dirContents.length === 0 && looper <= 3) {
     looper++
-    console.log(`Loop = ${looper}`)
-    console.log(path.extname(fileName).toLowerCase())
     if (path.extname(fileName).toLowerCase() === '.cbz') {
       if (process.platform === 'linux') { //
         rarLinux(fileName, tempFolder, looper)
