@@ -15,9 +15,13 @@ const path = require('path');
 const config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
 const comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
 
+const defaults = 'The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.';
+const loading = 'Your library is loading';
+const finished = '';
+
 // Builds the library with proper HTML
 libBuilder = (directory, array, listID) => {
-  $('#libStatus').remove();
+  $('#libStatus').text(loading);
   for (let i = 0; i < array.length; i++) {
     let file = array[i].name;
     let filePath = path.join(directory, file);
@@ -38,10 +42,10 @@ libBuilder = (directory, array, listID) => {
       libBuilder(filePath, array[i].children, newListID);
       $(`#${listID}`).append('</ul>');
     } else {
-          // Do Nothing
+      // Do Nothing
     }
   }
-  $('#repeat').removeClass('rotater');
+  $('#libStatus').text(finished);
 };
 
 // Dialog to open up directory
@@ -60,7 +64,6 @@ exports.openDir = () => {
     jsonfile.writeFileSync(comics, dirArray, {'spaces': 2});
     jsonfile.writeFileSync(config, obj);
     $('#ulLib li, #ulLib ul').remove();
-    $('#repeat').addClass('rotater');
     libBuilder(fileNames[0], dirArray.children, 'ulLib');
   });
 };
@@ -70,24 +73,22 @@ exports.builder = () => {
   let configJSON = jsonfile.readFileSync(config);
   let dirArray = dirTree(configJSON.library, ['.cbr', '.cbz']);
   $('#ulLib li, #ulLib ul').remove();
-  $('#repeat').addClass('rotater');
   libBuilder(configJSON.library, dirArray.children, 'ulLib');
 };
 
 // Loads library on program start
 exports.onLoad = () => {
-  let text = 'The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.';
   if (isThere(config)) {
     let configJSON = jsonfile.readFileSync(config);
     if (configJSON.library !== undefined) {
       let dirArray = dirTree(configJSON.library, ['.cbr', '.cbz']);
       libBuilder(configJSON.library, dirArray.children, 'ulLib');
     } else {
-      $('#libStatus').append(text);
+      $('#libStatus').append(defaults);
     }
   } else {
     mkdirp.sync(path.join(os.tmpdir(), 'wonderReader', 'json'));
     fs.writeFileSync(config, '{}');
-    $('#libStatus').append(text);
+    $('#libStatus').append(defaults);
   }
 };
