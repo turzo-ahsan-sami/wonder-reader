@@ -1,7 +1,7 @@
 {
   "name": "Wonder-Reader",
   "version": "0.4.1",
-  "description": "",
+  "description": "A Comic Book Reader, written with Node, housed in Electron",
   "main": "index.js",
   "scripts": {
     "start": "electron index.js",
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/alice-em/Wonder-Reader.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Alice Maldonado",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/alice-em/Wonder-Reader/issues"
