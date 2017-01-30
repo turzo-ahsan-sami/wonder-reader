@@ -19,6 +19,9 @@ const defaults = 'The library is empty. Click <span class="code"><i class="fa fa
 const loading = 'Your library is loading';
 const finished = '';
 
+// Function variables
+let libBuilder;
+
 // Builds the library with proper HTML
 libBuilder = (directory, array, listID) => {
   $('#libStatus').text(loading);

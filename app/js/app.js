@@ -14,6 +14,9 @@ const inner = document.getElementById('innerWindow');
 const viewer = document.getElementById('viewer');
 const zoomSlide = document.getElementById('zoomSlider');
 
+// Function Variables
+let handleError, zoomTextUpdate, zoomSliderUpdate, objPositioner, imgDivResizer, pageZoom, libFolders, libSlider, dropDown;
+
 // Key press Checker
 $(document).keydown(function (event) {
   if (document.activeElement.id === 'zoomText' || document.activeElement.id === 'zoomSlider') {

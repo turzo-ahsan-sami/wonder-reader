@@ -8,6 +8,9 @@ const rimraf = require('rimraf');
 
 const cacheDir = path.join(os.tmpdir(), 'wonderReader', 'cache');
 
+// Function variable
+let clearCache;
+
 // Cleans out the crap
 exports.trash = () => {
   getSize(cacheDir, function (err, size) {

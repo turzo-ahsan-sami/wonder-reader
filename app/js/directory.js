@@ -42,11 +42,11 @@ exports.encode = (oldPath) => {
       newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
     }
     newPath = `/${newPath}`;
+    newPath = newPath.replace(/\'/g, '\\\'');
   } else {
     for (let j = 1; j < tempPath.length; j++) {
       newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
     }
   }
-  newPath = newPath.replace(/\'/g, '\\\'');
   return newPath;
 };

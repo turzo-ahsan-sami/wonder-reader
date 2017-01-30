@@ -4,6 +4,9 @@ const file = require('./file.js');
 const fs = require('fs');
 const path = require('path');
 
+// Function variable
+let enable, disable;
+
 enable = (id) => {
   document.getElementById(id).disabled = false;
 };

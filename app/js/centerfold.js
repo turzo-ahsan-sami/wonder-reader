@@ -8,7 +8,13 @@ const strain = require('./strain.js');
 // Returns with an array of indices for double page images for core array of image files
 exports.fold = (id) => {
   id = document.getElementById(id);
+
+  // global variables
   let filePath, fileDir, dirContents, spread, dimensions, width, height;
+
+  // function variables
+  let sortNumber;
+  
   filePath = decodeURIComponent(id.src.substr(7));
   if (process.platform === 'win32') {
     filePath = decodeURIComponent(id.src.substr(8));

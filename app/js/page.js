@@ -10,6 +10,9 @@ const strain = require('./strain.js');
 
 let centerFolds, dirContents, fileDir, fileName, filePath;
 
+// Function variables
+let pageTurn, singlePage, defaults;
+
 const viewOne = document.getElementById('viewImgOne');
 const viewTwo = document.getElementById('viewImgTwo');
 const column = document.getElementById('column');
