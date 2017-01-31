@@ -142,7 +142,7 @@ fileRouter = (fileName, tempFolder, looper) => {
 };
 
 rarExtractor = (fileName, tempFolder, looper) => {
-  console.error('Unrar extraction started.');
+  console.log('Unrar extraction started.');
   cbr(fileName, tempFolder, function (error) {
     if (error) { console.error(error); }
     extractRouter(fileName, tempFolder, looper);

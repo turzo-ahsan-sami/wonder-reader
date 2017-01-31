@@ -15,7 +15,7 @@ const viewer = document.getElementById('viewer');
 const zoomSlide = document.getElementById('zoomSlider');
 
 // Function Variables
-let handleError, zoomTextUpdate, zoomSliderUpdate, objPositioner, imgDivResizer, pageZoom, libFolders, libSlider, dropDown;
+let handleError, zoomTextUpdate, objPositioner, imgDivResizer, pageZoom, libFolders, libSlider, dropDown;
 
 // Key press Checker
 $(document).keydown(function (event) {
@@ -50,9 +50,6 @@ title.onLoad();
 // Syncs dial to output box
 zoomTextUpdate = (val) => {
   document.querySelector('#zoomText').value = val;
-};
-zoomSliderUpdate = (val) => {
-  document.querySelector('#zoomSlider').value = val;
 };
 
 objPositioner = () => {
@@ -124,6 +121,8 @@ pageZoom = () => {
   }
   viewer.scrollTop = inner.clientHeight * cPXR - viewer.clientHeight / 2;
   viewer.scrollLeft = inner.clientWidth * cPYR - viewer.clientWidth / 2;
+  let val = document.getElementById('zoomSlider').value;
+  zoomTextUpdate(val);
 };
 
 // Main Library folder collapsing
@@ -150,3 +149,57 @@ $('#zoomSlider').mouseenter(function () {
   $('#viewer').addClass('dragscroll');
   $('#zoomSlider').blur();
 });
+
+
+// Button functions
+
+// zoomSlider
+document.getElementById('zoomSlider').addEventListener('input',
+  function() {
+    pageZoom();
+  }
+);
+
+// Page navigation
+document.getElementById('column').addEventListener('click',
+  function() {
+    page.spread();
+  }
+);
+document.getElementById('pageLeft').addEventListener('click',
+  function() {
+    page.Left();
+  }
+);
+document.getElementById('pageRight').addEventListener('click',
+  function() {
+    page.Right();
+  }
+);
+document.getElementById('openFile').addEventListener('click',
+  function() {
+    file.dialog();
+  }
+);
+document.getElementById('trash').addEventListener('click',
+  function() {
+    clean.trash();
+  }
+);
+
+// Library navigation & functions
+document.getElementById('libSlider').addEventListener('click',
+  function() {
+    libSlider();
+  }
+);
+document.getElementById('openDirectory').addEventListener('click',
+  function() {
+    library.openDir();
+  }
+);
+document.getElementById('libDropDown').addEventListener('click',
+  function() {
+    dropDown();
+  }
+);
