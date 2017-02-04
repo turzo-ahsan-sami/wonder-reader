@@ -1,0 +1,29 @@
+/* Global Values */
+body {
+  background-color: #FF7844;
+  margin: 0;
+}
+.bg-green {
+  background-color: #11999E;
+  padding: 0 0 15px 15px;
+}
+.bg-red {
+  background-color: #F73F52;
+  padding: 10px;
+}
+
+/* Header Values */
+
+header {
+  color: #fff;
+
+  h1, h2 {
+    text-align: right;
+  }
+  .bg-green {
+    padding: 0 0 15px 15px;
+  }
+  .bg-red {
+    padding: 10px;
+  }
+}
