@@ -13,7 +13,6 @@ const Unrar = require('node-unrar');
 const unzip = require('unzip2');
 
 // Wonder-Reader Specific Modules //
-const clean = require('./clean.js');
 const dirFunction = require('./directory.js');
 const miniLib = require('./libMini.js');
 const nextcomic = require('./nextcomic.js');
@@ -21,11 +20,15 @@ const page = require('./page.js');
 const strain = require('./strain.js');
 const title = require('./title.js');
 
+// Global variables
 let dirContents, fileName;
 
 const viewOne = document.getElementById('viewImgOne');
 const viewTwo = document.getElementById('viewImgTwo');
 const viewer = document.getElementById('viewer');
+
+// Functions variables
+let openFile, fileLoad, enable, postExtract, fileRouter, rarExtractor, rarLinux, zipExtractor, extractRouter;
 
 // Dialog box to load the file
 openFile = () => {
@@ -33,11 +36,11 @@ openFile = () => {
     { filters: [{
       name: 'Comic Files',
       extensions: ['cbr', 'cbz']
-      }]
+    }]
     },
 
     // Open File function
-    function(fileNames) {
+    function (fileNames) {
       if (fileNames === undefined) return; // Returns on error
       fileName = fileNames[0]; // Filepath name
       fileLoad(fileName); // Extracts files to their proper locations
@@ -47,36 +50,33 @@ openFile = () => {
 
 // The function that loads each file
 fileLoad = (fileName, err) => { // checks and extracts files and then loads them
-  if (err) {
-    handleError(err);
-  };
+  if (err) { console.error(err); }
   let fileComic, tempFolder, looper;
-  if ([".cbr", ".cbz"].indexOf(path.extname(fileName).toLowerCase()) > -1) {
-    fileComic = path.basename(fileName).replace(/#|!/g, "");
+  if (['.cbr', '.cbz'].indexOf(path.extname(fileName).toLowerCase()) > -1) {
+    fileComic = path.basename(fileName).replace(/#|!/g, '');
   } else {
-    handleError(evt);
-  };
+    return;
+  }
 
   // tempFolder Variable for loaded comic
   tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic);
   looper = 0;
-  console.log(`tempFolder = ${tempFolder}`);
 
   if (isThere(tempFolder)) { // Checks for existing Directory
     tempFolder = dirFunction.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
-    if (dirContents.length == 0) {
+    if (dirContents.length === 0) {
       fileRouter(fileName, tempFolder, looper);
     } else {
       postExtract(fileName, tempFolder, dirContents);
-    };
+    }
   } else { // If no Directory exists
     mkdirp.sync(tempFolder, {'mode': '0777'});
     fileRouter(fileName, tempFolder, looper);
     // Async class adding then hidden on final load
     $('#loader').addClass('loader').removeClass('hidden');
     $('#bgLoader').removeClass('hidden');
-  }; // End Directory checker
+  } // End Directory checker
 };
 
 // Enable et Disable ID's
@@ -92,9 +92,9 @@ postExtract = (fileName, tempFolder, dirContents) => {
   viewTwo.src = path.join(tempFolder, encodeURIComponent(dirContents[1]));
 
   page.load(fileName);
-  enable("pageLeft");
-  enable("pageRight");
-  enable("column");
+  enable('pageLeft');
+  enable('pageRight');
+  enable('column');
   $('#viewer').addClass('active');
   title.onFileLoad(fileName);
   miniLib.load(fileName);
@@ -107,7 +107,8 @@ postExtract = (fileName, tempFolder, dirContents) => {
   let preload = document.getElementById('imagePreload');
   for (let i = 2; i < dirContents.length; i++) {
     preload.src = path.join(tempFolder, encodeURIComponent(dirContents[i]));
-  };
+  }
+  preload.src = path.join('.', 'images', 'FFFFFF-0.0.png');
 };
 
 exports.dialog = () => {
@@ -120,50 +121,47 @@ exports.loader = (fileName) => {
     fileLoad(fileName);
   } else {
     alert(`Missing or broken file: Could not open ${fileName}`);
-  };
+  }
 };
 
 // File Extractors
-
 fileRouter = (fileName, tempFolder, looper) => {
-  if (path.extname(fileName).toLowerCase() == ".cbr") {
-    if (process.platform == 'linux') { //
+  if (path.extname(fileName).toLowerCase() === '.cbr') {
+    if (process.platform === 'linux') { //
       rarLinux(fileName, tempFolder, looper);
     } else {
       rarExtractor(fileName, tempFolder, looper);
-    };
-  } else if (path.extname(fileName).toLowerCase() == ".cbz") {
+    }
+  } else if (path.extname(fileName).toLowerCase() === '.cbz') {
     zipExtractor(fileName, tempFolder, looper);
   } else {
     alert('Possible broken file?');
     $('#loader').addClass('hidden').removeClass('loader');
     $('#bgLoader').addClass('hidden');
-  };
+  }
 };
 
 rarExtractor = (fileName, tempFolder, looper) => {
-  console.log('Unrar extraction started.')
+  console.log('Unrar extraction started.');
   cbr(fileName, tempFolder, function (error) {
-    if (error) console.log(error);
+    if (error) { console.error(error); }
     extractRouter(fileName, tempFolder, looper);
   });
 };
 
 rarLinux = (fileName, tempFolder, looper) => {
-  console.log('Unrar extraction started.')
   let rar = new Unrar(fileName);
   rar.extract(tempFolder, null, function (err) {
-    if (err) console.log(err);
+    if (err) { console.error(err); }
     extractRouter(fileName, tempFolder, looper);
   });
 };
 
 zipExtractor = (fileName, tempFolder, looper) => {
-  console.log('Unzip extraction started.');
   fs.createReadStream(fileName).pipe(
     unzip.Extract({
       path: tempFolder
-    }).on('close', function() {
+    }).on('close', function () {
       extractRouter(fileName, tempFolder, looper);
     })
   );
@@ -173,24 +171,22 @@ extractRouter = (fileName, tempFolder, looper) => {
   tempFolder = dirFunction.merge(tempFolder);
   dirContents = fs.readdirSync(tempFolder);
 
-  if (dirContents.length == 0 && looper <= 3) {
+  if (dirContents.length === 0 && looper <= 3) {
     looper++;
-    console.log(`Loop = ${looper}`);
-    console.log(path.extname(fileName).toLowerCase())
-    if (path.extname(fileName).toLowerCase() == ".cbz") {
-      if (process.platform == 'linux') { //
+    if (path.extname(fileName).toLowerCase() === '.cbz') {
+      if (process.platform === 'linux') { //
         rarLinux(fileName, tempFolder, looper);
       } else {
         rarExtractor(fileName, tempFolder, looper);
-      };
-    } else if (path.extname(fileName).toLowerCase() == ".cbr") {
+      }
+    } else if (path.extname(fileName).toLowerCase() === '.cbr') {
       zipExtractor(fileName, tempFolder, looper);
     } else {
       alert('Possible broken file?');
       $('#loader').addClass('hidden').removeClass('loader');
       $('#bgLoader').addClass('hidden');
       return;
-    };
+    }
   } else if (looper > 3) {
     alert('Possible broken file?');
     $('#loader').addClass('hidden').removeClass('loader');
@@ -201,5 +197,5 @@ extractRouter = (fileName, tempFolder, looper) => {
     $('#loader').addClass('hidden').removeClass('loader');
     $('#bgLoader').addClass('hidden');
     postExtract(fileName, tempFolder, dirContents);
-  };
+  }
 };

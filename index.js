@@ -4,7 +4,7 @@ const BrowserWindow = electron.BrowserWindow; // http://electron.atom.io/docs/ap
 const nativeImage = electron.nativeImage;
 
 let win; // Global 'win' variable
-function createWindow() {
+function createWindow () {
   win = new BrowserWindow({
     width: 1000,
     height: 700,
@@ -22,12 +22,12 @@ function createWindow() {
   win.on('closed', () => {
     win = null;
   });
-};
+}
 const icon = nativeImage.createFromPath('./shieldIcon.png');
 app.setName('Wonder Reader');
-if (process.platform == 'darwin') {
+if (process.platform === 'darwin') {
   app.dock.setIcon(icon);
-};
+}
 app.on('ready', () => {
   createWindow();
 });
@@ -39,5 +39,5 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (win === null) {
     createWindow();
-  };
+  }
 });

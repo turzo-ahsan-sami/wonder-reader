@@ -4,25 +4,26 @@ const $ = require('jquery');
 const bookmark = require('./bookmark.js');
 const center = require('./centerfold.js');
 const fs = require('fs');
-const os = require('os');
 const path = require('path');
 const sizeOf = require('image-size');
 const strain = require('./strain.js');
 
 let centerFolds, dirContents, fileDir, fileName, filePath;
 
-const inner = document.getElementById('innerWindow');
+// Function variables
+let pageTurn, singlePage, defaults;
+
 const viewOne = document.getElementById('viewImgOne');
 const viewTwo = document.getElementById('viewImgTwo');
 const column = document.getElementById('column');
 
 exports.load = (file) => {
-  let index, continueIndex, val, polarity, r;
+  let index, continueIndex, val, r;
 
   filePath = decodeURIComponent(viewOne.src.substr(7));
-  if (process.platform == "win32") {
+  if (process.platform === 'win32') {
     filePath = decodeURIComponent(viewOne.src.substr(8));
-  };
+  }
   fileName = path.basename(filePath);
   fileDir = path.dirname(filePath);
   dirContents = strain(fs.readdirSync(fileDir));
@@ -32,29 +33,28 @@ exports.load = (file) => {
   continueIndex = Number(bookmark.onLoad(file, dirContents));
   if (continueIndex > 0) {
     r = confirm(`Continue ${path.basename(file)} at page ${continueIndex}`);
-    if (r == true) {
+    if (r === true) {
       index = continueIndex;
     } else {
       index = 0;
-    };
-  };
+    }
+  }
   val = Number(column.dataset.val);
-  polarity = 1;
 
-  if (val == 1) {
+  if (val === 1) {
     singlePage(fileDir, dirContents, index);
   } else {
-    defaults(fileDir, dirContents, index, polarity);
-  };
+    defaults(fileDir, dirContents, index);
+  }
 };
 
 pageTurn = (val) => {
   let index, polarity;
 
   filePath = decodeURIComponent(viewOne.src.substr(7));
-  if (process.platform == "win32") {
+  if (process.platform === 'win32') {
     filePath = decodeURIComponent(viewOne.src.substr(8));
-  };
+  }
   fileName = path.basename(filePath);
   index = Number(dirContents.indexOf(fileName));
   val = Number(val);
@@ -62,66 +62,55 @@ pageTurn = (val) => {
   polarity = 1;
   if (val < 0) {
     polarity = -1;
-  };
+  }
 
   // Limits Val to range
-  if (index + val >= dirContents.length -1) { // For last page
-    if (Math.abs(val) == 2 && index == dirContents.length -2) {
-      // console.log(`pageTurn: index = ${index} || val = ${val}`)
-      if (centerFolds.indexOf(dirContents.length-1) > -1) {
-        index = dirContents.length -1;
+  if (index + val >= dirContents.length - 1) { // For last page
+    if (Math.abs(val) === 2 && index === dirContents.length - 2) {
+      if (centerFolds.indexOf(dirContents.length - 1) > -1) {
+        index = dirContents.length - 1;
         singlePage(fileDir, dirContents, index);
       } else {
-        index = dirContents.length -2;
-        defaults(fileDir, dirContents, index, polarity);
-      };
+        index = dirContents.length - 2;
+        defaults(fileDir, dirContents, index);
+      }
     } else {
-      // console.log(`pageTurn: index = ${index} || val = ${val}`)
-      index = dirContents.length -1;
+      index = dirContents.length - 1;
       singlePage(fileDir, dirContents, index);
-    };
+    }
   } else if (index + val <= 0) { // For first page
-    // console.log(`pageTurn: index = ${index} || val = ${val}`)
     index = 0;
-    defaults(fileDir, dirContents, index, polarity);
+    defaults(fileDir, dirContents, index);
   } else {
-    if (centerFolds.length == 0) {
-      // console.log(`pageTurn: index = ${index} || val = ${val}`)
-    // For no centerFolds. This is easy
+    if (centerFolds.length === 0) {
+          // For no centerFolds. This is easy
       index = index + val;
-      if (index == dirContents.length - 1) {
-        // console.log(`pageTurn: index = ${index} || val = ${val}`)
+      if (index === dirContents.length - 1) {
         singlePage(fileDir, dirContents, index);
       } else {
-        // console.log(`pageTurn: index = ${index} || val = ${val}`)
-        defaults(fileDir, dirContents, index, polarity);
-      };
+        defaults(fileDir, dirContents, index);
+      }
     } else {
-    // For when any CenterFold exists //
+          // For when any CenterFold exists //
       if (centerFolds.indexOf(index + polarity) > -1) {
-        // console.log(`pageTurn: index = ${index} || val = ${val}`)
         index = index + polarity;
         singlePage(fileDir, dirContents, index);
       } else if (centerFolds.indexOf(index + val) > -1) {
-        // console.log(`pageTurn: index = ${index} || val = ${val}`)
         index = index + val;
         singlePage(fileDir, dirContents, index);
       } else if (centerFolds.indexOf(index) > -1) {
         if (polarity > 0) {
-          // console.log(`pageTurn: index = ${index} || val = ${val}`)
           index = index + polarity;
         } else {
-          // console.log(`pageTurn: index = ${index} || val = ${val}`)
           index = index + val;
-        };
-        defaults(fileDir, dirContents, index, polarity);
+        }
+        defaults(fileDir, dirContents, index);
       } else {
         index = index + val;
-        // console.log(`pageTurn: index = ${index} || val = ${val}`)
-        defaults(fileDir, dirContents, index, polarity);
-      };
-    };
-  };
+        defaults(fileDir, dirContents, index);
+      }
+    }
+  }
   bookmark.onChange(index); // Updates bookmark.json
 };
 
@@ -132,14 +121,11 @@ singlePage = (fileDir, dirContents, index) => { // For Single page viewing and s
   viewTwo.src = path.join('images', 'FFFFFF-0.0.png');
 };
 
-defaults = (fileDir, dirContents, index, polarity) => {
+defaults = (fileDir, dirContents, index) => {
   let val = Number(column.dataset.val);
 
-  if (Math.abs(val) == 2) {
-    if (index >= dirContents.length -1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1) > -1/* || centerFolds.indexOf(index + polarity) > -1*/) {
-      // console.log(`index = ${index} || ${centerFolds.indexOf(index)} || ${centerFolds.indexOf(index + polarity)}`)
-      // console.log(`CenterFolds = ${centerFolds}`)
-
+  if (Math.abs(val) === 2) {
+    if (index >= dirContents.length - 1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1) > -1/* || centerFolds.indexOf(index + polarity) > -1*/) {
       singlePage(fileDir, dirContents, index);
     } else {
       viewOne.style.display = 'initial';
@@ -149,17 +135,17 @@ defaults = (fileDir, dirContents, index, polarity) => {
 
       let sizeOne = sizeOf(path.join(fileDir, dirContents[index]));
       let sizeTwo = sizeOf(path.join(fileDir, dirContents[index + 1]));
-      let ratioOne = sizeOne.width/sizeOne.height;
-      let ratioTwo = sizeTwo.width/sizeTwo.height;
+      let ratioOne = sizeOne.width / sizeOne.height;
+      let ratioTwo = sizeTwo.width / sizeTwo.height;
 
-      viewOne.style.width = `${ratioOne/(ratioOne + ratioTwo)*100}%`;
-      viewTwo.style.width = `${ratioTwo/(ratioOne + ratioTwo)*100}%`;
-    };
-  } else if (Math.abs(val) == 1) { // If val == 1
+      viewOne.style.width = `${ratioOne / (ratioOne + ratioTwo) * 100}%`;
+      viewTwo.style.width = `${ratioTwo / (ratioOne + ratioTwo) * 100}%`;
+    }
+  } else if (Math.abs(val) === 1) { // If val == 1
     singlePage(fileDir, dirContents, index);
   } else {
     alert(`Danger! Danger! Will Robinson!\nErr: Invalid variable val: ${val}`);
-  };
+  }
 };
 
 exports.Right = () => { // See page.spread()
@@ -174,19 +160,18 @@ exports.Left = () => {
 
 exports.spread = () => {
   filePath = decodeURIComponent(viewOne.src.substr(7));
-  if (process.platform == "win32") {
+  if (process.platform === 'win32') {
     filePath = decodeURIComponent(viewOne.src.substr(8));
-  };
+  }
   let index = dirContents.indexOf(path.basename(filePath));
-  let polarity = 1;
 
   if ($('#column').hasClass('disabled')) {
     $('#column').removeClass('disabled');
     column.dataset.val = 2;
-    defaults(fileDir, dirContents, index, polarity);
+    defaults(fileDir, dirContents, index);
   } else {
     $('#column').addClass('disabled');
     column.dataset.val = 1;
     singlePage(fileDir, dirContents, index);
-  };
+  }
 };

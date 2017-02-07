@@ -6,8 +6,7 @@
  * @copyright 2015 asvd <heliosframework@gmail.com>
  */
 
-
-(function(root, factory) {
+(function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(['exports'], factory);
   } else if (typeof exports !== 'undefined') {
@@ -15,7 +14,7 @@
   } else {
     factory((root.dragscroll = {}));
   }
-}(this, function(exports) {
+}(this, function (exports) {
   var _window = window;
   var _document = document;
   var mousemove = 'mousemove';
@@ -26,7 +25,7 @@
   var removeEventListener = 'remove' + EventListener;
 
   var dragged = [];
-  var reset = function(i, el) {
+  var reset = function (i, el) {
     for (i = 0; i < dragged.length;) {
       el = dragged[i++];
       el = el.container || el;
@@ -38,14 +37,14 @@
     // cloning into array since HTMLCollection is updated dynamically
     dragged = [].slice.call(_document.getElementsByClassName('dragscroll'));
     for (i = 0; i < dragged.length;) {
-      (function(el, lastClientX, lastClientY, pushed, scroller, cont) {
+      (function (el, lastClientX, lastClientY, pushed, scroller, cont) {
         (cont = el.container || el)[addEventListener](
           mousedown,
-          cont.md = function(e) {
+          cont.md = function (e) {
             if (!el.hasAttribute('nochilddrag') ||
               _document.elementFromPoint(
                 e.pageX, e.pageY
-              ) == cont
+              ) === cont
             ) {
               pushed = 1;
               lastClientX = e.clientX;
@@ -57,14 +56,14 @@
         );
 
         _window[addEventListener](
-          mouseup, cont.mu = function() {
+          mouseup, cont.mu = function () {
             pushed = 0;
           }, 0
         );
 
         _window[addEventListener](
           mousemove,
-          cont.mm = function(e) {
+          cont.mm = function (e) {
             if (pushed) {
               (scroller = el.scroller || el).scrollLeft -=
                 (-lastClientX + (lastClientX = e.clientX));
@@ -75,10 +74,9 @@
         );
       })(dragged[i++]);
     }
-  }
+  };
 
-
-  if (_document.readyState == 'complete') {
+  if (_document.readyState === 'complete') {
     reset();
   } else {
     _window[addEventListener]('load', reset, 0);

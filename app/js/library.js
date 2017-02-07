@@ -15,10 +15,17 @@ const path = require('path');
 const config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
 const comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
 
+const defaults = 'The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.';
+const loading = 'Your library is loading';
+const finished = '';
+
+// Function variables
+let libBuilder;
+
 // Builds the library with proper HTML
 libBuilder = (directory, array, listID) => {
-  $('#libStatus').remove();
-  for (let i=0; i < array.length; i++) {
+  $('#libStatus').text(loading);
+  for (let i = 0; i < array.length; i++) {
     let file = array[i].name;
     let filePath = path.join(directory, file);
 
@@ -31,17 +38,17 @@ libBuilder = (directory, array, listID) => {
 
     // Deep scans interior folders
     } else if (fs.statSync(filePath).isDirectory()) {
-      let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-/g, "");
+      let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-/g, '');
       $(`#${listID}`).append(
         `<li class="folder"><a href="#" onclick="libFolders('${newListID}')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${file}</a></li><ul id=${newListID}>`
       );
       libBuilder(filePath, array[i].children, newListID);
       $(`#${listID}`).append('</ul>');
     } else {
-      console.log(`${file} skipped`);
-    };
-  };
-  $('#repeat').removeClass('rotater');
+      // Do Nothing
+    }
+  }
+  $('#libStatus').text(finished);
 };
 
 // Dialog to open up directory
@@ -51,7 +58,7 @@ exports.openDir = () => {
       'openDirectory'
     ]
   },
-  function(fileNames) {
+  function (fileNames) {
     if (fileNames === undefined) return;
 
     let obj = {'library': fileNames[0]};
@@ -60,7 +67,6 @@ exports.openDir = () => {
     jsonfile.writeFileSync(comics, dirArray, {'spaces': 2});
     jsonfile.writeFileSync(config, obj);
     $('#ulLib li, #ulLib ul').remove();
-    $('#repeat').addClass('rotater');
     libBuilder(fileNames[0], dirArray.children, 'ulLib');
   });
 };
@@ -70,24 +76,22 @@ exports.builder = () => {
   let configJSON = jsonfile.readFileSync(config);
   let dirArray = dirTree(configJSON.library, ['.cbr', '.cbz']);
   $('#ulLib li, #ulLib ul').remove();
-  $('#repeat').addClass('rotater');
   libBuilder(configJSON.library, dirArray.children, 'ulLib');
 };
 
 // Loads library on program start
 exports.onLoad = () => {
-  let text = 'The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.';
   if (isThere(config)) {
     let configJSON = jsonfile.readFileSync(config);
-    if (configJSON.library != undefined) {
+    if (configJSON.library !== undefined) {
       let dirArray = dirTree(configJSON.library, ['.cbr', '.cbz']);
       libBuilder(configJSON.library, dirArray.children, 'ulLib');
     } else {
-      $('#libStatus').append(text);
-    };
+      $('#libStatus').append(defaults);
+    }
   } else {
     mkdirp.sync(path.join(os.tmpdir(), 'wonderReader', 'json'));
     fs.writeFileSync(config, '{}');
-    $('#libStatus').append(text);
-  };
+    $('#libStatus').append(defaults);
+  }
 };
