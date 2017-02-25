@@ -9,15 +9,17 @@ const rimraf = require('rimraf');
 const platform = process.platform;
 const version = jsonfile.readFileSync('package.json').version;
 
+let postPackage;
+
 console.log(colors.red(`Compiling Wonder Reader ${version}.`));
 let build = path.join('.', 'build', version);
-let ignoredPaths = fs.readdirSync(path.join('.','build'))
+let ignoredPaths = fs.readdirSync(path.join('.','build'));
 mkdirp.sync(build);
 let files = fs.readdirSync(build);
 for (let i = 0; i < files.length; i++) {
   console.log(`Removing ${files[i]}.`);
   rimraf.sync(path.join(build, files[i]));
-};
+}
 console.log(colors.red('This may take a few minutes.'));
 packager(
   {
