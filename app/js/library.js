@@ -32,6 +32,7 @@ libBuilder = (directory, array, listID) => {
     // Inserts file.loader() for files
     if (fs.statSync(filePath).isFile()) {
       let fileTarget = dirFunction.encode(filePath);
+      console.log(fileTarget);
       $(`#${listID}`).append(
         `<li class="file"><a href="#" onclick="file.loader('${fileTarget}')"><i class="fa fa-file" aria-hidden="true"></i>${file} ${bookmark.percent(file)}</a></li>`
       );
