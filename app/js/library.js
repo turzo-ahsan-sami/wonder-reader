@@ -32,14 +32,14 @@ libBuilder = (directory, array, listID) => {
     // Inserts file.loader() for files
     if (fs.statSync(filePath).isFile()) {
       let fileTarget = dirFunction.encode(filePath);
-      console.log(fileTarget);
+      // console.log(fileTarget);
       $(`#${listID}`).append(
         `<li class="file"><a href="#" onclick="file.loader('${fileTarget}')"><i class="fa fa-file" aria-hidden="true"></i>${file} ${bookmark.percent(file)}</a></li>`
       );
 
     // Deep scans interior folders
     } else if (fs.statSync(filePath).isDirectory()) {
-      let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-|!/g, '');
+      let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]/g, '');
       $(`#${listID}`).append(
         `<li class="folder"><a href="#" onclick="libFolders('${newListID}')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${file}</a></li><ul id=${newListID}>`
       );

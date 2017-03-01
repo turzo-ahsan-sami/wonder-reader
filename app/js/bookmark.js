@@ -5,12 +5,13 @@ const path = require('path');
 
 let template = {}; // {"name": "", "currentIndex": "0", "fullIndex": "0"}
 let baseName, obj;
-let bookmark = path.join(os.tmpdir(), 'wonderReader', 'json', 'bookmark.json');
-let regex = /\s|%|#|\(|\)|\.|-|_/gi; // Reg Ex for classes
+const bookmark = path.join(os.tmpdir(), 'wonderReader', 'json', 'bookmark.json');
+const regex = /\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]/gi; // Reg Ex for classes
 
 // Invoked on Comic.onLoad(), returns with current page
 exports.onLoad = (filePath, directoryContents) => { // returns a new index for <img> tags
-  baseName = path.basename(filePath);
+  baseName = path.basename(filePath); // Gets basename
+  console.dir(baseName);
 
   template = {};
   template.name = baseName;
@@ -60,7 +61,7 @@ exports.onChange = (index) => {
   });
 };
 
-// Fills library with percentage read
+// Fills library with percentage read on right hand side
 exports.percent = (fileName) => {
   let spanClass = fileName.replace(regex, '');
   if (isThere(bookmark)) {
