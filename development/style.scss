@@ -1,24 +1,24 @@
-/* ./app/css/style.scss */
+// ./app/css/style.scss */
 $white: #fff;
-$offWhite: #f3f3f3;
-$whiteOpaque: rgba(255,255,255,0.9);
-$whiteOpaqueDeg: rgba(255,255,255,0.8);
-$whiteTransDeg: rgba(255,255,255,0.1);
+$off-white: #f3f3f3;
+$white-opaque: rgba(255, 255, 255, 0.9);
+$white-opaque-deg: rgba(255, 255, 255, 0.8);
+$white-trans-deg: rgba(255, 255, 255, 0.1);
 $gray: #808080;
-$grayTrans: rgba(144,144,144,.2);
-$darkTrans: rgba(0,0,0,0.1);
-$darkTransDeg: rgba(0,0,0,0.2);
-$darkTransMid: rgba(0,0,0,0.5);
-$darkTransOpq: rgba(0,0,0,0.8);
+$gray-trans: rgba(144, 144, 144, .2);
+$dark-trans: rgba(0, 0, 0, 0.1);
+$dark-trans-deg: rgba(0, 0, 0, 0.2);
+$dark-trans-mid: rgba(0, 0, 0, 0.5);
+$dark-trans-opq: rgba(0, 0, 0, 0.8);
 $black: #000;
-$transparent: rgba(0,0,0,0);
-$teal: #0E2E3B;
-$comicBleu: rgb(20, 139, 181);
-$inputBleu: #91d5fd;
-$libColor: #ddbfeb;
-$trashColor: #ff0000;
+$transparent: rgba(0, 0, 0, 0);
+$teal: #0e2e3b;
+$comic-bleu: rgb(20, 139, 181);
+$input-bleu: #91d5fd;
+$lib-color: #ddbfeb;
+$trash-color: #f00;
 $manila: #ecc76f;
-/* ---- GLOBAL VALUES ---- */
+// ---- GLOBAL VALUES ---- */
 body {
   margin: 0;
   font-family: Ubuntu;
@@ -55,9 +55,9 @@ li ul {
 }
 button {
   font-size: 36px;
-  background-color: $darkTrans;
+  background-color: $dark-trans;
   border: 0;
-  color: $whiteOpaque;
+  color: $white-opaque;
   transition: all 0.5s;
   padding: 6px 6px 7px;
   cursor: pointer;
@@ -67,14 +67,14 @@ button:focus {
 }
 button:disabled {
   cursor: not-allowed;
-  color: $whiteTransDeg;
+  color: $white-trans-deg;
 }
 .disabled {
-  color: $whiteTransDeg;
+  color: $white-trans-deg;
 }
 .disabled:hover,
 button:disabled:hover {
-  text-shadow: 0 0 5px $whiteTransDeg;
+  text-shadow: 0 0 5px $white-trans-deg;
 }
 #bgColor {
   position: absolute;
@@ -84,7 +84,7 @@ button:disabled:hover {
   background: linear-gradient(to left, #8e9eab , #eef2f3);
   z-index: -1;
 }
-/* ---- Header Values ---- */
+// ---- Header Values ---- */
 .header {
   background-color: $teal;
   position: fixed;
@@ -105,7 +105,7 @@ button:disabled:hover {
 }
 .title {
   margin-left: 15px;
-  transition: margin-left 0.5s;
+  transition: margin-left .5s;
   float: left;
 }
 #cpanel {
@@ -136,20 +136,20 @@ button:disabled:hover {
     border-radius: 5px;
     background: $white;
     margin-top: -9px;
-    background-color: $comicBleu;
-    border: 2px solid $whiteOpaqueDeg;
+    background-color: $comic-bleu;
+    border: 2px solid $white-opaque-deg;
   }
   input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 8.4px;
     cursor: pointer;
-    background: $comicBleu;
+    background: $comic-bleu;
     border-radius: 4px;
-    border: 2px solid $whiteOpaqueDeg;
+    border: 2px solid $white-opaque-deg;
     transition: all 0.5s;
   }
   input[type=range]:focus::-webkit-slider-runnable-track {
-    box-shadow: 0 0 5px 2px $inputBleu;
+    box-shadow: 0 0 5px 2px $input-bleu;
   }
   #zoomText {
     color: $white;
@@ -158,15 +158,15 @@ button:disabled:hover {
     float: right;
     width: 52px;
     text-align: right;
-    background: $comicBleu;
+    background: $comic-bleu;
     border-radius: 4px;
     padding: 3px 26px 0 0;
-    border: 2px solid $whiteOpaqueDeg;
+    border: 2px solid $white-opaque-deg;
     outline: none;
     transition: all 0.5s;
   }
   #zoomText:focus {
-    box-shadow: 0 0 5px 2px $inputBleu;
+    box-shadow: 0 0 5px 2px $input-bleu;
   }
   #percent {
     position: absolute;
@@ -179,21 +179,21 @@ button:disabled:hover {
   }
 }
 button#trash {
-  background-color: $trashColor;
+  background-color: $trash-color;
   padding-left: 10px;
   box-shadow: -3px 0 10px -2px $black;
 }
 
-/* ---- mainLib Values ---- */
+// ---- mainLib Values ---- */
 #mainLib {
-  background: $darkTransOpq;
+  background: $dark-trans-opq;
   position: absolute;
   top: 56px;
   right: 5%;
   width: 90%;
   height: 600px;
   z-index: 1;
-  box-shadow: 0 0 10px 0px $darkTransOpq;
+  box-shadow: 0 0 10px 0px $dark-trans-opq;
   h1 {
     margin-left: 10px;
     margin-right: 10px;
@@ -215,15 +215,17 @@ button#trash {
     color: $white;
     ul {
       margin-left: 10px;
+      margin-bottom: 10px;
       border-left: 2px solid $black;
+      border-bottom: 2px solid $black;
       box-shadow: -7px 0 10px -6px $black;
     }
   }
   li {
     padding: 2px 0 2px 15px;
-    background: $darkTransDeg;
+    background: $dark-trans-deg;
     transition: box-shadow 0.15s;
-    border-bottom: 1px solid $darkTransMid;
+    border-bottom: 1px solid $dark-trans-mid;
   }
   li:nth-child(even) {
     background-color: $transparent;
@@ -231,12 +233,12 @@ button#trash {
   li.folder {
     font-weight: bold;
     padding: 2px 0 2px 15px;
-    background: $whiteTransDeg;
-    border-bottom: 1px solid $whiteTransDeg;
+    background: $white-trans-deg;
+    border-top: 1px solid $white-trans-deg;
   }
   li.file:hover,
   li.folder:hover {
-    box-shadow: inset 0 0 0 1px $whiteOpaqueDeg;
+    box-shadow: inset 0 0 0 1px $white-opaque-deg;
   }
   #libHeader {
     height: 56px;
@@ -245,7 +247,7 @@ button#trash {
     height: 544px;
     overflow-y: auto;
     .fa-file {
-      color: $inputBleu;
+      color: $input-bleu;
     }
     .fa-folder {
       color: $manila;
@@ -294,17 +296,17 @@ button#trash {
   top: -13px;
 }
 #libStatus {
-  color: $whiteOpaqueDeg;
+  color: $white-opaque-deg;
   font-size: 14px;
   float: right;
   padding: 10px;
   .code {
-    border: 1px solid $whiteOpaqueDeg;
+    border: 1px solid $white-opaque-deg;
     padding: 1px 3px 3px;
     border-radius: 3px;
   }
   .fa {
-    color: $whiteOpaqueDeg;
+    color: $white-opaque-deg;
     font-size: 12px;
     padding: 3px 1px;
   }
@@ -319,7 +321,7 @@ button#trash {
   from {transform: rotate(0deg);}
   to {transform: rotate(360deg);}
 }
-/* ---- miniLib Values ---- */
+// ---- miniLib Values ---- */
 .library {
   height: 100vh;
   width: 275px;
@@ -330,11 +332,11 @@ button#trash {
   border-right: 3px solid $teal;
   word-wrap: break-word;
   transition: margin-left 0.65s;
-  box-shadow: 3px 0 5px $darkTransMid;
+  box-shadow: 3px 0 5px $dark-trans-mid;
   h1 {
     display: block;
     text-align: center;
-    background: $comicBleu;
+    background: $comic-bleu;
   }
   ul {
     color: $teal;
@@ -353,7 +355,7 @@ button#trash {
     white-space: nowrap;
   }
   li:nth-child(even) {
-    background-color: $whiteTransDeg;
+    background-color: $white-trans-deg;
   }
   .libDir,
   .libFile {
@@ -363,12 +365,12 @@ button#trash {
       text-decoration: none;
       transition: all 0.25s;
       color: $white;
-      box-shadow: inset 3px 0 0 0 $libColor;
+      box-shadow: inset 3px 0 0 0 $lib-color;
     }
     a:hover {
       text-decoration: none;
       color: $white;
-      box-shadow: inset 2px 0 0 1px $libColor;
+      box-shadow: inset 2px 0 0 1px $lib-color;
       background: $black;
     }
   }
@@ -379,12 +381,12 @@ button#trash {
       transition: all 0.25s;
       padding: 3px 0 3px 10px;
       color: $white;
-      box-shadow: inset 2px 0 0 1px $libColor;
+      box-shadow: inset 2px 0 0 1px $lib-color;
     }
     span:hover {
       text-decoration: none;
       color: $white;
-      box-shadow: inset 2px 0 0 1px $whiteOpaqueDeg;
+      box-shadow: inset 2px 0 0 1px $white-opaque-deg;
       background: $black;
     }
   }
@@ -401,7 +403,7 @@ button#trash {
   font-size: 65px;
   top: 50vh;
   right: -15px;
-  color: $offWhite;
+  color: $off-white;
   z-index: -1;
   text-shadow: 4px 0 0 $teal;
   background: transparent;
@@ -413,7 +415,7 @@ button#trash {
   outline: none;
 }
 .directory {
-  background-color: $darkTransOpq;
+  background-color: $dark-trans-opq;
   .fa {
     padding-right: 5px;
   }
@@ -422,17 +424,17 @@ button#trash {
   background-color: $white;
 }
 .directory::-webkit-scrollbar-thumb {
-  background-color: $comicBleu;
+  background-color: $comic-bleu;
   border-radius: 2px;
 }
 .navigation {
   position: absolute;
   right: 0;
   top: 0;
-  box-shadow: -3px 0 10px -2px $grayTrans;
-  border-left: 1px solid $darkTransMid;
+  box-shadow: -3px 0 10px -2px $gray-trans;
+  border-left: 1px solid $dark-trans-mid;
 }
-/* ---- ViewerDiv Values ---- */
+// ---- ViewerDiv Values ---- */
 .mainWindow {
   width: 100%;
   margin-top: 56px;
@@ -447,14 +449,14 @@ button#trash {
   background-color: $white;
 }
 .mainWindow::-webkit-scrollbar-thumb {
-  background-color: $comicBleu;
+  background-color: $comic-bleu;
   border-radius: 2px;
 }
-/* ---- Loading Icon ---- */
+// ---- Loading Icon ---- */
 #bgLoader {
   height: 150px;
   width: 150px;
-  background: $comicBleu;
+  background: $comic-bleu;
   position: fixed;
   border-radius: 50%;
   opacity: 0.5;

@@ -52,6 +52,10 @@ openFile = () => {
 fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   if (err) { console.error(err); }
   let fileComic, tempFolder, looper;
+  if (process.platform == 'win32') { // corrects a possible err with HTML loading
+    fileName = fileName.replace(/\//g, '\\');
+    console.log(fileName);
+  }
   if (['.cbr', '.cbz'].indexOf(path.extname(fileName).toLowerCase()) > -1) {
     fileComic = path.basename(fileName).replace(/#|!/g, '');
   } else {

@@ -1,5 +1,3 @@
-/* ./app/css/style.scss */
-/* ---- GLOBAL VALUES ---- */
 body {
   margin: 0;
   font-family: Ubuntu;
@@ -77,9 +75,8 @@ button:disabled:hover {
   z-index: -1;
 }
 
-/* ---- Header Values ---- */
 .header {
-  background-color: #0E2E3B;
+  background-color: #0e2e3b;
   position: fixed;
   top: 0;
   z-index: 2;
@@ -99,7 +96,7 @@ button:disabled:hover {
 
 .title {
   margin-left: 15px;
-  transition: margin-left 0.5s;
+  transition: margin-left .5s;
   float: left;
 }
 
@@ -175,12 +172,11 @@ button:disabled:hover {
 }
 
 button#trash {
-  background-color: #ff0000;
+  background-color: #f00;
   padding-left: 10px;
   box-shadow: -3px 0 10px -2px #000;
 }
 
-/* ---- mainLib Values ---- */
 #mainLib {
   background: rgba(0, 0, 0, 0.8);
   position: absolute;
@@ -213,7 +209,9 @@ button#trash {
 }
 #mainLib ul ul {
   margin-left: 10px;
+  margin-bottom: 10px;
   border-left: 2px solid #000;
+  border-bottom: 2px solid #000;
   box-shadow: -7px 0 10px -6px #000;
 }
 #mainLib li {
@@ -229,7 +227,7 @@ button#trash {
   font-weight: bold;
   padding: 2px 0 2px 15px;
   background: rgba(255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 #mainLib li.file:hover,
 #mainLib li.folder:hover {
@@ -274,7 +272,7 @@ button#trash {
   top: -30px;
   padding: 0;
   transition: top .25s;
-  text-shadow: 0 5px 0 #0E2E3B;
+  text-shadow: 0 5px 0 #0e2e3b;
   z-index: 1;
   background: none;
   mix-blend-mode: exclusion;
@@ -322,7 +320,6 @@ button#trash {
     transform: rotate(360deg);
   }
 }
-/* ---- miniLib Values ---- */
 .library {
   height: 100vh;
   width: 275px;
@@ -330,7 +327,7 @@ button#trash {
   position: fixed;
   top: 0;
   z-index: 2;
-  border-right: 3px solid #0E2E3B;
+  border-right: 3px solid #0e2e3b;
   word-wrap: break-word;
   transition: margin-left 0.65s;
   box-shadow: 3px 0 5px rgba(0, 0, 0, 0.5);
@@ -341,7 +338,7 @@ button#trash {
   background: #148bb5;
 }
 .library ul {
-  color: #0E2E3B;
+  color: #0e2e3b;
   float: left;
   width: 100%;
   height: 90%;
@@ -405,7 +402,7 @@ button#trash {
   right: -15px;
   color: #f3f3f3;
   z-index: -1;
-  text-shadow: 4px 0 0 #0E2E3B;
+  text-shadow: 4px 0 0 #0e2e3b;
   background: transparent;
 }
 
@@ -441,7 +438,6 @@ button#trash {
   border-left: 1px solid rgba(0, 0, 0, 0.5);
 }
 
-/* ---- ViewerDiv Values ---- */
 .mainWindow {
   width: 100%;
   margin-top: 56px;
@@ -462,7 +458,6 @@ button#trash {
   border-radius: 2px;
 }
 
-/* ---- Loading Icon ---- */
 #bgLoader {
   height: 150px;
   width: 150px;
