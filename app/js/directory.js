@@ -35,18 +35,20 @@ exports.merge = (directory) => {
 // Splits a path, encodes each index, and merges it all for a URI compatible file path
 exports.encode = (oldPath) => {
   let newPath = '';
-  let tempPath = oldPath.split(path.sep);
+  let tempPath = oldPath.split(path.sep); // Breaks path into array
 
   if (process.platform !== 'win32') {
-    for (let j = 0; j < tempPath.length; j++) {
+    for (let j = 0; j < tempPath.length; j++) { // Encodes each folder, then merging it all together
       newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
     }
-    newPath = `/${newPath}`;
-    newPath = newPath.replace(/\'/g, '\\\'');
+    newPath = `/${newPath}`; // To set root folder
+    newPath = newPath.replace(/\'/g, '\\\''); // Fixes err with '
   } else {
-    for (let j = 1; j < tempPath.length; j++) {
+    let c = tempPath[0]; // Saves letter drive information
+    for (let j = 1; j < tempPath.length; j++) { // Encodes each folder, then merging it all together
       newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
     }
+    newPath = path.join(c, newPath); //returns proper path :: c:\path\to\file.cbz
   }
   return newPath;
 };
