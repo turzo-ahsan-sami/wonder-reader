@@ -15,7 +15,7 @@ const viewer = document.getElementById('viewer');
 const zoomSlide = document.getElementById('zoomSlider');
 
 // Function Variables
-let handleError, zoomTextUpdate, objPositioner, imgDivResizer, pageZoom, libFolders, libSlider, dropDown;
+let handleError, zoomTextUpdate, objPositioner, imgDivResizer, pageZoom, libFolders, libSlider, dropDown, filterToggle;
 
 // Key press Checker
 $(document).keydown(function (event) {
@@ -150,6 +150,42 @@ $('#zoomSlider').mouseenter(function () {
   $('#zoomSlider').blur();
 });
 
+// Filter Options for image quality
+filterToggle = () => {
+  console.log('Toggling Options');
+  let options = $('#optWindow');
+  options.slideToggle(400, function() {
+    if (options.is(':animated')) return;
+  });
+};
+// -------------------------
+// Filter: Brightness Slider
+
+let optBrightness = document.querySelector('#optBrightnessRange');
+optBrightness.addEventListener('input', function() {
+  let val = (optBrightness.value * 0.1).toFixed(1);
+  console.log(val);
+  document.querySelector('#innerWindow').style.webkitFilter = `brightness(${val})`;
+  document.querySelector('#optBrightnessText').value = val;
+});
+$('#optWindow').mouseenter(function () {
+  $('#viewer').removeClass('dragscroll');
+  $('#optWindow').focus();
+}).mouseleave(function () {
+  $('#viewer').addClass('dragscroll');
+  $('#optWindow').blur();
+});
+
+// ------------------------
+// Filter: Constrast Slider
+
+let optContrast = document.querySelector('#optContrastRange');
+optContrast.addEventListener('input', function() {
+  let val = (optContrast.value * 0.1).toFixed(1);
+  console.log(val);
+  document.querySelector('#innerWindow').style.webkitFilter = `contrast(${val})`;
+  document.querySelector('#optContrastText').value = val;
+});
 
 // Button functions
 
@@ -203,3 +239,25 @@ document.getElementById('libDropDown').addEventListener('click',
     dropDown();
   }
 );
+document.getElementById('options').addEventListener('click',
+  function() {
+    filterToggle();
+  }
+);
+// Option Reset Buttons
+String.prototype.capitalize = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
+let buttons = document.getElementById('optWindow').getElementsByTagName('button');
+console.log(buttons);
+for(let b = 0; b < buttons.length; b++) {
+  let data = buttons[b].dataset.style;
+  console.dir(data);
+  buttons[b].addEventListener('click', function() {
+    document.querySelector('#innerWindow').style.webkitFilter = `${data}(1)`;
+    let c = data.capitalize();
+    document.querySelector(`#opt${c}Range`).value = 10;
+    document.querySelector(`#opt${c}Text`).value = 1;
+  });
+}

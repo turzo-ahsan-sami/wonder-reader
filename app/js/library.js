@@ -16,6 +16,7 @@ const config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
 const comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
 
 const defaults = 'The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.';
+const libError = 'Library not found. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.';
 const loading = 'Your library is loading';
 const finished = '';
 
@@ -32,10 +33,10 @@ libBuilder = (directory, array, listID) => {
     // Inserts file.loader() for files
     if (fs.statSync(filePath).isFile()) {
       let fileTarget = dirFunction.encode(filePath);
-      console.log(fileTarget);
+      // console.log(fileTarget);
       if (process.platform == 'win32') { // Converts win32 paths to HTML compatible paths
         fileTarget = fileTarget.replace(/\\/g, '/');
-        console.log(fileTarget);
+        // console.log(fileTarget);
       }
       $(`#${listID}`).append(
         `<li class="file"><a href="#" onclick="file.loader('${fileTarget}')"><i class="fa fa-file" aria-hidden="true"></i>${file} ${bookmark.percent(file)}</a></li>`
@@ -90,7 +91,11 @@ exports.onLoad = () => {
     let configJSON = jsonfile.readFileSync(config);
     if (configJSON.library !== undefined) {
       let dirArray = dirTree(configJSON.library, ['.cbr', '.cbz']);
-      libBuilder(configJSON.library, dirArray.children, 'ulLib');
+      if (dirArray !== null) {
+        libBuilder(configJSON.library, dirArray.children, 'ulLib');
+      } else {
+        $('#libStatus').append(libError);
+      }
     } else {
       $('#libStatus').append(defaults);
     }

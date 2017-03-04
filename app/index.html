@@ -38,6 +38,9 @@
         <button id="openFile" onclick=""><i class="fa fa-folder-open-o"></i></button>
       </li>
       <li>
+        <button id="options" onclick=""><i class="fa fa-cog"></i></button>
+      </li>
+      <li>
         <button id="trash" onclick=""><i class="fa fa-trash-o"></i></button>
       </li>
     </ul>
@@ -47,8 +50,23 @@
     <ul id="dirLib" class="directory"></ul>
     <button id="libSlider"><i class="fa fa-caret-right"></i></button>
   </div>
-
+  <!-- Options Window -->
+  <div class="optWindow" id="optWindow">
+    <div class="row">
+      <label for="optBrightness">Brightness</label>
+      <input type="range" min="1" max="50" value="10" step="1" id="optBrightnessRange" for="optBrightnessText" name="optBrightnessRange">
+      <output type="text" for="optBrightnessRange" id="optBrightnessText">1</output>
+      <button onclick="" id="optBrightnessButton" data-style="brightness"><i class="fa fa-undo" aria-hidden="true"></i></button>
+    </div>
+    <div class="row">
+      <label for="optContrast">Contrast</label>
+      <input type="range" min="1" max="50" value="10" step="1" id="optContrastRange" for="optContrastText" name="optContrastRange">
+      <output type="text" for="optContrastRange" id="optContrastText">1</output>
+      <button onclick="" id="optContrastButton" data-style="contrast"><i class="fa fa-undo" aria-hidden="true"></i></button>
+    </div>
+  </div>
   <div class="mainWindow dragscroll" id="viewer">
+    <!-- Main Library -->
     <div class="mainLib" id="mainLib">
       <div class="libHeader" id="libHeader">
         <h1>Library</h1>

@@ -96,7 +96,7 @@ button:disabled:hover {
 
 .title {
   margin-left: 15px;
-  transition: margin-left .5s;
+  transition: margin-left 0.5s;
   float: left;
 }
 
@@ -104,7 +104,7 @@ button:disabled:hover {
   float: left;
   width: 165px;
   position: fixed;
-  right: 260px;
+  right: 307px;
   top: 8px;
 }
 #cpanel label {
@@ -177,6 +177,95 @@ button#trash {
   box-shadow: -3px 0 10px -2px #000;
 }
 
+#optWindow {
+  background: rgba(0, 0, 0, 0.8);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
+  display: none;
+  position: absolute;
+  right: 20px;
+  top: 56px;
+  width: 300px;
+  z-index: 2;
+}
+#optWindow .row {
+  clear: both;
+  border-bottom: 1px solid rgba(144, 144, 144, 0.2);
+  height: 40px;
+}
+#optWindow .row:nth-child(2n) {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+#optWindow .row:last-of-type {
+  border-bottom: none;
+}
+#optWindow button {
+  font-size: 15px;
+  float: right !important;
+  display: block;
+  position: relative;
+  right: -50px;
+  top: 5px;
+  color: #fff;
+  background: #148bb5;
+  width: 30px;
+  border-radius: 50%;
+  padding: 7px 3px;
+}
+#optWindow button:hover {
+  box-shadow: 0 0 10px #148bb5;
+  text-shadow: 0 0 10px #fff;
+}
+#optWindow label,
+#optWindow output {
+  color: #fff;
+  float: left;
+  font-family: CarterOne;
+  padding: 8px;
+  width: 80px;
+}
+#optWindow output {
+  float: right;
+  text-align: right;
+  width: 38px;
+  position: relative;
+  right: 35px;
+}
+#optWindow input[type="range"] {
+  -webkit-appearance: none;
+  float: left;
+  width: 75px;
+  position: relative;
+  top: 15px;
+  background: transparent;
+}
+#optWindow input[type="range"]:focus {
+  outline: none;
+}
+#optWindow input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 22px;
+  width: 12px;
+  border-radius: 5px;
+  background: #fff;
+  margin-top: -9px;
+  background-color: #148bb5;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+#optWindow input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  background: #148bb5;
+  border-radius: 4px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  transition: all 0.5s;
+}
+#optWindow input[type=range]:focus::-webkit-slider-runnable-track {
+  box-shadow: 0 0 5px 2px #91d5fd;
+}
+
 #mainLib {
   background: rgba(0, 0, 0, 0.8);
   position: absolute;
@@ -185,7 +274,7 @@ button#trash {
   width: 90%;
   height: 600px;
   z-index: 1;
-  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
 }
 #mainLib h1 {
   margin-left: 10px;
@@ -253,7 +342,7 @@ button#trash {
   display: block;
 }
 #mainLib #ulLib .fa-caret-down {
-  transition: transform .5s;
+  transition: transform 0.5s;
 }
 #mainLib #ulLib .rotate {
   transform: rotate(-90deg);
@@ -271,7 +360,7 @@ button#trash {
   position: fixed;
   top: -30px;
   padding: 0;
-  transition: top .25s;
+  transition: top 0.25s;
   text-shadow: 0 5px 0 #0e2e3b;
   z-index: 1;
   background: none;
@@ -281,7 +370,7 @@ button#trash {
   font-size: 110px;
   padding: 0;
   color: #fff;
-  transition: all .25s;
+  transition: all 0.25s;
 }
 
 #libDropDown:hover {
@@ -466,7 +555,7 @@ button#trash {
   border-radius: 50%;
   opacity: 0.5;
   mix-blend-mode: exclusion;
-  box-shadow: 0px 0px 12px -3px #000;
+  box-shadow: 0 0 12px -3px #000;
   z-index: 5;
 }
 

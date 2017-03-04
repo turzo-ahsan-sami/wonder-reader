@@ -11,7 +11,7 @@ const regex = /\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]/gi; // Reg Ex for classes
 // Invoked on Comic.onLoad(), returns with current page
 exports.onLoad = (filePath, directoryContents) => { // returns a new index for <img> tags
   baseName = path.basename(filePath); // Gets basename
-  console.dir(baseName);
+  console.log(`${baseName} loaded into Wonder Reader!`);
 
   template = {};
   template.name = baseName;
