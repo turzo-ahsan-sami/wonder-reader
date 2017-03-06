@@ -17,9 +17,13 @@ const zoomSlide = document.getElementById('zoomSlider');
 // Function Variables
 let handleError, zoomTextUpdate, objPositioner, imgDivResizer, pageZoom, libFolders, libSlider, dropDown, filterToggle;
 
+String.prototype.capitalize = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 // Key press Checker
 $(document).keydown(function (event) {
-  if (document.activeElement.id === 'zoomText' || document.activeElement.id === 'zoomSlider') {
+  if (document.activeElement.id === 'zoomText' || document.activeElement.tagName === 'INPUT') {
     // Do nothing when focused on zoom input
   } else if ($('#viewer').hasClass('active')) {
     // Check if file is loaded. See file.js: postExtract()
@@ -150,24 +154,6 @@ $('#zoomSlider').mouseenter(function () {
   $('#zoomSlider').blur();
 });
 
-// Filter Options for image quality
-filterToggle = () => {
-  console.log('Toggling Options');
-  let options = $('#optWindow');
-  options.slideToggle(400, function() {
-    if (options.is(':animated')) return;
-  });
-};
-// -------------------------
-// Filter: Brightness Slider
-
-let optBrightness = document.querySelector('#optBrightnessRange');
-optBrightness.addEventListener('input', function() {
-  let val = (optBrightness.value * 0.1).toFixed(1);
-  console.log(val);
-  document.querySelector('#innerWindow').style.webkitFilter = `brightness(${val})`;
-  document.querySelector('#optBrightnessText').value = val;
-});
 $('#optWindow').mouseenter(function () {
   $('#viewer').removeClass('dragscroll');
   $('#optWindow').focus();
@@ -176,16 +162,15 @@ $('#optWindow').mouseenter(function () {
   $('#optWindow').blur();
 });
 
-// ------------------------
-// Filter: Constrast Slider
 
-let optContrast = document.querySelector('#optContrastRange');
-optContrast.addEventListener('input', function() {
-  let val = (optContrast.value * 0.1).toFixed(1);
-  console.log(val);
-  document.querySelector('#innerWindow').style.webkitFilter = `contrast(${val})`;
-  document.querySelector('#optContrastText').value = val;
-});
+// Filter Options for image quality
+filterToggle = () => {
+  console.log('Toggling Options');
+  let options = $('#optWindow');
+  options.slideToggle(400, function() {
+    if (options.is(':animated')) return;
+  });
+};
 
 // Button functions
 
@@ -244,20 +229,35 @@ document.getElementById('options').addEventListener('click',
     filterToggle();
   }
 );
-// Option Reset Buttons
-String.prototype.capitalize = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-};
+
+// Option :: Updates Styles and Text
+
+let options = document.getElementById('optWindow').getElementsByTagName('input');
+for (let r = 0; r < options.length; r++) {
+  options[r].addEventListener('input', function() {
+    let val = options[r].value;
+    let style = options[r].dataset.style;
+    // console.log(val);
+    document.querySelector('#innerWindow').style.webkitFilter = `${style}(${val})`;
+    let text = document.querySelector(`#opt${style.capitalize()}Text`);
+    text.value = val;
+  });
+}
+
+// Options :: Reset Buttons
 
 let buttons = document.getElementById('optWindow').getElementsByTagName('button');
 console.log(buttons);
 for(let b = 0; b < buttons.length; b++) {
-  let data = buttons[b].dataset.style;
-  console.dir(data);
+  let style = buttons[b].dataset.style;
+  console.dir(style);
   buttons[b].addEventListener('click', function() {
-    document.querySelector('#innerWindow').style.webkitFilter = `${data}(1)`;
-    let c = data.capitalize();
-    document.querySelector(`#opt${c}Range`).value = 10;
-    document.querySelector(`#opt${c}Text`).value = 1;
+    let c = style.capitalize();
+    let range = document.querySelector(`#opt${c}Range`);
+    let text = document.querySelector(`#opt${c}Text`);
+    let d = range.dataset.default;
+    document.querySelector('#innerWindow').style.webkitFilter = `${style}(${d})`;
+    range.value = range.dataset.default;
+    text.value = range.dataset.default;
   });
 }
