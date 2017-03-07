@@ -23,16 +23,16 @@
         <button id="column" data-val="2" disabled><i class="fa fa-columns"></i></button>
       </li>
       <li>
-        <button id="prevComic" onclick="" disabled><i class="fa fa-angle-double-left"></i></button>
+        <button id="prevComic" disabled><i class="fa fa-angle-double-left"></i></button>
       </li>
       <li>
-        <button id="pageLeft" onclick="" disabled><i class="fa fa-angle-left"></i></button>
+        <button id="pageLeft" disabled><i class="fa fa-angle-left"></i></button>
       </li>
       <li>
-        <button id="pageRight" onclick="" disabled><i class="fa fa-angle-right"></i></button>
+        <button id="pageRight" disabled><i class="fa fa-angle-right"></i></button>
       </li>
       <li>
-        <button id="nextComic" onclick="" disabled><i class="fa fa-angle-double-right"></i></button>
+        <button id="nextComic" disabled><i class="fa fa-angle-double-right"></i></button>
       </li>
       <li>
         <button id="openFile" onclick=""><i class="fa fa-folder-open-o"></i></button>
@@ -58,7 +58,7 @@
       <label for="optBrightness">Brightness</label>
       <input type="range" min="0.1" max="5" value="1" step="0..1" id="optBrightnessRange" for="optBrightnessText" name="optBrightnessRange" data-default="1" data-style="brightness" />
       <output type="text" for="optBrightnessRange" id="optBrightnessText">1</output>
-      <button onclick="" id="optBrightnessButton" data-style="brightness"><i class="fa fa-undo" aria-hidden="true"></i></button>
+      <button id="optBrightnessButton" data-style="brightness"><i class="fa fa-undo" aria-hidden="true"></i></button>
     </div>
 
     <!-- Contrast! -->
@@ -66,15 +66,15 @@
       <label for="optContrast">Contrast</label>
       <input type="range" min="0.1" max="5" value="1" step="0.1" id="optContrastRange" for="optContrastText" name="optContrastRange" data-default="1" data-style="contrast" />
       <output type="text" for="optContrastRange" id="optContrastText">1</output>
-      <button onclick="" id="optContrastButton" data-style="contrast"><i class="fa fa-undo" aria-hidden="true"></i></button>
+      <button id="optContrastButton" data-style="contrast"><i class="fa fa-undo" aria-hidden="true"></i></button>
     </div>
 
     <!-- Grayscale! -->
     <div class="row">
       <label for="optGrayscale">Grayscale</label>
       <input type="range" min="0" max="1" value="0" step="0.1" id="optGrayscaleRange" for="optGrayscaleText" name="optGrayscaleRange" data-default="0" data-style="grayscale" />
-      <output type="text" for="optGrayscaleRange" id="optGrayscaleText">100</output>
-      <button onclick="" id="optGrayscaleButton" data-style="grayscale"><i class="fa fa-undo" aria-hidden="true"></i></button>
+      <output type="text" for="optGrayscaleRange" id="optGrayscaleText">0</output>
+      <button id="optGrayscaleButton" data-style="grayscale"><i class="fa fa-undo" aria-hidden="true"></i></button>
     </div>
   </div>
   <div class="mainWindow dragscroll" id="viewer">
@@ -87,8 +87,7 @@
         <span id="libStatus"></span>
       </div>
       <div class="libList" id="libList">
-        <ul id="ulLib">
-        </ul>
+        <ul id="ulLib"></ul>
       </div>
     </div>
     <button id="libDropDown">
