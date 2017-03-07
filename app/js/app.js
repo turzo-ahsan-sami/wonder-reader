@@ -92,8 +92,6 @@ let images = document.getElementsByClassName('image');
 for (let j = 0; j < images.length; j++) {
   images[j].addEventListener('load', function () {
     imgDivResizer();
-    viewer.scrollTop = 0;
-    viewer.scrollLeft = 0;
   });
 }
 
@@ -165,7 +163,6 @@ $('#optWindow').mouseenter(function () {
 
 // Filter Options for image quality
 filterToggle = () => {
-  console.log('Toggling Options');
   let options = $('#optWindow');
   options.slideToggle(400, function() {
     if (options.is(':animated')) return;
@@ -237,7 +234,6 @@ for (let r = 0; r < options.length; r++) {
   options[r].addEventListener('input', function() {
     let val = options[r].value;
     let style = options[r].dataset.style;
-    // console.log(val);
     document.querySelector('#innerWindow').style.webkitFilter = `${style}(${val})`;
     let text = document.querySelector(`#opt${style.capitalize()}Text`);
     text.value = val;
@@ -247,10 +243,8 @@ for (let r = 0; r < options.length; r++) {
 // Options :: Reset Buttons
 
 let buttons = document.getElementById('optWindow').getElementsByTagName('button');
-console.log(buttons);
 for(let b = 0; b < buttons.length; b++) {
   let style = buttons[b].dataset.style;
-  console.dir(style);
   buttons[b].addEventListener('click', function() {
     let c = style.capitalize();
     let range = document.querySelector(`#opt${c}Range`);

@@ -16,6 +16,7 @@ let pageTurn, singlePage, defaults;
 const viewOne = document.getElementById('viewImgOne');
 const viewTwo = document.getElementById('viewImgTwo');
 const column = document.getElementById('column');
+const viewer = document.getElementById('viewer');
 
 exports.load = (file) => {
   let index, continueIndex, val, r;
@@ -119,6 +120,8 @@ singlePage = (fileDir, dirContents, index) => { // For Single page viewing and s
   viewTwo.style.display = 'none';
   viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
   viewTwo.src = path.join('images', 'FFFFFF-0.0.png');
+  viewer.scrollTop = 0;
+  viewer.scrollLeft = 0;
 };
 
 defaults = (fileDir, dirContents, index) => {
@@ -132,6 +135,9 @@ defaults = (fileDir, dirContents, index) => {
       viewTwo.style.display = 'initial';
       viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
       viewTwo.src = path.join(fileDir, encodeURIComponent(dirContents[index + 1]));
+
+      viewer.scrollTop = 0;
+      viewer.scrollLeft = 0;
 
       let sizeOne = sizeOf(path.join(fileDir, dirContents[index]));
       let sizeTwo = sizeOf(path.join(fileDir, dirContents[index + 1]));
