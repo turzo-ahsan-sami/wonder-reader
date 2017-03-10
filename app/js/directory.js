@@ -42,7 +42,7 @@ exports.encode = (oldPath) => {
       newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
     }
     newPath = `/${newPath}`; // To set root folder
-    newPath = newPath.replace(/\'/g, '\\\''); // Fixes err with '
+    newPath = newPath.replace(/\'/g, '\\\''); // Fixes err with the character \' 
   } else {
     let c = tempPath[0]; // Saves letter drive information
     for (let j = 1; j < tempPath.length; j++) { // Encodes each folder, then merging it all together
