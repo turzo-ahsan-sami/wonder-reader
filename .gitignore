@@ -6,6 +6,7 @@ app/cache/*/
 .sass-cache/
 *.map
 build/
+.vscode/
 
 yarn.lock
 
