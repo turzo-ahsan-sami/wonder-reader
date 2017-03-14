@@ -15,7 +15,7 @@ const viewer = document.getElementById('viewer');
 const zoomSlide = document.getElementById('zoomSlider');
 
 // Function Variables
-let handleError, zoomTextUpdate, objPositioner, imgDivResizer, pageZoom, libFolders, libSlider, dropDown, filterToggle;
+let handleError, zoomTextUpdate, objPositioner, imgDivResizer, pageZoom, libSlider, dropDown, filterToggle;
 
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
@@ -125,14 +125,6 @@ pageZoom = () => {
   viewer.scrollLeft = inner.clientWidth * cPYR - viewer.clientWidth / 2;
   let val = document.getElementById('zoomSlider').value;
   zoomTextUpdate(val);
-};
-
-// Main Library folder collapsing
-libFolders = (id) => {
-  id = $(`#${id}`);
-  if (id.is(':animated')) return;
-  id.prev('.folder').children().children('.fa-caret-down').toggleClass('rotate');
-  id.slideToggle(500, 'linear');
 };
 
 // Library Windows collapsing

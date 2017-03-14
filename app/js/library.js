@@ -46,7 +46,7 @@ libBuilder = (directory, array, listID) => {
     } else if (fs.statSync(filePath).isDirectory()) {
       let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]/g, '');
       $(`#${listID}`).append(
-        `<li class="folder"><a href="#" onclick="libFolders('${newListID}')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${file}</a></li><ul id=${newListID}>`
+        `<li class="folder"><a href="#" onclick="library.toggle('${newListID}')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${file}</a></li><ul id=${newListID}>`
       );
       libBuilder(filePath, array[i].children, newListID);
       $(`#${listID}`).append('</ul>');
@@ -104,4 +104,11 @@ exports.onLoad = () => {
     fs.writeFileSync(config, '{}');
     $('#libStatus').append(defaults);
   }
+};
+
+exports.toggle = (id) => {
+  id = $(`#${id}`);
+  if (id.is(':animated')) return;
+  id.prev('.folder').children().children('.fa-caret-down').toggleClass('rotate');
+  id.slideToggle(500, 'linear');
 };
