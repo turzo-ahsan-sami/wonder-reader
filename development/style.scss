@@ -342,11 +342,10 @@ button#trash {
     color: $white;
 
     ul {
-      margin-left: 10px;
-      margin-bottom: 10px;
-      border-left: 2px solid $black;
-      border-bottom: 2px solid $black;
+      margin-left: 0;
+      border-left: 1px solid $black;
       box-shadow: -7px 0 10px -6px $black;
+
     }
   }
 
@@ -354,7 +353,7 @@ button#trash {
     padding: 2px 0 2px 15px;
     background: $dark-trans-deg;
     transition: box-shadow 0.15s;
-    border-bottom: 1px solid $dark-trans-mid;
+    border-top: 1px solid $dark-trans-mid;
   }
 
   li:nth-child(even) {
@@ -366,6 +365,9 @@ button#trash {
     padding: 2px 0 2px 15px;
     background: $white-trans-deg;
     border-top: 1px solid $white-trans-deg;
+    .folder {
+      background: $dark-trans;
+    }
   }
 
   li.file:hover,
@@ -395,8 +397,10 @@ button#trash {
       font-size: 12px;
     }
 
-    a {
+    span {
       display: block;
+      padding: 1px 0;
+      cursor: pointer;
     }
 
     .fa-caret-down {
@@ -409,6 +413,7 @@ button#trash {
 
     ul {
       display: none;
+      border-bottom: 1px solid $black;
     }
   }
 

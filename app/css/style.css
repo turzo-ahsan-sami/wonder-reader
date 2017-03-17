@@ -297,17 +297,15 @@ button#trash {
   color: #fff;
 }
 #mainLib ul ul {
-  margin-left: 10px;
-  margin-bottom: 10px;
-  border-left: 2px solid #000;
-  border-bottom: 2px solid #000;
+  margin-left: 0;
+  border-left: 1px solid #000;
   box-shadow: -7px 0 10px -6px #000;
 }
 #mainLib li {
   padding: 2px 0 2px 15px;
   background: rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.15s;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(0, 0, 0, 0.5);
 }
 #mainLib li:nth-child(even) {
   background-color: transparent;
@@ -317,6 +315,9 @@ button#trash {
   padding: 2px 0 2px 15px;
   background: rgba(255, 255, 255, 0.1);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+#mainLib li.folder .folder {
+  background: rgba(0, 0, 0, 0.1);
 }
 #mainLib li.file:hover,
 #mainLib li.folder:hover {
@@ -338,8 +339,10 @@ button#trash {
 #mainLib #ulLib .fa {
   font-size: 12px;
 }
-#mainLib #ulLib a {
+#mainLib #ulLib span {
   display: block;
+  padding: 1px 0;
+  cursor: pointer;
 }
 #mainLib #ulLib .fa-caret-down {
   transition: transform 0.5s;
@@ -349,6 +352,7 @@ button#trash {
 }
 #mainLib #ulLib ul {
   display: none;
+  border-bottom: 1px solid #000;
 }
 #mainLib .bookmark-percent {
   float: right;

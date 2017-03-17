@@ -21,7 +21,7 @@ const loading = 'Your library is loading';
 const finished = '';
 
 // Function variables
-let libBuilder;
+let libBuilder, folders;
 
 // Builds the library with proper HTML
 libBuilder = (directory, array, listID) => {
@@ -46,10 +46,10 @@ libBuilder = (directory, array, listID) => {
     } else if (fs.statSync(filePath).isDirectory()) {
       let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]/g, '');
       $(`#${listID}`).append(
-        `<li class="folder"><a href="#" onclick="library.toggle('${newListID}')"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${file}</a></li><ul id=${newListID}>`
+        `<li class="folder"><span><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${file}</span><ul id=${newListID}>`
       );
       libBuilder(filePath, array[i].children, newListID);
-      $(`#${listID}`).append('</ul>');
+      $(`#${listID}`).append('</ul></li>');
     } else {
       // Do Nothing
     }
@@ -83,6 +83,7 @@ exports.builder = () => {
   let dirArray = dirTree(configJSON.library, ['.cbr', '.cbz']);
   $('#ulLib li, #ulLib ul').remove();
   libBuilder(configJSON.library, dirArray.children, 'ulLib');
+  folders();
 };
 
 // Loads library on program start
@@ -104,11 +105,17 @@ exports.onLoad = () => {
     fs.writeFileSync(config, '{}');
     $('#libStatus').append(defaults);
   }
+  folders();
 };
 
-exports.toggle = (id) => {
-  id = $(`#${id}`);
-  if (id.is(':animated')) return;
-  id.prev('.folder').children().children('.fa-caret-down').toggleClass('rotate');
-  id.slideToggle(500, 'linear');
+folders = () => { // Toggle for folders in MainLib
+  let folders = document.querySelectorAll('.folder');
+  for (let i = 0; i < folders.length; i++) {
+    folders[i].querySelector('span').addEventListener('click', function() {
+      let _ul = $(this).next('ul');
+      if (_ul.is(':animated')) return;
+      $(this).children('.fa-caret-down').toggleClass('rotate');
+      _ul.slideToggle(300, 'linear');
+    });
+  }
 };
