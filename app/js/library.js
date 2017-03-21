@@ -33,10 +33,8 @@ libBuilder = (directory, array, listID) => {
     // Inserts file.loader() for files
     if (fs.statSync(filePath).isFile()) {
       let fileTarget = dirFunction.encode(filePath);
-      // console.log(fileTarget);
       if (process.platform == 'win32') { // Converts win32 paths to HTML compatible paths
         fileTarget = fileTarget.replace(/\\/g, '/');
-        // console.log(fileTarget);
       }
       $(`#${listID}`).append(
         `<li class="file"><a href="#" onclick="file.loader('${fileTarget}')"><i class="fa fa-file" aria-hidden="true"></i>${file} ${bookmark.percent(file)}</a></li>`
@@ -54,6 +52,7 @@ libBuilder = (directory, array, listID) => {
       // Do Nothing
     }
   }
+  folders();
   $('#libStatus').text(finished);
 };
 
@@ -83,7 +82,6 @@ exports.builder = () => {
   let dirArray = dirTree(configJSON.library, ['.cbr', '.cbz']);
   $('#ulLib li, #ulLib ul').remove();
   libBuilder(configJSON.library, dirArray.children, 'ulLib');
-  folders();
 };
 
 // Loads library on program start
@@ -109,6 +107,7 @@ exports.onLoad = () => {
 };
 
 folders = () => { // Toggle for folders in MainLib
+  console.log('folders() engaged.');
   let folders = document.querySelectorAll('.folder');
   for (let i = 0; i < folders.length; i++) {
     folders[i].querySelector('span').addEventListener('click', function() {

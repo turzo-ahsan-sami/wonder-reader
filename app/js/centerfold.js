@@ -10,11 +10,11 @@ exports.fold = (id) => {
   id = document.getElementById(id);
 
   // global variables
-  let filePath, fileDir, dirContents, spread, dimensions, width, height;
+  let dimensions, dirContents, fileDir, filePath, height, spread, width;
 
   // function variables
   let sortNumber;
-  
+
   filePath = decodeURIComponent(id.src.substr(7));
   if (process.platform === 'win32') {
     filePath = decodeURIComponent(id.src.substr(8));
