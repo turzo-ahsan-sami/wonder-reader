@@ -299,7 +299,7 @@ button#trash {
 #mainLib ul ul {
   margin-left: 0;
   border-left: 1px solid #000;
-  box-shadow: -7px 0 10px -6px #000;
+  box-shadow: inset 5px 5px 5px -2px rgba(0, 0, 0, 0.8);
 }
 #mainLib li {
   padding: 2px 0 2px 15px;
@@ -357,7 +357,7 @@ button#trash {
 #mainLib .bookmark-percent {
   float: right;
   font-size: 11px;
-  padding-right: 5px;
+  padding-right: 5px !important;
 }
 
 #libDropDown {

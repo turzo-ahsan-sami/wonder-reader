@@ -344,7 +344,7 @@ button#trash {
     ul {
       margin-left: 0;
       border-left: 1px solid $black;
-      box-shadow: -7px 0 10px -6px $black;
+      box-shadow: inset 5px 5px 5px -2px $dark-trans-opq;
 
     }
   }
@@ -420,7 +420,7 @@ button#trash {
   .bookmark-percent {
     float: right;
     font-size: 11px;
-    padding-right: 5px;
+    padding-right: 5px !important;
   }
 }
 
