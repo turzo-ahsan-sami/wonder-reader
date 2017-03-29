@@ -52,7 +52,6 @@ libBuilder = (directory, array, listID) => {
       // Do Nothing
     }
   }
-  folders();
   $('#libStatus').text(finished);
 };
 
@@ -73,6 +72,7 @@ exports.openDir = () => {
     jsonfile.writeFileSync(config, obj);
     $('#ulLib li, #ulLib ul').remove();
     libBuilder(fileNames[0], dirArray.children, 'ulLib');
+    folders();
   });
 };
 
@@ -82,6 +82,7 @@ exports.builder = () => {
   let dirArray = dirTree(configJSON.library, ['.cbr', '.cbz']);
   $('#ulLib li, #ulLib ul').remove();
   libBuilder(configJSON.library, dirArray.children, 'ulLib');
+  folders();
 };
 
 // Loads library on program start
@@ -107,7 +108,7 @@ exports.onLoad = () => {
 };
 
 folders = () => { // Toggle for folders in MainLib
-  console.log('folders() engaged.');
+  // console.log('folders() engaged.');
   let folders = document.querySelectorAll('.folder');
   for (let i = 0; i < folders.length; i++) {
     folders[i].querySelector('span').addEventListener('click', function() {
