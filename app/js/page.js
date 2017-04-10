@@ -131,13 +131,9 @@ defaults = (fileDir, dirContents, index) => {
     if (index >= dirContents.length - 1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1) > -1/* || centerFolds.indexOf(index + polarity) > -1*/) {
       singlePage(fileDir, dirContents, index);
     } else {
+
       viewOne.style.display = 'initial';
       viewTwo.style.display = 'initial';
-      viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
-      viewTwo.src = path.join(fileDir, encodeURIComponent(dirContents[index + 1]));
-
-      viewer.scrollTop = 0;
-      viewer.scrollLeft = 0;
 
       let sizeOne = sizeOf(path.join(fileDir, dirContents[index]));
       let sizeTwo = sizeOf(path.join(fileDir, dirContents[index + 1]));
@@ -146,6 +142,13 @@ defaults = (fileDir, dirContents, index) => {
 
       viewOne.style.width = `${ratioOne / (ratioOne + ratioTwo) * 100}%`;
       viewTwo.style.width = `${ratioTwo / (ratioOne + ratioTwo) * 100}%`;
+
+      viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
+      viewTwo.src = path.join(fileDir, encodeURIComponent(dirContents[index + 1]));
+
+      viewer.scrollTop = 0;
+      viewer.scrollLeft = 0;
+
     }
   } else if (Math.abs(val) === 1) { // If val == 1
     singlePage(fileDir, dirContents, index);
@@ -153,6 +156,25 @@ defaults = (fileDir, dirContents, index) => {
     alert(`Danger! Danger! Will Robinson!\nErr: Invalid variable val: ${val}`);
   }
 };
+
+// pageLoad = (images) => {
+//   console.log('Reading Object');
+//   let data = {};
+//   for (let i = 0; i < images.length; i++) {
+//     console.log(`Reading ${images[i]}`);
+//     Jimp.read(images[i]).then(function (lenna) {
+//       lenna.getBase64(Jimp.AUTO, function(err, src) {
+//         if (err) return console.error(err);
+//         data[i] = src;
+//         if (Object.keys(data).length == images.length) {
+//           console.log('Loading new images');
+//           viewOne.src = data[0];
+//           viewTwo.src = data[1];
+//         }
+//       });
+//     });
+//   }
+// };
 
 exports.Right = () => { // See page.spread()
   let val = column.dataset.val;
