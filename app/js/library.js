@@ -36,10 +36,6 @@ libBuilder = (directory, array, listID) => {
       if (process.platform == 'win32') { // Converts win32 paths to HTML compatible paths
         fileTarget = fileTarget.replace(/\\/g, '/');
       }
-      if (file == 'A.D. After Death Book 01.cbr') {
-        console.log(file);
-        console.log(listID);
-      }
       $(`#${listID}`).append(
         `<li class="file"><a href="#" onclick="file.loader('${fileTarget}')"><i class="fa fa-file" aria-hidden="true"></i>${file} ${bookmark.percent(file)}</a></li>`
       );
@@ -50,11 +46,6 @@ libBuilder = (directory, array, listID) => {
       $(`#${listID}`).append(
         `<li class="folder"><span><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${file}</span><ul id=${newListID}>`
       );
-      if (file == 'A.D. After Death') {
-        console.log(file);
-        console.log(listID);
-        console.log(newListID);
-      }
       libBuilder(filePath, array[i].children, newListID);
       $(`#${listID}`).append('</ul></li>');
     } else {
