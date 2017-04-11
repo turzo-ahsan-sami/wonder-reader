@@ -11,6 +11,7 @@ const title = require('./js/title.js');
 const imgOne = document.getElementById('viewImgOne');
 const imgTwo = document.getElementById('viewImgTwo');
 const inner = document.getElementById('innerWindow');
+const optWindow = document.getElementById('optWindow');
 const viewer = document.getElementById('viewer');
 const zoomSlide = document.getElementById('zoomSlider');
 
@@ -219,22 +220,32 @@ document.getElementById('options').addEventListener('click',
   }
 );
 
-// Option :: Updates Styles and Text
+// Option Defaults
+let display = {
+  'brightness': 'brightness(1.0)',
+  'contrast': 'contrast(1.0)',
+  'grayscale': 'grayscale(0.0)',
+  style: function() {
+    return `${this.brightness} ${this.contrast} ${this.grayscale}`;
+  }
+};
+inner.style.webkitFilter = display.style();
 
-let options = document.getElementById('optWindow').getElementsByTagName('input');
+// Option :: Updates Styles and Text
+let options = optWindow.getElementsByTagName('input');
 for (let r = 0; r < options.length; r++) {
   options[r].addEventListener('input', function() {
     let val = options[r].value;
     let style = options[r].dataset.style;
-    document.querySelector('#innerWindow').style.webkitFilter = `${style}(${val})`;
+    display[style] = `${style}(${val})`;
+    inner.style.webkitFilter = display.style();
     let text = document.querySelector(`#opt${style.capitalize()}Text`);
     text.value = val;
   });
 }
 
 // Options :: Reset Buttons
-
-let buttons = document.getElementById('optWindow').getElementsByTagName('button');
+let buttons = optWindow.getElementsByTagName('button');
 for(let b = 0; b < buttons.length; b++) {
   let style = buttons[b].dataset.style;
   buttons[b].addEventListener('click', function() {
@@ -242,7 +253,8 @@ for(let b = 0; b < buttons.length; b++) {
     let range = document.querySelector(`#opt${c}Range`);
     let text = document.querySelector(`#opt${c}Text`);
     let d = range.dataset.default;
-    document.querySelector('#innerWindow').style.webkitFilter = `${style}(${d})`;
+    display[style] = `${style}(${d})`;
+    inner.style.webkitFilter = display.style();
     range.value = range.dataset.default;
     text.value = range.dataset.default;
   });
