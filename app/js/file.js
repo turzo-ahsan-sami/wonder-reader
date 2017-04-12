@@ -31,8 +31,8 @@ const viewer = document.getElementById('viewer');
 let openFile, fileLoad, enable, postExtract, fileRouter, rarExtractor, rarLinux, zipExtractor, extractRouter, preLoad, postLoad;
 
 preLoad = () => {
-  $('#innerWindow').addClass('innerLoading');
   $('#loader').addClass('loader').removeClass('hidden');
+  $('#innerWindow').addClass('innerLoading');
   $('#bgLoader').removeClass('hidden');
 };
 
@@ -40,7 +40,7 @@ postLoad = () => {
   $('#innerWindow').removeClass('innerLoading');
   $('#loader').addClass('hidden').removeClass('loader');
   $('#bgLoader').addClass('hidden');
-}
+};
 
 // Dialog box to load the file
 openFile = () => {
@@ -87,10 +87,10 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
       postExtract(fileName, tempFolder, dirContents);
     }
   } else { // If no Directory exists
+    preLoad();
     mkdirp.sync(tempFolder, {'mode': '0777'});
     fileRouter(fileName, tempFolder, looper);
     // Async class adding then hidden on final load
-    preLoad();
   } // End Directory checker
 };
 
@@ -118,12 +118,6 @@ postExtract = (fileName, tempFolder, dirContents) => {
 
   viewer.scrollTop = 0;
   viewer.scrollLeft = 0;
-
-  let preload = document.getElementById('imagePreload');
-  for (let i = 2; i < dirContents.length; i++) {
-    preload.src = path.join(tempFolder, encodeURIComponent(dirContents[i]));
-  }
-  preload.src = path.join('.', 'images', 'FFFFFF-0.0.png');
 };
 
 exports.dialog = () => {

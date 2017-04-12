@@ -17,6 +17,7 @@ const viewOne = document.getElementById('viewImgOne');
 const viewTwo = document.getElementById('viewImgTwo');
 const column = document.getElementById('column');
 const viewer = document.getElementById('viewer');
+const clearImg = path.join('.', 'images', 'FFFFFF-0.0.png');
 
 exports.load = (file) => {
   let index, continueIndex, val, r;
@@ -32,6 +33,8 @@ exports.load = (file) => {
 
   index = 0;
   continueIndex = Number(bookmark.onLoad(file, dirContents));
+  viewOne.src = clearImg; // Clears the screen to minimize choppiness
+  viewTwo.src = clearImg;
   if (continueIndex > 0) {
     r = confirm(`Continue ${path.basename(file)} at page ${continueIndex}`);
     if (r === true) {
