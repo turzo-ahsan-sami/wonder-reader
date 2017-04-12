@@ -28,7 +28,19 @@ const viewTwo = document.getElementById('viewImgTwo');
 const viewer = document.getElementById('viewer');
 
 // Functions variables
-let openFile, fileLoad, enable, postExtract, fileRouter, rarExtractor, rarLinux, zipExtractor, extractRouter;
+let openFile, fileLoad, enable, postExtract, fileRouter, rarExtractor, rarLinux, zipExtractor, extractRouter, preLoad, postLoad;
+
+preLoad = () => {
+  $('#innerWindow').addClass('innerLoading');
+  $('#loader').addClass('loader').removeClass('hidden');
+  $('#bgLoader').removeClass('hidden');
+};
+
+postLoad = () => {
+  $('#innerWindow').removeClass('innerLoading');
+  $('#loader').addClass('hidden').removeClass('loader');
+  $('#bgLoader').addClass('hidden');
+}
 
 // Dialog box to load the file
 openFile = () => {
@@ -78,8 +90,7 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
     mkdirp.sync(tempFolder, {'mode': '0777'});
     fileRouter(fileName, tempFolder, looper);
     // Async class adding then hidden on final load
-    $('#loader').addClass('loader').removeClass('hidden');
-    $('#bgLoader').removeClass('hidden');
+    preLoad();
   } // End Directory checker
 };
 
@@ -140,8 +151,7 @@ fileRouter = (fileName, tempFolder, looper) => {
     zipExtractor(fileName, tempFolder, looper);
   } else {
     alert('Possible broken file?');
-    $('#loader').addClass('hidden').removeClass('loader');
-    $('#bgLoader').addClass('hidden');
+    postLoad();
   }
 };
 
@@ -187,19 +197,16 @@ extractRouter = (fileName, tempFolder, looper) => {
       zipExtractor(fileName, tempFolder, looper);
     } else {
       alert('Possible broken file?');
-      $('#loader').addClass('hidden').removeClass('loader');
-      $('#bgLoader').addClass('hidden');
+      postLoad();
       return;
     }
   } else if (looper > 3) {
     alert('Possible broken file?');
-    $('#loader').addClass('hidden').removeClass('loader');
-    $('#bgLoader').addClass('hidden');
+    postLoad();
     return;
   } else {
     console.log('Extraction complete!');
-    $('#loader').addClass('hidden').removeClass('loader');
-    $('#bgLoader').addClass('hidden');
+    postLoad();
     postExtract(fileName, tempFolder, dirContents);
   }
 };

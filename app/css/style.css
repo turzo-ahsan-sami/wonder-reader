@@ -540,6 +540,9 @@ button#trash {
   float: left;
   width: 50%;
 }
+.mainWindow #innerWindow {
+  transition: filter 0.3s;
+}
 
 .mainWindow::-webkit-scrollbar-track {
   background-color: #fff;
@@ -548,6 +551,10 @@ button#trash {
 .mainWindow::-webkit-scrollbar-thumb {
   background-color: #148bb5;
   border-radius: 2px;
+}
+
+#innerWindow.innerLoading {
+  filter: brightness(0.3) contrast(1) grayscale(1) !important;
 }
 
 #bgLoader {
