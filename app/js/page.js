@@ -47,6 +47,15 @@ exports.load = (file) => {
   } else {
     defaults(fileDir, dirContents, index);
   }
+
+  // Preloads each image file for a smoother experience
+  let loadedImages = [];
+  for (let i = 0; i < dirContents.length; i++) {
+    let img = new Image();
+    let imgSrc = path.join(fileDir, encodeURIComponent(dirContents[i]));
+    img.src = imgSrc;
+    loadedImages.push(img);
+  }
 };
 
 pageTurn = (val) => {
