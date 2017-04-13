@@ -42,7 +42,7 @@ libBuilder = (directory, array, listID) => {
 
     // Deep scans interior folders
     } else if (fs.statSync(filePath).isDirectory()) {
-      let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]|\./g, '');
+      let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]|\./g, ''); // Removes potentially damaging characters for app
       $(`#${listID}`).append(
         `<li class="folder"><span><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${file}</span><ul id=${newListID}>`
       );
@@ -108,7 +108,6 @@ exports.onLoad = () => {
 };
 
 folders = () => { // Toggle for folders in MainLib
-  // console.log('folders() engaged.');
   let folders = document.querySelectorAll('.folder');
   for (let i = 0; i < folders.length; i++) {
     folders[i].querySelector('span').addEventListener('click', function() {

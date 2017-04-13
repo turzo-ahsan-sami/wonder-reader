@@ -90,7 +90,6 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
     preLoad();
     mkdirp.sync(tempFolder, {'mode': '0777'});
     fileRouter(fileName, tempFolder, looper);
-    // Async class adding then hidden on final load
   } // End Directory checker
 };
 

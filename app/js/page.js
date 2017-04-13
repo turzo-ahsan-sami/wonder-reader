@@ -96,7 +96,7 @@ pageTurn = (val) => {
     defaults(fileDir, dirContents, index);
   } else {
     if (centerFolds.length === 0) {
-          // For no centerFolds. This is easy
+      // For no centerFolds. This is easy
       index = index + val;
       if (index === dirContents.length - 1) {
         singlePage(fileDir, dirContents, index);
@@ -104,7 +104,7 @@ pageTurn = (val) => {
         defaults(fileDir, dirContents, index);
       }
     } else {
-          // For when any CenterFold exists //
+      // For when any CenterFold exists //
       if (centerFolds.indexOf(index + polarity) > -1) {
         index = index + polarity;
         singlePage(fileDir, dirContents, index);
@@ -140,7 +140,7 @@ defaults = (fileDir, dirContents, index) => {
   let val = Number(column.dataset.val);
 
   if (Math.abs(val) === 2) {
-    if (index >= dirContents.length - 1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1) > -1/* || centerFolds.indexOf(index + polarity) > -1*/) {
+    if (index >= dirContents.length - 1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1) > -1) {
       singlePage(fileDir, dirContents, index);
     } else {
 
@@ -160,35 +160,15 @@ defaults = (fileDir, dirContents, index) => {
 
       viewer.scrollTop = 0;
       viewer.scrollLeft = 0;
-
     }
-  } else if (Math.abs(val) === 1) { // If val == 1
+  } else if (Math.abs(val) === 1) {
     singlePage(fileDir, dirContents, index);
   } else {
     alert(`Danger! Danger! Will Robinson!\nErr: Invalid variable val: ${val}`);
   }
 };
 
-// pageLoad = (images) => {
-//   console.log('Reading Object');
-//   let data = {};
-//   for (let i = 0; i < images.length; i++) {
-//     console.log(`Reading ${images[i]}`);
-//     Jimp.read(images[i]).then(function (lenna) {
-//       lenna.getBase64(Jimp.AUTO, function(err, src) {
-//         if (err) return console.error(err);
-//         data[i] = src;
-//         if (Object.keys(data).length == images.length) {
-//           console.log('Loading new images');
-//           viewOne.src = data[0];
-//           viewTwo.src = data[1];
-//         }
-//       });
-//     });
-//   }
-// };
-
-exports.Right = () => { // See page.spread()
+exports.Right = () => { // See exports.spread
   let val = column.dataset.val;
   pageTurn(val);
 };
