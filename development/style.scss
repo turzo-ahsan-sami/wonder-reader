@@ -432,7 +432,7 @@ button#trash {
   text-shadow: 0 5px 0 $teal;
   z-index: 1;
   background: none;
-  mix-blend-mode: exclusion;
+  //mix-blend-mode: exclusion;
 
   .fa {
     font-size: 110px;
@@ -649,8 +649,8 @@ button#trash {
   background: $comic-bleu;
   position: fixed;
   border-radius: 50%;
-  opacity: 0.5;
-  mix-blend-mode: exclusion;
+  opacity: 0.85;
+  //mix-blend-mode: exclusion;
   box-shadow: 0 0 12px -3px $black;
   z-index: 5;
 }

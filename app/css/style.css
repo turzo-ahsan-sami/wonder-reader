@@ -367,7 +367,6 @@ button#trash {
   text-shadow: 0 5px 0 #0e2e3b;
   z-index: 1;
   background: none;
-  mix-blend-mode: exclusion;
 }
 #libDropDown .fa {
   font-size: 110px;
@@ -564,7 +563,6 @@ button#trash {
   position: fixed;
   border-radius: 50%;
   opacity: 0.5;
-  mix-blend-mode: exclusion;
   box-shadow: 0 0 12px -3px #000;
   z-index: 5;
 }
