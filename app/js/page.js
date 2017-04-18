@@ -8,10 +8,10 @@ const path = require('path');
 const sizeOf = require('image-size');
 const strain = require('./strain.js');
 
-let centerFolds, dirContents, fileDir, fileName, filePath;
+let centerFolds, dirContents, fileDir, fileName, filePath, loadedImages;
 
 // Function variables
-let pageTurn, singlePage, defaults;
+let defaults, pageTurn, singlePage;
 
 const viewOne = document.getElementById('viewImgOne');
 const viewTwo = document.getElementById('viewImgTwo');
@@ -52,7 +52,7 @@ exports.load = (file) => {
   }
 
   // Preloads each image file for a smoother experience
-  let loadedImages = [];
+  loadedImages = [];
   for (let i = 0; i < dirContents.length; i++) {
     let img = new Image();
     let imgSrc = path.join(fileDir, encodeURIComponent(dirContents[i]));
