@@ -562,7 +562,7 @@ button#trash {
   background: #148bb5;
   position: fixed;
   border-radius: 50%;
-  opacity: 0.5;
+  opacity: 0.85;
   box-shadow: 0 0 12px -3px #000;
   z-index: 5;
 }
