@@ -353,7 +353,7 @@ button#trash {
   display: none;
   border-bottom: 1px solid #000;
 }
-#mainLib .bookmark-percent {
+#mainLib .bmPercent {
   float: right;
   font-size: 11px;
   padding-right: 5px !important;

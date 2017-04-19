@@ -24,52 +24,35 @@ const finished = '';
 let libBuilder, folders;
 
 // Builds the library with proper HTML
-libBuilder = (directory, listID) => {
-  let files = fs.readdirSync(directory);
+libBuilder = (directory, array, listID) => {
   $('#libStatus').text(loading);
-  for (let i = 0; i < files.length; i++) {
-    let file = files[i];
+  for (let i = 0; i < array.length; i++) {
+    let file = array[i].name;
     let filePath = path.join(directory, file);
 
-    // Checks if file is a valid file type
-    let r = ['.cbr', '.cbz'].indexOf(path.extname(file).toLowerCase()) > -1;
-
     // Inserts file.loader() for files
-    if (fs.statSync(filePath).isFile() && r) {
+    if (fs.statSync(filePath).isFile()) {
       let fileTarget = dirFunction.encode(filePath);
       if (process.platform == 'win32') { // Converts win32 paths to HTML compatible paths
         fileTarget = fileTarget.replace(/\\/g, '/');
       }
       $(`#${listID}`).append(
-        `<li class="file">
-          <a href="#" onclick="file.loader('${fileTarget}')">
-            <i class="fa fa-file" aria-hidden="true"></i>
-            ${file} ${bookmark.percent(file)}
-          </a>
-        </li>`
+        `<li class="file"><a href="#" onclick="file.loader('${fileTarget}')"><i class="fa fa-file" aria-hidden="true"></i>${file} ${bookmark.percent(file)}</a></li>`
       );
 
     // Deep scans interior folders
     } else if (fs.statSync(filePath).isDirectory()) {
       let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]|\./g, ''); // Removes potentially damaging characters for app
       $(`#${listID}`).append(
-        `<li class="folder" data-id='${newListID}' data-directory='${filePath}'>
-          <span>
-            <i class="fa fa-folder" aria-hidden="true"></i>
-            <i class="fa fa-caret-down rotate" aria-hidden="true"></i>
-            ${file}
-          </span>
-          <ul id=${newListID}></ul>
-        </li>`
+        `<li class="folder"><span><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-caret-down rotate" aria-hidden="true"></i>${file}</span><ul id=${newListID}>`
       );
-      // folders(filePath, newListID);
+      libBuilder(filePath, array[i].children, newListID);
+      $(`#${listID}`).append('</ul></li>');
     } else {
       // Do Nothing
     }
   }
-
   $('#libStatus').text(finished);
-  folders(directory, listID);
 };
 
 // Dialog to open up directory
@@ -83,33 +66,33 @@ exports.openDir = () => {
     if (fileNames === undefined) return;
 
     let obj = {'library': fileNames[0]};
-    let dirFiles = dirTree(fileNames[0], ['.cbr', '.cbz']);
+    let dirArray = dirTree(fileNames[0], ['.cbr', '.cbz']);
 
-    jsonfile.writeFileSync(comics, dirFiles, {'spaces': 2});
+    jsonfile.writeFileSync(comics, dirArray, {'spaces': 2});
     jsonfile.writeFileSync(config, obj);
     $('#ulLib li, #ulLib ul').remove();
-    libBuilder(fileNames[0], 'ulLib');
+    libBuilder(fileNames[0], dirArray.children, 'ulLib');
+    folders();
   });
 };
 
 // Exported version of libBuilder()
 exports.builder = () => {
   let configJSON = jsonfile.readFileSync(config);
-  let library = configJSON.library;
+  let dirArray = dirTree(configJSON.library, ['.cbr', '.cbz']);
   $('#ulLib li, #ulLib ul').remove();
-  libBuilder(library, 'ulLib');
-  folders(library, 'ulLib');
+  libBuilder(configJSON.library, dirArray.children, 'ulLib');
+  folders();
 };
 
 // Loads library on program start
 exports.onLoad = () => {
   if (isThere(config)) {
     let configJSON = jsonfile.readFileSync(config);
-    let library = configJSON.library || undefined;
-    if (library !== undefined) {
-      let dirFiles = dirTree(library, ['.cbr', '.cbz']);
-      if (dirFiles !== null) {
-        libBuilder(library, 'ulLib');
+    if (configJSON.library !== undefined) {
+      let dirArray = dirTree(configJSON.library, ['.cbr', '.cbz']);
+      if (dirArray !== null) {
+        libBuilder(configJSON.library, dirArray.children, 'ulLib');
       } else {
         $('#libStatus').append(libError);
       }
@@ -121,18 +104,13 @@ exports.onLoad = () => {
     fs.writeFileSync(config, '{}');
     $('#libStatus').append(defaults);
   }
+  folders();
 };
 
-folders = (directory, ID) => { // Toggle for folders in MainLib
-  let folders = document.querySelectorAll(`#${ID} .folder`);
+folders = () => { // Toggle for folders in MainLib
+  let folders = document.querySelectorAll('.folder');
   for (let i = 0; i < folders.length; i++) {
-    let newID = folders[i].dataset.id;
-    let newDirectory = folders[i].dataset.directory;
     folders[i].querySelector('span').addEventListener('click', function() {
-      if ($(`#${newID}`).children().length == 0) {
-        console.log(`Building library for #${newID}`);
-        libBuilder(newDirectory, newID);
-      }
       let _ul = $(this).next('ul');
       if (_ul.is(':animated')) return;
       $(this).children('.fa-caret-down').toggleClass('rotate');

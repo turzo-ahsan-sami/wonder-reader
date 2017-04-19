@@ -65,11 +65,11 @@ exports.percent = (fileName) => {
     obj = jsonfile.readFileSync(bookmark);
     if (obj[fileName]) {
       let percent = (obj[fileName].currentIndex / obj[fileName].fullIndex) * 100;
-      return `<span class="bookmark-percent ${spanClass}">${percent.toFixed(0)}%</span>`;
-    } else { return `<span class="bookmark-percent ${spanClass}">0%</span>`; }
+      return `<span class="bmPercent ${spanClass}">${percent.toFixed(0)}%</span>`;
+    } else { return `<span class="bmPercent ${spanClass}">0%</span>`; }
   } else {
     obj = {};
     jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
-    return `<span class="bookmark-percent ${spanClass}">0%</span>`;
+    return `<span class="bmPercent ${spanClass}">0%</span>`;
   }
 };
