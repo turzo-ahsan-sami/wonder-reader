@@ -3,7 +3,8 @@
 const path = require('path');
 const fs = require('fs');
 
-const imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
+// Allowable File Types
+const imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
 
 // Returns a path of the extracted comic up until the first image file appears
 exports.merge = (directory) => {
@@ -32,23 +33,29 @@ exports.merge = (directory) => {
   return directory;
 };
 
-// Splits a path, encodes each index, and merges it all for a URI compatible file path
+// Splits a path, encodes each index,
+// and merges it all for a URI compatible file path.
 exports.encode = (oldPath) => {
   let newPath = '';
   let tempPath = oldPath.split(path.sep); // Breaks path into array
 
   if (process.platform !== 'win32') {
-    for (let j = 0; j < tempPath.length; j++) { // Encodes each folder, then merging it all together
+    // Encodes each folder, then merging it all together
+    for (let j = 0; j < tempPath.length; j++) {
       newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
     }
     newPath = `/${newPath}`; // To set root folder
-    newPath = newPath.replace(/\'/g, '\\\''); // Fixes err with the character \' 
+    newPath = newPath.replace(/\'/g, '\\\''); // Fixes err with the character \'
   } else {
     let c = tempPath[0]; // Saves letter drive information
-    for (let j = 1; j < tempPath.length; j++) { // Encodes each folder, then merging it all together
+
+    // Encodes each folder, then merging it all together
+    for (let j = 1; j < tempPath.length; j++) {
       newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
     }
-    newPath = path.join(c, newPath); //returns proper path :: c:\path\to\file.cbz
+
+    newPath = path.join(c, newPath);
+    //returns proper path :: c:\path\to\file.cbz
   }
   return newPath;
 };

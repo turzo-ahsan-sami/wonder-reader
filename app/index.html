@@ -20,35 +20,53 @@
     </div>
     <ul class="navigation">
       <li>
-        <button id="column" data-val="2" disabled><i class="fa fa-columns"></i></button>
+        <button id="column" data-val="2" disabled>
+          <i class="fa fa-columns"></i>
+        </button>
       </li>
       <li>
-        <button id="prevComic" disabled><i class="fa fa-angle-double-left"></i></button>
+        <button id="prevComic" disabled>
+          <i class="fa fa-angle-double-left"></i>
+        </button>
       </li>
       <li>
-        <button id="pageLeft" disabled><i class="fa fa-angle-left"></i></button>
+        <button id="pageLeft" disabled>
+          <i class="fa fa-angle-left"></i>
+        </button>
       </li>
       <li>
-        <button id="pageRight" disabled><i class="fa fa-angle-right"></i></button>
+        <button id="pageRight" disabled>
+          <i class="fa fa-angle-right"></i>
+        </button>
       </li>
       <li>
-        <button id="nextComic" disabled><i class="fa fa-angle-double-right"></i></button>
+        <button id="nextComic" disabled>
+          <i class="fa fa-angle-double-right"></i>
+        </button>
       </li>
       <li>
-        <button id="openFile"><i class="fa fa-folder-open-o"></i></button>
+        <button id="openFile">
+          <i class="fa fa-folder-open-o"></i>
+        </button>
       </li>
       <li>
-        <button id="options"><i class="fa fa-cog"></i></button>
+        <button id="options">
+          <i class="fa fa-cog"></i>
+        </button>
       </li>
       <li>
-        <button id="trash"><i class="fa fa-trash-o"></i></button>
+        <button id="trash">
+          <i class="fa fa-trash-o"></i>
+        </button>
       </li>
     </ul>
   </div>
   <div class="library shift-left" id="sideLib">
     <h1>Series</h1>
     <ul id="dirLib" class="directory"></ul>
-    <button id="libSlider"><i class="fa fa-caret-right"></i></button>
+    <button id="libSlider">
+      <i class="fa fa-caret-right"></i>
+    </button>
   </div>
   <!-- Options Window -->
   <div class="optWindow" id="optWindow">
@@ -58,7 +76,9 @@
       <label for="optBrightness">Brightness</label>
       <input type="range" min="0.1" max="5" value="1" step="0.1" id="optBrightnessRange" for="optBrightnessText" name="optBrightnessRange" data-default="1" data-style="brightness" />
       <output type="text" for="optBrightnessRange" id="optBrightnessText">1</output>
-      <button id="optBrightnessButton" data-style="brightness"><i class="fa fa-undo" aria-hidden="true"></i></button>
+      <button id="optBrightnessButton" data-style="brightness">
+        <i class="fa fa-undo" aria-hidden="true"></i>
+      </button>
     </div>
 
     <!-- Contrast! -->
@@ -66,7 +86,9 @@
       <label for="optContrast">Contrast</label>
       <input type="range" min="0.1" max="5" value="1" step="0.1" id="optContrastRange" for="optContrastText" name="optContrastRange" data-default="1" data-style="contrast" />
       <output type="text" for="optContrastRange" id="optContrastText">1</output>
-      <button id="optContrastButton" data-style="contrast"><i class="fa fa-undo" aria-hidden="true"></i></button>
+      <button id="optContrastButton" data-style="contrast">
+        <i class="fa fa-undo" aria-hidden="true"></i>
+      </button>
     </div>
 
     <!-- Grayscale! -->
@@ -74,7 +96,9 @@
       <label for="optGrayscale">Grayscale</label>
       <input type="range" min="0" max="1" value="0" step="0.1" id="optGrayscaleRange" for="optGrayscaleText" name="optGrayscaleRange" data-default="0" data-style="grayscale" />
       <output type="text" for="optGrayscaleRange" id="optGrayscaleText">0</output>
-      <button id="optGrayscaleButton" data-style="grayscale"><i class="fa fa-undo" aria-hidden="true"></i></button>
+      <button id="optGrayscaleButton" data-style="grayscale">
+        <i class="fa fa-undo" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 
@@ -83,7 +107,9 @@
     <div class="mainLib" id="mainLib">
       <div class="libHeader" id="libHeader">
         <h1>Library</h1>
-        <button id="openDirectory"><i class="fa fa-search"></i></button>
+        <button id="openDirectory">
+          <i class="fa fa-search"></i>
+        </button>
         <span id="libStatus"></span>
       </div>
       <div class="libList" id="libList">

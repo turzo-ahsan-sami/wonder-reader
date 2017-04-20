@@ -27,12 +27,13 @@ exports.load = (fileName) => {
   filePath = path.dirname(fileName);
   dirContents = fs.readdirSync(filePath);
 
-  comics = dirContents.filter(function (x, i) { // Cleans out folders and non ['cbr', 'cbz'] files
-    return fs.statSync(path.join(filePath, dirContents[i])).isFile() &&
-    ['.cbr', '.cbz'].indexOf(path.extname(dirContents[i]).toLowerCase()) > -1;
+  // Cleans out folders and non ['cbr', 'cbz'] files
+  comics = dirContents.filter(function (x, i) {
+    return fs.statSync(path.join(filePath, dirContents[i])).isFile() && ['.cbr', '.cbz'].indexOf(path.extname(dirContents[i]).toLowerCase()) > -1;
   });
 
-  fileIndex = comics.indexOf(baseName); // Gets index position of file inside directory array
+  // Gets index position of file inside directory array
+  fileIndex = comics.indexOf(baseName);
 
   if (comics.length > 1) {
     if (fileIndex <= 0) { // If loaded comic is first comic in directory
