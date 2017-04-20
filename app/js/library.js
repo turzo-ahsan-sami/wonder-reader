@@ -37,7 +37,9 @@ libBuilder = (directory, listID) => {
     // Inserts file.loader() for files
     if (fs.statSync(filePath).isFile() && r) {
       let fileTarget = dirFunction.encode(filePath);
-      if (process.platform == 'win32') { // Converts win32 paths to HTML compatible paths
+      
+      // Converts win32 paths to HTML compatible paths
+      if (process.platform == 'win32') {
         fileTarget = fileTarget.replace(/\\/g, '/');
       }
       $(`#${listID}`).append(
@@ -62,7 +64,6 @@ libBuilder = (directory, listID) => {
           <ul id=${newListID}></ul>
         </li>`
       );
-      // folders(filePath, newListID);
     } else {
       // Do Nothing
     }
@@ -98,7 +99,6 @@ exports.builder = () => {
   let library = configJSON.library;
   $('#ulLib li, #ulLib ul').remove();
   libBuilder(library, 'ulLib');
-  folders(library, 'ulLib');
 };
 
 // Loads library on program start
@@ -130,7 +130,7 @@ folders = (directory, ID) => { // Toggle for folders in MainLib
     let newDirectory = folders[i].dataset.directory;
     folders[i].querySelector('span').addEventListener('click', function() {
       if ($(`#${newID}`).children().length == 0) {
-        console.log(`Building library for #${newID}`);
+        // console.log(`Building library for #${newID}`);
         libBuilder(newDirectory, newID);
       }
       let _ul = $(this).next('ul');
