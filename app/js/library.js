@@ -26,6 +26,14 @@ let libBuilder, folders;
 // Builds the library with proper HTML
 libBuilder = (directory, listID) => {
   let files = fs.readdirSync(directory);
+  files.sort(function(A, B) { // Sorts arrays by the Alphabet
+    let a=A.toLowerCase(), b=B.toLowerCase();
+    if (a < b) //sort string ascending
+      return -1;
+    if (a > b)
+      return 1;
+    return 0; //default return value (no sorting)
+  });
   $('#libStatus').text(loading);
   for (let i = 0; i < files.length; i++) {
     let file = files[i];
@@ -37,7 +45,7 @@ libBuilder = (directory, listID) => {
     // Inserts file.loader() for files
     if (fs.statSync(filePath).isFile() && r) {
       let fileTarget = dirFunction.encode(filePath);
-      
+
       // Converts win32 paths to HTML compatible paths
       if (process.platform == 'win32') {
         fileTarget = fileTarget.replace(/\\/g, '/');
@@ -52,7 +60,7 @@ libBuilder = (directory, listID) => {
       );
 
     // Deep scans interior folders
-    } else if (fs.statSync(filePath).isDirectory()) {
+    } else if (fs.statSync(filePath).isDirectory() && file.charAt(0) != '.') {
       let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]|\./g, ''); // Removes potentially damaging characters for app
       $(`#${listID}`).append(
         `<li class="folder" data-id='${newListID}' data-directory='${filePath}'>
@@ -130,7 +138,6 @@ folders = (directory, ID) => { // Toggle for folders in MainLib
     let newDirectory = folders[i].dataset.directory;
     folders[i].querySelector('span').addEventListener('click', function() {
       if ($(`#${newID}`).children().length == 0) {
-        // console.log(`Building library for #${newID}`);
         libBuilder(newDirectory, newID);
       }
       let _ul = $(this).next('ul');
