@@ -25,6 +25,7 @@ let libBuilder, folders;
 
 // Builds the library with proper HTML
 libBuilder = (directory, listID) => {
+  console.log(directory);
   let files = fs.readdirSync(directory);
   files.sort(function(A, B) { // Sorts arrays by the Alphabet
     let a=A.toLowerCase(), b=B.toLowerCase();
@@ -61,9 +62,11 @@ libBuilder = (directory, listID) => {
 
     // Deep scans interior folders
     } else if (fs.statSync(filePath).isDirectory() && file.charAt(0) != '.') {
-      let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]|\./g, ''); // Removes potentially damaging characters for app
+      // Removes potentially damaging characters for app
+      let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]|\./g, '');
+
       $(`#${listID}`).append(
-        `<li class="folder" data-id='${newListID}' data-directory='${filePath}'>
+        `<li class="folder" data-id='${newListID}' data-directory="${filePath}">
           <span>
             <i class="fa fa-folder" aria-hidden="true"></i>
             <i class="fa fa-caret-down rotate" aria-hidden="true"></i>
