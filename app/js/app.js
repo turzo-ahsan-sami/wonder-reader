@@ -2,6 +2,7 @@
 
 const $ = require('jquery'); // https://www.npmjs.com/package/jquery
 const clean = require('./js/clean.js');
+const config = require('./js/config.js');
 const file = require('./js/file.js');
 const library = require('./js/library.js');
 const page = require('./js/page.js');
@@ -259,3 +260,6 @@ for(let b = 0; b < buttons.length; b++) {
     text.value = range.dataset.default;
   });
 }
+
+// Loads Default Values;
+config.onStart();

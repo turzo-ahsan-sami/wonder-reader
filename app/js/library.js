@@ -2,17 +2,16 @@
 
 const $ = require('jquery');
 const bookmark = require('./bookmark.js');
+const config = require('./config.js');
 const {dialog} = require('electron').remote;
 const dirFunction = require('./directory.js');
 const dirTree = require('directory-tree'); // https://www.npmjs.com/package/directory-tree
 const fs = require('fs');
 const isThere = require('is-there');
 const jsonfile = require('jsonfile'); // https://www.npmjs.com/package/jsonfile
-const mkdirp = require('mkdirp');
 const os = require('os');
 const path = require('path');
 
-const config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
 const comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
 
 const defaults = 'The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.';
@@ -27,15 +26,9 @@ let libBuilder, folders;
 libBuilder = (directory, listID) => {
   console.log(directory);
   let files = fs.readdirSync(directory);
-  files.sort(function(A, B) { // Sorts arrays by the Alphabet
-    let a=A.toLowerCase(), b=B.toLowerCase();
-    if (a < b) //sort string ascending
-      return -1;
-    if (a > b)
-      return 1;
-    return 0; //default return value (no sorting)
-  });
   $('#libStatus').text(loading);
+
+  // `For` loop to create elements for the DOM
   for (let i = 0; i < files.length; i++) {
     let file = files[i];
     let filePath = path.join(directory, file);
@@ -45,15 +38,16 @@ libBuilder = (directory, listID) => {
 
     // Inserts file.loader() for files
     if (fs.statSync(filePath).isFile() && r) {
-      let fileTarget = dirFunction.encode(filePath);
+      file = path.basename(file, path.extname(file));
+      filePath = dirFunction.encode(filePath);
 
       // Converts win32 paths to HTML compatible paths
       if (process.platform == 'win32') {
-        fileTarget = fileTarget.replace(/\\/g, '/');
+        filePath = filePath.replace(/\\/g, '/');
       }
       $(`#${listID}`).append(
         `<li class="file">
-          <a href="#" onclick="file.loader('${fileTarget}')">
+          <a href="#" onclick="file.loader('${filePath}')">
             <i class="fa fa-file" aria-hidden="true"></i>
             ${file} ${bookmark.percent(file)}
           </a>
@@ -94,29 +88,25 @@ exports.openDir = () => {
   function (fileNames) {
     if (fileNames === undefined) return;
 
-    let obj = {'library': fileNames[0]};
     let dirFiles = dirTree(fileNames[0], ['.cbr', '.cbz']);
 
     jsonfile.writeFileSync(comics, dirFiles, {'spaces': 2});
-    jsonfile.writeFileSync(config, obj);
     $('#ulLib li, #ulLib ul').remove();
     libBuilder(fileNames[0], 'ulLib');
   });
 };
 
 // Exported version of libBuilder()
-exports.builder = () => {
-  let configJSON = jsonfile.readFileSync(config);
-  let library = configJSON.library;
+exports.builder = (filePath) => {
   $('#ulLib li, #ulLib ul').remove();
-  libBuilder(library, 'ulLib');
+  libBuilder(filePath, 'ulLib');
 };
 
 // Loads library on program start
 exports.onLoad = () => {
-  if (isThere(config)) {
-    let configJSON = jsonfile.readFileSync(config);
-    let library = configJSON.library || undefined;
+  const configFile = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
+  if (isThere(configFile)) {
+    let library = config.libPath();
     if (library !== undefined) {
       let dirFiles = dirTree(library, ['.cbr', '.cbz']);
       if (dirFiles !== null) {
@@ -128,8 +118,7 @@ exports.onLoad = () => {
       $('#libStatus').append(defaults);
     }
   } else {
-    mkdirp.sync(path.join(os.tmpdir(), 'wonderReader', 'json'));
-    fs.writeFileSync(config, '{}');
+    config.onStart();
     $('#libStatus').append(defaults);
   }
 };

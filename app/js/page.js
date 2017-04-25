@@ -3,6 +3,7 @@
 const $ = require('jquery');
 const bookmark = require('./bookmark.js');
 const center = require('./centerfold.js');
+const config = require('./config.js');
 const fs = require('fs');
 const path = require('path');
 const sizeOf = require('image-size');
@@ -137,8 +138,8 @@ singlePage = (fileDir, dirContents, index) => { // For Single page viewing and s
 };
 
 defaults = (fileDir, dirContents, index) => {
+  console.log(column.dataset.val);
   let val = Number(column.dataset.val);
-
   if (Math.abs(val) === 2) {
     if (index >= dirContents.length - 1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1) > -1) {
       singlePage(fileDir, dirContents, index);
@@ -194,4 +195,5 @@ exports.spread = () => {
     column.dataset.val = 1;
     singlePage(fileDir, dirContents, index);
   }
+  config.page(column.dataset.val);
 };
