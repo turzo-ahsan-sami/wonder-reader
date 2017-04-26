@@ -48,7 +48,7 @@ handleError = (evt) => {
 window.addEventListener('error', handleError, true);
 
 // Builds library on load
-library.onLoad();
+// library.onLoad();
 
 // Updates title with version
 title.onLoad();

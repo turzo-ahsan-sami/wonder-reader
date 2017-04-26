@@ -5,16 +5,10 @@ const bookmark = require('./bookmark.js');
 const config = require('./config.js');
 const {dialog} = require('electron').remote;
 const dirFunction = require('./directory.js');
-const dirTree = require('directory-tree'); // https://www.npmjs.com/package/directory-tree
 const fs = require('fs');
 const isThere = require('is-there');
-const jsonfile = require('jsonfile'); // https://www.npmjs.com/package/jsonfile
-const os = require('os');
 const path = require('path');
 
-const comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
-
-const defaults = 'The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.';
 const libError = 'Library not found. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.';
 const loading = 'Your library is loading';
 const finished = '';
@@ -24,7 +18,12 @@ let libBuilder, folders;
 
 // Builds the library with proper HTML
 libBuilder = (directory, listID) => {
-  console.log(directory);
+  if(!isThere(directory)) {
+    console.error(`${directory} not found.`);
+    $('#libStatus').text(libError);
+    return;
+  }
+  config.libSave(directory);
   let files = fs.readdirSync(directory);
   $('#libStatus').text(loading);
 
@@ -88,9 +87,7 @@ exports.openDir = () => {
   function (fileNames) {
     if (fileNames === undefined) return;
 
-    let dirFiles = dirTree(fileNames[0], ['.cbr', '.cbz']);
-
-    jsonfile.writeFileSync(comics, dirFiles, {'spaces': 2});
+    config.dbBuild(fileNames[0]);
     $('#ulLib li, #ulLib ul').remove();
     libBuilder(fileNames[0], 'ulLib');
   });
@@ -100,27 +97,6 @@ exports.openDir = () => {
 exports.builder = (filePath) => {
   $('#ulLib li, #ulLib ul').remove();
   libBuilder(filePath, 'ulLib');
-};
-
-// Loads library on program start
-exports.onLoad = () => {
-  const configFile = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
-  if (isThere(configFile)) {
-    let library = config.libPath();
-    if (library !== undefined) {
-      let dirFiles = dirTree(library, ['.cbr', '.cbz']);
-      if (dirFiles !== null) {
-        libBuilder(library, 'ulLib');
-      } else {
-        $('#libStatus').append(libError);
-      }
-    } else {
-      $('#libStatus').append(defaults);
-    }
-  } else {
-    config.onStart();
-    $('#libStatus').append(defaults);
-  }
 };
 
 folders = (directory, ID) => { // Toggle for folders in MainLib

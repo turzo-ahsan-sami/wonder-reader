@@ -138,7 +138,6 @@ singlePage = (fileDir, dirContents, index) => { // For Single page viewing and s
 };
 
 defaults = (fileDir, dirContents, index) => {
-  console.log(column.dataset.val);
   let val = Number(column.dataset.val);
   if (Math.abs(val) === 2) {
     if (index >= dirContents.length - 1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1) > -1) {
