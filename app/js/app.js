@@ -55,7 +55,7 @@ title.onLoad();
 
 // Syncs dial to output box
 zoomTextUpdate = (val) => {
-  document.querySelector('#zoomText').value = val;
+  document.getElementById('zoomText').value = val;
 };
 
 objPositioner = () => {
@@ -240,7 +240,7 @@ for (let r = 0; r < options.length; r++) {
     let style = options[r].dataset.style;
     display[style] = `${style}(${val})`;
     inner.style.webkitFilter = display.style();
-    let text = document.querySelector(`#opt${style.capitalize()}Text`);
+    let text = document.getElementById(`opt${style.capitalize()}Text`);
     text.value = val;
   });
 }
@@ -251,8 +251,8 @@ for(let b = 0; b < buttons.length; b++) {
   let style = buttons[b].dataset.style;
   buttons[b].addEventListener('click', function() {
     let c = style.capitalize();
-    let range = document.querySelector(`#opt${c}Range`);
-    let text = document.querySelector(`#opt${c}Text`);
+    let range = document.getElementById(`opt${c}Range`);
+    let text = document.getElementById(`opt${c}Text`);
     let d = range.dataset.default;
     display[style] = `${style}(${d})`;
     inner.style.webkitFilter = display.style();

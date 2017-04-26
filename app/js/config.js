@@ -8,7 +8,7 @@ const path = require('path');
 
 const comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
 const config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
-const column = document.querySelector('#column');
+const column = document.getElementById('column');
 // Function variables;
 let dbBuild, libSave, onStart, page;
 
@@ -43,7 +43,7 @@ page = (val) => {
 };
 
 onStart = () => {
-  let libStatus= document.querySelector('#libStatus');
+  let libStatus= document.getElementById('libStatus');
   if(!isThere(config)) { // Creates default template for a new config file
     let obj = {};
     obj.library = '';
