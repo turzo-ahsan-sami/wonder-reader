@@ -29,9 +29,9 @@ $(document).keydown(function (event) {
     // Do nothing when focused on zoom input
   } else if ($('#viewer').hasClass('active')) {
     // Check if file is loaded. See file.js: postExtract()
-    if (event.which === 37) { // left key
+    if (event.which === 37 || event.which === 65) { // left key
       page.Left();
-    } else if (event.which === 39) { // right key
+    } else if (event.which === 39 || event.which === 68) { // right key
       page.Right();
     }
   }
@@ -46,9 +46,6 @@ handleError = (evt) => {
   }
 };
 window.addEventListener('error', handleError, true);
-
-// Builds library on load
-// library.onLoad();
 
 // Updates title with version
 title.onLoad();

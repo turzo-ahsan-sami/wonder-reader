@@ -14,7 +14,7 @@ const loading = 'Your library is loading';
 const finished = '';
 
 // Function variables
-let libBuilder, folders;
+let build, libBuilder, folders;
 
 // Builds the library with proper HTML
 libBuilder = (directory, listID) => {
@@ -23,7 +23,7 @@ libBuilder = (directory, listID) => {
     $('#libStatus').text(libError);
     return;
   }
-  config.libSave(directory);
+
   let files = fs.readdirSync(directory);
   $('#libStatus').text(loading);
 
@@ -87,14 +87,18 @@ exports.openDir = () => {
   function (fileNames) {
     if (fileNames === undefined) return;
 
-    config.dbBuild(fileNames[0]);
-    $('#ulLib li, #ulLib ul').remove();
-    libBuilder(fileNames[0], 'ulLib');
+    build(fileNames[0]);
   });
 };
 
 // Exported version of libBuilder()
 exports.builder = (filePath) => {
+  build(filePath);
+};
+
+build = (filePath) => {
+  config.libSave(filePath);
+  config.dbBuild(filePath);
   $('#ulLib li, #ulLib ul').remove();
   libBuilder(filePath, 'ulLib');
 };
