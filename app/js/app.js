@@ -3,10 +3,14 @@
 const $ = require('jquery'); // https://www.npmjs.com/package/jquery
 const clean = require('./js/clean.js');
 const config = require('./js/config.js');
+const EventEmitter = require('events');
 const file = require('./js/file.js');
 const library = require('./js/library.js');
 const page = require('./js/page.js');
 const title = require('./js/title.js');
+
+class MyEmitter extends EventEmitter {}
+const zoomEvent = new MyEmitter();
 
 // Variables
 const imgOne = document.getElementById('viewImgOne');
@@ -122,9 +126,43 @@ pageZoom = () => {
   }
   viewer.scrollTop = inner.clientHeight * cPXR - viewer.clientHeight / 2;
   viewer.scrollLeft = inner.clientWidth * cPYR - viewer.clientWidth / 2;
-  let val = document.getElementById('zoomSlider').value;
+  let val = zoomSlide.value;
   zoomTextUpdate(val);
+  zoomEvent.emit('save');
 };
+
+// Returns a function, that, as long as it continues to be invoked, will not
+// be triggered. The function will be called after it stops being called for
+// N milliseconds. If `immediate` is passed, trigger the function on the
+// leading edge, instead of the trailing.
+let debounce = (func, wait, immediate) => {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+};
+
+let zoomSave = debounce(function() {
+  let val = zoomSlide.value;
+  config.zoomSave(val);
+  console.log(val);
+}, 250);
+
+// Saves zoom levels with debounce
+zoomEvent.on('save', zoomSave);
+
+// Zoom on Start Up
+zoomSlide.value = config.zoomReturn();
+inner.style.width = `${config.zoomReturn()}%`;
+pageZoom();
 
 // Library Windows collapsing
 libSlider = () => {

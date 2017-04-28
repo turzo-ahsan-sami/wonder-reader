@@ -10,7 +10,7 @@ const comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
 const config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
 const column = document.getElementById('column');
 // Function variables;
-let dbBuild, libSave, onStart, page;
+let configSave, dbBuild, libSave, onStart, pageViewSave, zoomReturn, zoomSave;
 
 // Builds a database for comics
 dbBuild = (filePath) => {
@@ -21,25 +21,23 @@ dbBuild = (filePath) => {
   });
 };
 
-libSave = (filePath) => {
+configSave = (type, val) => {
   jsonfile.readFile(config, function(err, obj) {
     if (err) console.error(err);
-    obj.library = filePath;
+    obj[`${type}`] = val;
     jsonfile.writeFile(config, obj, function(err) {
       if (err) console.error(err);
-      console.log(`${filePath} saved.`);
+      // console.dir(obj);
     });
   });
 };
 
-page = (val) => {
-  jsonfile.readFile(config, function(err, obj) {
-    if (err) console.error(err);
-    obj.page = val;
-    jsonfile.writeFile(config, obj, function(err) {
-      if (err) console.error(err);
-    });
-  });
+libSave = (val) => {
+  configSave('library', val);
+};
+
+pageViewSave = (val) => {
+  configSave('page', val);
 };
 
 onStart = () => {
@@ -73,6 +71,20 @@ onStart = () => {
   }
 };
 
+zoomReturn = () => {
+  var obj = jsonfile.readFileSync(config);
+  return obj.zoom;
+};
+
+zoomSave = (val) => {
+  console.log(`config.zoom = ${val}`);
+  var c = debounce(function(val) {
+    configSave('zoom', val);
+    console.log(val);
+  }, 250);
+  c(val);
+};
+
 exports.dbBuild = (filePath) => {
   dbBuild(filePath);
 };
@@ -90,6 +102,14 @@ exports.onStart = () => {
   onStart();
 };
 
-exports.page = (val) => {
-  page(val);
+exports.pageViewSave = (val) => {
+  pageViewSave(val);
+};
+
+exports.zoomReturn = () => { // for future exports
+  return zoomReturn();
+};
+
+exports.zoomSave = (val) => {
+  zoomSave(val);
 };

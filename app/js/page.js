@@ -194,5 +194,5 @@ exports.spread = () => {
     column.dataset.val = 1;
     singlePage(fileDir, dirContents, index);
   }
-  config.page(column.dataset.val);
+  config.pageViewSave(column.dataset.val);
 };

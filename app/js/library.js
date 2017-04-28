@@ -9,6 +9,8 @@ const fs = require('fs');
 const isThere = require('is-there');
 const path = require('path');
 
+const libStatus = document.getElementById('libStatus');
+
 const libError = 'Library not found. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.';
 const loading = 'Your library is loading';
 const finished = '';
@@ -20,12 +22,12 @@ let build, libBuilder, folders;
 libBuilder = (directory, listID) => {
   if(!isThere(directory)) {
     console.error(`${directory} not found.`);
-    $('#libStatus').text(libError);
+    libStatus.innerHTML = libError;
     return;
   }
 
   let files = fs.readdirSync(directory);
-  $('#libStatus').text(loading);
+  libStatus.innerHTML = loading;
 
   // `For` loop to create elements for the DOM
   for (let i = 0; i < files.length; i++) {
@@ -73,7 +75,7 @@ libBuilder = (directory, listID) => {
     }
   }
 
-  $('#libStatus').text(finished);
+  libStatus.innerHTML = finished;
   folders(directory, listID);
 };
 
