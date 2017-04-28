@@ -108,7 +108,7 @@ postExtract = (fileName, tempFolder, dirContents) => {
   page.load(fileName);
   enable('pageLeft');
   enable('pageRight');
-  enable('column');
+  // enable('column');
   $('#viewer').addClass('active');
   title.onFileLoad(fileName);
   miniLib.load(fileName);

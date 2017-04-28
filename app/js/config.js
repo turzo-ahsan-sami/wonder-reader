@@ -1,3 +1,4 @@
+const $ = require('jquery');
 const dirTree = require('directory-tree');
 const isThere = require('is-there');
 const jsonfile = require('jsonfile');
@@ -60,6 +61,12 @@ onStart = () => {
     jsonfile.readFile(config, function(err, obj) {
       if (err) console.error(err);
       column.dataset.val = obj.page || 2;
+      console.log(column.dataset.val);
+      if (column.dataset.val == 1) {
+        $('#column').addClass('disabled');
+      } else {
+        $('#column').removeClass('disabled');
+      }
       console.log(obj.library);
       if(isThere(obj.library)) {
         library.builder(obj.library);
