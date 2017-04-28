@@ -20,6 +20,24 @@ const column = document.getElementById('column');
 const viewer = document.getElementById('viewer');
 const clearImg = path.join('.', 'images', 'FFFFFF-0.0.png');
 
+exports.onStart = () => {
+  let r = config.pageReturn;
+  switch (r) {
+  case 1:
+    $('#column').addClass('disabled');
+    column.dataset.val = 1;
+    break;
+  case 2:
+    $('#column').removeClass('disabled');
+    column.dataset.val = 2;
+    break;
+  default:
+    $('#column').removeClass('disabled');
+    column.dataset.val = 2;
+    break;
+  }
+};
+
 exports.load = (file) => {
   let index, continueIndex, val, r;
 

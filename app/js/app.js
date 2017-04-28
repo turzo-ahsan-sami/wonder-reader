@@ -3,6 +3,7 @@
 const $ = require('jquery'); // https://www.npmjs.com/package/jquery
 const clean = require('./js/clean.js');
 const config = require('./js/config.js');
+const debounce = require('debounce'); // https://www.npmjs.com/package/debounce
 const EventEmitter = require('events');
 const file = require('./js/file.js');
 const library = require('./js/library.js');
@@ -131,29 +132,9 @@ pageZoom = () => {
   zoomEvent.emit('save');
 };
 
-// Returns a function, that, as long as it continues to be invoked, will not
-// be triggered. The function will be called after it stops being called for
-// N milliseconds. If `immediate` is passed, trigger the function on the
-// leading edge, instead of the trailing.
-let debounce = (func, wait, immediate) => {
-  var timeout;
-  return function() {
-    var context = this, args = arguments;
-    var later = function() {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    };
-    var callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) func.apply(context, args);
-  };
-};
-
 let zoomSave = debounce(function() {
   let val = zoomSlide.value;
   config.zoomSave(val);
-  console.log(val);
 }, 250);
 
 // Saves zoom levels with debounce
@@ -298,3 +279,4 @@ for(let b = 0; b < buttons.length; b++) {
 
 // Loads Default Values;
 config.onStart();
+page.onStart();

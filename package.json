@@ -21,6 +21,7 @@
   "dependencies": {
     "buffers": "^0.1.1",
     "cbr": "1.0.3",
+    "debounce": "^1.0.2",
     "directory-tree": "1.1.0",
     "electron-settings": "3.0.14",
     "file-exists": "^2.0.0",

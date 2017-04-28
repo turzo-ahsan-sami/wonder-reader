@@ -9,6 +9,7 @@ const path = require('path');
 const comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
 const config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
 const column = document.getElementById('column');
+
 // Function variables;
 let configSave, dbBuild, libSave, onStart, pageViewSave, zoomReturn, zoomSave;
 
@@ -27,7 +28,6 @@ configSave = (type, val) => {
     obj[`${type}`] = val;
     jsonfile.writeFile(config, obj, function(err) {
       if (err) console.error(err);
-      // console.dir(obj);
     });
   });
 };
@@ -77,12 +77,7 @@ zoomReturn = () => {
 };
 
 zoomSave = (val) => {
-  console.log(`config.zoom = ${val}`);
-  var c = debounce(function(val) {
-    configSave('zoom', val);
-    console.log(val);
-  }, 250);
-  c(val);
+  configSave('zoom', val);
 };
 
 exports.dbBuild = (filePath) => {
@@ -100,6 +95,11 @@ exports.libSave = (filePath) => {
 
 exports.onStart = () => {
   onStart();
+};
+
+exports.pageReturn = () => {
+  let obj = jsonfile.readFileSync(config);
+  return obj.page || undefined;
 };
 
 exports.pageViewSave = (val) => {
