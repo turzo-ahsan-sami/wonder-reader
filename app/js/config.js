@@ -1,4 +1,3 @@
-const $ = require('jquery');
 const dirTree = require('directory-tree');
 const isThere = require('is-there');
 const jsonfile = require('jsonfile');
@@ -12,7 +11,7 @@ const config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
 const column = document.getElementById('column');
 
 // Function variables;
-let configSave, dbBuild, libSave, onStart, pageViewSave, zoomReturn, zoomSave;
+let configSave, dbBuild, onStart;
 
 // Builds a database for comics
 dbBuild = (filePath) => {
@@ -33,22 +32,36 @@ configSave = (type, val) => {
   });
 };
 
-libSave = (val) => {
-  configSave('library', val);
-};
-
-pageViewSave = (val) => {
-  configSave('page', val);
-};
-
 onStart = () => {
   let libStatus= document.getElementById('libStatus');
-  if(!isThere(config)) { // Creates default template for a new config file
-    let obj = {};
+  let obj = {};
+  switch (isThere(config)) {
+  case true:
+    jsonfile.readFile(config, function(err, obj) {
+      if (err) console.error(err);
+      column.dataset.val = obj.page || 2;
+      console.log(column.dataset.val);
+      switch (Number(column.dataset.val)) {
+      case 1:
+        column.classList.add('disabled');
+        break;
+      default:
+        column.classList.remove('disabled');
+      }
+      switch (isThere(obj.library)) {
+      case true:
+        library.builder(obj.library);
+        break;
+      default:
+        libStatus.innerHTML = '<p>Library not found. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.</p>';
+        console.log('Library not found.');
+      }
+    });
+    break;
+  default:
     obj.library = '';
     obj.page = column.dataset.val;
     libStatus.innerHTML = '<p>The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.</p>';
-
     // creates a folder for config if none exist
     mkdirp(path.dirname(config), function(err) {
       if (err) console.error(err);
@@ -56,35 +69,7 @@ onStart = () => {
         if (err) console.error(err);
       });
     });
-
-  } else { // Loads library
-    jsonfile.readFile(config, function(err, obj) {
-      if (err) console.error(err);
-      column.dataset.val = obj.page || 2;
-      console.log(column.dataset.val);
-      if (column.dataset.val == 1) {
-        $('#column').addClass('disabled');
-      } else {
-        $('#column').removeClass('disabled');
-      }
-      console.log(obj.library);
-      if(isThere(obj.library)) {
-        library.builder(obj.library);
-      } else {
-        libStatus.innerHTML = '<p>Library not found. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.</p>';
-        console.log('Library not found.');
-      }
-    });
   }
-};
-
-zoomReturn = () => {
-  var obj = jsonfile.readFileSync(config);
-  return obj.zoom;
-};
-
-zoomSave = (val) => {
-  configSave('zoom', val);
 };
 
 exports.dbBuild = (filePath) => {
@@ -97,7 +82,7 @@ exports.library = () => {
 };
 
 exports.libSave = (filePath) => {
-  libSave(filePath);
+  configSave('library', filePath);
 };
 
 exports.onStart = () => {
@@ -106,17 +91,19 @@ exports.onStart = () => {
 
 exports.pageReturn = () => {
   let obj = jsonfile.readFileSync(config);
+  console.log(obj.page);
   return obj.page || undefined;
 };
 
 exports.pageViewSave = (val) => {
-  pageViewSave(val);
+  configSave('page', val);
 };
 
 exports.zoomReturn = () => { // for future exports
-  return zoomReturn();
+  var obj = jsonfile.readFileSync(config);
+  return obj.zoom || 100;
 };
 
 exports.zoomSave = (val) => {
-  zoomSave(val);
+  configSave('zoom', val);
 };

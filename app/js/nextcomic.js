@@ -52,7 +52,5 @@ exports.load = (fileName) => {
       enable('nextComic');
       enable('prevComic');
     }
-  } else {
-    // Do nothing
   }
 };

@@ -384,7 +384,7 @@ button#trash {
   color: rgba(255, 255, 255, 0.8);
   font-size: 14px;
   float: right;
-  padding: 10px;
+  padding: 0 10px;
 }
 #libStatus .code {
   border: 1px solid rgba(255, 255, 255, 0.8);

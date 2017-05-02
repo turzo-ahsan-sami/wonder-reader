@@ -58,7 +58,8 @@ libBuilder = (directory, listID) => {
     // Deep scans interior folders
     } else if (fs.statSync(filePath).isDirectory() && file.charAt(0) != '.') {
       // Removes potentially damaging characters for app
-      let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]|\./g, '');
+      let newListID = (`${listID}${file}`)
+        .replace(/\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]|\./g, '');
 
       $(`#${listID}`).append(
         `<li class="folder" data-id='${newListID}' data-directory="${filePath}">
@@ -70,8 +71,6 @@ libBuilder = (directory, listID) => {
           <ul id=${newListID}></ul>
         </li>`
       );
-    } else {
-      // Do Nothing
     }
   }
 
@@ -88,7 +87,6 @@ exports.openDir = () => {
   },
   function (fileNames) {
     if (fileNames === undefined) return;
-
     build(fileNames[0]);
   });
 };

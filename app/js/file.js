@@ -23,23 +23,28 @@ const title = require('./title.js');
 // Global variables
 let dirContents, fileName;
 
+const bgLoader = document.getElementById('bgLoader');
+const innerWindow = document.getElementById('innerWindow');
+const loader = document.getElementById('loader');
 const viewOne = document.getElementById('viewImgOne');
 const viewTwo = document.getElementById('viewImgTwo');
 const viewer = document.getElementById('viewer');
 
 // Functions variables
-let openFile, fileLoad, enable, postExtract, fileRouter, rarExtractor, rarLinux, zipExtractor, extractRouter, preLoad, postLoad;
+let openFile, fileLoad, enable, postExtract, fileRouter, rarExtractor, zipExtractor, extractRouter, preLoad, postLoad;
 
 preLoad = () => {
-  $('#loader').addClass('loader').removeClass('hidden');
-  $('#innerWindow').addClass('innerLoading');
-  $('#bgLoader').removeClass('hidden');
+  loader.classList.add('loader');
+  loader.classList.remove('hidden');
+  innerWindow.classList.add('innerLoading');
+  bgLoader.classList.remove('hidden');
 };
 
 postLoad = () => {
-  $('#innerWindow').removeClass('innerLoading');
-  $('#loader').addClass('hidden').removeClass('loader');
-  $('#bgLoader').addClass('hidden');
+  innerWindow.classList.remove('innerLoading');
+  loader.classList.add('hidden');
+  loader.classList.remove('loader');
+  bgLoader.classList.add('hidden');
 };
 
 // Dialog box to load the file
@@ -64,9 +69,9 @@ openFile = () => {
 fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   if (err) { console.error(err); }
   let fileComic, tempFolder, looper;
-  if (process.platform == 'win32') { // corrects a possible err with HTML loading
+  // corrects a possible err with HTML loading
+  if (process.platform == 'win32') {
     fileName = fileName.replace(/\//g, '\\');
-    // console.log(fileName);
   }
   if (['.cbr', '.cbz'].indexOf(path.extname(fileName).toLowerCase()) > -1) {
     fileComic = path.basename(fileName).replace(/#|!/g, '');
@@ -78,7 +83,8 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic);
   looper = 0;
 
-  if (isThere(tempFolder)) { // Checks for existing Directory
+  switch (isThere(tempFolder)) {
+  case true:
     tempFolder = dirFunction.merge(tempFolder);
     dirContents = fs.readdirSync(tempFolder);
     if (dirContents.length === 0) {
@@ -86,10 +92,12 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
     } else {
       postExtract(fileName, tempFolder, dirContents);
     }
-  } else { // If no Directory exists
+    break;
+  default:
     preLoad();
     mkdirp.sync(tempFolder, {'mode': '0777'});
     fileRouter(fileName, tempFolder, looper);
+    break;
   } // End Directory checker
 };
 
@@ -108,8 +116,7 @@ postExtract = (fileName, tempFolder, dirContents) => {
   page.load(fileName);
   enable('pageLeft');
   enable('pageRight');
-  // enable('column');
-  $('#viewer').addClass('active');
+  viewer.dataset.active = true;
   title.onFileLoad(fileName);
   miniLib.load(fileName);
   nextcomic.load(fileName);
@@ -125,24 +132,27 @@ exports.dialog = () => {
 
 exports.loader = (fileName) => {
   fileName = decodeURIComponent(fileName);
-  if (isThere(fileName)) {
+  switch (isThere(fileName)) {
+  case true:
     fileLoad(fileName);
-  } else {
+    break;
+  default:
     alert(`Missing or broken file: Could not open ${fileName}`);
+    break;
   }
 };
 
 // File Extractors
 fileRouter = (fileName, tempFolder, looper) => {
-  if (path.extname(fileName).toLowerCase() === '.cbr') {
-    if (process.platform === 'linux') { //
-      rarLinux(fileName, tempFolder, looper);
-    } else {
-      rarExtractor(fileName, tempFolder, looper);
-    }
-  } else if (path.extname(fileName).toLowerCase() === '.cbz') {
+  let extName = path.extname(fileName).toLowerCase();
+  switch (extName) {
+  case '.cbr':
+    rarExtractor(fileName, tempFolder, looper);
+    break;
+  case '.cbz':
     zipExtractor(fileName, tempFolder, looper);
-  } else {
+    break;
+  default:
     alert('Possible broken file?');
     postLoad();
   }
@@ -150,18 +160,18 @@ fileRouter = (fileName, tempFolder, looper) => {
 
 rarExtractor = (fileName, tempFolder, looper) => {
   console.log('Unrar extraction started.');
-  cbr(fileName, tempFolder, function (error) {
-    if (error) { console.error(error); }
-    extractRouter(fileName, tempFolder, looper);
-  });
-};
-
-rarLinux = (fileName, tempFolder, looper) => {
-  let rar = new Unrar(fileName);
-  rar.extract(tempFolder, null, function (err) {
-    if (err) { console.error(err); }
-    extractRouter(fileName, tempFolder, looper);
-  });
+  if (process.platform == 'linux') {
+    let rar = new Unrar(fileName);
+    rar.extract(tempFolder, null, function (err) {
+      if (err) { console.error(err); }
+      extractRouter(fileName, tempFolder, looper);
+    });
+  } else {
+    cbr(fileName, tempFolder, function (error) {
+      if (error) { console.error(error); }
+      extractRouter(fileName, tempFolder, looper);
+    });
+  }
 };
 
 zipExtractor = (fileName, tempFolder, looper) => {
@@ -177,27 +187,28 @@ zipExtractor = (fileName, tempFolder, looper) => {
 extractRouter = (fileName, tempFolder, looper) => {
   tempFolder = dirFunction.merge(tempFolder);
   dirContents = fs.readdirSync(tempFolder);
+  let extName = path.extname(fileName).toLowerCase();
 
-  if (dirContents.length === 0 && looper <= 3) {
+  switch(true) {
+  case (dirContents.length == 0 && looper <= 3):
     looper++;
-    if (path.extname(fileName).toLowerCase() === '.cbz') {
-      if (process.platform === 'linux') { //
-        rarLinux(fileName, tempFolder, looper);
-      } else {
-        rarExtractor(fileName, tempFolder, looper);
-      }
-    } else if (path.extname(fileName).toLowerCase() === '.cbr') {
+    switch(extName) {
+    case '.cbz':
+      rarExtractor(fileName, tempFolder, looper);
+      break;
+    case '.cbr':
       zipExtractor(fileName, tempFolder, looper);
-    } else {
+      break;
+    default:
       alert('Possible broken file?');
       postLoad();
-      return;
     }
-  } else if (looper > 3) {
+    break;
+  case (dirContents.length != 0 && looper > 3):
     alert('Possible broken file?');
     postLoad();
-    return;
-  } else {
+    break;
+  default:
     console.log('Extraction complete!');
     postLoad();
     postExtract(fileName, tempFolder, dirContents);

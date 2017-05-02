@@ -18,11 +18,12 @@ const imgOne = document.getElementById('viewImgOne');
 const imgTwo = document.getElementById('viewImgTwo');
 const inner = document.getElementById('innerWindow');
 const optWindow = document.getElementById('optWindow');
+const sideLib = document.getElementById('sideLib');
 const viewer = document.getElementById('viewer');
 const zoomSlide = document.getElementById('zoomSlider');
 
 // Function Variables
-let handleError, zoomTextUpdate, objPositioner, imgDivResizer, pageZoom, libSlider, dropDown, filterToggle;
+let dropDown, filterToggle, handleError, imgDivResizer, libSlider, objPositioner, pageZoom, zoomTextUpdate;
 
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
@@ -30,13 +31,15 @@ String.prototype.capitalize = function() {
 
 // Key press Checker
 $(document).keydown(function (event) {
-  if (document.activeElement.id === 'zoomText' || document.activeElement.tagName === 'INPUT') {
-    // Do nothing when focused on zoom input
-  } else if ($('#viewer').hasClass('active')) {
-    // Check if file is loaded. See file.js: postExtract()
-    if (event.which === 37 || event.which === 65) { // left key
+  let elem = document.activeElement;
+  if (viewer.dataset.active && !(elem.id === 'zoomText' || elem.tagName === 'input')) {
+    switch (event.which) {
+    case 37:
+    case 65: // Left or `a` key
       page.Left();
-    } else if (event.which === 39 || event.which === 68) { // right key
+      break;
+    case 39:
+    case 68: // Right or `d` key
       page.Right();
     }
   }
@@ -101,7 +104,7 @@ for (let j = 0; j < images.length; j++) {
 
 // Handles the zoom
 pageZoom = () => {
-  // Center Points
+  // Center Points X || Y
   let cPX = viewer.scrollTop + viewer.clientHeight / 2;
   let cPY = viewer.scrollLeft + viewer.clientWidth / 2;
 
@@ -109,7 +112,7 @@ pageZoom = () => {
   let cPXR = cPX / inner.clientHeight;
   let cPYR = cPY / inner.clientWidth;
 
-  // Sets the width for the viewer window
+  // Sets the width & margin for the viewer window
   inner.style.width = `${zoomSlide.value}%`;
   if (zoomSlide.value < 100) {
     inner.style.marginLeft = `${(100 - zoomSlide.value) / 2}%`;
@@ -119,16 +122,19 @@ pageZoom = () => {
 
   imgDivResizer();
 
-  // Sets margins as necessary
+  // Sets Y margins as necessary
   if (viewer.clientHeight > inner.clientHeight) {
     inner.style.marginTop = `${(viewer.clientHeight - inner.clientHeight) / 2}px`;
   } else {
     inner.style.marginTop = 0;
   }
+
+  // Scrolls towards defined centerpoint
   viewer.scrollTop = inner.clientHeight * cPXR - viewer.clientHeight / 2;
   viewer.scrollLeft = inner.clientWidth * cPYR - viewer.clientWidth / 2;
-  let val = zoomSlide.value;
-  zoomTextUpdate(val);
+
+  // Update & Position Save Event Emitter (for debouncing)
+  zoomTextUpdate(zoomSlide.value);
   zoomEvent.emit('save');
 };
 
@@ -147,7 +153,7 @@ pageZoom();
 
 // Library Windows collapsing
 libSlider = () => {
-  $('#sideLib').toggleClass('shift-left');
+  sideLib.classList.toggle('shift-left');
 };
 dropDown = () => {
   $('#mainLib').slideToggle(800);
@@ -155,18 +161,18 @@ dropDown = () => {
 
 // dragscroll things
 $('#zoomSlider').mouseenter(function () {
-  $('#viewer').removeClass('dragscroll');
+  viewer.classList.remove('dragscroll');
   $('#zoomSlider').focus();
 }).mouseleave(function () {
-  $('#viewer').addClass('dragscroll');
+  viewer.classList.add('dragscroll');
   $('#zoomSlider').blur();
 });
 
 $('#optWindow').mouseenter(function () {
-  $('#viewer').removeClass('dragscroll');
+  viewer.classList.remove('dragscroll');
   $('#optWindow').focus();
 }).mouseleave(function () {
-  $('#viewer').addClass('dragscroll');
+  viewer.classList.add('dragscroll');
   $('#optWindow').blur();
 });
 
@@ -179,7 +185,7 @@ filterToggle = () => {
   });
 };
 
-// Button functions
+// ------ Button functions
 
 // zoomSlider
 document.getElementById('zoomSlider').addEventListener('input',
@@ -279,4 +285,3 @@ for(let b = 0; b < buttons.length; b++) {
 
 // Loads Default Values;
 config.onStart();
-page.onStart();

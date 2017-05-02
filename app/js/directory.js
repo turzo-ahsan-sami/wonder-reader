@@ -22,7 +22,9 @@ exports.merge = (directory) => {
     while (fs.statSync(path.join(directory, dirContents[0])).isDirectory()) {
       filtered = [];
       for (let i = 0; i < dirContents.length; i++) {
-        if (imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(directory, dirContents[i])).isDirectory()) {
+        let validExtName = imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1;
+        let validStat = fs.statSync(path.join(directory, dirContents[i])).isDirectory();
+        if (validExtName || validStat) {
           filtered.push(dirContents[i]);
         }
       }
@@ -33,29 +35,27 @@ exports.merge = (directory) => {
   return directory;
 };
 
-// Splits a path, encodes each index,
-// and merges it all for a URI compatible file path.
+// Splits a path, encodes each index, and merges it all for a URI compatible file path.
 exports.encode = (oldPath) => {
+  let c;
   let newPath = '';
   let tempPath = oldPath.split(path.sep); // Breaks path into array
 
-  if (process.platform !== 'win32') {
-    // Encodes each folder, then merging it all together
+  // Encodes each folder, then merging it all together
+  switch (process.platform) {
+  case 'win32':
+    c = tempPath[0]; // Saves letter drive information
+    for (let j = 1; j < tempPath.length; j++) {
+      newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
+    }
+    newPath = path.join(c, newPath); //returns c:\path\to\file.cbz
+    return newPath;
+  default:
     for (let j = 0; j < tempPath.length; j++) {
       newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
     }
     newPath = `/${newPath}`; // To set root folder
     newPath = newPath.replace(/\'/g, '\\\''); // Fixes err with the character \'
-  } else {
-    let c = tempPath[0]; // Saves letter drive information
-
-    // Encodes each folder, then merging it all together
-    for (let j = 1; j < tempPath.length; j++) {
-      newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
-    }
-
-    newPath = path.join(c, newPath);
-    //returns proper path :: c:\path\to\file.cbz
+    return newPath;
   }
-  return newPath;
 };

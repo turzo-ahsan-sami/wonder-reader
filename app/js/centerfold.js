@@ -24,19 +24,16 @@ exports.fold = (id) => {
   spread = [];
 
   for (let i = 0; i < dirContents.length; i++) {
-    (function (i) {
-      dimensions = sizeOf(path.join(fileDir, dirContents[i]));
-      width = dimensions.width;
-      height = dimensions.height;
+    dimensions = sizeOf(path.join(fileDir, dirContents[i]));
+    width = dimensions.width;
+    height = dimensions.height;
 
-      if (width >= height) {
-        spread.push(i);
-      }
-    })(i);
+    if (width >= height) {
+      spread.push(i);
+    }
   }
   sortNumber = (a, b) => {
     return a - b;
   };
-  spread = spread.sort(sortNumber);
-  return spread;
+  return spread.sort(sortNumber);
 };

@@ -1,6 +1,5 @@
 // page.js turns pages.
 
-const $ = require('jquery');
 const bookmark = require('./bookmark.js');
 const center = require('./centerfold.js');
 const config = require('./config.js');
@@ -20,26 +19,8 @@ const column = document.getElementById('column');
 const viewer = document.getElementById('viewer');
 const clearImg = path.join('.', 'images', 'FFFFFF-0.0.png');
 
-exports.onStart = () => {
-  let r = config.pageReturn;
-  switch (r) {
-  case 1:
-    $('#column').addClass('disabled');
-    column.dataset.val = 1;
-    break;
-  case 2:
-    $('#column').removeClass('disabled');
-    column.dataset.val = 2;
-    break;
-  default:
-    $('#column').removeClass('disabled');
-    column.dataset.val = 2;
-    break;
-  }
-};
-
 exports.load = (file) => {
-  let index, continueIndex, val, r;
+  let continueIndex, index, r;
 
   filePath = decodeURIComponent(viewOne.src.substr(7));
   if (process.platform === 'win32') {
@@ -62,11 +43,12 @@ exports.load = (file) => {
       index = 0;
     }
   }
-  val = Number(column.dataset.val);
 
-  if (val === 1) {
+  switch (Number(column.dataset.val)) {
+  case 1:
     singlePage(fileDir, dirContents, index);
-  } else {
+    break;
+  default:
     defaults(fileDir, dirContents, index);
   }
 
@@ -146,7 +128,8 @@ pageTurn = (val) => {
   bookmark.onChange(index); // Updates bookmark.json
 };
 
-singlePage = (fileDir, dirContents, index) => { // For Single page viewing and styling
+// For Single page viewing and styling
+singlePage = (fileDir, dirContents, index) => {
   viewOne.style.width = '100%';
   viewTwo.style.display = 'none';
   viewOne.src = path.join(fileDir, encodeURIComponent(dirContents[index]));
@@ -156,19 +139,22 @@ singlePage = (fileDir, dirContents, index) => { // For Single page viewing and s
 };
 
 defaults = (fileDir, dirContents, index) => {
-  let val = Number(column.dataset.val);
-  if (Math.abs(val) === 2) {
+  let val = Number(column.dataset.val), sizeOne, sizeTwo, ratioOne, ratioTwo;
+  switch (Math.abs(val)) {
+  case 1:
+    singlePage(fileDir, dirContents, index);
+    break;
+  default:
     if (index >= dirContents.length - 1 || centerFolds.indexOf(index) > -1 || centerFolds.indexOf(index + 1) > -1) {
       singlePage(fileDir, dirContents, index);
     } else {
-
       viewOne.style.display = 'initial';
       viewTwo.style.display = 'initial';
 
-      let sizeOne = sizeOf(path.join(fileDir, dirContents[index]));
-      let sizeTwo = sizeOf(path.join(fileDir, dirContents[index + 1]));
-      let ratioOne = sizeOne.width / sizeOne.height;
-      let ratioTwo = sizeTwo.width / sizeTwo.height;
+      sizeOne = sizeOf(path.join(fileDir, dirContents[index]));
+      sizeTwo = sizeOf(path.join(fileDir, dirContents[index + 1]));
+      ratioOne = sizeOne.width / sizeOne.height;
+      ratioTwo = sizeTwo.width / sizeTwo.height;
 
       viewOne.style.width = `${ratioOne / (ratioOne + ratioTwo) * 100}%`;
       viewTwo.style.width = `${ratioTwo / (ratioOne + ratioTwo) * 100}%`;
@@ -179,10 +165,6 @@ defaults = (fileDir, dirContents, index) => {
       viewer.scrollTop = 0;
       viewer.scrollLeft = 0;
     }
-  } else if (Math.abs(val) === 1) {
-    singlePage(fileDir, dirContents, index);
-  } else {
-    alert(`Danger! Danger! Will Robinson!\nErr: Invalid variable val: ${val}`);
   }
 };
 
@@ -203,12 +185,13 @@ exports.spread = () => {
   }
   let index = dirContents.indexOf(path.basename(filePath));
 
-  if ($('#column').hasClass('disabled')) {
-    $('#column').removeClass('disabled');
+  console.log(column.classList);
+  if (column.classList.contains('disabled')) {
+    column.classList.remove('disabled');
     column.dataset.val = 2;
     defaults(fileDir, dirContents, index);
   } else {
-    $('#column').addClass('disabled');
+    column.classList.add('disabled');
     column.dataset.val = 1;
     singlePage(fileDir, dirContents, index);
   }
