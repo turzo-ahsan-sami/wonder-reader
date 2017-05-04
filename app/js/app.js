@@ -32,7 +32,7 @@ String.prototype.capitalize = function() {
 // Key press Checker
 $(document).keydown(function (event) {
   let elem = document.activeElement;
-  if (viewer.dataset.active && !(elem.id === 'zoomText' || elem.tagName === 'input')) {
+  if (viewer.dataset.active && !(elem.id === 'zoomText' || elem.tagName.toLowerCase() === 'input')) {
     switch (event.which) {
     case 37:
     case 65: // Left or `a` key

@@ -40,7 +40,6 @@ onStart = () => {
     jsonfile.readFile(config, function(err, obj) {
       if (err) console.error(err);
       column.dataset.val = obj.page || 2;
-      console.log(column.dataset.val);
       switch (Number(column.dataset.val)) {
       case 1:
         column.classList.add('disabled');
