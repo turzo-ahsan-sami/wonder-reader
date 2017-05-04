@@ -59,6 +59,7 @@ exports.onChange = (index) => {
 // Fills library with percentage read on right hand side
 exports.percent = (fileName) => {
   let spanClass = fileName.replace(regex, '');
+  console.log(spanClass);
   if (isThere(bookmark)) {
     obj = jsonfile.readFileSync(bookmark);
     if (obj[fileName]) {
