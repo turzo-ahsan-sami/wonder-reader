@@ -39,9 +39,9 @@ libBuilder = (directory, listID) => {
 
     // Inserts file.loader() for files
     if (fs.statSync(filePath).isFile() && r) {
+      let percent = bookmark.percent(file);
       file = path.basename(file, path.extname(file));
       filePath = dirFunction.encode(filePath);
-
       // Converts win32 paths to HTML compatible paths
       if (process.platform == 'win32') {
         filePath = filePath.replace(/\\/g, '/');
@@ -50,7 +50,7 @@ libBuilder = (directory, listID) => {
         `<li class="file">
           <a href="#" onclick="file.loader('${filePath}')">
             <i class="fa fa-file" aria-hidden="true"></i>
-            ${file} ${bookmark.percent(file)}
+            ${file} ${percent}
           </a>
         </li>`
       );

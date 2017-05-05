@@ -1,6 +1,7 @@
 // Central JS Controller: for main app functions as well as calling modules
 
 const $ = require('jquery'); // https://www.npmjs.com/package/jquery
+const bookmark = require('./js/bookmark.js');
 const clean = require('./js/clean.js');
 const config = require('./js/config.js');
 const debounce = require('debounce'); // https://www.npmjs.com/package/debounce
@@ -284,4 +285,5 @@ for(let b = 0; b < buttons.length; b++) {
 }
 
 // Loads Default Values;
+bookmark.onStart();
 config.onStart();

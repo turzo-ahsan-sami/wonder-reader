@@ -9,7 +9,7 @@ const bookmark = path.join(os.tmpdir(), 'wonderReader', 'json', 'bookmark.json')
 const regex = /\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]/gi; // Reg Ex for classes
 
 // Invoked on Comic.onLoad(), returns with current page
-exports.onLoad = (filePath, directoryContents) => { // returns a new index for <img> tags
+exports.onFileLoad = (filePath, directoryContents) => { // returns a new index for <img> tags
   baseName = path.basename(filePath); // Gets basename
   console.log(`${baseName} loaded into Wonder Reader!`);
 
@@ -56,18 +56,25 @@ exports.onChange = (index) => {
   });
 };
 
+exports.onStart = () => {
+  if (isThere(bookmark)) {
+    obj = jsonfile.readFileSync(bookmark);
+  } else {
+    obj = {};
+  }
+};
+
 // Fills library with percentage read on right hand side
 exports.percent = (fileName) => {
   let spanClass = fileName.replace(regex, '');
-  console.log(spanClass);
   if (isThere(bookmark)) {
-    obj = jsonfile.readFileSync(bookmark);
+    // obj = jsonfile.readFileSync(bookmark);
     if (obj[fileName]) {
       let percent = (obj[fileName].currentIndex / obj[fileName].fullIndex) * 100;
       return `<span class="bmPercent ${spanClass}">${percent.toFixed(0)}%</span>`;
     } else { return `<span class="bmPercent ${spanClass}">0%</span>`; }
   } else {
-    obj = {};
+    // obj = {};
     jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
     return `<span class="bmPercent ${spanClass}">0%</span>`;
   }

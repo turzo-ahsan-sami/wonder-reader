@@ -32,7 +32,7 @@ exports.load = (file) => {
   centerFolds = center.fold('viewImgOne');
 
   index = 0;
-  continueIndex = Number(bookmark.onLoad(file, dirContents));
+  continueIndex = Number(bookmark.onFileLoad(file, dirContents));
   viewOne.src = clearImg; // Clears the screen to minimize choppiness
   viewTwo.src = clearImg;
   if (continueIndex > 0) {
