@@ -11,7 +11,7 @@ const config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
 const column = document.getElementById('column');
 
 // Function variables;
-let configSave, dbBuild, onStart;
+let configSave, dbBuild, defaults, onStart;
 
 // Builds a database for comics
 dbBuild = (filePath) => {
@@ -34,7 +34,7 @@ configSave = (type, val) => {
 
 onStart = () => {
   let libStatus= document.getElementById('libStatus');
-  let obj = {};
+  let obj;
   switch (isThere(config)) {
   case true:
     jsonfile.readFile(config, function(err, obj) {
@@ -58,10 +58,8 @@ onStart = () => {
     });
     break;
   default:
-    obj.library = '';
-    obj.page = column.dataset.val;
+    obj = {library: '', page: 2, zoom: 100};
     libStatus.innerHTML = '<p>The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.</p>';
-    // creates a folder for config if none exist
     mkdirp(path.dirname(config), function(err) {
       if (err) console.error(err);
       jsonfile.writeFile(config, obj, function(err) {
@@ -71,13 +69,20 @@ onStart = () => {
   }
 };
 
+defaults = () => {
+  let obj = {library: '', page: 2, zoom: 100};
+  if (isThere(config)) {
+    obj = jsonfile.readFileSync(config);
+  }
+  return obj;
+};
+
 exports.dbBuild = (filePath) => {
   dbBuild(filePath);
 };
 
 exports.library = () => {
-  var obj = jsonfile.readFileSync(config);
-  return obj.library || undefined;
+  return defaults().library || '';
 };
 
 exports.libSave = (filePath) => {
@@ -89,18 +94,15 @@ exports.onStart = () => {
 };
 
 exports.pageReturn = () => {
-  let obj = jsonfile.readFileSync(config);
-  console.log(obj.page);
-  return obj.page || undefined;
+  return defaults().page || 2;
 };
 
 exports.pageViewSave = (val) => {
   configSave('page', val);
 };
 
-exports.zoomReturn = () => { // for future exports
-  var obj = jsonfile.readFileSync(config);
-  return obj.zoom || 100;
+exports.zoomReturn = () => {
+  return defaults().zoom || 100;
 };
 
 exports.zoomSave = (val) => {

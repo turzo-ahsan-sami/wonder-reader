@@ -11,8 +11,8 @@ const library = require('./js/library.js');
 const page = require('./js/page.js');
 const title = require('./js/title.js');
 
-class MyEmitter extends EventEmitter {}
-const zoomEvent = new MyEmitter();
+class zoomEmit extends EventEmitter {}
+const zoomEvent = new zoomEmit();
 
 // Variables
 const imgOne = document.getElementById('viewImgOne');
