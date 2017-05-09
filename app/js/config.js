@@ -69,12 +69,19 @@ onStart = () => {
   }
 };
 
-defaults = () => {
-  let obj = {library: '', page: 2, zoom: 100};
+defaults = (prop) => {
+  let def = {library: '', page: 2, zoom: 100};
+  let obj;
   if (isThere(config)) {
     obj = jsonfile.readFileSync(config);
+    if (obj[prop]) {
+      return obj[prop];
+    } else {
+      return def[prop];
+    }
+  } else {
+    return def[prop];
   }
-  return obj;
 };
 
 exports.dbBuild = (filePath) => {
@@ -82,7 +89,7 @@ exports.dbBuild = (filePath) => {
 };
 
 exports.library = () => {
-  return defaults().library || '';
+  return defaults('library') || '';
 };
 
 exports.libSave = (filePath) => {
@@ -94,7 +101,7 @@ exports.onStart = () => {
 };
 
 exports.pageReturn = () => {
-  return defaults().page || 2;
+  return defaults('page') || 2;
 };
 
 exports.pageViewSave = (val) => {
@@ -102,7 +109,7 @@ exports.pageViewSave = (val) => {
 };
 
 exports.zoomReturn = () => {
-  return defaults().zoom || 100;
+  return defaults('zoom') || 100;
 };
 
 exports.zoomSave = (val) => {
