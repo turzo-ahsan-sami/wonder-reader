@@ -90,7 +90,6 @@ exports.onStart = () => {
 
 exports.pageReturn = () => {
   let obj = jsonfile.readFileSync(config);
-  console.log(obj.page);
   return obj.page || undefined;
 };
 
@@ -99,8 +98,17 @@ exports.pageViewSave = (val) => {
 };
 
 exports.zoomReturn = () => { // for future exports
-  var obj = jsonfile.readFileSync(config);
-  return obj.zoom || 100;
+  let obj;
+  if (isThere(config)) {
+    obj = jsonfile.readFileSync(config);
+    if (obj.zoom) {
+      return obj.zoom;
+    } else {
+      return 100;
+    }
+  } else {
+    return 100;
+  }
 };
 
 exports.zoomSave = (val) => {

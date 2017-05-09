@@ -48,7 +48,6 @@ exports.onChange = (index) => {
     let base = path.basename(obj[baseName].name, path.extname(obj[baseName].name));
     let spanClass = base.replace(regex, '');
 
-    console.log(spanClass);
     let elem = document.getElementsByClassName(spanClass);
     for (let i = 0; i < elem.length; i++) {
       elem[i].innerHTML = `${percent.toFixed(0)}%`;

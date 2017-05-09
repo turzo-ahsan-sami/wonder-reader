@@ -10,13 +10,22 @@ const isThere = require('is-there');
 const path = require('path');
 
 const libStatus = document.getElementById('libStatus');
+const sideLib = document.getElementById('sideLib');
 
 const libError = 'Library not found. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.';
 const loading = 'Your library is loading';
 const finished = '';
 
 // Function variables
-let build, libBuilder, folders;
+let build, toggle, libBuilder, slide, folders;
+
+// Library Windows collapsing
+slide = () => {
+  sideLib.classList.toggle('shift-left');
+};
+toggle = () => {
+  $('#mainLib').slideToggle(800);
+};
 
 // Builds the library with proper HTML
 libBuilder = (directory, listID) => {
@@ -76,6 +85,14 @@ libBuilder = (directory, listID) => {
 
   libStatus.innerHTML = finished;
   folders(directory, listID);
+};
+
+exports.slide = () => {
+  slide();
+};
+
+exports.toggle = () => {
+  toggle();
 };
 
 // Dialog to open up directory

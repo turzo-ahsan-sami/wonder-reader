@@ -185,7 +185,6 @@ exports.spread = () => {
   }
   let index = dirContents.indexOf(path.basename(filePath));
 
-  console.log(column.classList);
   if (column.classList.contains('disabled')) {
     column.classList.remove('disabled');
     column.dataset.val = 2;
