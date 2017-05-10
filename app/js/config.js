@@ -10,6 +10,8 @@ const comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
 const config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
 const column = document.getElementById('column');
 
+const template = {library: '', page: 2, zoom: 100};
+
 // Function variables;
 let configSave, dbBuild, defaults, onStart;
 
@@ -24,7 +26,10 @@ dbBuild = (filePath) => {
 
 configSave = (type, val) => {
   jsonfile.readFile(config, function(err, obj) {
-    if (err) console.error(err);
+    if (err) {
+      console.error(err);
+      return;
+    }
     obj[type] = val;
     jsonfile.writeFile(config, obj, function(err) {
       if (err) console.error(err);
@@ -58,7 +63,7 @@ onStart = () => {
     });
     break;
   default:
-    obj = {library: '', page: 2, zoom: 100};
+    obj = template;
     libStatus.innerHTML = '<p>The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.</p>';
     mkdirp(path.dirname(config), function(err) {
       if (err) console.error(err);
@@ -70,7 +75,7 @@ onStart = () => {
 };
 
 defaults = (prop) => {
-  let def = {library: '', page: 2, zoom: 100};
+  let def = template;
   let obj;
   if (isThere(config)) {
     obj = jsonfile.readFileSync(config);

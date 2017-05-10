@@ -13,10 +13,10 @@ const viewer = document.getElementById('viewer');
 const zoomSlide = document.getElementById('zoomSlider');
 
 // Function Variables
-let autoResize, width, zoomTextUpdate;
+let autoResize, width, textUpdate;
 
 // Syncs dial to output box
-zoomTextUpdate = (val) => {
+textUpdate = (val) => {
   document.getElementById('zoomText').value = val;
 };
 
@@ -60,7 +60,7 @@ width = () => {
   viewer.scrollLeft = inner.clientWidth * cPYR - viewer.clientWidth / 2;
 
   // Update & Position Save Event Emitter (for debouncing)
-  zoomTextUpdate(zoomSlide.value);
+  textUpdate(zoomSlide.value);
   zoomEvent.emit('save');
 };
 
@@ -78,7 +78,7 @@ exports.onStart = () => {
   let val = config.zoomReturn();
   zoomSlide.value = val;
   inner.style.width = `${val}%`;
-  zoomTextUpdate(val);
+  textUpdate(val);
   width();
 };
 

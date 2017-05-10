@@ -487,7 +487,7 @@ button#trash {
 }
 
 #libSlider {
-  transition: right 0.5s;
+  transition: right 0.25s;
   position: absolute;
   font-size: 65px;
   top: 50vh;
