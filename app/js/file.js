@@ -14,6 +14,7 @@ const unzip = require('unzip2');
 
 // Wonder-Reader Specific Modules //
 const dirFunction = require('./directory.js');
+const isComic = require('./isComic.js');
 const miniLib = require('./libMini.js');
 const nextcomic = require('./nextcomic.js');
 const page = require('./page.js');
@@ -73,7 +74,7 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   if (process.platform == 'win32') {
     fileName = fileName.replace(/\//g, '\\');
   }
-  if (['.cbr', '.cbz'].indexOf(path.extname(fileName).toLowerCase()) > -1) {
+  if (isComic(fileName)) {
     fileComic = path.basename(fileName).replace(/#|!/g, '');
   } else {
     return;

@@ -2,6 +2,7 @@
 
 const file = require('./file.js');
 const fs = require('fs');
+const isComic = require('./isComic.js');
 const path = require('path');
 
 // Function variable
@@ -19,7 +20,7 @@ const prevComic = document.getElementById('prevComic');
 
 // Configures Next/Prev comic buttons
 exports.load = (fileName) => {
-  let baseName, filePath, dirContents, comics, fileIndex, nextSrc, prevSrc;
+  let baseName, filePath, dirContents, comics, issue, nextSrc, prevSrc;
   disable('nextComic');
   disable('prevComic');
 
@@ -29,24 +30,25 @@ exports.load = (fileName) => {
 
   // Cleans out folders and non ['cbr', 'cbz'] files
   comics = dirContents.filter(function (x, i) {
-    return fs.statSync(path.join(filePath, dirContents[i])).isFile() && ['.cbr', '.cbz'].indexOf(path.extname(dirContents[i]).toLowerCase()) > -1;
+    let comic = path.join(filePath, dirContents[i]);
+    return fs.statSync(comic).isFile() && isComic(comic);
   });
 
   // Gets index position of file inside directory array
-  fileIndex = comics.indexOf(baseName);
+  issue = comics.indexOf(baseName); // Like a comic book issue!
 
   if (comics.length > 1) {
-    if (fileIndex <= 0) { // If loaded comic is first comic in directory
-      nextSrc = path.join(filePath, comics[fileIndex + 1]);
+    if (issue <= 0) { // If loaded comic is first comic in directory
+      nextSrc = path.join(filePath, comics[issue + 1]);
       nextComic.onclick = function () { file.loader(nextSrc); };
       enable('nextComic');
-    } else if (fileIndex >= comics.length - 1) { // If loaded comic is the last comic in directory
-      prevSrc = path.join(filePath, comics[fileIndex - 1]);
+    } else if (issue >= comics.length - 1) { // If loaded comic is the last comic in directory
+      prevSrc = path.join(filePath, comics[issue - 1]);
       prevComic.onclick = function () { file.loader(prevSrc); };
       enable('prevComic');
     } else { // If comic is somewhere in the middle of the directory array
-      nextSrc = path.join(filePath, comics[fileIndex + 1]);
-      prevSrc = path.join(filePath, comics[fileIndex - 1]);
+      nextSrc = path.join(filePath, comics[issue + 1]);
+      prevSrc = path.join(filePath, comics[issue - 1]);
       nextComic.onclick = function () { file.loader(nextSrc); };
       prevComic.onclick = function () { file.loader(prevSrc); };
       enable('nextComic');

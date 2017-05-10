@@ -3,6 +3,7 @@
 const bookmark = require('./bookmark.js');
 const center = require('./centerfold.js');
 const config = require('./config.js');
+const decode = require('./decode.js');
 const fs = require('fs');
 const path = require('path');
 const sizeOf = require('image-size');
@@ -22,10 +23,7 @@ const clearImg = path.join('.', 'images', 'FFFFFF-0.0.png');
 exports.load = (file) => {
   let continueIndex, index, r;
 
-  filePath = decodeURIComponent(viewOne.src.substr(7));
-  if (process.platform === 'win32') {
-    filePath = decodeURIComponent(viewOne.src.substr(8));
-  }
+  filePath = decode(viewOne);
   fileName = path.basename(filePath);
   fileDir = path.dirname(filePath);
   dirContents = strain(fs.readdirSync(fileDir));
@@ -65,10 +63,7 @@ exports.load = (file) => {
 pageTurn = (val) => {
   let index, polarity;
 
-  filePath = decodeURIComponent(viewOne.src.substr(7));
-  if (process.platform === 'win32') {
-    filePath = decodeURIComponent(viewOne.src.substr(8));
-  }
+  filePath = decode(viewOne);
   fileName = path.basename(filePath);
   index = Number(dirContents.indexOf(fileName));
   val = Number(val);
@@ -179,10 +174,7 @@ exports.Left = () => {
 };
 
 exports.spread = () => {
-  filePath = decodeURIComponent(viewOne.src.substr(7));
-  if (process.platform === 'win32') {
-    filePath = decodeURIComponent(viewOne.src.substr(8));
-  }
+  filePath = decode(viewOne);
   let index = dirContents.indexOf(path.basename(filePath));
 
   if (column.classList.contains('disabled')) {

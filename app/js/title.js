@@ -7,8 +7,7 @@ let version;
 
 // Loads title and version number
 exports.onLoad = () => {
-  let packageFile = 'package.json';
-  jsonfile.readFile(packageFile, function (err, obj) {
+  jsonfile.readFile('package.json', function (err, obj) {
     if (err) { version = ''; }
     else { version = ` ${obj.version}`; }
     document.title = `Wonder Reader${version}`;

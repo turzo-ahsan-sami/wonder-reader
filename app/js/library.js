@@ -6,6 +6,7 @@ const config = require('./config.js');
 const {dialog} = require('electron').remote;
 const dirFunction = require('./directory.js');
 const fs = require('fs');
+const isComic = require('./isComic.js');
 const isThere = require('is-there');
 const path = require('path');
 
@@ -43,11 +44,8 @@ libBuilder = (directory, listID) => {
     let file = files[i];
     let filePath = path.join(directory, file);
 
-    // Checks if file is a valid file type
-    let r = ['.cbr', '.cbz'].indexOf(path.extname(file).toLowerCase()) > -1;
-
     // Inserts file.loader() for files
-    if (fs.statSync(filePath).isFile() && r) {
+    if (fs.statSync(filePath).isFile() && isComic(file)) {
       let percent = bookmark.percent(file);
       file = path.basename(file, path.extname(file));
       filePath = dirFunction.encode(filePath);

@@ -6,14 +6,14 @@ class MyEmitter extends EventEmitter {}
 const zoomEvent = new MyEmitter();
 
 // Variables
-const imgOne = document.getElementById('viewImgOne');
-const imgTwo = document.getElementById('viewImgTwo');
+const viewOne = document.getElementById('viewImgOne');
+const viewTwo = document.getElementById('viewImgTwo');
 const inner = document.getElementById('innerWindow');
 const viewer = document.getElementById('viewer');
 const zoomSlide = document.getElementById('zoomSlider');
 
 // Function Variables
-let autoResize, width, zoomSave, zoomTextUpdate;
+let autoResize, width, zoomTextUpdate;
 
 // Syncs dial to output box
 zoomTextUpdate = (val) => {
@@ -22,10 +22,10 @@ zoomTextUpdate = (val) => {
 
 // Function that resizes innerWindow div
 autoResize = () => {
-  if (imgOne.clientHeight >= imgTwo.clientHeight) {
-    inner.style.height = `${imgOne.clientHeight}px`;
+  if (viewOne.clientHeight >= viewTwo.clientHeight) {
+    inner.style.height = `${viewOne.clientHeight}px`;
   } else {
-    inner.style.height = `${imgTwo.clientHeight}px`;
+    inner.style.height = `${viewTwo.clientHeight}px`;
   }
 };
 
@@ -65,15 +65,9 @@ width = () => {
 };
 
 // Saves zoom levels with debounce
-zoomEvent.on('save', function() {zoomSave();});
-
-// Debouncing Function
-zoomSave = () => {
-  debounce(function() {
-    let val = zoomSlide.value;
-    config.zoomSave(val);
-  }, 250);
-};
+zoomEvent.on('save', function() {
+  debounce(config.zoomSave(zoomSlide.value), 250);
+});
 
 exports.autoResize = () => {
   autoResize();

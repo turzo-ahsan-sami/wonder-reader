@@ -1,5 +1,6 @@
 // centerfold.js returns an array with the index locations of supposed centerfolds
 
+const decode = require('./decode.js');
 const fs = require('fs');
 const path = require('path');
 const sizeOf = require('image-size');
@@ -9,16 +10,13 @@ const strain = require('./strain.js');
 exports.fold = (id) => {
   id = document.getElementById(id);
 
-  // global variables
+  // variables
   let dimensions, dirContents, fileDir, filePath, height, spread, width;
 
   // function variables
   let sortNumber;
 
-  filePath = decodeURIComponent(id.src.substr(7));
-  if (process.platform === 'win32') {
-    filePath = decodeURIComponent(id.src.substr(8));
-  }
+  filePath = decode(id);
   fileDir = path.dirname(filePath);
   dirContents = strain(fs.readdirSync(fileDir));
   spread = [];

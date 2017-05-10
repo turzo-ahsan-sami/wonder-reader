@@ -25,7 +25,7 @@ dbBuild = (filePath) => {
 configSave = (type, val) => {
   jsonfile.readFile(config, function(err, obj) {
     if (err) console.error(err);
-    obj[`${type}`] = val;
+    obj[type] = val;
     jsonfile.writeFile(config, obj, function(err) {
       if (err) console.error(err);
     });

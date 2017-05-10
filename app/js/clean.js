@@ -1,5 +1,6 @@
 // clean.js clears out old cache files. Might be worth doing at app.close
 
+const decode = require('./decode.js');
 const fs = require('fs');
 const getSize = require('get-folder-size');
 const os = require('os');
@@ -10,6 +11,8 @@ const cacheDir = path.join(os.tmpdir(), 'wonderReader', 'cache');
 
 // Function variable
 let clearCache;
+
+const viewOne = document.getElementById('viewImgOne');
 
 // Cleans out the crap
 exports.trash = () => {
@@ -30,14 +33,11 @@ exports.autoTrash = () => {
 
 // The crap cleaner function itself
 clearCache = (directory) => {
-  let cacheContents, pathArray, currentDir, imgOne;
+  let cacheContents, pathArray, currentDir;
 
-  imgOne = document.getElementById('viewImgOne');
   cacheContents = fs.readdirSync(directory);
-  pathArray = path.dirname(decodeURI(imgOne.src.substr(7))).split(path.sep);
-  if (process.platform === 'win32') {
-    pathArray = path.dirname(decodeURI(imgOne.src.substr(8))).split(path.sep);
-  }
+  pathArray = decode(viewOne).split(path.sep);
+
   // Finds /path/to/wonderReader/cache, and calls the next folder in
   currentDir = pathArray[pathArray.indexOf('cache') + 1];
 

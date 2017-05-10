@@ -25,25 +25,26 @@ exports.onStart = () => {
 
   // Option :: Updates Styles and Text
   let options = optWindow.getElementsByTagName('input');
-  for (let r = 0; r < options.length; r++) {
-    options[r].addEventListener('input', function() {
-      let val = options[r].value;
-      let style = options[r].dataset.style;
+  for (let i = 0; i < options.length; i++) {
+    options[i].addEventListener('input', function() {
+      let val = options[i].value;
+      let style = options[i].dataset.style;
       display[style] = `${style}(${val})`;
       inner.style.webkitFilter = display.style();
-      let text = document.getElementById(`opt${style.capitalize()}Text`);
+      let Style = style.capitalize();
+      let text = document.getElementById(`opt${Style}Text`);
       text.value = val;
     });
   }
 
   // Options :: Reset Buttons
   let buttons = optWindow.getElementsByTagName('button');
-  for(let b = 0; b < buttons.length; b++) {
-    let style = buttons[b].dataset.style;
-    buttons[b].addEventListener('click', function() {
-      let c = style.capitalize();
-      let range = document.getElementById(`opt${c}Range`);
-      let text = document.getElementById(`opt${c}Text`);
+  for(let i = 0; i < buttons.length; i++) {
+    let style = buttons[i].dataset.style;
+    buttons[i].addEventListener('click', function() {
+      let Style = style.capitalize();
+      let range = document.getElementById(`opt${Style}Range`);
+      let text = document.getElementById(`opt${Style}Text`);
       let d = range.dataset.default;
       display[style] = `${style}(${d})`;
       inner.style.webkitFilter = display.style();
