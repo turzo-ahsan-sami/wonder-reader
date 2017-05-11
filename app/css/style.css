@@ -90,6 +90,10 @@ button:disabled:hover {
 .header ul li {
   float: left;
 }
+.header ul #column .fa {
+  font-size: 32px;
+  transform: rotate(90deg);
+}
 .header button:hover {
   text-shadow: 0 0 5px #fff;
 }
@@ -477,6 +481,10 @@ button#trash {
   color: #fff;
   box-shadow: inset 2px 0 0 1px rgba(255, 255, 255, 0.8);
   background: #000;
+}
+
+.file a {
+  display: block;
 }
 
 .shift-left {

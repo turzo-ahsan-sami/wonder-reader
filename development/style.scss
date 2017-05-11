@@ -114,6 +114,12 @@ button:disabled:hover {
     li {
       float: left;
     }
+    #column {
+      .fa {
+        font-size: 32px;
+        transform: rotate(90deg);
+      }
+    }
   }
 
   button:hover {
@@ -556,6 +562,12 @@ button#trash {
       box-shadow: inset 2px 0 0 1px $white-opaque-deg;
       background: $black;
     }
+  }
+}
+
+.file {
+  a {
+    display: block;
   }
 }
 

@@ -9,6 +9,7 @@ const path = require('path');
 const comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
 const config = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
 const column = document.getElementById('column');
+const columnIcon = document.getElementById('columnIcon');
 
 const template = {library: '', page: 2, zoom: 100};
 
@@ -47,10 +48,12 @@ onStart = () => {
       column.dataset.val = obj.page || 2;
       switch (Number(column.dataset.val)) {
       case 1:
-        column.classList.add('disabled');
+        columnIcon.classList.remove('fa-minus-square-o');
+        columnIcon.classList.add('fa-square-o');
         break;
       default:
-        column.classList.remove('disabled');
+        columnIcon.classList.remove('fa-square-o');
+        columnIcon.classList.add('fa-minus-square-o');
       }
       switch (isThere(obj.library)) {
       case true:

@@ -17,6 +17,7 @@ let defaults, pageTurn, singlePage;
 const viewOne = document.getElementById('viewImgOne');
 const viewTwo = document.getElementById('viewImgTwo');
 const column = document.getElementById('column');
+const columnIcon = document.getElementById('columnIcon');
 const viewer = document.getElementById('viewer');
 const clearImg = path.join('.', 'images', 'FFFFFF-0.0.png');
 
@@ -42,6 +43,7 @@ exports.load = (file) => {
     }
   }
 
+  column.classList.remove('disabled');
   switch (Number(column.dataset.val)) {
   case 1:
     singlePage(fileDir, dirContents, index);
@@ -177,12 +179,16 @@ exports.spread = () => {
   filePath = decode(viewOne);
   let index = dirContents.indexOf(path.basename(filePath));
 
-  if (column.classList.contains('disabled')) {
-    column.classList.remove('disabled');
+  switch (Number(column.dataset.val)) {
+  case 1:
+    columnIcon.classList.remove('fa-square-o');
+    columnIcon.classList.add('fa-minus-square-o');
     column.dataset.val = 2;
     defaults(fileDir, dirContents, index);
-  } else {
-    column.classList.add('disabled');
+    break;
+  case 2:
+    columnIcon.classList.remove('fa-minus-square-o');
+    columnIcon.classList.add('fa-square-o');
     column.dataset.val = 1;
     singlePage(fileDir, dirContents, index);
   }
