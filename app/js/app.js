@@ -48,9 +48,6 @@ handleError = (evt) => {
 };
 window.addEventListener('error', handleError, true);
 
-// Updates title with version
-title.onLoad();
-
 objPositioner = () => {
   document.getElementById('dirLib').style.height = `${window.innerHeight - 56}px`;
   document.getElementById('viewer').style.height = `${window.innerHeight - 56}px`;
@@ -157,6 +154,7 @@ document.getElementById('options').addEventListener('click',
 );
 
 // Loads Default Values;
+title.onStart();
 bookmark.onStart();
 config.onStart();
 options.onStart();

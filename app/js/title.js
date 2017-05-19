@@ -6,7 +6,7 @@ const jsonfile = require('jsonfile');
 let version;
 
 // Loads title and version number
-exports.onLoad = () => {
+exports.onStart = () => {
   jsonfile.readFile('package.json', function (err, obj) {
     if (err) { version = ''; }
     else { version = ` ${obj.version}`; }
