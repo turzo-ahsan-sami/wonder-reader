@@ -13,7 +13,7 @@ const Unrar = require('node-unrar');
 const unzip = require('unzip2');
 
 // Wonder-Reader Specific Modules //
-const dirFunction = require('./directory.js');
+const directoryFunction = require('./directory.js');
 const isComic = require('./isComic.js');
 const miniLib = require('./libMini.js');
 const nextcomic = require('./nextcomic.js');
@@ -86,7 +86,7 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
 
   switch (isThere(tempFolder)) {
   case true:
-    tempFolder = dirFunction.merge(tempFolder);
+    tempFolder = directoryFunction.merge(tempFolder);
     extractedImages = fs.readdirSync(tempFolder);
     if (extractedImages.length === 0) {
       fileRouter(fileName, tempFolder, looper);
@@ -186,7 +186,7 @@ zipExtractor = (fileName, tempFolder, looper) => {
 };
 
 extractRouter = (fileName, tempFolder, looper) => {
-  tempFolder = dirFunction.merge(tempFolder);
+  tempFolder = directoryFunction.merge(tempFolder);
   extractedImages = fs.readdirSync(tempFolder);
   let extName = path.extname(fileName).toLowerCase();
 

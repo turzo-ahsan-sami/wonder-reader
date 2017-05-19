@@ -4,7 +4,7 @@ const $ = require('jquery');
 const bookmark = require('./bookmark.js');
 const config = require('./config.js');
 const {dialog} = require('electron').remote;
-const dirFunction = require('./directory.js');
+const directoryFunction = require('./directory.js');
 const fs = require('fs');
 const isComic = require('./isComic.js');
 const isThere = require('is-there');
@@ -48,7 +48,7 @@ libBuilder = (directory, listID) => {
     if (fs.statSync(filePath).isFile() && isComic(file)) {
       let percent = bookmark.percent(file);
       file = path.basename(file, path.extname(file));
-      filePath = dirFunction.encode(filePath);
+      filePath = directoryFunction.encode(filePath);
       // Converts win32 paths to HTML compatible paths
       if (process.platform == 'win32') {
         filePath = filePath.replace(/\\/g, '/');
