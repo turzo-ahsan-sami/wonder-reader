@@ -12,7 +12,9 @@ exports.merge = (directory) => {
   let filtered = [];
 
   for (let i = 0; i < extractedFiles.length; i++) {
-    if (imgTypes.indexOf(path.extname(extractedFiles[i]).toLowerCase()) > -1 || fs.statSync(path.join(directory, extractedFiles[i])).isDirectory()) {
+    let validExtName = imgTypes.indexOf(path.extname(extractedFiles[i]).toLowerCase()) > -1;
+    let validStat = fs.statSync(path.join(directory, extractedFiles[i])).isDirectory();
+    if (validExtName || validStat) {
       filtered.push(extractedFiles[i]);
     }
   }

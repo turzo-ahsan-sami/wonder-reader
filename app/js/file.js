@@ -76,7 +76,7 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
     console.log(fileName);
   }
   if (isComic(fileName)) {
-    comic = path.basename(fileName).replace(/#|!/g, '');
+    comic = path.basename(fileName, path.extname(fileName)).replace(/#|!/g, '');
   } else {
     return;
   }

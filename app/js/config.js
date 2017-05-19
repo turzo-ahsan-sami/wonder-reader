@@ -97,6 +97,10 @@ exports.databaseBuild = (filePath) => {
   databaseBuild(filePath);
 };
 
+exports.displaySave = (val) => {
+  configSave('display', val);
+};
+
 exports.library = () => {
   return defaults('library') || '';
 };
