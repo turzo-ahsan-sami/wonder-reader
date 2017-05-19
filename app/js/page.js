@@ -28,7 +28,7 @@ exports.load = (file) => {
   fileName = path.basename(tempPath);
   filePath = path.dirname(tempPath);
   extractedImages = strain(fs.readdirSync(filePath));
-  centerFolds = center.fold('viewImgOne');
+  centerFolds = center.fold(filePath, extractedImages);
 
   PAGE = 0;
   savedPAGE = Number(bookmark.onFileLoad(file, extractedImages));
