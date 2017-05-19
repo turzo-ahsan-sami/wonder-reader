@@ -22,7 +22,7 @@ const strain = require('./strain.js');
 const title = require('./title.js');
 
 // Global variables
-let extractedImages, fileName;
+let extractedImages, fileName, comic, tempFolder;
 
 const bgLoader = document.getElementById('bgLoader');
 const innerWindow = document.getElementById('innerWindow');
@@ -35,9 +35,9 @@ const viewer = document.getElementById('viewer');
 let openFile, fileLoad, enable, postExtract, fileRouter, rarExtractor, zipExtractor, extractRouter, preLoad, postLoad;
 
 preLoad = () => {
+  innerWindow.classList.add('innerLoading');
   loader.classList.add('loader');
   loader.classList.remove('hidden');
-  innerWindow.classList.add('innerLoading');
   bgLoader.classList.remove('hidden');
 };
 
@@ -69,21 +69,21 @@ openFile = () => {
 // The function that loads each file
 fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   if (err) { return console.error(err); }
-  let fileComic, tempFolder, looper;
+  let looper;
   // corrects a possible err with HTML loading
   if (process.platform == 'win32') {
     fileName = fileName.replace(/\//g, '\\');
+    console.log(fileName);
   }
   if (isComic(fileName)) {
-    fileComic = path.basename(fileName).replace(/#|!/g, '');
+    comic = path.basename(fileName).replace(/#|!/g, '');
   } else {
     return;
   }
-
+  document.getElementById('trash').dataset.current = comic;
   // tempFolder Variable for loaded comic
-  tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', fileComic);
+  tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', comic);
   looper = 0;
-
   switch (isThere(tempFolder)) {
   case true:
     tempFolder = directoryFunction.merge(tempFolder);
@@ -98,7 +98,6 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
     preLoad();
     mkdirp.sync(tempFolder, {'mode': '0777'});
     fileRouter(fileName, tempFolder, looper);
-    break;
   } // End Directory checker
 };
 
@@ -114,11 +113,11 @@ postExtract = (fileName, tempFolder, extractedImages) => {
   viewOne.src = path.join(tempFolder, encodeURIComponent(extractedImages[0]));
   viewTwo.src = path.join(tempFolder, encodeURIComponent(extractedImages[1]));
 
-  page.load(fileName);
+  page.load(fileName, tempFolder, extractedImages);
   enable('pageLeft');
   enable('pageRight');
   viewer.dataset.active = true;
-  title.onFileLoad(fileName);
+  title.onLoad(fileName);
   miniLib.load(fileName);
   nextcomic.load(fileName);
   $('#mainLib').slideUp(800);
@@ -160,7 +159,6 @@ fileRouter = (fileName, tempFolder, looper) => {
 };
 
 rarExtractor = (fileName, tempFolder, looper) => {
-  console.log('Unrar extraction started.');
   if (process.platform == 'linux') {
     let rar = new Unrar(fileName);
     rar.extract(tempFolder, null, function (err) {
@@ -186,6 +184,7 @@ zipExtractor = (fileName, tempFolder, looper) => {
 };
 
 extractRouter = (fileName, tempFolder, looper) => {
+
   tempFolder = directoryFunction.merge(tempFolder);
   extractedImages = fs.readdirSync(tempFolder);
   let extName = path.extname(fileName).toLowerCase();

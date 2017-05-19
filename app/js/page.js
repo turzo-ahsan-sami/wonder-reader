@@ -3,13 +3,10 @@
 const bookmark = require('./bookmark.js');
 const center = require('./centerfold.js');
 const config = require('./config.js');
-const decode = require('./decode.js');
-const fs = require('fs');
 const path = require('path');
 const sizeOf = require('image-size');
-const strain = require('./strain.js');
 
-let centerFolds, extractedImages, filePath, fileName, tempPath, loadedImages;
+let centerFolds, extractedImages, filePath, PAGE, loadedImages;
 
 // Function variables
 let defaults, pageTurn, singlePage;
@@ -21,17 +18,14 @@ const columnIcon = document.getElementById('columnIcon');
 const viewer = document.getElementById('viewer');
 const clearImg = path.join('.', 'images', 'FFFFFF-0.0.png');
 
-exports.load = (file) => {
-  let savedPAGE, PAGE, r;
-
-  tempPath = decode(viewOne);
-  fileName = path.basename(tempPath);
-  filePath = path.dirname(tempPath);
-  extractedImages = strain(fs.readdirSync(filePath));
+exports.load = (file, DIR, IMAGES) => {
+  let savedPAGE, r;
+  filePath = DIR;
+  extractedImages = IMAGES;
   centerFolds = center.fold(filePath, extractedImages);
 
   PAGE = 0;
-  savedPAGE = Number(bookmark.onFileLoad(file, extractedImages));
+  savedPAGE = Number(bookmark.onLoad(file, extractedImages));
   viewOne.src = clearImg; // Clears the screen to minimize choppiness
   viewTwo.src = clearImg;
   if (savedPAGE > 0) {
@@ -42,32 +36,30 @@ exports.load = (file) => {
       PAGE = 0;
     }
   }
+  PAGE = Number(PAGE);
 
   column.classList.remove('disabled');
   switch (Number(column.dataset.val)) {
   case 1:
-    singlePage(filePath, extractedImages, PAGE);
+    singlePage(DIR, extractedImages, PAGE);
     break;
   default:
-    defaults(filePath, extractedImages, PAGE);
+    defaults(DIR, extractedImages, PAGE);
   }
 
   // Preloads each image file for a smoother experience
   loadedImages = [];
   for (let i = 0; i < extractedImages.length; i++) {
     let img = new Image();
-    let imgSrc = path.join(filePath, encodeURIComponent(extractedImages[i]));
+    let imgSrc = path.join(DIR, encodeURIComponent(extractedImages[i]));
     img.src = imgSrc;
     loadedImages.push(img);
   }
 };
 
 pageTurn = (val) => {
-  let PAGE, polarity;
-
-  tempPath = decode(viewOne);
-  fileName = path.basename(tempPath);
-  PAGE = Number(extractedImages.indexOf(fileName));
+  let polarity;
+  PAGE = Number(PAGE);
   val = Number(val);
 
   polarity = 1;
@@ -176,9 +168,6 @@ exports.Left = () => {
 };
 
 exports.spread = () => {
-  tempPath = decode(viewOne);
-  let PAGE = extractedImages.indexOf(path.basename(tempPath));
-
   switch (Number(column.dataset.val)) {
   case 1:
     columnIcon.classList.remove('fa-square-o');

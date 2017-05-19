@@ -15,7 +15,7 @@ exports.onStart = () => {
 };
 
 // Updates title with comic name
-exports.onFileLoad = (fileName) => {
+exports.onLoad = (fileName) => {
   let file = path.basename(fileName, path.extname(fileName));
   document.title = `Wonder Reader${version}: ${file}`;
 };

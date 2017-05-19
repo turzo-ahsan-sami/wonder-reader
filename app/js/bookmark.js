@@ -11,7 +11,7 @@ const bookmark = path.join(os.tmpdir(), 'wonderReader', 'json', 'bookmark.json')
 const regex = /\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]/gi; // Reg Ex for classes
 
 // Invoked on Comic.onLoad(), returns with current page and option to continue
-exports.onFileLoad = (filePath, directoryContents) => {
+exports.onLoad = (filePath, directoryContents) => {
   baseName = path.basename(filePath); // Gets basename
   console.log(`${baseName} loaded into Wonder Reader!`);
 

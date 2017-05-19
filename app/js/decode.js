@@ -1,3 +1,5 @@
+// for decoding file paths -- currently not used
+
 module.exports = (elem) => {
   let output;
   output = decodeURIComponent(elem.src.substr(7));

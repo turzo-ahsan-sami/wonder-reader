@@ -128,7 +128,8 @@ document.getElementById('openFile').addEventListener('click',
 );
 document.getElementById('trash').addEventListener('click',
   function() {
-    clean.trash();
+    let current = document.getElementById('trash').dataset.current;
+    clean.trash(current);
   }
 );
 // Library navigation & functions
