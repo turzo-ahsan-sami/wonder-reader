@@ -12,12 +12,14 @@ const column = document.getElementById('column');
 const columnIcon = document.getElementById('columnIcon');
 
 const template = {library: '', page: 2, zoom: 100};
+const libNotFound = '<p>Library not found. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.</p>';
+const libIsEmpty = '<p>The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.</p>';
 
 // Function variables;
-let configSave, dbBuild, defaults, onStart;
+let configSave, databaseBuild, defaults, onStart;
 
 // Builds a database for comics
-dbBuild = (filePath) => {
+databaseBuild = (filePath) => {
   let Files = dirTree(filePath, ['.cbr', '.cbz']);
   jsonfile.writeFile(comics, Files, {'spaces': 2}, function(err) {
     if (err) console.error(err);
@@ -60,14 +62,14 @@ onStart = () => {
         library.builder(obj.library);
         break;
       default:
-        libStatus.innerHTML = '<p>Library not found. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.</p>';
+        libStatus.innerHTML = libNotFound;
         console.log('Library not found.');
       }
     });
     break;
   default:
     obj = template;
-    libStatus.innerHTML = '<p>The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.</p>';
+    libStatus.innerHTML = libIsEmpty;
     mkdirp(path.dirname(config), function(err) {
       if (err) console.error(err);
       jsonfile.writeFile(config, obj, function(err) {
@@ -78,22 +80,21 @@ onStart = () => {
 };
 
 defaults = (prop) => {
-  let def = template;
   let obj;
   if (isThere(config)) {
     obj = jsonfile.readFileSync(config);
     if (obj[prop]) {
       return obj[prop];
     } else {
-      return def[prop];
+      return template[prop];
     }
   } else {
-    return def[prop];
+    return template[prop];
   }
 };
 
-exports.dbBuild = (filePath) => {
-  dbBuild(filePath);
+exports.databaseBuild = (filePath) => {
+  databaseBuild(filePath);
 };
 
 exports.library = () => {

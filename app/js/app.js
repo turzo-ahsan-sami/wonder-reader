@@ -39,11 +39,11 @@ document.addEventListener('keydown', function (event) {
 });
 
 // Error Handling
-handleError = (evt) => {
-  if (evt.message) {
-    alert(`Error: ${evt.message} at linenumber: ${evt.lineno} of file: ${evt.filename}`);
+handleError = (event) => {
+  if (event.message) {
+    alert(`Error: ${event.message} at linenumber: ${event.lineno} of file: ${event.filename}`);
   } else {
-    alert(`Error: ${evt.type} from element: ${(evt.srcElement || evt.target)}`);
+    alert(`Error: ${event.type} from element: ${(event.srcElement || event.target)}`);
   }
 };
 window.addEventListener('error', handleError, true);

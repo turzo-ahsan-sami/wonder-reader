@@ -18,7 +18,7 @@ const loading = 'Your library is loading';
 const finished = '';
 
 // Function variables
-let build, toggle, libBuilder, slide, folders;
+let build, toggle, buildLibrary, slide, folders;
 
 // Library Windows collapsing
 slide = () => {
@@ -29,7 +29,7 @@ toggle = () => {
 };
 
 // Builds the library with proper HTML
-libBuilder = (directory, listID) => {
+buildLibrary = (directory, listID) => {
   if(!isThere(directory)) {
     console.error(`${directory} not found.`);
     libStatus.innerHTML = libError;
@@ -106,16 +106,16 @@ exports.openDir = () => {
   });
 };
 
-// Exported version of libBuilder()
+// Exported version of buildLibrary()
 exports.builder = (filePath) => {
   build(filePath);
 };
 
 build = (filePath) => {
   config.libSave(filePath);
-  config.dbBuild(filePath);
+  config.databaseBuild(filePath);
   $('#ulLib li, #ulLib ul').remove();
-  libBuilder(filePath, 'ulLib');
+  buildLibrary(filePath, 'ulLib');
 };
 
 folders = (directory, ID) => { // Toggle for folders in MainLib
@@ -125,7 +125,7 @@ folders = (directory, ID) => { // Toggle for folders in MainLib
     let newDirectory = folders[i].dataset.directory;
     folders[i].querySelector('span').addEventListener('click', function() {
       if ($(`#${newID}`).children().length == 0) {
-        libBuilder(newDirectory, newID);
+        buildLibrary(newDirectory, newID);
       }
       let _ul = $(this).next('ul');
       if (_ul.is(':animated')) return;

@@ -1,3 +1,5 @@
+// bookmark.js updates read percentage as well as saving the position in $temp/bookmark.json
+
 const isThere = require('is-there');
 const jsonfile = require('jsonfile');
 const os = require('os');
@@ -13,10 +15,11 @@ exports.onFileLoad = (filePath, directoryContents) => {
   baseName = path.basename(filePath); // Gets basename
   console.log(`${baseName} loaded into Wonder Reader!`);
 
-  template = {};
-  template.name = baseName;
-  template.currentIndex = 0;
-  template.fullIndex = directoryContents.length - 1;
+  template = {
+    name: baseName,
+    currentIndex: 0,
+    fullIndex: directoryContents.length - 1
+  };
 
   switch (isThere(bookmark)) {
   case true:

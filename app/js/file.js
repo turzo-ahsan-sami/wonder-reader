@@ -68,7 +68,7 @@ openFile = () => {
 
 // The function that loads each file
 fileLoad = (fileName, err) => { // checks and extracts files and then loads them
-  if (err) { console.error(err); }
+  if (err) { return console.error(err); }
   let fileComic, tempFolder, looper;
   // corrects a possible err with HTML loading
   if (process.platform == 'win32') {

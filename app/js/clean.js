@@ -8,11 +8,10 @@ const path = require('path');
 const rimraf = require('rimraf');
 
 const cacheDirectory = path.join(os.tmpdir(), 'wonderReader', 'cache');
+const viewOne = document.getElementById('viewImgOne');
 
 // Function variable
 let clearCache;
-
-const viewOne = document.getElementById('viewImgOne');
 
 // Cleans out the crap
 exports.trash = () => {
