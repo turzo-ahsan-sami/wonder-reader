@@ -11,18 +11,18 @@ exports.fold = (id) => {
   id = document.getElementById(id);
 
   // variables
-  let dimensions, dirContents, fileDir, filePath, height, spread, width;
+  let dimensions, extractedImages, fileDirectory, filePath, height, spread, width;
 
   // function variables
   let sortNumber;
 
   filePath = decode(id);
-  fileDir = path.dirname(filePath);
-  dirContents = strain(fs.readdirSync(fileDir));
+  fileDirectory = path.dirname(filePath);
+  extractedImages = strain(fs.readdirSync(fileDirectory));
   spread = [];
 
-  for (let i = 0; i < dirContents.length; i++) {
-    dimensions = sizeOf(path.join(fileDir, dirContents[i]));
+  for (let i = 0; i < extractedImages.length; i++) {
+    dimensions = sizeOf(path.join(fileDirectory, extractedImages[i]));
     width = dimensions.width;
     height = dimensions.height;
 

@@ -20,17 +20,17 @@ const prevComic = document.getElementById('prevComic');
 
 // Configures Next/Prev comic buttons
 exports.load = (fileName) => {
-  let baseName, filePath, dirContents, comics, issue, nextSrc, prevSrc;
+  let baseName, filePath, comicSeries, comics, issue, nextSrc, prevSrc;
   disable('nextComic');
   disable('prevComic');
 
   baseName = path.basename(fileName);
   filePath = path.dirname(fileName);
-  dirContents = fs.readdirSync(filePath);
+  comicSeries = fs.readdirSync(filePath);
 
   // Cleans out folders and non ['cbr', 'cbz'] files
-  comics = dirContents.filter(function (x, i) {
-    let comic = path.join(filePath, dirContents[i]);
+  comics = comicSeries.filter(function (x, i) {
+    let comic = path.join(filePath, comicSeries[i]);
     return fs.statSync(comic).isFile() && isComic(comic);
   });
 

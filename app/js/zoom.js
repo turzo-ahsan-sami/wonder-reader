@@ -34,6 +34,7 @@ width = () => {
   let cPX = viewer.scrollTop + viewer.clientHeight / 2;
   let cPY = viewer.scrollLeft + viewer.clientWidth / 2;
 
+  // ------------------------
   // Position Ratios to whole
   let cPXR = cPX / inner.clientHeight;
   let cPYR = cPY / inner.clientWidth;

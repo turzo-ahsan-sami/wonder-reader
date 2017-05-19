@@ -8,28 +8,28 @@ const imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
 
 // Returns a path of the extracted comic up until the first image file appears
 exports.merge = (directory) => {
-  let dirContents = fs.readdirSync(directory);
+  let extractedFiles = fs.readdirSync(directory);
   let filtered = [];
 
-  for (let i = 0; i < dirContents.length; i++) {
-    if (imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1 || fs.statSync(path.join(directory, dirContents[i])).isDirectory()) {
-      filtered.push(dirContents[i]);
+  for (let i = 0; i < extractedFiles.length; i++) {
+    if (imgTypes.indexOf(path.extname(extractedFiles[i]).toLowerCase()) > -1 || fs.statSync(path.join(directory, extractedFiles[i])).isDirectory()) {
+      filtered.push(extractedFiles[i]);
     }
   }
-  dirContents = filtered;
+  extractedFiles = filtered;
 
-  if (dirContents.length > 0) {
-    while (fs.statSync(path.join(directory, dirContents[0])).isDirectory()) {
+  if (extractedFiles.length > 0) {
+    while (fs.statSync(path.join(directory, extractedFiles[0])).isDirectory()) {
       filtered = [];
-      for (let i = 0; i < dirContents.length; i++) {
-        let validExtName = imgTypes.indexOf(path.extname(dirContents[i]).toLowerCase()) > -1;
-        let validStat = fs.statSync(path.join(directory, dirContents[i])).isDirectory();
+      for (let i = 0; i < extractedFiles.length; i++) {
+        let validExtName = imgTypes.indexOf(path.extname(extractedFiles[i]).toLowerCase()) > -1;
+        let validStat = fs.statSync(path.join(directory, extractedFiles[i])).isDirectory();
         if (validExtName || validStat) {
-          filtered.push(dirContents[i]);
+          filtered.push(extractedFiles[i]);
         }
       }
       directory = path.join(directory, filtered[0]);
-      dirContents = fs.readdirSync(directory);
+      extractedFiles = fs.readdirSync(directory);
     }
   }
   return directory;

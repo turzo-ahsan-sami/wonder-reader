@@ -22,7 +22,7 @@ const strain = require('./strain.js');
 const title = require('./title.js');
 
 // Global variables
-let dirContents, fileName;
+let extractedImages, fileName;
 
 const bgLoader = document.getElementById('bgLoader');
 const innerWindow = document.getElementById('innerWindow');
@@ -87,11 +87,11 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   switch (isThere(tempFolder)) {
   case true:
     tempFolder = dirFunction.merge(tempFolder);
-    dirContents = fs.readdirSync(tempFolder);
-    if (dirContents.length === 0) {
+    extractedImages = fs.readdirSync(tempFolder);
+    if (extractedImages.length === 0) {
       fileRouter(fileName, tempFolder, looper);
     } else {
-      postExtract(fileName, tempFolder, dirContents);
+      postExtract(fileName, tempFolder, extractedImages);
     }
     break;
   default:
@@ -108,11 +108,11 @@ enable = (id) => {
 };
 
 // After extraction, loads stuff into img tags, as well as other junk
-postExtract = (fileName, tempFolder, dirContents) => {
-  dirContents = strain(dirContents);
+postExtract = (fileName, tempFolder, extractedImages) => {
+  extractedImages = strain(extractedImages);
 
-  viewOne.src = path.join(tempFolder, encodeURIComponent(dirContents[0]));
-  viewTwo.src = path.join(tempFolder, encodeURIComponent(dirContents[1]));
+  viewOne.src = path.join(tempFolder, encodeURIComponent(extractedImages[0]));
+  viewTwo.src = path.join(tempFolder, encodeURIComponent(extractedImages[1]));
 
   page.load(fileName);
   enable('pageLeft');
@@ -187,11 +187,11 @@ zipExtractor = (fileName, tempFolder, looper) => {
 
 extractRouter = (fileName, tempFolder, looper) => {
   tempFolder = dirFunction.merge(tempFolder);
-  dirContents = fs.readdirSync(tempFolder);
+  extractedImages = fs.readdirSync(tempFolder);
   let extName = path.extname(fileName).toLowerCase();
 
   switch(true) {
-  case (dirContents.length == 0 && looper <= 3):
+  case (extractedImages.length == 0 && looper <= 3):
     looper++;
     switch(extName) {
     case '.cbz':
@@ -205,13 +205,13 @@ extractRouter = (fileName, tempFolder, looper) => {
       postLoad();
     }
     break;
-  case (dirContents.length != 0 && looper > 3):
+  case (extractedImages.length != 0 && looper > 3):
     alert('Possible broken file?');
     postLoad();
     break;
   default:
     console.log('Extraction complete!');
     postLoad();
-    postExtract(fileName, tempFolder, dirContents);
+    postExtract(fileName, tempFolder, extractedImages);
   }
 };

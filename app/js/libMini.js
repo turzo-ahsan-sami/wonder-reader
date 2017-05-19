@@ -10,14 +10,14 @@ const path = require('path');
 exports.load = (fileName) => {
   let baseName = path.basename(fileName);
   let filePath = path.dirname(fileName);
-  let dirContents = fs.readdirSync(filePath);
+  let comicSeries = fs.readdirSync(filePath);
 
   $('.libFile').remove();
   $('.libDir').remove();
-  for (let i = 0; i < dirContents.length; i++) {
-    let comic = dirContents[i];
+  for (let i = 0; i < comicSeries.length; i++) {
+    let comic = comicSeries[i];
     if (fs.statSync(path.join(filePath, comic)).isFile() && isComic(comic)) {
-      if (dirContents[i] === baseName) {
+      if (comicSeries[i] === baseName) {
         $('#dirLib').append(`
           <li class="libFile current">
             <span>

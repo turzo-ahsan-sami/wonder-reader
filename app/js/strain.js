@@ -3,11 +3,11 @@
 const path = require('path');
 const imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']; // Allowable File Types
 
-// Cleans out non image files from array
-module.exports = (array) => {
-  array = array.filter(function (x, i) {
-    return imgTypes.indexOf(path.extname(array[i]).toLowerCase()) > -1;
+// Cleans out non image files from ARRAY
+module.exports = (ARRAY) => {
+  ARRAY = ARRAY.filter(function (x, i) {
+    return imgTypes.indexOf(path.extname(ARRAY[i]).toLowerCase()) > -1;
   });
-  array = array.sort();
-  return array;
+  ARRAY = ARRAY.sort();
+  return ARRAY;
 };
