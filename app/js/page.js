@@ -48,6 +48,10 @@ exports.load = (file, DIR, IMAGES) => {
   }
 
   // Preloads each image file for a smoother experience
+  imageLoad();
+};
+
+async function imageLoad() {
   loadedImages = [];
   for (let i = 0; i < extractedImages.length; i++) {
     let img = new Image();
@@ -55,7 +59,7 @@ exports.load = (file, DIR, IMAGES) => {
     img.src = imgSrc;
     loadedImages.push(img);
   }
-};
+}
 
 pageTurn = (val) => {
   let polarity;

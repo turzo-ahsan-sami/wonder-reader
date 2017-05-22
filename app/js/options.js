@@ -54,6 +54,10 @@ exports.onStart = () => {
   }
 };
 
+exports.toggle = () => {
+  toggle();
+};
+
 // ----- ELEM EXAMPLE, usually targetting `input[range]`
 //
 // <label for="optContrast">Contrast</label>
@@ -65,13 +69,13 @@ exports.onStart = () => {
 
 // This uses option[i] and extracts and updates inputs
 onInput = (elem, display) => {
-  let val = elem.value;
+  let value = elem.value;
   let style = elem.dataset.style;
-  display[style] = `${style}(${val})`;
-  inner.style.webkitFilter = display.style();
   let Style = style.capitalize();
   let text = document.getElementById(`opt${Style}Text`);
-  text.value = val;
+  display[style] = `${style}(${value})`;
+  inner.style.webkitFilter = display.style();
+  text.value = value;
 };
 
 // This uses options[i] to change input values onStart to that of the saved config.json[display]
@@ -82,8 +86,4 @@ onStart = (elem, display) => {
   let text = document.getElementById(`opt${style.capitalize()}Text`);
   elem.value = value;
   text.value = value;
-};
-
-exports.toggle = () => {
-  toggle();
 };
