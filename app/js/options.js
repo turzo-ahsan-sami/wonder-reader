@@ -35,7 +35,7 @@ exports.onStart = () => {
       debounce(config.displaySave(display), 250);
     });
   }
-  console.log(inner.style.webkitFilter);
+
   // Options :: Reset Buttons
   let buttons = optWindow.getElementsByTagName('button');
   for(let i = 0; i < buttons.length; i++) {

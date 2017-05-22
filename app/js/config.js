@@ -11,7 +11,7 @@ const configFile = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json')
 const column = document.getElementById('column');
 const columnIcon = document.getElementById('columnIcon');
 
-const template = {library: '', page: 2, zoom: 100};
+const template = {library: '', page: 2, zoom: 100, display: {'brightness': 'brightness(1.0)', 'contrast': 'contrast(1.0)', 'grayscale': 'grayscale(0.0)'}};
 const libNotFound = '<p>Library not found. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.</p>';
 const libIsEmpty = '<p>The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.</p>';
 
