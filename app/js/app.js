@@ -27,13 +27,13 @@ document.addEventListener('keydown', function (event) {
   let elem = document.activeElement;
   if (viewer.dataset.active && !(elem.id === 'zoomText' || elem.tagName.toLowerCase() === 'input')) {
     switch (event.which) {
-    case 37:
-    case 65: // Left or `a` key
-      page.Left();
-      break;
-    case 39:
-    case 68: // Right or `d` key
-      page.Right();
+      case 37:
+      case 65: // Left or `a` key
+        page.Left();
+        break;
+      case 39:
+      case 68: // Right or `d` key
+        page.Right();
     }
   }
 });

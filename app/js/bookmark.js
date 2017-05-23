@@ -22,20 +22,20 @@ exports.onLoad = (filePath, directoryContents) => {
   };
 
   switch (isThere(bookmark)) {
-  case true:
-    obj = jsonfile.readFileSync(bookmark);
-    if (obj[baseName] !== undefined) { // if baseName is listed
-      return obj[baseName].currentIndex;
-    } else { // if baseName isn't listed, adds item to bookmark.json
-      obj[baseName] = template;
+    case true:
+      obj = jsonfile.readFileSync(bookmark);
+      if (obj[baseName] !== undefined) { // if baseName is listed
+        return obj[baseName].currentIndex;
+      } else { // if baseName isn't listed, adds item to bookmark.json
+        obj[baseName] = template;
+        jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
+        return 0;
+      }
+    default:
+      obj = {};
+      obj[baseName] = template; // Pushes into Array
       jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
       return 0;
-    }
-  default:
-    obj = {};
-    obj[baseName] = template; // Pushes into Array
-    jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
-    return 0;
   }
 };
 

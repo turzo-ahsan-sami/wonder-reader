@@ -44,38 +44,38 @@ onStart = () => {
   let libStatus= document.getElementById('libStatus');
   let obj;
   switch (isThere(configFile)) {
-  case true:
-    jsonfile.readFile(configFile, function(err, obj) {
-      if (err) console.error(err);
-      column.dataset.val = obj.page || 2;
-      switch (Number(column.dataset.val)) {
-      case 1:
-        columnIcon.classList.remove('fa-minus-square-o');
-        columnIcon.classList.add('fa-square-o');
-        break;
-      default:
-        columnIcon.classList.remove('fa-square-o');
-        columnIcon.classList.add('fa-minus-square-o');
-      }
-      switch (isThere(obj.library)) {
-      case true:
-        library.builder(obj.library);
-        break;
-      default:
-        libStatus.innerHTML = libNotFound;
-        console.log('Library not found.');
-      }
-    });
-    break;
-  default:
-    obj = template;
-    libStatus.innerHTML = libIsEmpty;
-    mkdirp(path.dirname(configFile), function(err) {
-      if (err) console.error(err);
-      jsonfile.writeFile(configFile, obj, function(err) {
+    case true:
+      jsonfile.readFile(configFile, function(err, obj) {
         if (err) console.error(err);
+        column.dataset.val = obj.page || 2;
+        switch (Number(column.dataset.val)) {
+          case 1:
+            columnIcon.classList.remove('fa-minus-square-o');
+            columnIcon.classList.add('fa-square-o');
+            break;
+          default:
+            columnIcon.classList.remove('fa-square-o');
+            columnIcon.classList.add('fa-minus-square-o');
+        }
+        switch (isThere(obj.library)) {
+          case true:
+            library.builder(obj.library);
+            break;
+          default:
+            libStatus.innerHTML = libNotFound;
+            console.log('Library not found.');
+        }
       });
-    });
+      break;
+    default:
+      obj = template;
+      libStatus.innerHTML = libIsEmpty;
+      mkdirp(path.dirname(configFile), function(err) {
+        if (err) console.error(err);
+        jsonfile.writeFile(configFile, obj, function(err) {
+          if (err) console.error(err);
+        });
+      });
   }
 };
 

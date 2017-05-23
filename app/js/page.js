@@ -40,11 +40,11 @@ exports.load = (file, DIR, IMAGES) => {
 
   column.classList.remove('disabled');
   switch (Number(column.dataset.val)) {
-  case 1:
-    singlePage(DIR, extractedImages, PAGE);
-    break;
-  default:
-    defaults(DIR, extractedImages, PAGE);
+    case 1:
+      singlePage(DIR, extractedImages, PAGE);
+      break;
+    default:
+      defaults(DIR, extractedImages, PAGE);
   }
 
   // Preloads each image file for a smoother experience
@@ -134,30 +134,30 @@ singlePage = (filePath, extractedImages, PAGE) => {
 defaults = (filePath, extractedImages, PAGE) => {
   let val = Number(column.dataset.val), sizeOne, sizeTwo, ratioOne, ratioTwo;
   switch (Math.abs(val)) {
-  case 1:
-    singlePage(filePath, extractedImages, PAGE);
-    break;
-  default:
-    if (PAGE >= extractedImages.length - 1 || centerFolds.indexOf(PAGE) > -1 || centerFolds.indexOf(PAGE + 1) > -1) {
+    case 1:
       singlePage(filePath, extractedImages, PAGE);
-    } else {
-      viewOne.style.display = 'initial';
-      viewTwo.style.display = 'initial';
+      break;
+    default:
+      if (PAGE >= extractedImages.length - 1 || centerFolds.indexOf(PAGE) > -1 || centerFolds.indexOf(PAGE + 1) > -1) {
+        singlePage(filePath, extractedImages, PAGE);
+      } else {
+        viewOne.style.display = 'initial';
+        viewTwo.style.display = 'initial';
 
-      sizeOne = sizeOf(path.join(filePath, extractedImages[PAGE]));
-      sizeTwo = sizeOf(path.join(filePath, extractedImages[PAGE + 1]));
-      ratioOne = sizeOne.width / sizeOne.height;
-      ratioTwo = sizeTwo.width / sizeTwo.height;
+        sizeOne = sizeOf(path.join(filePath, extractedImages[PAGE]));
+        sizeTwo = sizeOf(path.join(filePath, extractedImages[PAGE + 1]));
+        ratioOne = sizeOne.width / sizeOne.height;
+        ratioTwo = sizeTwo.width / sizeTwo.height;
 
-      viewOne.style.width = `${ratioOne / (ratioOne + ratioTwo) * 100}%`;
-      viewTwo.style.width = `${ratioTwo / (ratioOne + ratioTwo) * 100}%`;
+        viewOne.style.width = `${ratioOne / (ratioOne + ratioTwo) * 100}%`;
+        viewTwo.style.width = `${ratioTwo / (ratioOne + ratioTwo) * 100}%`;
 
-      viewOne.src = path.join(filePath, encodeURIComponent(extractedImages[PAGE]));
-      viewTwo.src = path.join(filePath, encodeURIComponent(extractedImages[PAGE + 1]));
+        viewOne.src = path.join(filePath, encodeURIComponent(extractedImages[PAGE]));
+        viewTwo.src = path.join(filePath, encodeURIComponent(extractedImages[PAGE + 1]));
 
-      viewer.scrollTop = 0;
-      viewer.scrollLeft = 0;
-    }
+        viewer.scrollTop = 0;
+        viewer.scrollLeft = 0;
+      }
   }
 };
 
@@ -173,17 +173,17 @@ exports.Left = () => {
 
 exports.spread = () => {
   switch (Number(column.dataset.val)) {
-  case 1:
-    columnIcon.classList.remove('fa-square-o');
-    columnIcon.classList.add('fa-minus-square-o');
-    column.dataset.val = 2;
-    defaults(filePath, extractedImages, PAGE);
-    break;
-  case 2:
-    columnIcon.classList.remove('fa-minus-square-o');
-    columnIcon.classList.add('fa-square-o');
-    column.dataset.val = 1;
-    singlePage(filePath, extractedImages, PAGE);
+    case 1:
+      columnIcon.classList.remove('fa-square-o');
+      columnIcon.classList.add('fa-minus-square-o');
+      column.dataset.val = 2;
+      defaults(filePath, extractedImages, PAGE);
+      break;
+    case 2:
+      columnIcon.classList.remove('fa-minus-square-o');
+      columnIcon.classList.add('fa-square-o');
+      column.dataset.val = 1;
+      singlePage(filePath, extractedImages, PAGE);
   }
   config.pageViewSave(column.dataset.val);
 };

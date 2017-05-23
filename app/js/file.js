@@ -85,19 +85,19 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', comic);
   looper = 0;
   switch (isThere(tempFolder)) {
-  case true:
-    tempFolder = directoryFunction.merge(tempFolder);
-    extractedImages = fs.readdirSync(tempFolder);
-    if (extractedImages.length === 0) {
+    case true:
+      tempFolder = directoryFunction.merge(tempFolder);
+      extractedImages = fs.readdirSync(tempFolder);
+      if (extractedImages.length === 0) {
+        fileRouter(fileName, tempFolder, looper);
+      } else {
+        postExtract(fileName, tempFolder, extractedImages);
+      }
+      break;
+    default:
+      preLoad();
+      mkdirp.sync(tempFolder, {'mode': '0777'});
       fileRouter(fileName, tempFolder, looper);
-    } else {
-      postExtract(fileName, tempFolder, extractedImages);
-    }
-    break;
-  default:
-    preLoad();
-    mkdirp.sync(tempFolder, {'mode': '0777'});
-    fileRouter(fileName, tempFolder, looper);
   } // End Directory checker
 };
 
@@ -133,12 +133,12 @@ exports.dialog = () => {
 exports.loader = (fileName) => {
   fileName = decodeURIComponent(fileName);
   switch (isThere(fileName)) {
-  case true:
-    fileLoad(fileName);
-    break;
-  default:
-    alert(`Missing or broken file: Could not open ${fileName}`);
-    break;
+    case true:
+      fileLoad(fileName);
+      break;
+    default:
+      alert(`Missing or broken file: Could not open ${fileName}`);
+      break;
   }
 };
 
@@ -146,15 +146,15 @@ exports.loader = (fileName) => {
 fileRouter = (fileName, tempFolder, looper) => {
   let extName = path.extname(fileName).toLowerCase();
   switch (extName) {
-  case '.cbr':
-    rarExtractor(fileName, tempFolder, looper);
-    break;
-  case '.cbz':
-    zipExtractor(fileName, tempFolder, looper);
-    break;
-  default:
-    alert('Possible broken file?');
-    postLoad();
+    case '.cbr':
+      rarExtractor(fileName, tempFolder, looper);
+      break;
+    case '.cbz':
+      zipExtractor(fileName, tempFolder, looper);
+      break;
+    default:
+      alert('Possible broken file?');
+      postLoad();
   }
 };
 
@@ -190,27 +190,27 @@ extractRouter = (fileName, tempFolder, looper) => {
   let extName = path.extname(fileName).toLowerCase();
 
   switch(true) {
-  case (extractedImages.length == 0 && looper <= 3):
-    looper++;
-    switch(extName) {
-    case '.cbz':
-      rarExtractor(fileName, tempFolder, looper);
+    case (extractedImages.length == 0 && looper <= 3):
+      looper++;
+      switch(extName) {
+        case '.cbz':
+          rarExtractor(fileName, tempFolder, looper);
+          break;
+        case '.cbr':
+          zipExtractor(fileName, tempFolder, looper);
+          break;
+        default:
+          alert('Possible broken file?');
+          postLoad();
+      }
       break;
-    case '.cbr':
-      zipExtractor(fileName, tempFolder, looper);
-      break;
-    default:
+    case (extractedImages.length != 0 && looper > 3):
       alert('Possible broken file?');
       postLoad();
-    }
-    break;
-  case (extractedImages.length != 0 && looper > 3):
-    alert('Possible broken file?');
-    postLoad();
-    break;
-  default:
-    console.log('Extraction complete!');
-    postLoad();
-    postExtract(fileName, tempFolder, extractedImages);
+      break;
+    default:
+      console.log('Extraction complete!');
+      postLoad();
+      postExtract(fileName, tempFolder, extractedImages);
   }
 };
