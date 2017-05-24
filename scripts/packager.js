@@ -33,10 +33,24 @@ packager(
     icon: './shieldIcon'
   },
   function cb(err, appPaths) {
-    postPackage(appPaths);
+    postPackage(err, appPaths);
   }
 );
 
-postPackage = (appPaths) => {
-  console.log(colors.magenta(`Wonder Reader packaging successful! Files can be found at ${appPaths}`));
+postPackage = (err, appPaths) => {
+  if (err) {
+    console.error(
+      colors.red(
+        `Wonder Reader packaging failed. \n
+        Error: ${err}`
+      )
+    );
+  } else {
+    console.log(
+        colors.magenta(
+          `Wonder Reader packaging successful! Files can be found at \n
+          ${appPaths}`
+        )
+      );
+  }
 };

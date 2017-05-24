@@ -41,10 +41,10 @@ exports.load = (file, DIR, IMAGES) => {
   column.classList.remove('disabled');
   switch (Number(column.dataset.val)) {
     case 1:
-      singlePage(DIR, extractedImages, PAGE);
+      singlePage(filePath, extractedImages, PAGE);
       break;
     default:
-      defaults(DIR, extractedImages, PAGE);
+      defaults(filePath, extractedImages, PAGE);
   }
 
   // Preloads each image file for a smoother experience
@@ -55,7 +55,7 @@ async function imageLoad() {
   loadedImages = [];
   for (let i = 0; i < extractedImages.length; i++) {
     let img = new Image();
-    let imgSrc = path.join(DIR, encodeURIComponent(extractedImages[i]));
+    let imgSrc = path.join(filePath, encodeURIComponent(extractedImages[i]));
     img.src = imgSrc;
     loadedImages.push(img);
   }
