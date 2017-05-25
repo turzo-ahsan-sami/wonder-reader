@@ -17,7 +17,7 @@ exports.load = (fileName) => {
   for (let i = 0; i < comicSeries.length; i++) {
     let comic = comicSeries[i];
     if (fs.statSync(path.join(filePath, comic)).isFile() && isComic(comic)) {
-      if (comicSeries[i] === baseName) {
+      if (comic === baseName) {
         $('#dirLib').append(`
           <li class="libFile current">
             <span>

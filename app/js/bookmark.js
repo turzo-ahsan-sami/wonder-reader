@@ -24,12 +24,13 @@ exports.onLoad = (filePath, directoryContents) => {
   switch (isThere(bookmark)) {
     case true:
       obj = jsonfile.readFileSync(bookmark);
-      if (obj[baseName] !== undefined) { // if baseName is listed
-        return obj[baseName].currentIndex;
-      } else { // if baseName isn't listed, adds item to bookmark.json
-        obj[baseName] = template;
-        jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
-        return 0;
+      switch (obj[baseName]) {
+        case undefined: // if baseName isn't listed, adds item to bookmark.json
+          obj[baseName] = template;
+          jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
+          return 0;
+        default: // if baseName is listed
+          return obj[baseName].currentIndex;
       }
     default:
       obj = {};
@@ -75,7 +76,9 @@ exports.percent = (fileName) => {
     if (comic) {
       let percent = (comic.currentIndex / comic.fullIndex) * 100;
       return `<span class="bmPercent ${spanClass}">${percent.toFixed(0)}%</span>`;
-    } else { return `<span class="bmPercent ${spanClass}">0%</span>`; }
+    } else {
+      return `<span class="bmPercent ${spanClass}">0%</span>`;
+    }
   } else {
     jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
     return `<span class="bmPercent ${spanClass}">0%</span>`;

@@ -62,14 +62,12 @@ async function imageLoad() {
 }
 
 pageTurn = (val) => {
-  let polarity;
-  PAGE = Number(PAGE);
-  val = Number(val);
-
-  polarity = 1;
+  let polarity = 1;
   if (val < 0) {
     polarity = -1;
   }
+  PAGE = Number(PAGE);
+  val = Number(val);
 
   // Limits Val to range
   if (PAGE + val >= extractedImages.length - 1) { // For last page

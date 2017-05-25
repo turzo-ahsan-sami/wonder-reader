@@ -21,12 +21,8 @@ const finished = '';
 let build, toggle, buildLibrary, slide, folders;
 
 // Library Windows collapsing
-slide = () => {
-  sideLib.classList.toggle('shift-left');
-};
-toggle = () => {
-  $('#mainLib').slideToggle(800);
-};
+slide = () => { sideLib.classList.toggle('shift-left'); };
+toggle = () => { $('#mainLib').slideToggle(800); };
 
 // Builds the library with proper HTML
 buildLibrary = (directory, listID) => {
@@ -35,7 +31,6 @@ buildLibrary = (directory, listID) => {
     libStatus.innerHTML = libError;
     return;
   }
-
   let files = fs.readdirSync(directory);
   libStatus.innerHTML = loading;
 
@@ -43,15 +38,16 @@ buildLibrary = (directory, listID) => {
   for (let i = 0; i < files.length; i++) {
     let file = files[i];
     let filePath = path.join(directory, file);
-
+    let stat = fs.statSync(filePath);
     // Inserts file.loader() for files
-    if (fs.statSync(filePath).isFile() && isComic(file)) {
+    if (stat.isFile() && isComic(file)) {
       let percent = bookmark.percent(file);
       file = path.basename(file, path.extname(file));
       filePath = directoryFunction.encode(filePath);
       // Converts win32 paths to HTML compatible paths
       if (process.platform == 'win32') {
         filePath = filePath.replace(/\\/g, '/');
+        console.log(filePath);
       }
       $(`#${listID}`).append(
         `<li class="file">
@@ -63,11 +59,10 @@ buildLibrary = (directory, listID) => {
       );
 
     // Deep scans interior folders
-    } else if (fs.statSync(filePath).isDirectory() && file.charAt(0) != '.') {
+    } else if (stat.isDirectory() && file.charAt(0) != '.') {
       // Removes potentially damaging characters for app
       let newListID = (`${listID}${file}`)
         .replace(/\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]|\./g, '');
-
       $(`#${listID}`).append(
         `<li class="folder" data-id='${newListID}' data-directory="${filePath}">
           <span>

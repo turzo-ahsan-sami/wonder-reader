@@ -22,20 +22,17 @@ let configSave, databaseBuild, defaults, onStart;
 databaseBuild = (filePath) => {
   let Files = dirTree(filePath, ['.cbr', '.cbz']);
   jsonfile.writeFile(comics, Files, {'spaces': 2}, function(err) {
-    if (err) console.error(err);
+    if (err) { console.error(err); }
     console.log(`Comic database built and saved for ${filePath}`);
   });
 };
 
 configSave = (type, val) => {
   jsonfile.readFile(configFile, function(err, obj) {
-    if (err) {
-      console.error(err);
-      return;
-    }
+    if (err) { return console.error(err); }
     obj[type] = val;
     jsonfile.writeFile(configFile, obj, function(err) {
-      if (err) console.error(err);
+      if (err) { console.error(err); }
     });
   });
 };
@@ -46,7 +43,7 @@ onStart = () => {
   switch (isThere(configFile)) {
     case true:
       jsonfile.readFile(configFile, function(err, obj) {
-        if (err) console.error(err);
+        if (err) { console.error(err); }
         column.dataset.val = obj.page || 2;
         switch (Number(column.dataset.val)) {
           case 1:
@@ -63,7 +60,6 @@ onStart = () => {
             break;
           default:
             libStatus.innerHTML = libNotFound;
-            console.log('Library not found.');
         }
       });
       break;
@@ -71,9 +67,9 @@ onStart = () => {
       obj = template;
       libStatus.innerHTML = libIsEmpty;
       mkdirp(path.dirname(configFile), function(err) {
-        if (err) console.error(err);
+        if (err) { console.error(err); }
         jsonfile.writeFile(configFile, obj, function(err) {
-          if (err) console.error(err);
+          if (err) { console.error(err); }
         });
       });
   }

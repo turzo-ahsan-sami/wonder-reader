@@ -56,7 +56,6 @@ openFile = () => {
       extensions: ['cbr', 'cbz']
     }]
     },
-
     // Open File function
     function (fileNames) {
       if (fileNames === undefined) return; // Returns on error
@@ -138,7 +137,6 @@ exports.loader = (fileName) => {
       break;
     default:
       alert(`Missing or broken file: Could not open ${fileName}`);
-      break;
   }
 };
 
@@ -159,17 +157,20 @@ fileRouter = (fileName, tempFolder, looper) => {
 };
 
 rarExtractor = (fileName, tempFolder, looper) => {
-  if (process.platform == 'linux') {
-    let rar = new Unrar(fileName);
-    rar.extract(tempFolder, null, function (err) {
-      if (err) { console.error(err); }
-      extractRouter(fileName, tempFolder, looper);
-    });
-  } else {
-    cbr(fileName, tempFolder, function (error) {
-      if (error) { console.error(error); }
-      extractRouter(fileName, tempFolder, looper);
-    });
+  let rar;
+  switch (process.platform) {
+    case 'linux':
+      rar = new Unrar(fileName);
+      rar.extract(tempFolder, null, function (err) {
+        if (err) { console.error(err); }
+        extractRouter(fileName, tempFolder, looper);
+      });
+      break;
+    default:
+      cbr(fileName, tempFolder, function (error) {
+        if (error) { console.error(error); }
+        extractRouter(fileName, tempFolder, looper);
+      });
   }
 };
 

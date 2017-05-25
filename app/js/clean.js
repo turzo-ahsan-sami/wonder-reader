@@ -14,7 +14,7 @@ let clearCache;
 // Cleans out the crap
 exports.trash = (currentDirectory) => {
   getSize(cacheDirectory, function (err, size) {
-    if (err) console.error(err);
+    if (err) { console.error(err); }
     let cacheSize = size / 1024 / 1024;
     let r = confirm(`This will clear your Wonder Reader cache (Currently ${cacheSize.toFixed(2)} Mb). \n\nContinue?`);
     if (r === true) {
@@ -30,9 +30,7 @@ exports.autoTrash = () => {
 
 // The crap cleaner function itself
 clearCache = (currentDirectory) => {
-  let cacheContents;
-
-  cacheContents = fs.readdirSync(cacheDirectory);
+  let cacheContents = fs.readdirSync(cacheDirectory);
 
   for (let i = 0; i < cacheContents.length; i++) {
     let item = path.join(cacheDirectory, cacheContents[i]);
