@@ -38,7 +38,7 @@
   "devDependencies": {
     "colors": "1.1.2",
     "electron-packager": "8.6.0",
-    "electron": "1.6.2",
+    "electron": "1.6.10",
     "eslint": "^3.10.2",
     "grunt": "1.0.1",
     "grunt-contrib-sass": "1.0.0",

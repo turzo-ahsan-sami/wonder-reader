@@ -8,8 +8,6 @@ app/cache/*/
 build/
 .vscode/
 
-yarn.lock
-
 # Runtime data
 pids
 *.pid
