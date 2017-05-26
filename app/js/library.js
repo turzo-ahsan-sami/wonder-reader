@@ -80,13 +80,9 @@ buildLibrary = (directory, listID) => {
   folders(directory, listID);
 };
 
-exports.slide = () => {
-  slide();
-};
+exports.slide = () => { slide(); };
 
-exports.toggle = () => {
-  toggle();
-};
+exports.toggle = () => { toggle(); };
 
 // Dialog to open up directory
 exports.openDir = () => {
@@ -102,9 +98,7 @@ exports.openDir = () => {
 };
 
 // Exported version of buildLibrary()
-exports.builder = (filePath) => {
-  build(filePath);
-};
+exports.builder = (filePath) => { build(filePath); };
 
 build = (filePath) => {
   config.libSave(filePath);
@@ -119,9 +113,7 @@ folders = (directory, ID) => { // Toggle for folders in MainLib
     let newID = folders[i].dataset.id;
     let newDirectory = folders[i].dataset.directory;
     folders[i].querySelector('span').addEventListener('click', function() {
-      if ($(`#${newID}`).children().length == 0) {
-        buildLibrary(newDirectory, newID);
-      }
+      if ($(`#${newID}`).children().length == 0) { buildLibrary(newDirectory, newID); }
       let _ul = $(this).next('ul');
       if (_ul.is(':animated')) return;
       $(this).children('.fa-caret-down').toggleClass('rotate');

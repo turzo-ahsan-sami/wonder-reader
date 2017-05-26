@@ -101,9 +101,7 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
 };
 
 // Enable et Disable ID's
-enable = (id) => {
-  document.getElementById(id).disabled = false;
-};
+enable = (id) => { document.getElementById(id).disabled = false; };
 
 // After extraction, loads stuff into img tags, as well as other junk
 postExtract = (fileName, tempFolder, extractedImages) => {
@@ -125,9 +123,7 @@ postExtract = (fileName, tempFolder, extractedImages) => {
   viewer.scrollLeft = 0;
 };
 
-exports.dialog = () => {
-  openFile();
-};
+exports.dialog = () => { openFile(); };
 
 exports.loader = (fileName) => {
   fileName = decodeURIComponent(fileName);
@@ -185,11 +181,9 @@ zipExtractor = (fileName, tempFolder, looper) => {
 };
 
 extractRouter = (fileName, tempFolder, looper) => {
-
   tempFolder = directoryFunction.merge(tempFolder);
   extractedImages = fs.readdirSync(tempFolder);
   let extName = path.extname(fileName).toLowerCase();
-
   switch(true) {
     case (extractedImages.length == 0 && looper <= 3):
       looper++;

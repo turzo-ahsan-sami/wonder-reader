@@ -101,30 +101,20 @@ optWindow.addEventListener('mouseleave', function() {
 
 // zoomSlider
 document.getElementById('zoomSlider').addEventListener('input',
-  function() {
-    zoom.width();
-  }
+  function() { zoom.width(); }
 );
 // Page navigation
 document.getElementById('column').addEventListener('click',
-  function() {
-    page.spread();
-  }
+  function() { page.spread(); }
 );
 document.getElementById('pageLeft').addEventListener('click',
-  function() {
-    page.Left();
-  }
+  function() { page.Left(); }
 );
 document.getElementById('pageRight').addEventListener('click',
-  function() {
-    page.Right();
-  }
+  function() { page.Right(); }
 );
 document.getElementById('openFile').addEventListener('click',
-  function() {
-    file.dialog();
-  }
+  function() { file.dialog(); }
 );
 document.getElementById('trash').addEventListener('click',
   function() {
@@ -134,24 +124,16 @@ document.getElementById('trash').addEventListener('click',
 );
 // Library navigation & functions
 document.getElementById('libSlider').addEventListener('click',
-  function() {
-    library.slide();
-  }
+  function() { library.slide(); }
 );
 document.getElementById('openDirectory').addEventListener('click',
-  function() {
-    library.openDir();
-  }
+  function() { library.openDir(); }
 );
 document.getElementById('libDropDown').addEventListener('click',
-  function() {
-    library.toggle();
-  }
+  function() { library.toggle(); }
 );
 document.getElementById('options').addEventListener('click',
-  function() {
-    options.toggle();
-  }
+  function() { options.toggle(); }
 );
 
 // Loads Default Values;

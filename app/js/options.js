@@ -54,9 +54,7 @@ exports.onStart = () => {
   }
 };
 
-exports.toggle = () => {
-  toggle();
-};
+exports.toggle = () => { toggle(); };
 
 // ----- ELEM EXAMPLE, usually targetting `input[range]`
 //

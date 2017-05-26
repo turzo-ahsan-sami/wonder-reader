@@ -43,15 +43,15 @@ exports.onLoad = (filePath, directoryContents) => {
 // Updates JSON with current page
 exports.onChange = (index) => {
   jsonfile.readFile(bookmark, function (err, obj) {
-    if (err) { return err; }
+    if (err) { return console.error(err); }
     obj[baseName].currentIndex = index;
     jsonfile.writeFile(bookmark, obj, {spaces: 2}, function (err) {
-      if (err) { return err; }
+      if (err) { return console.error(err); }
     });
-    let percent = (obj[baseName].currentIndex / obj[baseName].fullIndex) * 100;
-    let base = path.basename(obj[baseName].name, path.extname(obj[baseName].name));
+    let comic = obj[baseName];
+    let base = path.basename(comic.name, path.extname(comic.name));
     let spanClass = base.replace(regex, '');
-
+    let percent = (comic.currentIndex / comic.fullIndex) * 100;
     let elem = document.getElementsByClassName(spanClass);
     for (let i = 0; i < elem.length; i++) {
       elem[i].innerHTML = `${percent.toFixed(0)}%`;
@@ -71,16 +71,17 @@ exports.onStart = () => {
 exports.percent = (fileName) => {
   let base = path.basename(fileName, path.extname(fileName));
   let spanClass = base.replace(regex, '');
+  let comic, percent;
   if (isThere(bookmark)) {
-    let comic = obj[fileName];
-    if (comic) {
-      let percent = (comic.currentIndex / comic.fullIndex) * 100;
-      return `<span class="bmPercent ${spanClass}">${percent.toFixed(0)}%</span>`;
+    if (obj[fileName]) {
+      comic = obj[fileName];
+      percent = (comic.currentIndex / comic.fullIndex) * 100;
     } else {
-      return `<span class="bmPercent ${spanClass}">0%</span>`;
+      percent = 0;
     }
   } else {
     jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
-    return `<span class="bmPercent ${spanClass}">0%</span>`;
+    percent = 0;
   }
+  return `<span class="bmPercent ${spanClass}">${percent.toFixed(0)}%</span>`;
 };

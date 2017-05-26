@@ -63,9 +63,7 @@ async function imageLoad() {
 
 pageTurn = (val) => {
   let polarity = 1;
-  if (val < 0) {
-    polarity = -1;
-  }
+  if (val < 0) { polarity = -1; }
   PAGE = Number(PAGE);
   val = Number(val);
 
@@ -87,16 +85,15 @@ pageTurn = (val) => {
     PAGE = 0;
     defaults(filePath, extractedImages, PAGE);
   } else {
-    if (centerFolds.length === 0) {
-      // For no centerFolds. This is easy
+    if (centerFolds.length === 0) { // For no centerFolds. This is easy
+
       PAGE = PAGE + val;
       if (PAGE === extractedImages.length - 1) {
         singlePage(filePath, extractedImages, PAGE);
       } else {
         defaults(filePath, extractedImages, PAGE);
       }
-    } else {
-      // For when any CenterFold exists //
+    } else { // For when any CenterFold exists
       if (centerFolds.indexOf(PAGE + polarity) > -1) {
         PAGE = PAGE + polarity;
         singlePage(filePath, extractedImages, PAGE);

@@ -16,9 +16,7 @@ const zoomSlide = document.getElementById('zoomSlider');
 let autoResize, width, textUpdate;
 
 // Syncs dial to output box
-textUpdate = (val) => {
-  document.getElementById('zoomText').value = val;
-};
+textUpdate = (val) => { document.getElementById('zoomText').value = val; };
 
 // Function that resizes innerWindow div
 autoResize = () => {
@@ -70,9 +68,7 @@ zoomEvent.on('save', function() {
   debounce(config.zoomSave(zoomSlide.value), 250);
 });
 
-exports.autoResize = () => {
-  autoResize();
-};
+exports.autoResize = () => { autoResize(); };
 
 // Zoom on Start Up
 exports.onStart = () => {
@@ -83,6 +79,4 @@ exports.onStart = () => {
   width();
 };
 
-exports.width = () => {
-  width();
-};
+exports.width = () => { width(); };

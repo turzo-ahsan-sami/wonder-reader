@@ -8,12 +8,8 @@ const path = require('path');
 // Function variable
 let enable, disable;
 
-enable = (id) => {
-  document.getElementById(id).disabled = false;
-};
-disable = (id) => {
-  document.getElementById(id).disabled = true;
-};
+enable = (id) => { document.getElementById(id).disabled = false; };
+disable = (id) => { document.getElementById(id).disabled = true; };
 
 const nextComic = document.getElementById('nextComic');
 const prevComic = document.getElementById('prevComic');

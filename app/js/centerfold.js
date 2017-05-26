@@ -12,18 +12,12 @@ exports.fold = (filePath, extractedImages) => {
   let sortNumber;
 
   spread = [];
-
   for (let i = 0; i < extractedImages.length; i++) {
     dimensions = sizeOf(path.join(filePath, extractedImages[i]));
     width = dimensions.width;
     height = dimensions.height;
-
-    if (width >= height) {
-      spread.push(i);
-    }
+    if (width >= height) { spread.push(i); }
   }
-  sortNumber = (a, b) => {
-    return a - b;
-  };
+  sortNumber = (a, b) => { return a - b; };
   return spread.sort(sortNumber);
 };
