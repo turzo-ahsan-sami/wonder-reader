@@ -1,5 +1,4 @@
 // directory.js merges directories within directories to then return a new path
-
 const path = require('path');
 const fs = require('fs');
 
@@ -8,30 +7,23 @@ const imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
 
 // Returns a path of the extracted comic up until the first image file appears
 exports.merge = (directory) => {
-  let extractedFiles = fs.readdirSync(directory);
-  let filtered = [];
-
-  for (let i = 0; i < extractedFiles.length; i++) {
-    let validExtName = imgTypes.indexOf(path.extname(extractedFiles[i]).toLowerCase()) > -1;
-    let validStat = fs.statSync(path.join(directory, extractedFiles[i])).isDirectory();
-    if (validExtName || validStat) {
-      filtered.push(extractedFiles[i]);
-    }
-  }
-  extractedFiles = filtered;
-
+  let extractedFiles, filtered, filePath, validExtName, validPath;
+  extractedFiles = fs.readdirSync(directory);
+  filePath = path.join(directory, extractedFiles[0]);
   if (extractedFiles.length > 0) {
-    while (fs.statSync(path.join(directory, extractedFiles[0])).isDirectory()) {
-      filtered = [];
-      for (let i = 0; i < extractedFiles.length; i++) {
-        let validExtName = imgTypes.indexOf(path.extname(extractedFiles[i]).toLowerCase()) > -1;
-        let validStat = fs.statSync(path.join(directory, extractedFiles[i])).isDirectory();
-        if (validExtName || validStat) {
-          filtered.push(extractedFiles[i]);
-        }
-      }
-      directory = path.join(directory, filtered[0]);
+    while (fs.statSync(filePath).isDirectory()) {
+      filtered = '';
+      // Checks for valid image types
+      validExtName = imgTypes.indexOf(
+          path.extname(filePath).toLowerCase()
+        ) > -1;
+      // Checks if [i] is a directory
+      validPath = fs.statSync(filePath).isDirectory();
+      // Pushes [i] to array for merging paths
+      if (validExtName || validPath) { filtered = extractedFiles[0]; }
+      directory = path.join(directory, filtered);
       extractedFiles = fs.readdirSync(directory);
+      filePath = path.join(directory, extractedFiles[0]);
     }
   }
   return directory;
