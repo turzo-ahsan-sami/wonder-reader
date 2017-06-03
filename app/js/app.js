@@ -113,6 +113,12 @@ document.getElementById('pageLeft').addEventListener('click',
 document.getElementById('pageRight').addEventListener('click',
   function() { page.Right(); }
 );
+document.getElementById('mwPageLeft').addEventListener('click',
+  function() { page.Left(); }
+);
+document.getElementById('mwPageRight').addEventListener('click',
+  function() { page.Right(); }
+);
 document.getElementById('openFile').addEventListener('click',
   function() { file.dialog(); }
 );

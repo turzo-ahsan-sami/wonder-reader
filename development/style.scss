@@ -638,6 +638,22 @@ button#trash {
   #innerWindow {
     transition: filter 0.3s;
   }
+  .navi-button {
+    position: fixed;
+    background: $transparent;
+    display: flex;
+    top: 50%;
+    font-size: 36px;
+  }
+  .navi-button:hover {
+    color: $comic-bleu;
+  }
+  #mwPageLeft {
+    left: 16px;
+  }
+  #mwPageRight {
+    right: 32px;
+  }
 }
 
 .mainWindow::-webkit-scrollbar-track {

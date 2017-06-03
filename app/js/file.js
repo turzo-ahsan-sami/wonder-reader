@@ -113,6 +113,8 @@ postExtract = (fileName, tempFolder, extractedImages) => {
   page.load(fileName, tempFolder, extractedImages);
   enable('pageLeft');
   enable('pageRight');
+  enable('mwPageLeft');
+  enable('mwPageRight');
   viewer.dataset.active = true;
   title.onLoad(fileName);
   miniLib.load(fileName);
