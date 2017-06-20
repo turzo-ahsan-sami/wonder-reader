@@ -32,6 +32,7 @@
     "jsonfile": "2.3.1",
     "mkdirp": "0.5.1",
     "node-unrar": "^0.1.5",
+    "node-unrar-js": "^0.8.1",
     "rimraf": "2.5.4",
     "unzip2": "0.2.5"
   },
