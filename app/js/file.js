@@ -5,6 +5,7 @@ const $ = require('jquery');
 const cbr = require('cbr');
 const {dialog} = require('electron').remote;
 const fs = require('fs');
+const inflate = require('node-unpacker'); // https://www.npmjs.com/package/node-unpacker
 const isThere = require('is-there'); // https://www.npmjs.com/package/is-there
 const mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
 const os = require('os'); // https://nodejs.org/api/os.html
@@ -156,6 +157,9 @@ fileRouter = (fileName, tempFolder, looper) => {
 
 rarExtractor = (fileName, tempFolder, looper) => {
   let rar;
+  console.log(fileName);
+  console.log(tempFolder);
+  console.log(looper);
   switch (process.platform) {
     case 'linux':
       rar = new Unrar(fileName);
@@ -163,6 +167,15 @@ rarExtractor = (fileName, tempFolder, looper) => {
         if (err) { console.error(err); }
         extractRouter(fileName, tempFolder, looper);
       });
+      break;
+    case 'darwin': // Change to win32
+      inflate.unpackFile(fileName, tempFolder).then(
+        function(data) {
+          console.log(data);
+          extractRouter(fileName, tempFolder, looper);
+        },
+        function (error) { console.error(error); }
+      );
       break;
     default:
       cbr(fileName, tempFolder, function (error) {

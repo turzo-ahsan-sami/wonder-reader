@@ -79,11 +79,7 @@ defaults = (prop) => {
   let obj;
   if (isThere(configFile)) {
     obj = jsonfile.readFileSync(configFile);
-    if (obj[prop]) {
-      return obj[prop];
-    } else {
-      return template[prop];
-    }
+    return obj[prop] ? obj[prop] : template[prop];
   } else {
     return template[prop];
   }
