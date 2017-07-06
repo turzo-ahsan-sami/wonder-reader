@@ -5,41 +5,40 @@ const fs = require('fs');
 // Allowable File Types
 const imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
 // Returns a path of the extracted comic up until the first image file appears
+
+// Checks for valid image types
+const validExtName = (file) => {
+  return imgTypes.indexOf(path.extname(file).toLowerCase()) > -1;
+};
+
+const validPath = (directory, file) => {
+  return fs.statSync(path.join(directory, file)).isDirectory();
+};
+
+const filter = (directory) => {
+  return fs.readdirSync(directory).filter(function(file) {
+    return validExtName(file) || validPath(directory, file);
+  });
+};
+
 exports.merge = (directory) => {
   let extractedFiles,
-    filtered,
-    filePath,
-    validExtName,
-    validPath;
+    filtered;
 
-  extractedFiles = fs.readdirSync(directory).filter(function(file) {
-    return imgTypes.indexOf(path.extname(file).toLowerCase()) > -1 || fs.statSync(path.join(directory, file)).isDirectory();
-  });
-
-  filePath = path.join(directory, extractedFiles[0]);
+  extractedFiles = filter(directory);
 
   if (extractedFiles.length > 0) {
-    while (fs.statSync(filePath).isDirectory()) {
+    while (validPath(directory, extractedFiles[0])) {
       filtered = '';
 
-      // Checks for valid image types
-      validExtName = imgTypes.indexOf(path.extname(filePath).toLowerCase()) > -1;
-
-      // Checks if [i] is a directory
-      validPath = fs.statSync(filePath).isDirectory();
-
       // Pushes [i] to array for merging paths
-      if (validExtName || validPath)
+      if (validExtName(extractedFiles[0]) || validPath(directory, extractedFiles[0])) {
         filtered = extractedFiles[0];
+      }
       directory = path.join(directory, filtered);
 
       // removes unwanted metadata and other stuff
-      extractedFiles = fs.readdirSync(directory);
-      extractedFiles = extractedFiles.filter(function(file) {
-        return imgTypes.indexOf(path.extname(file).toLowerCase()) > -1 || fs.statSync(path.join(directory, file)).isDirectory();
-      });
-      // New filePath to test the loop on
-      filePath = path.join(directory, extractedFiles[0]);
+      extractedFiles = filter(directory);
     }
   }
   return directory;

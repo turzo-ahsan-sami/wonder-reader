@@ -97,9 +97,7 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   looper = 0;
   if (isThere(tempFolder)) {
     tempFolder = df.merge(tempFolder);
-    console.log(tempFolder);
     extractedImages = fs.readdirSync(tempFolder);
-    console.log(extractedImages);
     extractedImages.length === 0
       ? fileRouter(fileName, tempFolder, looper)
       : postExtract(fileName, tempFolder, extractedImages);
@@ -146,7 +144,6 @@ exports.loader = (fileName) => {
   isThere(fileName)
     ? fileLoad(fileName)
     : alert(`Missing or broken file: Could not open ${fileName}`);
-
 };
 
 // File Extractors
@@ -204,9 +201,7 @@ zipExtractor = (fileName, tempFolder, looper) => {
 
 extractRouter = (fileName, tempFolder, looper) => {
   tempFolder = df.merge(tempFolder);
-  console.log(tempFolder);
   extractedImages = fs.readdirSync(tempFolder);
-  console.log(extractedImages);
   let extName = path.extname(fileName).toLowerCase();
   switch (true) {
     case(extractedImages.length == 0 && looper <= 3):
