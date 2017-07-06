@@ -14,8 +14,7 @@ const Unrar = require('node-unrar');
 const unzip = require('unzip2');
 
 // Wonder-Reader Specific Modules //
-const directoryFunction = require('./directory.js');
-const isComic = require('./isComic.js');
+const df = require('./directory.js');
 const miniLib = require('./libMini.js');
 const nextcomic = require('./nextcomic.js');
 const page = require('./page.js');
@@ -23,7 +22,10 @@ const strain = require('./strain.js');
 const title = require('./title.js');
 
 // Global variables
-let extractedImages, fileName, comic, tempFolder;
+let extractedImages,
+  fileName,
+  comic,
+  tempFolder;
 
 const bgLoader = document.getElementById('bgLoader');
 const innerWindow = document.getElementById('innerWindow');
@@ -33,7 +35,16 @@ const viewTwo = document.getElementById('viewImgTwo');
 const viewer = document.getElementById('viewer');
 
 // Functions variables
-let openFile, fileLoad, enable, postExtract, fileRouter, rarExtractor, zipExtractor, extractRouter, preLoad, postLoad;
+let openFile,
+  fileLoad,
+  enable,
+  postExtract,
+  fileRouter,
+  rarExtractor,
+  zipExtractor,
+  extractRouter,
+  preLoad,
+  postLoad;
 
 preLoad = () => {
   innerWindow.classList.add('innerLoading');
@@ -51,58 +62,58 @@ postLoad = () => {
 
 // Dialog box to load the file
 openFile = () => {
-  dialog.showOpenDialog(
-    { filters: [{
-      name: 'Comic Files',
-      extensions: ['cbr', 'cbz']
-    }]
-    },
-    // Open File function
-    function (fileNames) {
-      if (fileNames === undefined) return; // Returns on error
-      fileName = fileNames[0]; // Filepath name
-      fileLoad(fileName); // Extracts files to their proper locations
-    }
-  );
+  dialog.showOpenDialog({
+    filters: [
+      {
+        name: 'Comic Files',
+        extensions: ['cbr', 'cbz']
+      }
+    ]
+  },
+  // Open File function
+  function(fileNames) {
+    if (fileNames === undefined)
+      return; // Returns on error
+    fileName = fileNames[0]; // Filepath name
+    fileLoad(fileName); // Extracts files to their proper locations
+  });
 };
 
 // The function that loads each file
 fileLoad = (fileName, err) => { // checks and extracts files and then loads them
-  if (err) { return console.error(err); }
+  if (err)
+    return console.error(err);
   let looper;
   // corrects a possible err with HTML loading
   if (process.platform == 'win32') {
     fileName = fileName.replace(/\//g, '\\');
     console.log(fileName);
   }
-  if (isComic(fileName)) {
-    comic = path.basename(fileName, path.extname(fileName)).replace(/#|!/g, '');
-  } else {
-    return;
-  }
+  comic = path.basename(fileName, path.extname(fileName)).replace(/#|!|,/g, '');
+
   document.getElementById('trash').dataset.current = comic;
   // tempFolder Variable for loaded comic
   tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', comic);
   looper = 0;
-  switch (isThere(tempFolder)) {
-    case true:
-      tempFolder = directoryFunction.merge(tempFolder);
-      extractedImages = fs.readdirSync(tempFolder);
-      if (extractedImages.length === 0) {
-        fileRouter(fileName, tempFolder, looper);
-      } else {
-        postExtract(fileName, tempFolder, extractedImages);
-      }
-      break;
-    default:
-      preLoad();
-      mkdirp.sync(tempFolder, {'mode': '0777'});
-      fileRouter(fileName, tempFolder, looper);
-  } // End Directory checker
-};
+  if (isThere(tempFolder)) {
+    tempFolder = df.merge(tempFolder);
+    console.log(tempFolder);
+    extractedImages = fs.readdirSync(tempFolder);
+    console.log(extractedImages);
+    extractedImages.length === 0
+      ? fileRouter(fileName, tempFolder, looper)
+      : postExtract(fileName, tempFolder, extractedImages);
+  } else {
+    preLoad();
+    mkdirp.sync(tempFolder, {'mode': '0777'});
+    fileRouter(fileName, tempFolder, looper);
+  }
+}; // End Directory checker
 
 // Enable et Disable ID's
-enable = (id) => { document.getElementById(id).disabled = false; };
+enable = (id) => {
+  document.getElementById(id).disabled = false;
+};
 
 // After extraction, loads stuff into img tags, as well as other junk
 postExtract = (fileName, tempFolder, extractedImages) => {
@@ -126,17 +137,16 @@ postExtract = (fileName, tempFolder, extractedImages) => {
   viewer.scrollLeft = 0;
 };
 
-exports.dialog = () => { openFile(); };
+exports.dialog = () => {
+  openFile();
+};
 
 exports.loader = (fileName) => {
   fileName = decodeURIComponent(fileName);
-  switch (isThere(fileName)) {
-    case true:
-      fileLoad(fileName);
-      break;
-    default:
-      alert(`Missing or broken file: Could not open ${fileName}`);
-  }
+  isThere(fileName)
+    ? fileLoad(fileName)
+    : alert(`Missing or broken file: Could not open ${fileName}`);
+
 };
 
 // File Extractors
@@ -163,46 +173,45 @@ rarExtractor = (fileName, tempFolder, looper) => {
   switch (process.platform) {
     case 'linux':
       rar = new Unrar(fileName);
-      rar.extract(tempFolder, null, function (err) {
-        if (err) { console.error(err); }
+      rar.extract(tempFolder, null, function(err) {
+        if (err)
+          console.error(err);
         extractRouter(fileName, tempFolder, looper);
       });
       break;
     case 'darwin': // Change to win32
-      inflate.unpackFile(fileName, tempFolder).then(
-        function(data) {
-          console.log(data);
-          extractRouter(fileName, tempFolder, looper);
-        },
-        function (error) { console.error(error); }
-      );
+      inflate.unpackFile(fileName, tempFolder).then(function(data) {
+        console.log(data);
+        extractRouter(fileName, tempFolder, looper);
+      }, function(error) {
+        console.error(error);
+      });
       break;
     default:
-      cbr(fileName, tempFolder, function (error) {
-        if (error) { console.error(error); }
+      cbr(fileName, tempFolder, function(error) {
+        if (error)
+          console.error(error);
         extractRouter(fileName, tempFolder, looper);
       });
   }
 };
 
 zipExtractor = (fileName, tempFolder, looper) => {
-  fs.createReadStream(fileName).pipe(
-    unzip.Extract({
-      path: tempFolder
-    }).on('close', function () {
-      extractRouter(fileName, tempFolder, looper);
-    })
-  );
+  fs.createReadStream(fileName).pipe(unzip.Extract({path: tempFolder}).on('close', function() {
+    extractRouter(fileName, tempFolder, looper);
+  }));
 };
 
 extractRouter = (fileName, tempFolder, looper) => {
-  tempFolder = directoryFunction.merge(tempFolder);
+  tempFolder = df.merge(tempFolder);
+  console.log(tempFolder);
   extractedImages = fs.readdirSync(tempFolder);
+  console.log(extractedImages);
   let extName = path.extname(fileName).toLowerCase();
-  switch(true) {
-    case (extractedImages.length == 0 && looper <= 3):
+  switch (true) {
+    case(extractedImages.length == 0 && looper <= 3):
       looper++;
-      switch(extName) {
+      switch (extName) {
         case '.cbz':
           rarExtractor(fileName, tempFolder, looper);
           break;
@@ -214,7 +223,7 @@ extractRouter = (fileName, tempFolder, looper) => {
           postLoad();
       }
       break;
-    case (extractedImages.length != 0 && looper > 3):
+    case(extractedImages.length != 0 && looper > 3):
       alert('Possible broken file?');
       postLoad();
       break;

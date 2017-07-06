@@ -6,7 +6,8 @@ const os = require('os');
 const path = require('path');
 
 let template = {}; // {"name": "", "currentIndex": "0", "fullIndex": "0"}
-let baseName, obj;
+let baseName,
+  obj;
 const bookmark = path.join(os.tmpdir(), 'wonderReader', 'json', 'bookmark.json');
 const regex = /\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]/gi; // Reg Ex for classes
 
@@ -21,32 +22,35 @@ exports.onLoad = (filePath, directoryContents) => {
     fullIndex: directoryContents.length - 1
   };
 
-  switch (isThere(bookmark)) {
-    case true:
-      obj = jsonfile.readFileSync(bookmark);
-      switch (obj[baseName]) {
-        case undefined: // if baseName isn't listed, adds item to bookmark.json
-          obj[baseName] = template;
-          jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
-          return 0;
-        default: // if baseName is listed
-          return obj[baseName].currentIndex;
-      }
-    default:
-      obj = {};
-      obj[baseName] = template; // Pushes into Array
-      jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
-      return 0;
+  if (isThere(bookmark)) {
+    obj = jsonfile.readFileSync(bookmark);
+    switch (obj[baseName]) {
+      case undefined: // if baseName isn't listed, adds item to bookmark.json
+        obj[baseName] = template;
+        jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
+        return 0;
+      default: // if baseName is listed
+        return obj[baseName].currentIndex;
+    }
+  } else {
+    obj = {};
+    obj[baseName] = template; // Pushes into Array
+    jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
+    return 0;
   }
 };
 
 // Updates JSON with current page
 exports.onChange = (index) => {
-  jsonfile.readFile(bookmark, function (err, obj) {
-    if (err) { return console.error(err); }
+  jsonfile.readFile(bookmark, function(err, obj) {
+    if (err) {
+      return console.error(err);
+    }
     obj[baseName].currentIndex = index;
-    jsonfile.writeFile(bookmark, obj, {spaces: 2}, function (err) {
-      if (err) { return console.error(err); }
+    jsonfile.writeFile(bookmark, obj, function(err) {
+      if (err) {
+        return console.error(err);
+      }
     });
     let comic = obj[baseName];
     let base = path.basename(comic.name, path.extname(comic.name));
@@ -60,25 +64,20 @@ exports.onChange = (index) => {
 };
 
 exports.onStart = () => {
-  if (isThere(bookmark)) {
-    obj = jsonfile.readFileSync(bookmark);
-  } else {
-    obj = {};
-  }
+  obj = isThere(bookmark)
+    ? jsonfile.readFileSync(bookmark)
+    : {};
 };
 
 // Fills library with percentage read on right hand side
 exports.percent = (fileName) => {
   let base = path.basename(fileName, path.extname(fileName));
   let spanClass = base.replace(regex, '');
-  let comic, percent;
+  let percent;
   if (isThere(bookmark)) {
-    if (obj[fileName]) {
-      comic = obj[fileName];
-      percent = (comic.currentIndex / comic.fullIndex) * 100;
-    } else {
-      percent = 0;
-    }
+    percent = obj[fileName]
+      ? (obj[fileName].currentIndex / obj[fileName].fullIndex) * 100
+      : 0;
   } else {
     jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
     percent = 0;

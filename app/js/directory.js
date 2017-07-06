@@ -4,25 +4,41 @@ const fs = require('fs');
 
 // Allowable File Types
 const imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
-
 // Returns a path of the extracted comic up until the first image file appears
 exports.merge = (directory) => {
-  let extractedFiles, filtered, filePath, validExtName, validPath;
-  extractedFiles = fs.readdirSync(directory);
+  let extractedFiles,
+    filtered,
+    filePath,
+    validExtName,
+    validPath;
+
+  extractedFiles = fs.readdirSync(directory).filter(function(file) {
+    return imgTypes.indexOf(path.extname(file).toLowerCase()) > -1 || fs.statSync(path.join(directory, file)).isDirectory();
+  });
+
   filePath = path.join(directory, extractedFiles[0]);
+
   if (extractedFiles.length > 0) {
     while (fs.statSync(filePath).isDirectory()) {
       filtered = '';
+
       // Checks for valid image types
-      validExtName = imgTypes.indexOf(
-          path.extname(filePath).toLowerCase()
-        ) > -1;
+      validExtName = imgTypes.indexOf(path.extname(filePath).toLowerCase()) > -1;
+
       // Checks if [i] is a directory
       validPath = fs.statSync(filePath).isDirectory();
+
       // Pushes [i] to array for merging paths
-      if (validExtName || validPath) { filtered = extractedFiles[0]; }
+      if (validExtName || validPath)
+        filtered = extractedFiles[0];
       directory = path.join(directory, filtered);
+
+      // removes unwanted metadata and other stuff
       extractedFiles = fs.readdirSync(directory);
+      extractedFiles = extractedFiles.filter(function(file) {
+        return imgTypes.indexOf(path.extname(file).toLowerCase()) > -1 || fs.statSync(path.join(directory, file)).isDirectory();
+      });
+      // New filePath to test the loop on
       filePath = path.join(directory, extractedFiles[0]);
     }
   }

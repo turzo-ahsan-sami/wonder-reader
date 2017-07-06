@@ -16,14 +16,15 @@ const viewer = document.getElementById('viewer');
 const zoomSlide = document.getElementById('zoomSlider');
 
 // Function Variables
-let handleError, objPositioner;
+let handleError,
+  objPositioner;
 
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
 // Key press Checker
-document.addEventListener('keydown', function (event) {
+document.addEventListener('keydown', function(event) {
   let elem = document.activeElement;
   if (viewer.dataset.active && !(elem.id === 'zoomText' || elem.tagName.toLowerCase() === 'input')) {
     switch (event.which) {
@@ -40,11 +41,9 @@ document.addEventListener('keydown', function (event) {
 
 // Error Handling
 handleError = (event) => {
-  if (event.message) {
-    alert(`Error: ${event.message} at linenumber: ${event.lineno} of file: ${event.filename}`);
-  } else {
-    alert(`Error: ${event.type} from element: ${(event.srcElement || event.target)}`);
-  }
+  event.message
+    ? alert(`Error: ${event.message} at linenumber: ${event.lineno} of file: ${event.filename}`)
+    : alert(`Error: ${event.type} from element: ${ (event.srcElement || event.target)}`);
 };
 window.addEventListener('error', handleError, true);
 
@@ -64,7 +63,7 @@ objPositioner = () => {
 // Formats page to variable window sizes
 document.addEventListener('DOMContentLoaded', function() {
   objPositioner();
-  window.onresize = function () { // On Change
+  window.onresize = function() { // On Change
     objPositioner();
     zoom.autoResize();
   };
@@ -73,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Adds an event listener to both images
 let images = document.getElementsByClassName('image');
 for (let j = 0; j < images.length; j++) {
-  images[j].addEventListener('load', function () {
+  images[j].addEventListener('load', function() {
     zoom.autoResize();
   });
 }
@@ -100,47 +99,45 @@ optWindow.addEventListener('mouseleave', function() {
 // ------ Button functions ------ //
 
 // zoomSlider
-document.getElementById('zoomSlider').addEventListener('input',
-  function() { zoom.width(); }
-);
+document.getElementById('zoomSlider').addEventListener('input', function() {
+  zoom.width();
+});
 // Page navigation
-document.getElementById('column').addEventListener('click',
-  function() { page.spread(); }
-);
-document.getElementById('pageLeft').addEventListener('click',
-  function() { page.Left(); }
-);
-document.getElementById('pageRight').addEventListener('click',
-  function() { page.Right(); }
-);
-document.getElementById('mwPageLeft').addEventListener('click',
-  function() { page.Left(); }
-);
-document.getElementById('mwPageRight').addEventListener('click',
-  function() { page.Right(); }
-);
-document.getElementById('openFile').addEventListener('click',
-  function() { file.dialog(); }
-);
-document.getElementById('trash').addEventListener('click',
-  function() {
-    let current = document.getElementById('trash').dataset.current;
-    clean.trash(current);
-  }
-);
+document.getElementById('column').addEventListener('click', function() {
+  page.spread();
+});
+document.getElementById('pageLeft').addEventListener('click', function() {
+  page.Left();
+});
+document.getElementById('pageRight').addEventListener('click', function() {
+  page.Right();
+});
+document.getElementById('mwPageLeft').addEventListener('click', function() {
+  page.Left();
+});
+document.getElementById('mwPageRight').addEventListener('click', function() {
+  page.Right();
+});
+document.getElementById('openFile').addEventListener('click', function() {
+  file.dialog();
+});
+document.getElementById('trash').addEventListener('click', function() {
+  let current = document.getElementById('trash').dataset.current;
+  clean.trash(current);
+});
 // Library navigation & functions
-document.getElementById('libSlider').addEventListener('click',
-  function() { library.slide(); }
-);
-document.getElementById('openDirectory').addEventListener('click',
-  function() { library.openDir(); }
-);
-document.getElementById('libDropDown').addEventListener('click',
-  function() { library.toggle(); }
-);
-document.getElementById('options').addEventListener('click',
-  function() { options.toggle(); }
-);
+document.getElementById('libSlider').addEventListener('click', function() {
+  library.slide();
+});
+document.getElementById('openDirectory').addEventListener('click', function() {
+  library.openDir();
+});
+document.getElementById('libDropDown').addEventListener('click', function() {
+  library.toggle();
+});
+document.getElementById('options').addEventListener('click', function() {
+  options.toggle();
+});
 
 // Loads Default Values;
 title.onStart();

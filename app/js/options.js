@@ -2,7 +2,9 @@ const $ = require('jquery');
 const config = require('./config.js');
 const debounce = require('debounce');
 
-let onInput, onStart, toggle;
+let onInput,
+  onStart,
+  toggle;
 
 const inner = document.getElementById('innerWindow');
 const optWindow = document.getElementById('optWindow');
@@ -10,7 +12,8 @@ const optWindow = document.getElementById('optWindow');
 toggle = () => {
   let options = $('#optWindow');
   options.slideToggle(400, function() {
-    if (options.is(':animated')) return;
+    if (options.is(':animated'))
+      return;
   });
 };
 
@@ -38,7 +41,7 @@ exports.onStart = () => {
 
   // Options :: Reset Buttons
   let buttons = optWindow.getElementsByTagName('button');
-  for(let i = 0; i < buttons.length; i++) {
+  for (let i = 0; i < buttons.length; i++) {
     let style = buttons[i].dataset.style;
     buttons[i].addEventListener('click', function() {
       let Style = style.capitalize();
@@ -54,7 +57,9 @@ exports.onStart = () => {
   }
 };
 
-exports.toggle = () => { toggle(); };
+exports.toggle = () => {
+  toggle();
+};
 
 // ----- ELEM EXAMPLE, usually targetting `input[range]`
 //

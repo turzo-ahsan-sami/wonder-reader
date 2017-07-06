@@ -13,18 +13,20 @@ const viewer = document.getElementById('viewer');
 const zoomSlide = document.getElementById('zoomSlider');
 
 // Function Variables
-let autoResize, width, textUpdate;
+let autoResize,
+  width,
+  textUpdate;
 
 // Syncs dial to output box
-textUpdate = (val) => { document.getElementById('zoomText').value = val; };
+textUpdate = (val) => {
+  document.getElementById('zoomText').value = val;
+};
 
 // Function that resizes innerWindow div
 autoResize = () => {
-  if (viewOne.clientHeight >= viewTwo.clientHeight) {
-    inner.style.height = `${viewOne.clientHeight}px`;
-  } else {
-    inner.style.height = `${viewTwo.clientHeight}px`;
-  }
+  inner.style.height = viewOne.clientHeight >= viewTwo.clientHeight
+    ? `${viewOne.clientHeight}px`
+    : `${viewTwo.clientHeight}px`;
 };
 
 width = () => {
@@ -39,20 +41,16 @@ width = () => {
 
   // Sets the width & margin for the viewer window
   inner.style.width = `${zoomSlide.value}%`;
-  if (zoomSlide.value < 100) {
-    inner.style.marginLeft = `${(100 - zoomSlide.value) / 2}%`;
-  } else {
-    inner.style.marginLeft = 0;
-  }
+  inner.style.marginLeft = zoomSlide.value < 100
+    ? `${ (100 - zoomSlide.value) / 2}%`
+    : 0;
 
   autoResize();
 
   // Sets Y margins as necessary
-  if (viewer.clientHeight > inner.clientHeight) {
-    inner.style.marginTop = `${(viewer.clientHeight - inner.clientHeight) / 2}px`;
-  } else {
-    inner.style.marginTop = 0;
-  }
+  inner.style.marginTop = viewer.clientHeight > inner.clientHeight
+    ? `${ (viewer.clientHeight - inner.clientHeight) / 2}px`
+    : 0;
 
   // Scrolls towards defined centerpoint
   viewer.scrollTop = inner.clientHeight * cPXR - viewer.clientHeight / 2;
@@ -68,7 +66,9 @@ zoomEvent.on('save', function() {
   debounce(config.zoomSave(zoomSlide.value), 250);
 });
 
-exports.autoResize = () => { autoResize(); };
+exports.autoResize = () => {
+  autoResize();
+};
 
 // Zoom on Start Up
 exports.onStart = () => {
@@ -79,4 +79,6 @@ exports.onStart = () => {
   width();
 };
 
-exports.width = () => { width(); };
+exports.width = () => {
+  width();
+};
