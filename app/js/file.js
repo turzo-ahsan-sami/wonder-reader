@@ -176,7 +176,7 @@ rarExtractor = (fileName, tempFolder, looper) => {
         extractRouter(fileName, tempFolder, looper);
       });
       break;
-    case 'darwin': // Change to win32
+    case 'win32': // Change to win32
       inflate.unpackFile(fileName, tempFolder).then(function(data) {
         console.log(data);
         extractRouter(fileName, tempFolder, looper);
