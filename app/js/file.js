@@ -5,7 +5,7 @@ const $ = require('jquery');
 const cbr = require('cbr');
 const {dialog} = require('electron').remote;
 const fs = require('fs');
-const inflate = require('node-unpacker'); // https://www.npmjs.com/package/node-unpacker
+const inflate = require('node-unrar-js'); // https://www.npmjs.com/package/node-unpacker
 const isThere = require('is-there'); // https://www.npmjs.com/package/is-there
 const mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
 const os = require('os'); // https://nodejs.org/api/os.html
@@ -163,7 +163,10 @@ fileRouter = (fileName, tempFolder, looper) => {
 };
 
 rarExtractor = (fileName, tempFolder, looper) => {
-  let rar;
+  let buf,
+    extracted,
+    extractor,
+    rar;
   console.log(fileName);
   console.log(tempFolder);
   console.log(looper);
@@ -177,19 +180,26 @@ rarExtractor = (fileName, tempFolder, looper) => {
       });
       break;
     case 'win32': // Change to win32
-      inflate.unpackFile(fileName, tempFolder).then(function(data) {
-        console.log(data);
-        extractRouter(fileName, tempFolder, looper);
-      }, function(error) {
-        console.error(error);
+      buf = Uint8Array.from(fs.readFileSync(fileName)).buffer;
+      extractor = inflate.createExtractorFromData(buf);
+      extracted = extractor.extractAll();
+      console.log(extracted);
+      extracted[1].files = extracted[1].files.reverse();
+      extracted[1].files.forEach(function(file) {
+        !file.fileHeader.flags.directory
+          ? fs.appendFileSync(tempFolder, new Buffer(file.extract[1]))
+          : mkdirp.sync(path.join(tempFolder, file.fileHeader.name));
       });
       break;
-    default:
+    case 'darwin':
       cbr(fileName, tempFolder, function(error) {
         if (error)
           console.error(error);
         extractRouter(fileName, tempFolder, looper);
       });
+      break;
+    default:
+      alert(`True Believer! Wonder Reader only works on Windows, OSX, and Linux.  You're on ${process.platform}`);
   }
 };
 
