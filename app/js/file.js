@@ -210,9 +210,9 @@ zipExtractor = (fileName, tempFolder, looper) => {
 };
 
 extractRouter = (fileName, tempFolder, looper) => {
+  let extName = path.extname(fileName).toLowerCase();
   tempFolder = df.merge(tempFolder);
   extractedImages = fs.readdirSync(tempFolder);
-  let extName = path.extname(fileName).toLowerCase();
   switch (true) {
     case(extractedImages.length == 0 && looper <= 3):
       looper++;

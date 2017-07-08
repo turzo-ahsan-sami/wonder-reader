@@ -24,13 +24,12 @@ exports.onLoad = (filePath, directoryContents) => {
 
   if (isThere(bookmark)) {
     obj = jsonfile.readFileSync(bookmark);
-    switch (obj[baseName]) {
-      case undefined: // if baseName isn't listed, adds item to bookmark.json
-        obj[baseName] = template;
-        jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
-        return 0;
-      default: // if baseName is listed
-        return obj[baseName].currentIndex;
+    if (obj[baseName]) { // if baseName is listed
+      return obj[baseName].currentIndex;
+    } else { // if baseName isn't listed, adds item to bookmark.json
+      obj[baseName] = template;
+      jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
+      return 0;
     }
   } else {
     obj = {};
@@ -43,14 +42,12 @@ exports.onLoad = (filePath, directoryContents) => {
 // Updates JSON with current page
 exports.onChange = (index) => {
   jsonfile.readFile(bookmark, function(err, obj) {
-    if (err) {
+    if (err)
       return console.error(err);
-    }
     obj[baseName].currentIndex = index;
     jsonfile.writeFile(bookmark, obj, function(err) {
-      if (err) {
+      if (err)
         return console.error(err);
-      }
     });
     let comic = obj[baseName];
     let base = path.basename(comic.name, path.extname(comic.name));
