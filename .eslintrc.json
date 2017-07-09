@@ -15,8 +15,7 @@
       "error",
       2,
       {
-        "SwitchCase": 1,
-        "MemberExpression": 2
+        "SwitchCase": 1
       }
     ],
     "linebreak-style": [
