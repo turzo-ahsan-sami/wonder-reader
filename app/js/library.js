@@ -50,7 +50,6 @@ buildLibrary = (directory, listID) => {
     let stat = fs.statSync(filePath);
     // Inserts file.loader() for files
     if (stat.isFile() && isComic(file)) {
-      let percent = bookmark.percent(file);
       file = path.basename(file, path.extname(file));
       filePath = df.encode(filePath);
       // Converts win32 paths to HTML compatible paths
@@ -61,7 +60,7 @@ buildLibrary = (directory, listID) => {
       $(`#${listID}`).append(`<li class="file">
           <a href="#" onclick="file.loader('${filePath}')">
             <i class="fa fa-file" aria-hidden="true"></i>
-            ${file} ${percent}
+            ${file} ${bookmark.percent(file)}
           </a>
         </li>`);
 

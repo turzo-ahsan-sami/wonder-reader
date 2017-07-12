@@ -46,8 +46,7 @@ exports.merge = (directory) => {
 
 // Splits a path, encodes each index, and merges it all for a URI compatible file path.
 exports.encode = (oldPath) => {
-  let c;
-  let newPath = '';
+  let c, newPath;
   let tempPath = oldPath.split(path.sep); // Breaks path into array
 
   // Encodes each folder, then merging it all together

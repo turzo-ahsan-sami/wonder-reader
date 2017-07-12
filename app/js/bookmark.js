@@ -9,7 +9,7 @@ let template = {}; // {"name": "", "currentIndex": "0", "fullIndex": "0"}
 let baseName,
   obj;
 const bookmark = path.join(os.tmpdir(), 'wonderReader', 'json', 'bookmark.json');
-const regex = /\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]/gi; // Reg Ex for classes
+const regex = /\s|#|\(|\)|'|,|&|\+|-|!|\[|\]/gi; // Reg Ex for classes
 
 // Invoked on Comic.onLoad(), returns with current page and option to continue
 exports.onLoad = (filePath, directoryContents) => {
