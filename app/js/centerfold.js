@@ -12,7 +12,9 @@ exports.fold = (filePath, extractedImages) => {
     width;
 
   // function variables
-  let sortNumber;
+  let sortNumber = (a, b) => {
+    return a - b;
+  };
 
   spread = [];
   for (let i = 0; i < extractedImages.length; i++) {
@@ -22,8 +24,5 @@ exports.fold = (filePath, extractedImages) => {
     if (width >= height)
       spread.push(i);
   }
-  sortNumber = (a, b) => {
-    return a - b;
-  };
   return spread.sort(sortNumber);
 };
