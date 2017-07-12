@@ -74,8 +74,7 @@ exports.toggle = () => {
 onInput = (elem, display) => {
   let value = elem.value;
   let style = elem.dataset.style;
-  let Style = style.capitalize();
-  let text = document.getElementById(`opt${Style}Text`);
+  let text = document.getElementById(`opt${style.capitalize()}Text`);
   display[style] = `${style}(${value})`;
   inner.style.webkitFilter = display.style();
   text.value = value;

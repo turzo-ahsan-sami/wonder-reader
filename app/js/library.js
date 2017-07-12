@@ -68,7 +68,7 @@ buildLibrary = (directory, listID) => {
       // Deep scans interior folders
     } else if (stat.isDirectory() && file.charAt(0) != '.') {
       // Removes potentially damaging characters for app
-      let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]|\./g, '');
+      let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|'|,|&|\+|-|!|\[|\]|\./g, '');
       $(`#${listID}`).append(`<li class="folder" data-id='${newListID}' data-directory="${filePath}">
           <span>
             <i class="fa fa-folder" aria-hidden="true"></i>
