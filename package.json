@@ -29,7 +29,6 @@
     "jquery": "3.2.x",
     "jsonfile": "3.0.1",
     "mkdirp": "0.5.1",
-    "node-unpacker": "https://github.com/alice-em/node-unpacker/tarball/ad7c86f6aa8bc4ce2524b243355aaf6ed17d62bb",
     "node-unrar": "^0.1.5",
     "node-unrar-js": "^0.8.1",
     "rimraf": "2.6.1",
