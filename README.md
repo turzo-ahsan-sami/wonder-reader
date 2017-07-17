@@ -5,7 +5,7 @@
 `0.5.0`
 ## Downloads
 
-[Downloads](http://alice-em.github.io/Wonder-Reader/)
+[Downloads](http://alice-em.github.io/wonder-reader/)
 
 ## Installation and Starting
 __Requirements__: `git`, `node`, and `npm`
