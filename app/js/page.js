@@ -6,10 +6,16 @@ const config = require('./config.js');
 const path = require('path');
 const sizeOf = require('image-size');
 
-let centerFolds, extractedImages, filePath, PAGE, loadedImages;
+let centerFolds,
+  extractedImages,
+  filePath,
+  PAGE,
+  loadedImages;
 
 // Function variables
-let defaults, pageTurn, singlePage;
+let defaults,
+  pageTurn,
+  singlePage;
 
 const viewOne = document.getElementById('viewImgOne');
 const viewTwo = document.getElementById('viewImgTwo');
@@ -19,7 +25,8 @@ const viewer = document.getElementById('viewer');
 const clearImg = path.join('.', 'images', 'FFFFFF-0.0.png');
 
 exports.load = (file, DIR, IMAGES) => {
-  let savedPAGE, r;
+  let savedPAGE,
+    r;
   filePath = DIR;
   extractedImages = IMAGES;
   centerFolds = center.fold(filePath, extractedImages);
@@ -30,23 +37,16 @@ exports.load = (file, DIR, IMAGES) => {
   viewTwo.src = clearImg;
   if (savedPAGE > 0) {
     r = confirm(`Continue ${path.basename(file)} at page ${savedPAGE}`);
-    if (r === true) {
-      PAGE = savedPAGE;
-    } else {
-      PAGE = 0;
-    }
+    PAGE = r === true
+      ? savedPAGE
+      : 0;
   }
   PAGE = Number(PAGE);
 
   column.classList.remove('disabled');
-  switch (Number(column.dataset.val)) {
-    case 1:
-      singlePage(filePath, extractedImages, PAGE);
-      break;
-    default:
-      defaults(filePath, extractedImages, PAGE);
-  }
-
+  Number(column.dataset.val) === 1
+    ? singlePage(filePath, extractedImages, PAGE)
+    : defaults(filePath, extractedImages, PAGE);
   // Preloads each image file for a smoother experience
   imageLoad();
 };
@@ -62,8 +62,9 @@ async function imageLoad() {
 }
 
 pageTurn = (val) => {
-  let polarity = 1;
-  if (val < 0) { polarity = -1; }
+  let polarity = val > 0
+    ? 1
+    : -1;
   PAGE = Number(PAGE);
   val = Number(val);
 
@@ -86,29 +87,24 @@ pageTurn = (val) => {
     defaults(filePath, extractedImages, PAGE);
   } else {
     if (centerFolds.length === 0) { // For no centerFolds. This is easy
-
-      PAGE = PAGE + val;
-      if (PAGE === extractedImages.length - 1) {
-        singlePage(filePath, extractedImages, PAGE);
-      } else {
-        defaults(filePath, extractedImages, PAGE);
-      }
+      PAGE += val;
+      PAGE === extractedImages.length - 1
+        ? singlePage(filePath, extractedImages, PAGE)
+        : defaults(filePath, extractedImages, PAGE);
     } else { // For when any CenterFold exists
       if (centerFolds.indexOf(PAGE + polarity) > -1) {
-        PAGE = PAGE + polarity;
+        PAGE += polarity;
         singlePage(filePath, extractedImages, PAGE);
       } else if (centerFolds.indexOf(PAGE + val) > -1) {
-        PAGE = PAGE + val;
+        PAGE += val;
         singlePage(filePath, extractedImages, PAGE);
       } else if (centerFolds.indexOf(PAGE) > -1) {
-        if (polarity > 0) {
-          PAGE = PAGE + polarity;
-        } else {
-          PAGE = PAGE + val;
-        }
+        PAGE += polarity > 0
+          ? polarity
+          : val;
         defaults(filePath, extractedImages, PAGE);
       } else {
-        PAGE = PAGE + val;
+        PAGE += val;
         defaults(filePath, extractedImages, PAGE);
       }
     }
@@ -127,7 +123,11 @@ singlePage = (filePath, extractedImages, PAGE) => {
 };
 
 defaults = (filePath, extractedImages, PAGE) => {
-  let val = Number(column.dataset.val), sizeOne, sizeTwo, ratioOne, ratioTwo;
+  let val = Number(column.dataset.val),
+    sizeOne,
+    sizeTwo,
+    ratioOne,
+    ratioTwo;
   switch (Math.abs(val)) {
     case 1:
       singlePage(filePath, extractedImages, PAGE);

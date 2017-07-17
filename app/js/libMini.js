@@ -1,7 +1,7 @@
 // libMini.load(fileName) loads into #library.ul, the sidebar library 'Series'
 
 const $ = require('jquery');
-const directoryFunction = require('./directory.js');
+const df = require('./directory.js');
 const fs = require('fs');
 const isComic = require('./isComic.js');
 const path = require('path');
@@ -27,7 +27,7 @@ exports.load = (fileName) => {
           </li>`
         );
       } else {
-        let file = directoryFunction.encode(path.join(filePath, comic));
+        let file = df.encode(path.join(filePath, comic));
         $('#dirLib').append(`
           <li class="libFile">
             <a href="#" onclick="file.loader('${file}')">

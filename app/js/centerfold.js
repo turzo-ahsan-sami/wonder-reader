@@ -6,18 +6,23 @@ const sizeOf = require('image-size');
 // Returns with an array of indices for double page images for core array of image files
 exports.fold = (filePath, extractedImages) => {
   // variables
-  let dimensions, height, spread, width;
+  let dimensions,
+    height,
+    spread,
+    width;
 
   // function variables
-  let sortNumber;
+  let sortNumber = (a, b) => {
+    return a - b;
+  };
 
   spread = [];
   for (let i = 0; i < extractedImages.length; i++) {
     dimensions = sizeOf(path.join(filePath, extractedImages[i]));
     width = dimensions.width;
     height = dimensions.height;
-    if (width >= height) { spread.push(i); }
+    if (width >= height)
+      spread.push(i);
   }
-  sortNumber = (a, b) => { return a - b; };
   return spread.sort(sortNumber);
 };

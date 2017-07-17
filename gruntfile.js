@@ -8,8 +8,7 @@ module.exports = function(grunt) {
           style: 'expanded'
         },
         files: { // Dictionary of files
-          'app/css/style.css': 'development/style.scss'
-            // 'destination': 'source'
+          'app/css/style.css': 'development/style.scss' // 'destination': 'source'
         }
       }
     },

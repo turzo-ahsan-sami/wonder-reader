@@ -1,10 +1,7 @@
 // for decoding file paths -- currently not used
 
 module.exports = (elem) => {
-  let output;
-  output = decodeURIComponent(elem.src.substr(7));
-  if (process.platform === 'win32') {
-    output = decodeURIComponent(elem.src.substr(8));
-  }
-  return output;
+  return process.platform === 'win32'
+    ? decodeURIComponent(elem.src.substr(8))
+    : decodeURIComponent(elem.src.substr(7));
 };
