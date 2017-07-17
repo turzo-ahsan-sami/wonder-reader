@@ -1,13 +1,14 @@
 # Wonder-Reader
 
-Version 0.5.0
-
+[![dependencies Status](https://david-dm.org/alice-em/wonder-reader/status.png)](https://david-dm.org/alice-em/wonder-reader)
+[![GitHub version](https://badge.fury.io/gh/alice-em%2Fwonder-reader.svg)](https://badge.fury.io/gh/alice-em%2Fwonder-reader)
+`0.5.0`
 ## Downloads
 
 [Downloads](http://alice-em.github.io/Wonder-Reader/)
 
 ## Installation and Starting
-__Requirements__: Git, Node, and NPM or Yarn
+__Requirements__: `git`, `node`, and `npm`
 
 ```shell
 git clone https://github.com/alice-em/Wonder-Reader.git
@@ -28,7 +29,7 @@ npm run packager
 ````
 
 ## Development
-__Requirements__: Grunt-cli, Sass, and some sort of text-editor
+__Requirements__: `grunt-cli`, `sass`, and some sort of text-editor
 
 ##### TODO:
 * Any other neat ideas that could work go here too.
