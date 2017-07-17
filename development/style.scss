@@ -1,32 +1,36 @@
-/* ./app/css/style.scss */
+// ./app/css/style.scss */
 $white: #fff;
-$offWhite: #f3f3f3;
-$whiteOpaque: rgba(255,255,255,0.9);
-$whiteOpaqueDeg: rgba(255,255,255,0.8);
-$whiteTransDeg: rgba(255,255,255,0.1);
+$off-white: #f3f3f3;
+$white-opaque: rgba(255, 255, 255, 0.9);
+$white-opaque-deg: rgba(255, 255, 255, 0.8);
+$white-trans-deg: rgba(255, 255, 255, 0.1);
 $gray: #808080;
-$grayTrans: rgba(144,144,144,.2);
-$darkTrans: rgba(0,0,0,0.1);
-$darkTransDeg: rgba(0,0,0,0.2);
-$darkTransMid: rgba(0,0,0,0.5);
-$darkTransOpq: rgba(0,0,0,0.8);
+$gray-trans: rgba(144, 144, 144, .2);
+$dark-trans: rgba(0, 0, 0, 0.1);
+$dark-trans-deg: rgba(0, 0, 0, 0.2);
+$dark-trans-mid: rgba(0, 0, 0, 0.5);
+$dark-trans-opq: rgba(0, 0, 0, 0.8);
 $black: #000;
-$transparent: rgba(0,0,0,0);
-$teal: #0E2E3B;
-$comicBleu: rgb(20, 139, 181);
-$inputBleu: #91d5fd;
-$libColor: #ddbfeb;
-$trashColor: #ff0000;
+$transparent: rgba(0, 0, 0, 0);
+$teal: #0e2e3b;
+$comic-bleu: rgb(20, 139, 181);
+$input-bleu: #91d5fd;
+$lib-color: #ddbfeb;
+$trash-color: #f00;
 $manila: #ecc76f;
-/* ---- GLOBAL VALUES ---- */
+
+// ---- GLOBAL VALUES ---- */
+
 body {
   margin: 0;
   font-family: Ubuntu;
   -webkit-user-select: none;
 }
+
 p {
   cursor: default;
 }
+
 h1,
 h2,
 h3,
@@ -41,50 +45,60 @@ h6 {
   cursor: default;
   font-size: 36px;
 }
+
 a {
   color: inherit;
   text-decoration: none;
 }
+
 ul {
   padding: 0;
   margin: 0;
   list-style-type: none;
 }
+
 li ul {
   margin-left: 16px;
 }
+
 button {
   font-size: 36px;
-  background-color: $darkTrans;
+  background-color: $dark-trans;
   border: 0;
-  color: $whiteOpaque;
+  color: $white-opaque;
   transition: all 0.5s;
   padding: 6px 6px 7px;
   cursor: pointer;
 }
+
 button:focus {
   outline: none;
 }
+
 button:disabled {
   cursor: not-allowed;
-  color: $whiteTransDeg;
+  color: $white-trans-deg;
 }
+
 .disabled {
-  color: $whiteTransDeg;
+  color: $white-trans-deg;
 }
+
 .disabled:hover,
 button:disabled:hover {
-  text-shadow: 0 0 5px $whiteTransDeg;
+  text-shadow: 0 0 5px $white-trans-deg;
 }
+
 #bgColor {
   position: absolute;
   top: 0;
   height: 100%;
   width: 100%;
-  background: linear-gradient(to left, #8e9eab , #eef2f3);
+  background: linear-gradient(to left, #444, #112, #444);
   z-index: -1;
 }
-/* ---- Header Values ---- */
+// ---- Header Values ---- */
+
 .header {
   background-color: $teal;
   position: fixed;
@@ -92,32 +106,45 @@ button:disabled:hover {
   z-index: 2;
   width: 100%;
   box-shadow: 0 1px 5px $black;
+
   ul {
     display: inline;
     float: right;
+
     li {
       float: left;
     }
+    #column {
+      .fa {
+        font-size: 32px;
+        transform: rotate(90deg);
+      }
+    }
   }
+
   button:hover {
     text-shadow: 0 0 5px $white;
   }
 }
+
 .title {
   margin-left: 15px;
   transition: margin-left 0.5s;
   float: left;
 }
+
 #cpanel {
   float: left;
   width: 165px;
   position: fixed;
-  right: 260px;
+  right: 307px;
   top: 8px;
+
   label {
     display: none;
     float: left;
   }
+
   input[type="range"] {
     -webkit-appearance: none;
     float: left;
@@ -126,9 +153,11 @@ button:disabled:hover {
     top: 15px;
     background: transparent;
   }
+
   input[type="range"]:focus {
     outline: none;
   }
+
   input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 22px;
@@ -136,21 +165,24 @@ button:disabled:hover {
     border-radius: 5px;
     background: $white;
     margin-top: -9px;
-    background-color: $comicBleu;
-    border: 2px solid $whiteOpaqueDeg;
+    background-color: $comic-bleu;
+    border: 2px solid $white-opaque-deg;
   }
+
   input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 8.4px;
     cursor: pointer;
-    background: $comicBleu;
+    background: $comic-bleu;
     border-radius: 4px;
-    border: 2px solid $whiteOpaqueDeg;
+    border: 2px solid $white-opaque-deg;
     transition: all 0.5s;
   }
+
   input[type=range]:focus::-webkit-slider-runnable-track {
-    box-shadow: 0 0 5px 2px $inputBleu;
+    box-shadow: 0 0 5px 2px $input-bleu;
   }
+
   #zoomText {
     color: $white;
     font-family: CarterOne;
@@ -158,16 +190,18 @@ button:disabled:hover {
     float: right;
     width: 52px;
     text-align: right;
-    background: $comicBleu;
+    background: $comic-bleu;
     border-radius: 4px;
     padding: 3px 26px 0 0;
-    border: 2px solid $whiteOpaqueDeg;
+    border: 2px solid $white-opaque-deg;
     outline: none;
     transition: all 0.5s;
   }
+
   #zoomText:focus {
-    box-shadow: 0 0 5px 2px $inputBleu;
+    box-shadow: 0 0 5px 2px $input-bleu;
   }
+
   #percent {
     position: absolute;
     top: 5px;
@@ -178,137 +212,264 @@ button:disabled:hover {
     font-size: 22px;
   }
 }
+
 button#trash {
-  background-color: $trashColor;
+  background-color: $trash-color;
   padding-left: 10px;
   box-shadow: -3px 0 10px -2px $black;
 }
+// ---- Options Window ---- */
 
-/* ---- mainLib Values ---- */
+#optWindow {
+  background: $dark-trans-opq;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0 0 10px 0 $dark-trans-opq;
+  display: none;
+  position: absolute;
+  right: 20px;
+  top: 56px;
+  width: 300px;
+  z-index: 2;
+  .row {
+    clear: both;
+    border-bottom: 1px solid $gray-trans;
+    height: 40px;
+  }
+  .row:nth-child(2n) {
+    background-color: $dark-trans-mid;
+  }
+  .row:last-of-type {
+    border-bottom: none;
+  }
+  button {
+    font-size: 15px;
+    float: right !important;
+    display: block;
+    position: relative;
+    right: -50px;
+    top: 5px;
+    color: $white;
+    background: $comic-bleu;
+    width: 30px;
+    border-radius: 50%;
+    padding: 7px 3px;
+  }
+  button:hover {
+    box-shadow: 0 0 10px $comic-bleu;
+    text-shadow: 0 0 10px $white;
+  }
+  label,
+  output {
+    color: $white;
+    float: left;
+    font-family: CarterOne;
+    padding: 8px;
+    width: 80px;
+  }
+  output {
+    float: right;
+    text-align: right;
+    width: 38px;
+    position: relative;
+    right: 35px;
+  }
+  input[type="range"] {
+    -webkit-appearance: none;
+    float: left;
+    width: 75px;
+    position: relative;
+    top: 15px;
+    background: transparent;
+  }
+
+  input[type="range"]:focus {
+    outline: none;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 22px;
+    width: 12px;
+    border-radius: 5px;
+    background: $white;
+    margin-top: -9px;
+    background-color: $comic-bleu;
+    border: 2px solid $white-opaque-deg;
+  }
+
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    background: $comic-bleu;
+    border-radius: 4px;
+    border: 2px solid $white-opaque-deg;
+    transition: all 0.5s;
+  }
+
+  input[type=range]:focus::-webkit-slider-runnable-track {
+    box-shadow: 0 0 5px 2px $input-bleu;
+  }
+}
+// ---- mainLib Values ---- */
+
 #mainLib {
-  background: $darkTransOpq;
+  background: $dark-trans-opq;
   position: absolute;
   top: 56px;
   right: 5%;
   width: 90%;
   height: 600px;
   z-index: 1;
-  box-shadow: 0 0 10px 0px $darkTransOpq;
+  box-shadow: 0 0 10px 0 $dark-trans-opq;
+
   h1 {
     margin-left: 10px;
     margin-right: 10px;
     float: left;
   }
+
   button {
     float: left;
     background: $transparent;
   }
+
   .fa {
     font-size: 32px;
     color: $white;
     padding-left: 5px;
     padding-right: 5px;
   }
+
   ul {
     clear: both;
     font-size: 10px;
     color: $white;
+
     ul {
-      margin-left: 10px;
-      border-left: 2px solid $black;
-      box-shadow: -7px 0 10px -6px $black;
+      margin-left: 0;
+      box-shadow: inset 0 5px 5px 3px $dark-trans-opq;
     }
   }
+
   li {
     padding: 2px 0 2px 15px;
-    background: $darkTransDeg;
+    background: $dark-trans-deg;
     transition: box-shadow 0.15s;
-    border-bottom: 1px solid $darkTransMid;
+    border-top: 1px solid $dark-trans-mid;
   }
+
   li:nth-child(even) {
     background-color: $transparent;
   }
+
   li.folder {
     font-weight: bold;
     padding: 2px 0 2px 15px;
-    background: $whiteTransDeg;
-    border-bottom: 1px solid $whiteTransDeg;
+    background: $white-trans-deg;
+    border-top: 1px solid $white-trans-deg;
+    .folder {
+      background: $dark-trans;
+    }
   }
+
   li.file:hover,
   li.folder:hover {
-    box-shadow: inset 0 0 0 1px $whiteOpaqueDeg;
+    box-shadow: inset 0 0 0 1px $white-opaque-deg;
   }
+
   #libHeader {
     height: 56px;
   }
+
   #libList {
     height: 544px;
     overflow-y: auto;
+
     .fa-file {
-      color: $inputBleu;
+      color: $input-bleu;
     }
+
     .fa-folder {
       color: $manila;
     }
   }
+
   #ulLib {
     .fa {
       font-size: 12px;
     }
-    a {
+
+    span {
       display: block;
+      padding: 1px 0;
+      cursor: pointer;
     }
+
     .fa-caret-down {
-      transition: transform .5s;
+      transition: transform 0.5s;
     }
+
     .rotate {
       transform: rotate(-90deg);
     }
+
     ul {
       display: none;
+      border-bottom: 1px solid $black;
+      margin-right: 10px;
     }
   }
-  .bookmark-percent {
+
+  .bmPercent {
     float: right;
     font-size: 11px;
-    padding-right: 5px;
+    padding-right: 5px !important;
   }
 }
+
 #libDropDown {
   position: fixed;
   top: -30px;
   padding: 0;
-  transition: top .25s;
+  transition: top 0.25s;
   text-shadow: 0 5px 0 $teal;
   z-index: 1;
   background: none;
-  mix-blend-mode: exclusion;
+  //mix-blend-mode: exclusion;
+
   .fa {
     font-size: 110px;
     padding: 0;
     color: $white;
-    transition: all .25s;
+    transition: all 0.25s;
   }
 }
+
 #libDropDown:hover {
   top: -13px;
 }
+
 #libStatus {
-  color: $whiteOpaqueDeg;
+  color: $white-opaque-deg;
   font-size: 14px;
   float: right;
-  padding: 10px;
+  padding: 0 10px;
+
   .code {
-    border: 1px solid $whiteOpaqueDeg;
+    border: 1px solid $white-opaque-deg;
     padding: 1px 3px 3px;
     border-radius: 3px;
   }
+
   .fa {
-    color: $whiteOpaqueDeg;
+    color: $white-opaque-deg;
     font-size: 12px;
     padding: 3px 1px;
   }
 }
+
 .rotater {
   animation-name: rotate;
   animation-duration: 2s;
@@ -316,10 +477,16 @@ button#trash {
   animation-timing-function: linear;
 }
 @keyframes rotate {
-  from {transform: rotate(0deg);}
-  to {transform: rotate(360deg);}
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
-/* ---- miniLib Values ---- */
+// ---- miniLib Values ---- */
+
 .library {
   height: 100vh;
   width: 275px;
@@ -330,12 +497,14 @@ button#trash {
   border-right: 3px solid $teal;
   word-wrap: break-word;
   transition: margin-left 0.65s;
-  box-shadow: 3px 0 5px $darkTransMid;
+  box-shadow: 3px 0 5px $dark-trans-mid;
+
   h1 {
     display: block;
     text-align: center;
-    background: $comicBleu;
+    background: $comic-bleu;
   }
+
   ul {
     color: $teal;
     float: left;
@@ -344,6 +513,7 @@ button#trash {
     transition: all 0.25s;
     overflow-y: scroll;
   }
+
   li {
     cursor: pointer;
     clear: both;
@@ -352,9 +522,11 @@ button#trash {
     line-height: 1.42857143;
     white-space: nowrap;
   }
+
   li:nth-child(even) {
-    background-color: $whiteTransDeg;
+    background-color: $white-trans-deg;
   }
+
   .libDir,
   .libFile {
     a {
@@ -363,15 +535,17 @@ button#trash {
       text-decoration: none;
       transition: all 0.25s;
       color: $white;
-      box-shadow: inset 3px 0 0 0 $libColor;
+      box-shadow: inset 3px 0 0 0 $lib-color;
     }
+
     a:hover {
       text-decoration: none;
       color: $white;
-      box-shadow: inset 2px 0 0 1px $libColor;
+      box-shadow: inset 2px 0 0 1px $lib-color;
       background: $black;
     }
   }
+
   .current {
     span {
       display: block;
@@ -379,89 +553,135 @@ button#trash {
       transition: all 0.25s;
       padding: 3px 0 3px 10px;
       color: $white;
-      box-shadow: inset 2px 0 0 1px $libColor;
+      box-shadow: inset 2px 0 0 1px $lib-color;
     }
+
     span:hover {
       text-decoration: none;
       color: $white;
-      box-shadow: inset 2px 0 0 1px $whiteOpaqueDeg;
+      box-shadow: inset 2px 0 0 1px $white-opaque-deg;
       background: $black;
     }
   }
 }
+
+.file {
+  a {
+    display: block;
+  }
+}
+
 .shift-left {
   margin-left: -275px;
+
   ul#dirLib {
     color: transparent;
   }
 }
+
 #libSlider {
-  transition: right 0.5s;
+  transition: right 0.25s;
   position: absolute;
   font-size: 65px;
   top: 50vh;
   right: -15px;
-  color: $offWhite;
+  color: $off-white;
   z-index: -1;
   text-shadow: 4px 0 0 $teal;
   background: transparent;
 }
+
 #libSlider:hover {
   right: -25px;
 }
+
 #libSlider:focus {
   outline: none;
 }
+
 .directory {
-  background-color: $darkTransOpq;
+  background-color: $dark-trans-opq;
+
   .fa {
     padding-right: 5px;
   }
 }
+
 .directory::-webkit-scrollbar-track {
   background-color: $white;
 }
+
 .directory::-webkit-scrollbar-thumb {
-  background-color: $comicBleu;
+  background-color: $comic-bleu;
   border-radius: 2px;
 }
+
 .navigation {
   position: absolute;
   right: 0;
   top: 0;
-  box-shadow: -3px 0 10px -2px $grayTrans;
-  border-left: 1px solid $darkTransMid;
+  box-shadow: -3px 0 10px -2px $gray-trans;
+  border-left: 1px solid $dark-trans-mid;
 }
-/* ---- ViewerDiv Values ---- */
+// ---- ViewerDiv Values ---- */
+
 .mainWindow {
   width: 100%;
   margin-top: 56px;
   overflow-y: scroll;
   overflow-x: auto;
+
   img {
     float: left;
     width: 50%;
   }
+  #innerWindow {
+    transition: filter 0.3s;
+  }
+  .navi-button {
+    position: fixed;
+    background: $transparent;
+    display: flex;
+    top: 50%;
+    font-size: 36px;
+  }
+  .navi-button:hover {
+    color: $comic-bleu;
+  }
+  #mwPageLeft {
+    left: 16px;
+  }
+  #mwPageRight {
+    right: 32px;
+  }
 }
+
 .mainWindow::-webkit-scrollbar-track {
   background-color: $white;
 }
+
 .mainWindow::-webkit-scrollbar-thumb {
-  background-color: $comicBleu;
+  background-color: $comic-bleu;
   border-radius: 2px;
 }
-/* ---- Loading Icon ---- */
+// ---- Loading  ---- */
+
+#innerWindow.innerLoading {
+  filter: brightness(0.3) contrast(1) grayscale(1) !important;
+}
+
 #bgLoader {
   height: 150px;
   width: 150px;
-  background: $comicBleu;
+  background: $comic-bleu;
   position: fixed;
   border-radius: 50%;
-  opacity: 0.5;
-  mix-blend-mode: exclusion;
-  box-shadow: 0px 0px 12px -3px $black;
+  opacity: 0.85;
+  //mix-blend-mode: exclusion;
+  box-shadow: 0 0 12px -3px $black;
   z-index: 5;
 }
+
 .loader,
 .loader:after,
 .loader:before {
@@ -472,17 +692,20 @@ button#trash {
   width: 1em;
   height: 4em;
 }
+
 .loader:after,
 .loader:before {
   position: absolute;
   top: 0;
   content: '';
 }
+
 .loader:before {
   left: -1.5em;
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
+
 .loader {
   color: $white;
   text-indent: -9999em;
@@ -495,6 +718,7 @@ button#trash {
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }
+
 .loader:after {
   left: 1.5em;
 }
@@ -505,6 +729,7 @@ button#trash {
     box-shadow: 0 0;
     height: 4em;
   }
+
   40% {
     box-shadow: 0 -2em;
     height: 5em;
@@ -517,11 +742,13 @@ button#trash {
     box-shadow: 0 0;
     height: 4em;
   }
+
   40% {
     box-shadow: 0 -2em;
     height: 5em;
   }
 }
+
 .hidden {
   display: none;
 }

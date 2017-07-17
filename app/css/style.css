@@ -1,5 +1,3 @@
-/* ./app/css/style.scss */
-/* ---- GLOBAL VALUES ---- */
 body {
   margin: 0;
   font-family: Ubuntu;
@@ -73,13 +71,12 @@ button:disabled:hover {
   top: 0;
   height: 100%;
   width: 100%;
-  background: linear-gradient(to left, #8e9eab, #eef2f3);
+  background: linear-gradient(to left, #444, #112, #444);
   z-index: -1;
 }
 
-/* ---- Header Values ---- */
 .header {
-  background-color: #0E2E3B;
+  background-color: #0e2e3b;
   position: fixed;
   top: 0;
   z-index: 2;
@@ -92,6 +89,10 @@ button:disabled:hover {
 }
 .header ul li {
   float: left;
+}
+.header ul #column .fa {
+  font-size: 32px;
+  transform: rotate(90deg);
 }
 .header button:hover {
   text-shadow: 0 0 5px #fff;
@@ -107,7 +108,7 @@ button:disabled:hover {
   float: left;
   width: 165px;
   position: fixed;
-  right: 260px;
+  right: 307px;
   top: 8px;
 }
 #cpanel label {
@@ -175,12 +176,100 @@ button:disabled:hover {
 }
 
 button#trash {
-  background-color: #ff0000;
+  background-color: #f00;
   padding-left: 10px;
   box-shadow: -3px 0 10px -2px #000;
 }
 
-/* ---- mainLib Values ---- */
+#optWindow {
+  background: rgba(0, 0, 0, 0.8);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
+  display: none;
+  position: absolute;
+  right: 20px;
+  top: 56px;
+  width: 300px;
+  z-index: 2;
+}
+#optWindow .row {
+  clear: both;
+  border-bottom: 1px solid rgba(144, 144, 144, 0.2);
+  height: 40px;
+}
+#optWindow .row:nth-child(2n) {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+#optWindow .row:last-of-type {
+  border-bottom: none;
+}
+#optWindow button {
+  font-size: 15px;
+  float: right !important;
+  display: block;
+  position: relative;
+  right: -50px;
+  top: 5px;
+  color: #fff;
+  background: #148bb5;
+  width: 30px;
+  border-radius: 50%;
+  padding: 7px 3px;
+}
+#optWindow button:hover {
+  box-shadow: 0 0 10px #148bb5;
+  text-shadow: 0 0 10px #fff;
+}
+#optWindow label,
+#optWindow output {
+  color: #fff;
+  float: left;
+  font-family: CarterOne;
+  padding: 8px;
+  width: 80px;
+}
+#optWindow output {
+  float: right;
+  text-align: right;
+  width: 38px;
+  position: relative;
+  right: 35px;
+}
+#optWindow input[type="range"] {
+  -webkit-appearance: none;
+  float: left;
+  width: 75px;
+  position: relative;
+  top: 15px;
+  background: transparent;
+}
+#optWindow input[type="range"]:focus {
+  outline: none;
+}
+#optWindow input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 22px;
+  width: 12px;
+  border-radius: 5px;
+  background: #fff;
+  margin-top: -9px;
+  background-color: #148bb5;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+#optWindow input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  background: #148bb5;
+  border-radius: 4px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  transition: all 0.5s;
+}
+#optWindow input[type=range]:focus::-webkit-slider-runnable-track {
+  box-shadow: 0 0 5px 2px #91d5fd;
+}
+
 #mainLib {
   background: rgba(0, 0, 0, 0.8);
   position: absolute;
@@ -189,7 +278,7 @@ button#trash {
   width: 90%;
   height: 600px;
   z-index: 1;
-  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
 }
 #mainLib h1 {
   margin-left: 10px;
@@ -212,15 +301,14 @@ button#trash {
   color: #fff;
 }
 #mainLib ul ul {
-  margin-left: 10px;
-  border-left: 2px solid #000;
-  box-shadow: -7px 0 10px -6px #000;
+  margin-left: 0;
+  box-shadow: inset 0 5px 5px 3px rgba(0, 0, 0, 0.8);
 }
 #mainLib li {
   padding: 2px 0 2px 15px;
   background: rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.15s;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(0, 0, 0, 0.5);
 }
 #mainLib li:nth-child(even) {
   background-color: transparent;
@@ -229,7 +317,10 @@ button#trash {
   font-weight: bold;
   padding: 2px 0 2px 15px;
   background: rgba(255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+#mainLib li.folder .folder {
+  background: rgba(0, 0, 0, 0.1);
 }
 #mainLib li.file:hover,
 #mainLib li.folder:hover {
@@ -251,39 +342,42 @@ button#trash {
 #mainLib #ulLib .fa {
   font-size: 12px;
 }
-#mainLib #ulLib a {
+#mainLib #ulLib span {
   display: block;
+  padding: 1px 0;
+  cursor: pointer;
 }
 #mainLib #ulLib .fa-caret-down {
-  transition: transform .5s;
+  transition: transform 0.5s;
 }
 #mainLib #ulLib .rotate {
   transform: rotate(-90deg);
 }
 #mainLib #ulLib ul {
   display: none;
+  border-bottom: 1px solid #000;
+  margin-right: 10px;
 }
-#mainLib .bookmark-percent {
+#mainLib .bmPercent {
   float: right;
   font-size: 11px;
-  padding-right: 5px;
+  padding-right: 5px !important;
 }
 
 #libDropDown {
   position: fixed;
   top: -30px;
   padding: 0;
-  transition: top .25s;
-  text-shadow: 0 5px 0 #0E2E3B;
+  transition: top 0.25s;
+  text-shadow: 0 5px 0 #0e2e3b;
   z-index: 1;
   background: none;
-  mix-blend-mode: exclusion;
 }
 #libDropDown .fa {
   font-size: 110px;
   padding: 0;
   color: #fff;
-  transition: all .25s;
+  transition: all 0.25s;
 }
 
 #libDropDown:hover {
@@ -294,7 +388,7 @@ button#trash {
   color: rgba(255, 255, 255, 0.8);
   font-size: 14px;
   float: right;
-  padding: 10px;
+  padding: 0 10px;
 }
 #libStatus .code {
   border: 1px solid rgba(255, 255, 255, 0.8);
@@ -322,7 +416,6 @@ button#trash {
     transform: rotate(360deg);
   }
 }
-/* ---- miniLib Values ---- */
 .library {
   height: 100vh;
   width: 275px;
@@ -330,7 +423,7 @@ button#trash {
   position: fixed;
   top: 0;
   z-index: 2;
-  border-right: 3px solid #0E2E3B;
+  border-right: 3px solid #0e2e3b;
   word-wrap: break-word;
   transition: margin-left 0.65s;
   box-shadow: 3px 0 5px rgba(0, 0, 0, 0.5);
@@ -341,7 +434,7 @@ button#trash {
   background: #148bb5;
 }
 .library ul {
-  color: #0E2E3B;
+  color: #0e2e3b;
   float: left;
   width: 100%;
   height: 90%;
@@ -390,6 +483,10 @@ button#trash {
   background: #000;
 }
 
+.file a {
+  display: block;
+}
+
 .shift-left {
   margin-left: -275px;
 }
@@ -398,14 +495,14 @@ button#trash {
 }
 
 #libSlider {
-  transition: right 0.5s;
+  transition: right 0.25s;
   position: absolute;
   font-size: 65px;
   top: 50vh;
   right: -15px;
   color: #f3f3f3;
   z-index: -1;
-  text-shadow: 4px 0 0 #0E2E3B;
+  text-shadow: 4px 0 0 #0e2e3b;
   background: transparent;
 }
 
@@ -441,7 +538,6 @@ button#trash {
   border-left: 1px solid rgba(0, 0, 0, 0.5);
 }
 
-/* ---- ViewerDiv Values ---- */
 .mainWindow {
   width: 100%;
   margin-top: 56px;
@@ -451,6 +547,25 @@ button#trash {
 .mainWindow img {
   float: left;
   width: 50%;
+}
+.mainWindow #innerWindow {
+  transition: filter 0.3s;
+}
+.mainWindow .navi-button {
+  position: fixed;
+  background: transparent;
+  display: flex;
+  top: 50%;
+  font-size: 36px;
+}
+.mainWindow .navi-button:hover {
+  color: #148bb5;
+}
+.mainWindow #mwPageLeft {
+  left: 16px;
+}
+.mainWindow #mwPageRight {
+  right: 32px;
 }
 
 .mainWindow::-webkit-scrollbar-track {
@@ -462,16 +577,18 @@ button#trash {
   border-radius: 2px;
 }
 
-/* ---- Loading Icon ---- */
+#innerWindow.innerLoading {
+  filter: brightness(0.3) contrast(1) grayscale(1) !important;
+}
+
 #bgLoader {
   height: 150px;
   width: 150px;
   background: #148bb5;
   position: fixed;
   border-radius: 50%;
-  opacity: 0.5;
-  mix-blend-mode: exclusion;
-  box-shadow: 0px 0px 12px -3px #000;
+  opacity: 0.85;
+  box-shadow: 0 0 12px -3px #000;
   z-index: 5;
 }
 

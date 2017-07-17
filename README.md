@@ -1,6 +1,6 @@
 # Wonder-Reader
 
-Version 0.4.1
+Version 0.5.0
 
 ## Downloads
 
@@ -45,6 +45,7 @@ __Requirements__: Grunt-cli, Sass, and some sort of text-editor
 
 TODO:
 * Any other neat ideas that could work go here too.
+  * [!IMPORTANT] Correct the function that changes two pages at once to allow for simultaneous image loading.
 	* Double click zoom in function!
 	* Comics at either __firstPage__ or __lastPage__ can open up the next file in library folder.
 

@@ -1,56 +1,51 @@
 // Central JS Controller: for main app functions as well as calling modules
 
-const $ = require('jquery'); // https://www.npmjs.com/package/jquery
+const bookmark = require('./js/bookmark.js');
 const clean = require('./js/clean.js');
+const config = require('./js/config.js');
 const file = require('./js/file.js');
 const library = require('./js/library.js');
+const options = require('./js/options.js');
 const page = require('./js/page.js');
 const title = require('./js/title.js');
+const zoom = require('./js/zoom.js');
 
 // Variables
-const imgOne = document.getElementById('viewImgOne');
-const imgTwo = document.getElementById('viewImgTwo');
-const inner = document.getElementById('innerWindow');
+const optWindow = document.getElementById('optWindow');
 const viewer = document.getElementById('viewer');
 const zoomSlide = document.getElementById('zoomSlider');
 
 // Function Variables
-let handleError, zoomTextUpdate, objPositioner, imgDivResizer, pageZoom, libFolders, libSlider, dropDown;
+let handleError,
+  objPositioner;
+
+String.prototype.capitalize = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
 
 // Key press Checker
-$(document).keydown(function (event) {
-  if (document.activeElement.id === 'zoomText' || document.activeElement.id === 'zoomSlider') {
-    // Do nothing when focused on zoom input
-  } else if ($('#viewer').hasClass('active')) {
-    // Check if file is loaded. See file.js: postExtract()
-    if (event.which === 37) { // left key
-      page.Left();
-    } else if (event.which === 39) { // right key
-      page.Right();
+document.addEventListener('keydown', function(event) {
+  let elem = document.activeElement;
+  if (viewer.dataset.active && !(elem.id === 'zoomText' || elem.tagName.toLowerCase() === 'input')) {
+    switch (event.which) {
+      case 37:
+      case 65: // Left or `a` key
+        page.Left();
+        break;
+      case 39:
+      case 68: // Right or `d` key
+        page.Right();
     }
   }
 });
 
 // Error Handling
-handleError = (evt) => {
-  if (evt.message) {
-    alert(`Error: ${evt.message} at linenumber: ${evt.lineno} of file: ${evt.filename}`);
-  } else {
-    alert(`Error: ${evt.type} from element: ${(evt.srcElement || evt.target)}`);
-  }
+handleError = (event) => {
+  event.message
+    ? alert(`Error: ${event.message} at linenumber: ${event.lineno} of file: ${event.filename}`)
+    : alert(`Error: ${event.type} from element: ${ (event.srcElement || event.target)}`);
 };
 window.addEventListener('error', handleError, true);
-
-// Builds library on load
-library.onLoad();
-
-// Updates title with version
-title.onLoad();
-
-// Syncs dial to output box
-zoomTextUpdate = (val) => {
-  document.querySelector('#zoomText').value = val;
-};
 
 objPositioner = () => {
   document.getElementById('dirLib').style.height = `${window.innerHeight - 56}px`;
@@ -66,140 +61,87 @@ objPositioner = () => {
 };
 
 // Formats page to variable window sizes
-$(document).ready(function () { // On Load
+document.addEventListener('DOMContentLoaded', function() {
   objPositioner();
-  window.onresize = function () { // On Change
+  window.onresize = function() { // On Change
     objPositioner();
-    imgDivResizer();
+    zoom.autoResize();
   };
 });
-
-// Function that resizes innerWindow div
-imgDivResizer = () => {
-  if (imgOne.clientHeight >= imgTwo.clientHeight) {
-    inner.style.height = `${imgOne.clientHeight}px`;
-  } else {
-    inner.style.height = `${imgTwo.clientHeight}px`;
-  }
-};
 
 // Adds an event listener to both images
 let images = document.getElementsByClassName('image');
 for (let j = 0; j < images.length; j++) {
-  images[j].addEventListener('load', function () {
-    imgDivResizer();
-    viewer.scrollTop = 0;
-    viewer.scrollLeft = 0;
+  images[j].addEventListener('load', function() {
+    zoom.autoResize();
   });
 }
 
-// Handles the zoom
-pageZoom = () => {
-  // Center Points
-  let cPX = viewer.scrollTop + viewer.clientHeight / 2;
-  let cPY = viewer.scrollLeft + viewer.clientWidth / 2;
-
-  // Position Ratios to whole
-  let cPXR = cPX / inner.clientHeight;
-  let cPYR = cPY / inner.clientWidth;
-
-  // Sets the width for the viewer window
-  inner.style.width = `${zoomSlide.value}%`;
-  if (zoomSlide.value < 100) {
-    inner.style.marginLeft = `${(100 - zoomSlide.value) / 2}%`;
-  } else {
-    inner.style.marginLeft = 0;
-  }
-
-  imgDivResizer();
-
-  // Sets margins as necessary
-  if (viewer.clientHeight > inner.clientHeight) {
-    inner.style.marginTop = `${(viewer.clientHeight - inner.clientHeight) / 2}px`;
-  } else {
-    inner.style.marginTop = 0;
-  }
-  viewer.scrollTop = inner.clientHeight * cPXR - viewer.clientHeight / 2;
-  viewer.scrollLeft = inner.clientWidth * cPYR - viewer.clientWidth / 2;
-  let val = document.getElementById('zoomSlider').value;
-  zoomTextUpdate(val);
-};
-
-// Main Library folder collapsing
-libFolders = (id) => {
-  id = $(`#${id}`);
-  if (id.is(':animated')) return;
-  id.prev('.folder').children().children('.fa-caret-down').toggleClass('rotate');
-  id.slideToggle(500, 'linear');
-};
-
-// Library Windows collapsing
-libSlider = () => {
-  $('#sideLib').toggleClass('shift-left');
-};
-dropDown = () => {
-  $('#mainLib').slideToggle(800);
-};
-
 // dragscroll things
-$('#zoomSlider').mouseenter(function () {
-  $('#viewer').removeClass('dragscroll');
-  $('#zoomSlider').focus();
-}).mouseleave(function () {
-  $('#viewer').addClass('dragscroll');
-  $('#zoomSlider').blur();
+zoomSlide.addEventListener('mouseenter', function() {
+  viewer.classList.remove('dragscroll');
+  zoomSlide.focus();
+});
+zoomSlide.addEventListener('mouseleave', function() {
+  viewer.classList.add('dragscroll');
+  zoomSlide.blur();
 });
 
+optWindow.addEventListener('mouseenter', function() {
+  viewer.classList.remove('dragscroll');
+  optWindow.focus();
+});
+optWindow.addEventListener('mouseleave', function() {
+  viewer.classList.add('dragscroll');
+  optWindow.blur();
+});
 
-// Button functions
+// ------ Button functions ------ //
 
 // zoomSlider
-document.getElementById('zoomSlider').addEventListener('input',
-  function() {
-    pageZoom();
-  }
-);
-
+document.getElementById('zoomSlider').addEventListener('input', function() {
+  zoom.width();
+});
 // Page navigation
-document.getElementById('column').addEventListener('click',
-  function() {
-    page.spread();
-  }
-);
-document.getElementById('pageLeft').addEventListener('click',
-  function() {
-    page.Left();
-  }
-);
-document.getElementById('pageRight').addEventListener('click',
-  function() {
-    page.Right();
-  }
-);
-document.getElementById('openFile').addEventListener('click',
-  function() {
-    file.dialog();
-  }
-);
-document.getElementById('trash').addEventListener('click',
-  function() {
-    clean.trash();
-  }
-);
-
+document.getElementById('column').addEventListener('click', function() {
+  page.spread();
+});
+document.getElementById('pageLeft').addEventListener('click', function() {
+  page.Left();
+});
+document.getElementById('pageRight').addEventListener('click', function() {
+  page.Right();
+});
+document.getElementById('mwPageLeft').addEventListener('click', function() {
+  page.Left();
+});
+document.getElementById('mwPageRight').addEventListener('click', function() {
+  page.Right();
+});
+document.getElementById('openFile').addEventListener('click', function() {
+  file.dialog();
+});
+document.getElementById('trash').addEventListener('click', function() {
+  let current = document.getElementById('trash').dataset.current;
+  clean.trash(current);
+});
 // Library navigation & functions
-document.getElementById('libSlider').addEventListener('click',
-  function() {
-    libSlider();
-  }
-);
-document.getElementById('openDirectory').addEventListener('click',
-  function() {
-    library.openDir();
-  }
-);
-document.getElementById('libDropDown').addEventListener('click',
-  function() {
-    dropDown();
-  }
-);
+document.getElementById('libSlider').addEventListener('click', function() {
+  library.slide();
+});
+document.getElementById('openDirectory').addEventListener('click', function() {
+  library.openDir();
+});
+document.getElementById('libDropDown').addEventListener('click', function() {
+  library.toggle();
+});
+document.getElementById('options').addEventListener('click', function() {
+  options.toggle();
+});
+
+// Loads Default Values;
+title.onStart();
+bookmark.onStart();
+config.onStart();
+options.onStart();
+zoom.onStart();

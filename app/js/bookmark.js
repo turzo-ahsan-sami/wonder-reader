@@ -1,59 +1,58 @@
+// bookmark.js updates read percentage as well as saving the position in $temp/bookmark.json
+
 const isThere = require('is-there');
 const jsonfile = require('jsonfile');
 const os = require('os');
 const path = require('path');
 
 let template = {}; // {"name": "", "currentIndex": "0", "fullIndex": "0"}
-let baseName, obj;
+let baseName,
+  obj;
 const bookmark = path.join(os.tmpdir(), 'wonderReader', 'json', 'bookmark.json');
-const regex = /\s|#|\(|\)|\'|,|&|\+|-|!|\[|\]/gi; // Reg Ex for classes
+const regex = /\s|#|\(|\)|'|,|&|\+|-|!|\[|\]/gi; // Reg Ex for classes
 
-// Invoked on Comic.onLoad(), returns with current page
-exports.onLoad = (filePath, directoryContents) => { // returns a new index for <img> tags
+// Invoked on Comic.onLoad(), returns with current page and option to continue
+exports.onLoad = (filePath, directoryContents) => {
   baseName = path.basename(filePath); // Gets basename
-  console.dir(baseName);
+  console.log(`${baseName} loaded into Wonder Reader!`);
 
-  template = {};
-  template.name = baseName;
-  template.currentIndex = 0;
-  template.fullIndex = directoryContents.length - 1;
+  template = {
+    name: baseName,
+    currentIndex: 0,
+    fullIndex: directoryContents.length - 1
+  };
 
   if (isThere(bookmark)) {
     obj = jsonfile.readFileSync(bookmark);
-    if (obj[baseName] !== undefined) { // if baseName is listed
-      // console.log(`${baseName} located. Loading comic at index ${obj[baseName].currentIndex}`)
+    if (obj[baseName]) { // if baseName is listed
       return obj[baseName].currentIndex;
     } else { // if baseName isn't listed, adds item to bookmark.json
       obj[baseName] = template;
-      jsonfile.writeFile(bookmark, obj, {spaces: 2}, function (err) {
-        if (err) {
-          console.error(err);
-          return 0;
-        }
-        // console.log(`Item, ${baseName}, added to bookmark.json.`)
-        return 0;
-      });
+      jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
+      return 0;
     }
   } else {
     obj = {};
     obj[baseName] = template; // Pushes into Array
     jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
-    // console.log('New bookmark.json created. Loading Comic at index 0')
     return 0;
   }
 };
 
 // Updates JSON with current page
 exports.onChange = (index) => {
-  jsonfile.readFile(bookmark, function (err, obj) {
-    if (err) { return err; }
+  jsonfile.readFile(bookmark, function(err, obj) {
+    if (err)
+      return console.error(err);
     obj[baseName].currentIndex = index;
-    jsonfile.writeFile(bookmark, obj, {spaces: 2}, function (err) {
-      if (err) { return err; }
+    jsonfile.writeFile(bookmark, obj, function(err) {
+      if (err)
+        return console.error(err);
     });
-    let percent = (obj[baseName].currentIndex / obj[baseName].fullIndex) * 100;
-    let spanClass = obj[baseName].name.replace(regex, '');
-
+    let comic = obj[baseName];
+    let base = path.basename(comic.name, path.extname(comic.name));
+    let spanClass = base.replace(regex, '');
+    let percent = (comic.currentIndex / comic.fullIndex) * 100;
     let elem = document.getElementsByClassName(spanClass);
     for (let i = 0; i < elem.length; i++) {
       elem[i].innerHTML = `${percent.toFixed(0)}%`;
@@ -61,19 +60,24 @@ exports.onChange = (index) => {
   });
 };
 
+exports.onStart = () => {
+  obj = isThere(bookmark)
+    ? jsonfile.readFileSync(bookmark)
+    : {};
+};
+
 // Fills library with percentage read on right hand side
 exports.percent = (fileName) => {
-  let spanClass = fileName.replace(regex, '');
+  let base = path.basename(fileName, path.extname(fileName));
+  let spanClass = base.replace(regex, '');
+  let percent;
   if (isThere(bookmark)) {
-    obj = jsonfile.readFileSync(bookmark);
-    if (obj[fileName]) {
-      // console.log(`${obj[fileName].name}: ${obj[fileName].currentIndex} of ${obj[fileName].fullIndex}`)
-      let percent = (obj[fileName].currentIndex / obj[fileName].fullIndex) * 100;
-      return `<span class="bookmark-percent ${spanClass}">${percent.toFixed(0)}%</span>`;
-    } else { return `<span class="bookmark-percent ${spanClass}">0%</span>`; }
+    percent = obj[fileName]
+      ? (obj[fileName].currentIndex / obj[fileName].fullIndex) * 100
+      : 0;
   } else {
-    obj = {};
     jsonfile.writeFileSync(bookmark, obj, {spaces: 2});
-    return `<span class="bookmark-percent ${spanClass}">0%</span>`;
+    percent = 0;
   }
+  return `<span class="bmPercent ${spanClass}">${percent.toFixed(0)}%</span>`;
 };
