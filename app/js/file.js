@@ -2,16 +2,16 @@
 // extracting and sourcing images to where they need to go
 
 const $ = require('jquery');
-const cbr = require('cbr');
 const {dialog} = require('electron').remote;
 const fs = require('fs');
-const inflate = require('node-unrar-js'); // https://www.npmjs.com/package/node-unpacker
+const isRar = require('is-rar');
 const isThere = require('is-there'); // https://www.npmjs.com/package/is-there
+const isZip = require('is-zip');
 const mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
 const os = require('os'); // https://nodejs.org/api/os.html
 const path = require('path');
-const Unrar = require('node-unrar');
 const unzip = require('unzip2');
+const unrar = require('electron-unrar-js');
 
 // Wonder-Reader Specific Modules //
 const df = require('./directory.js');
@@ -83,7 +83,7 @@ openFile = () => {
 fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   if (err)
     return console.error(err);
-  let looper;
+  let looper = 0;
   // corrects a possible err with HTML loading
   if (process.platform == 'win32') {
     fileName = fileName.replace(/\//g, '\\');
@@ -94,7 +94,6 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   document.getElementById('trash').dataset.current = comic;
   // tempFolder Variable for loaded comic
   tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', comic);
-  looper = 0;
   if (isThere(tempFolder)) {
     tempFolder = df.merge(tempFolder);
     extractedImages = fs.readdirSync(tempFolder);
@@ -141,6 +140,7 @@ exports.dialog = () => {
 
 exports.loader = (fileName) => {
   fileName = decodeURIComponent(fileName);
+  console.log(fileName);
   isThere(fileName)
     ? fileLoad(fileName)
     : alert(`Missing or broken file: Could not open ${fileName}`);
@@ -148,59 +148,38 @@ exports.loader = (fileName) => {
 
 // File Extractors
 fileRouter = (fileName, tempFolder, looper) => {
-  let extName = path.extname(fileName).toLowerCase();
-  switch (extName) {
-    case '.cbr':
-      rarExtractor(fileName, tempFolder, looper);
-      break;
-    case '.cbz':
+  fs.readFile(fileName, (err, data) => {
+    if (err)
+      return console.error(err);
+    if (isZip(data)) {
+      console.log('File read as ZIP');
       zipExtractor(fileName, tempFolder, looper);
-      break;
-    default:
+    } else if (isRar(data)) {
+      console.log('File read as RAR');
+      rarExtractor(fileName, tempFolder, looper);
+    } else {
       alert('Possible broken file?');
       postLoad();
-  }
+    }
+  });
 };
 
 rarExtractor = (fileName, tempFolder, looper) => {
-  let buf,
-    extracted,
-    extractor,
-    rar;
-  console.log(fileName);
-  console.log(tempFolder);
-  console.log(looper);
-  switch (process.platform) {
-    case 'linux':
-      rar = new Unrar(fileName);
-      rar.extract(tempFolder, null, function(err) {
-        if (err)
-          console.error(err);
-        extractRouter(fileName, tempFolder, looper);
-      });
-      break;
-    case 'win32': // Change to win32
-      buf = Uint8Array.from(fs.readFileSync(fileName)).buffer;
-      extractor = inflate.createExtractorFromData(buf);
-      extracted = extractor.extractAll();
-      console.log(extracted);
-      extracted[1].files = extracted[1].files.reverse();
-      extracted[1].files.forEach(function(file) {
-        !file.fileHeader.flags.directory
-          ? fs.appendFileSync(tempFolder, new Buffer(file.extract[1]))
-          : mkdirp.sync(path.join(tempFolder, file.fileHeader.name));
-      });
-      break;
-    case 'darwin':
-      cbr(fileName, tempFolder, function(error) {
-        if (error)
-          console.error(error);
-        extractRouter(fileName, tempFolder, looper);
-      });
-      break;
-    default:
-      alert(`True Believer! Wonder Reader only works on Windows, OSX, and Linux.  You're on ${process.platform}`);
+  let buf = Uint8Array.from(fs.readFileSync(fileName)).buffer;
+  let extractor = unrar.createExtractorFromData(buf);
+  let extracted = extractor.extractAll();
+  if (extracted[1]) {
+    extracted[1].files = extracted[1].files.reverse();
+  } else {
+    return zipExtractor(fileName, tempFolder, Number(looper) + 1);
   }
+  extracted[1].files.forEach(function(file) {
+    let dest = path.join(tempFolder, file.fileHeader.name);
+    !file.fileHeader.flags.directory
+      ? fs.appendFileSync(dest, new Buffer(file.extract[1]))
+      : mkdirp.sync(path.join(tempFolder, file.fileHeader.name));
+  });
+  extractRouter(fileName, tempFolder, looper);
 };
 
 zipExtractor = (fileName, tempFolder, looper) => {
