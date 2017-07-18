@@ -26,7 +26,7 @@ for (let i = 0; i < files.length; i++) {
 ignoredPaths = fs.readdirSync(path.join('.','build'));
 
 // Build Function
-console.log(colors.red('This may take a few minutes.'));
+console.log(colors.blue('This may take a few minutes.'));
 packager(
   {
     dir: './',
@@ -36,7 +36,7 @@ packager(
     prune: true,
     out: build,
     ignore: ignoredPaths,
-    icon: './shieldIcon'
+    icon: './wonderShield'
   },
   function cb(err, appPaths) {
     postPackage(err, appPaths);
