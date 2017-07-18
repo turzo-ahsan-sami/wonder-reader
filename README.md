@@ -11,8 +11,8 @@
 __Requirements__: `git`, `node`, and `npm`
 
 ```shell
-git clone https://github.com/alice-em/Wonder-Reader.git
-cd Wonder-Reader
+git clone https://github.com/alice-em/wonder-weader.git
+cd wonder-reader
 npm install
 npm start
 ```
@@ -21,7 +21,7 @@ npm start
 __Requirements__: electron-packager
 
 ##### Terminal
-* Go to where you cloned __Wonder Reader__ `cd/to/git/Wonder-Reader`
+* Go to where you cloned __Wonder Reader__ `cd/to/git/wonder-reader`
 
 ````
 npm install
