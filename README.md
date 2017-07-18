@@ -27,6 +27,7 @@ __Requirements__: electron-packager
 npm install
 npm run packager
 ````
+__Warning! 18/07/2017__ There is an issue with `>= npm@5.3.0` that interferes with compiling. Please use `<= npm@5.2.0` for the time being. Refer to `npm -v`, and if needed, run `npm i -g npm@5.2.0`
 
 ## Development
 __Requirements__: `grunt-cli`, `sass`, and some sort of text-editor
