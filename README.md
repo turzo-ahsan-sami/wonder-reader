@@ -27,7 +27,7 @@ __Requirements__: electron-packager
 npm install
 npm run packager
 ````
-__Warning! 18/07/2017__ There is an issue with `>= npm@5.3.0` that interferes with compiling. Please use `<= npm@5.2.0` for the time being. Refer to `npm -v`, and if needed, run `npm i -g npm@5.2.0`
+__Warning! :: 18 July 2017__ There is an issue with `>= npm@5.3.0` that interferes with compiling. Please use `<= npm@5.2.0` for the time being. Refer to `npm -v`, and if needed, run `npm i -g npm@5.2.0`
 
 ## Development
 __Requirements__: `grunt-cli`, `sass`, and some sort of text-editor
@@ -38,8 +38,8 @@ __Requirements__: `grunt-cli`, `sass`, and some sort of text-editor
 * Comics at either __firstPage__ or __lastPage__ can open up the next file in library folder.
 
 ##### Notes
-* node.fs API :: ( https://nodejs.org/api/fs.html )
-* electron.io API et Docs :: ( http://electron.atom.io/docs/ )
+* node.fs API :: https://nodejs.org/api/fs.html
+* electron API :: http://electron.atom.io/docs/
 
 ##### Credit
 * CSS Loaders :: https://github.com/lukehaas/css-loaders
@@ -48,4 +48,3 @@ __Requirements__: `grunt-cli`, `sass`, and some sort of text-editor
 * Font Awesome :: http://fontawesome.io/
 * Node :: https://nodejs.org/en/
 * Node Directory Tree :: https://github.com/mihneadb/node-directory-tree
-* Logo design by Jake Brockway :: http://jacobvbrockway.weebly.com
