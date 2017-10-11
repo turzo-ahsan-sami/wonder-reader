@@ -1,6 +1,6 @@
 {
   "name": "Wonder-Reader",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A Comic Book Reader, written with Node, housed in Electron",
   "main": "index.js",
   "scripts": {
@@ -21,24 +21,24 @@
   "dependencies": {
     "debounce": "^1.0.2",
     "directory-tree": "2.0.0",
-    "electron-settings": "3.1.1",
+    "electron-settings": "3.1.2",
     "electron-unrar-js": "^1.0.1",
     "get-folder-size": "1.0.0",
-    "image-size": "0.6.0",
-    "is-rar": "^1.0.0",
-    "is-there": "4.4.2",
+    "image-size": "0.6.1",
+    "is-rar": "2.0.0",
+    "is-there": "4.4.3",
     "is-zip": "^1.0.0",
     "jquery": "3.2.x",
-    "jsonfile": "3.0.1",
+    "jsonfile": "4.0.0",
     "mkdirp": "0.5.1",
-    "rimraf": "2.6.1",
+    "rimraf": "2.6.2",
     "unzip2": "0.2.5"
   },
   "devDependencies": {
     "colors": "1.1.2",
-    "electron-packager": "8.7.2",
-    "electron": "1.6.11",
-    "eslint": "4.1.1",
+    "electron": "1.7.8",
+    "electron-packager": "9.1.0",
+    "eslint": "4.8.0",
     "grunt": "1.0.1",
     "grunt-contrib-sass": "1.0.0",
     "grunt-contrib-watch": "1.0.0"
