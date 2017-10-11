@@ -41,6 +41,9 @@ databaseBuild = (filePath) => {
 };
 
 configSave = (type, val) => {
+  if (!isThere(configFile)) {
+    jsonfile.writeFileSync(configFile, template);
+  }
   jsonfile.readFile(configFile, function(err, obj) {
     if (err)
       return console.error(err);

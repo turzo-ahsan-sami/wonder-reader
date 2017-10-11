@@ -9,14 +9,14 @@ const path = require('path');
 // Autoloads the sidebar library
 exports.load = (fileName) => {
   let baseName = path.basename(fileName);
-  let filePath = path.dirname(fileName);
-  let comicSeries = fs.readdirSync(filePath);
+  let dirName = path.dirname(fileName);
+  let comicSeries = fs.readdirSync(dirName);
 
   $('.libFile').remove();
   $('.libDir').remove();
   for (let i = 0; i < comicSeries.length; i++) {
     let comic = comicSeries[i];
-    if (fs.statSync(path.join(filePath, comic)).isFile() && isComic(comic)) {
+    if (fs.statSync(path.join(dirName, comic)).isFile() && isComic(comic)) {
       if (comic === baseName) {
         $('#dirLib').append(`
           <li class="libFile current">
@@ -27,7 +27,7 @@ exports.load = (fileName) => {
           </li>`
         );
       } else {
-        let file = df.encode(path.join(filePath, comic));
+        let file = df.encode(path.join(dirName, comic));
         $('#dirLib').append(`
           <li class="libFile">
             <a href="#" onclick="file.loader('${file}')">

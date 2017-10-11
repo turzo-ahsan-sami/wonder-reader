@@ -9,7 +9,7 @@ const sizeOf = require('image-size');
 let centerFolds,
   extractedImages,
   filePath,
-  PAGE,
+  pageNumber,
   loadedImages;
 
 // Function variables
@@ -25,28 +25,28 @@ const viewer = document.getElementById('viewer');
 const clearImg = path.join('.', 'images', 'FFFFFF-0.0.png');
 
 exports.load = (file, DIR, IMAGES) => {
-  let savedPAGE,
+  let savedpageNumber,
     r;
   filePath = DIR;
   extractedImages = IMAGES;
   centerFolds = center.fold(filePath, extractedImages);
 
-  PAGE = 0;
-  savedPAGE = Number(bookmark.onLoad(file, extractedImages));
+  pageNumber = 0;
+  savedpageNumber = Number(bookmark.onLoad(file, extractedImages));
   viewOne.src = clearImg; // Clears the screen to minimize choppiness
   viewTwo.src = clearImg;
-  if (savedPAGE > 0) {
-    r = confirm(`Continue ${path.basename(file)} at page ${savedPAGE}`);
-    PAGE = r === true
-      ? savedPAGE
+  if (savedpageNumber > 0) {
+    r = confirm(`Continue ${path.basename(file)} at page ${savedpageNumber}`);
+    pageNumber = r === true
+      ? savedpageNumber
       : 0;
   }
-  PAGE = Number(PAGE);
+  pageNumber = Number(pageNumber);
 
   column.classList.remove('disabled');
   Number(column.dataset.val) === 1
-    ? singlePage(filePath, extractedImages, PAGE)
-    : defaults(filePath, extractedImages, PAGE);
+    ? singlePage(filePath, extractedImages, pageNumber)
+    : defaults(filePath, extractedImages, pageNumber);
   // Preloads each image file for a smoother experience
   imageLoad();
 };
@@ -65,64 +65,64 @@ pageTurn = (val) => {
   let polarity = val > 0
     ? 1
     : -1;
-  PAGE = Number(PAGE);
+  pageNumber = Number(pageNumber);
   val = Number(val);
 
   // Limits Val to range
-  if (PAGE + val >= extractedImages.length - 1) { // For last page
-    if (Math.abs(val) === 2 && PAGE === extractedImages.length - 2) {
+  if (pageNumber + val >= extractedImages.length - 1) { // For last page
+    if (Math.abs(val) === 2 && pageNumber === extractedImages.length - 2) {
       if (centerFolds.indexOf(extractedImages.length - 1) > -1) {
-        PAGE = extractedImages.length - 1;
-        singlePage(filePath, extractedImages, PAGE);
+        pageNumber = extractedImages.length - 1;
+        singlePage(filePath, extractedImages, pageNumber);
       } else {
-        PAGE = extractedImages.length - 2;
-        defaults(filePath, extractedImages, PAGE);
+        pageNumber = extractedImages.length - 2;
+        defaults(filePath, extractedImages, pageNumber);
       }
     } else {
-      PAGE = extractedImages.length - 1;
-      singlePage(filePath, extractedImages, PAGE);
+      pageNumber = extractedImages.length - 1;
+      singlePage(filePath, extractedImages, pageNumber);
     }
-  } else if (PAGE + val <= 0) { // For first page
-    PAGE = 0;
-    defaults(filePath, extractedImages, PAGE);
+  } else if (pageNumber + val <= 0) { // For first page
+    pageNumber = 0;
+    defaults(filePath, extractedImages, pageNumber);
   } else {
     if (centerFolds.length === 0) { // For no centerFolds. This is easy
-      PAGE += val;
-      PAGE === extractedImages.length - 1
-        ? singlePage(filePath, extractedImages, PAGE)
-        : defaults(filePath, extractedImages, PAGE);
+      pageNumber += val;
+      pageNumber === extractedImages.length - 1
+        ? singlePage(filePath, extractedImages, pageNumber)
+        : defaults(filePath, extractedImages, pageNumber);
     } else { // For when any CenterFold exists
-      if (centerFolds.indexOf(PAGE + polarity) > -1) {
-        PAGE += polarity;
-        singlePage(filePath, extractedImages, PAGE);
-      } else if (centerFolds.indexOf(PAGE + val) > -1) {
-        PAGE += val;
-        singlePage(filePath, extractedImages, PAGE);
-      } else if (centerFolds.indexOf(PAGE) > -1) {
-        PAGE += polarity > 0
+      if (centerFolds.indexOf(pageNumber + polarity) > -1) {
+        pageNumber += polarity;
+        singlePage(filePath, extractedImages, pageNumber);
+      } else if (centerFolds.indexOf(pageNumber + val) > -1) {
+        pageNumber += val;
+        singlePage(filePath, extractedImages, pageNumber);
+      } else if (centerFolds.indexOf(pageNumber) > -1) {
+        pageNumber += polarity > 0
           ? polarity
           : val;
-        defaults(filePath, extractedImages, PAGE);
+        defaults(filePath, extractedImages, pageNumber);
       } else {
-        PAGE += val;
-        defaults(filePath, extractedImages, PAGE);
+        pageNumber += val;
+        defaults(filePath, extractedImages, pageNumber);
       }
     }
   }
-  bookmark.onChange(PAGE); // Updates bookmark.json
+  bookmark.onChange(pageNumber); // Updates bookmark.json
 };
 
 // For Single page viewing and styling
-singlePage = (filePath, extractedImages, PAGE) => {
+singlePage = (filePath, extractedImages, pageNumber) => {
   viewOne.style.width = '100%';
   viewTwo.style.display = 'none';
-  viewOne.src = path.join(filePath, encodeURIComponent(extractedImages[PAGE]));
+  viewOne.src = path.join(filePath, encodeURIComponent(extractedImages[pageNumber]));
   viewTwo.src = path.join('images', 'FFFFFF-0.0.png');
   viewer.scrollTop = 0;
   viewer.scrollLeft = 0;
 };
 
-defaults = (filePath, extractedImages, PAGE) => {
+defaults = (filePath, extractedImages, pageNumber) => {
   let val = Number(column.dataset.val),
     sizeOne,
     sizeTwo,
@@ -130,25 +130,25 @@ defaults = (filePath, extractedImages, PAGE) => {
     ratioTwo;
   switch (Math.abs(val)) {
     case 1:
-      singlePage(filePath, extractedImages, PAGE);
+      singlePage(filePath, extractedImages, pageNumber);
       break;
     default:
-      if (PAGE >= extractedImages.length - 1 || centerFolds.indexOf(PAGE) > -1 || centerFolds.indexOf(PAGE + 1) > -1) {
-        singlePage(filePath, extractedImages, PAGE);
+      if (pageNumber >= extractedImages.length - 1 || centerFolds.indexOf(pageNumber) > -1 || centerFolds.indexOf(pageNumber + 1) > -1) {
+        singlePage(filePath, extractedImages, pageNumber);
       } else {
         viewOne.style.display = 'initial';
         viewTwo.style.display = 'initial';
 
-        sizeOne = sizeOf(path.join(filePath, extractedImages[PAGE]));
-        sizeTwo = sizeOf(path.join(filePath, extractedImages[PAGE + 1]));
+        sizeOne = sizeOf(path.join(filePath, extractedImages[pageNumber]));
+        sizeTwo = sizeOf(path.join(filePath, extractedImages[pageNumber + 1]));
         ratioOne = sizeOne.width / sizeOne.height;
         ratioTwo = sizeTwo.width / sizeTwo.height;
 
         viewOne.style.width = `${ratioOne / (ratioOne + ratioTwo) * 100}%`;
         viewTwo.style.width = `${ratioTwo / (ratioOne + ratioTwo) * 100}%`;
 
-        viewOne.src = path.join(filePath, encodeURIComponent(extractedImages[PAGE]));
-        viewTwo.src = path.join(filePath, encodeURIComponent(extractedImages[PAGE + 1]));
+        viewOne.src = path.join(filePath, encodeURIComponent(extractedImages[pageNumber]));
+        viewTwo.src = path.join(filePath, encodeURIComponent(extractedImages[pageNumber + 1]));
 
         viewer.scrollTop = 0;
         viewer.scrollLeft = 0;
@@ -172,13 +172,13 @@ exports.spread = () => {
       columnIcon.classList.remove('fa-square-o');
       columnIcon.classList.add('fa-minus-square-o');
       column.dataset.val = 2;
-      defaults(filePath, extractedImages, PAGE);
+      defaults(filePath, extractedImages, pageNumber);
       break;
     case 2:
       columnIcon.classList.remove('fa-minus-square-o');
       columnIcon.classList.add('fa-square-o');
       column.dataset.val = 1;
-      singlePage(filePath, extractedImages, PAGE);
+      singlePage(filePath, extractedImages, pageNumber);
   }
   config.pageViewSave(column.dataset.val);
 };

@@ -46,19 +46,18 @@ buildLibrary = (directory, listID) => {
   // `For` loop to create elements for the DOM
   for (let i = 0; i < files.length; i++) {
     let file = files[i];
-    let filePath = path.join(directory, file);
-    let stat = fs.statSync(filePath);
+    let fullFilePath = path.join(directory, file);
+    let stat = fs.statSync(fullFilePath);
     // Inserts file.loader() for files
     if (stat.isFile() && isComic(file)) {
-      file = path.basename(file, path.extname(file));
-      filePath = df.encode(filePath);
+      fullFilePath = df.encode(fullFilePath);
       // Converts win32 paths to HTML compatible paths
       if (process.platform == 'win32') {
-        filePath = filePath.replace(/\\/g, '/');
-        console.log(filePath);
+        fullFilePath = fullFilePath.replace(/\\/g, '/');
+        console.log(fullFilePath);
       }
       $(`#${listID}`).append(`<li class="file">
-          <a href="#" onclick="file.loader('${filePath}')">
+          <a href="#" onclick="file.loader('${fullFilePath}')">
             <i class="fa fa-file" aria-hidden="true"></i>
             ${file} ${bookmark.percent(file)}
           </a>
@@ -68,14 +67,15 @@ buildLibrary = (directory, listID) => {
     } else if (stat.isDirectory() && file.charAt(0) != '.') {
       // Removes potentially damaging characters for app
       let newListID = (`${listID}${file}`).replace(/\s|#|\(|\)|'|,|&|\+|-|!|\[|\]|\./g, '');
-      $(`#${listID}`).append(`<li class="folder" data-id='${newListID}' data-directory="${filePath}">
+      $(`#${listID}`).append(`<li class="folder" data-id='${newListID}' data-directory="${fullFilePath}">
           <span>
             <i class="fa fa-folder" aria-hidden="true"></i>
             <i class="fa fa-caret-down rotate" aria-hidden="true"></i>
             ${file}
           </span>
           <ul id=${newListID}></ul>
-        </li>`);
+        </li>`
+      );
     }
   }
 
@@ -103,15 +103,15 @@ exports.openDir = () => {
 };
 
 // Exported version of buildLibrary()
-exports.builder = (filePath) => {
-  build(filePath);
+exports.builder = (fullFilePath) => {
+  build(fullFilePath);
 };
 
-build = (filePath) => {
-  config.libSave(filePath);
-  config.databaseBuild(filePath);
+build = (fullFilePath) => {
+  config.libSave(fullFilePath);
+  config.databaseBuild(fullFilePath);
   $('#ulLib li, #ulLib ul').remove();
-  buildLibrary(filePath, 'ulLib');
+  buildLibrary(fullFilePath, 'ulLib');
 };
 
 folders = (directory, ID) => { // Toggle for folders in MainLib

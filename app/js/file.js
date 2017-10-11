@@ -168,12 +168,14 @@ rarExtractor = (fileName, tempFolder, looper) => {
   let buf = Uint8Array.from(fs.readFileSync(fileName)).buffer;
   let extractor = unrar.createExtractorFromData(buf);
   let extracted = extractor.extractAll();
+  console.log(extracted);
   if (extracted[1]) {
     extracted[1].files = extracted[1].files.reverse();
   } else {
     return zipExtractor(fileName, tempFolder, Number(looper) + 1);
   }
   extracted[1].files.forEach(function(file) {
+    console.dir(file);
     let dest = path.join(tempFolder, file.fileHeader.name);
     !file.fileHeader.flags.directory
       ? fs.appendFileSync(dest, new Buffer(file.extract[1]))
@@ -189,22 +191,20 @@ zipExtractor = (fileName, tempFolder, looper) => {
 };
 
 extractRouter = (fileName, tempFolder, looper) => {
-  let extName = path.extname(fileName).toLowerCase();
   tempFolder = df.merge(tempFolder);
   extractedImages = fs.readdirSync(tempFolder);
   switch (true) {
     case(extractedImages.length == 0 && looper <= 3):
       looper++;
-      switch (extName) {
-        case '.cbz':
-          rarExtractor(fileName, tempFolder, looper);
-          break;
-        case '.cbr':
-          zipExtractor(fileName, tempFolder, looper);
-          break;
-        default:
-          alert('Possible broken file?');
-          postLoad();
+      if (!isZip(fileName)) {
+        console.log('Re-reading as ZIP');
+        zipExtractor(fileName, tempFolder, looper);
+      } else if (!isRar(fileName)) {
+        console.log('Re-reading as RAR');
+        rarExtractor(fileName, tempFolder, looper);
+      } else {
+        alert('Possible broken file?');
+        postLoad();
       }
       break;
     case(extractedImages.length != 0 && looper > 3):
