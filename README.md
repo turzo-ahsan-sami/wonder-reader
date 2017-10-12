@@ -2,7 +2,7 @@
 
 [![dependencies Status](https://david-dm.org/alice-em/wonder-reader/status.png)](https://david-dm.org/alice-em/wonder-reader)
 [![GitHub version](https://badge.fury.io/gh/alice-em%2Fwonder-reader.svg)](https://badge.fury.io/gh/alice-em%2Fwonder-reader)
-`0.5.0`
+`0.5.1`
 ## Downloads
 
 [Downloads](http://alice-em.github.io/wonder-reader/)
