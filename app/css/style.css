@@ -287,7 +287,7 @@ button#trash {
 }
 #mainLib button {
   float: left;
-  background: transparent;
+  background: rgba(0, 0, 0, 0);
 }
 #mainLib .fa {
   font-size: 32px;
@@ -311,11 +311,11 @@ button#trash {
   border-top: 1px solid rgba(0, 0, 0, 0.5);
 }
 #mainLib li:nth-child(even) {
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0);
 }
 #mainLib li.folder {
   font-weight: bold;
-  padding: 2px 0 2px 15px;
+  padding: 2px 0 2px 10px;
   background: rgba(255, 255, 255, 0.1);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -335,6 +335,7 @@ button#trash {
 }
 #mainLib #libList .fa-file {
   color: #91d5fd;
+  margin-right: 15px;
 }
 #mainLib #libList .fa-folder {
   color: #ecc76f;
@@ -553,7 +554,7 @@ button#trash {
 }
 .mainWindow .navi-button {
   position: fixed;
-  background: transparent;
+  background: rgba(0, 0, 0, 0);
   display: flex;
   top: 50%;
   font-size: 36px;

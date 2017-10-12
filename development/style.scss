@@ -366,7 +366,7 @@ button#trash {
 
   li.folder {
     font-weight: bold;
-    padding: 2px 0 2px 15px;
+    padding: 2px 0 2px 10px;
     background: $white-trans-deg;
     border-top: 1px solid $white-trans-deg;
     .folder {
@@ -389,6 +389,7 @@ button#trash {
 
     .fa-file {
       color: $input-bleu;
+      margin-right: 15px;
     }
 
     .fa-folder {
