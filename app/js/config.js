@@ -41,15 +41,23 @@ databaseBuild = (filePath) => {
 };
 
 configSave = (type, val) => {
-  jsonfile.readFile(configFile, function(err, obj) {
-    if (err)
-      return console.error(err);
-    obj[type] = val;
-    jsonfile.writeFile(configFile, obj, function(err) {
+  // console.log(`${configFile} exists? ${isThere(configFile)}`);
+  if (!isThere(configFile)) {
+    jsonfile.writeFile(configFile, template, function(err) {
       if (err)
         console.error(err);
     });
-  });
+  } else {
+    jsonfile.readFile(configFile, function(err, obj) {
+      if (err)
+        return console.error(err);
+      obj[type] = val;
+      jsonfile.writeFile(configFile, obj, function(err) {
+        if (err)
+          console.error(err);
+      });
+    });
+  }
 };
 
 onStart = () => {
@@ -88,15 +96,9 @@ onStart = () => {
 };
 
 defaults = (prop) => {
-  let obj;
-  if (isThere(configFile)) {
-    obj = jsonfile.readFileSync(configFile);
-    return obj[prop]
-      ? obj[prop]
-      : template[prop];
-  } else {
-    return template[prop];
-  }
+  return isThere(configFile)
+    ? jsonfile.readFileSync(configFile)[prop] || template[prop]
+    : template[prop];
 };
 
 exports.databaseBuild = (filePath) => {

@@ -87,8 +87,8 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   // corrects a possible err with HTML loading
   if (process.platform == 'win32') {
     fileName = fileName.replace(/\//g, '\\');
-    console.log(fileName);
   }
+  console.log(fileName);
   comic = path.basename(fileName, path.extname(fileName)).replace(/#|!|,/g, '');
 
   document.getElementById('trash').dataset.current = comic;
@@ -114,10 +114,11 @@ enable = (id) => {
 
 // After extraction, loads stuff into img tags, as well as other junk
 postExtract = (fileName, tempFolder, extractedImages) => {
+  // console.dir([fileName, tempFolder, extractedImages]);
   extractedImages = strain(extractedImages);
 
-  viewOne.src = path.join(tempFolder, encodeURIComponent(extractedImages[0]));
-  viewTwo.src = path.join(tempFolder, encodeURIComponent(extractedImages[1]));
+  viewOne.src = df.encode(path.join(tempFolder, extractedImages[0]));
+  viewTwo.src = df.encode(path.join(tempFolder, extractedImages[1]));
 
   page.load(fileName, tempFolder, extractedImages);
   enable('pageLeft');
@@ -140,7 +141,7 @@ exports.dialog = () => {
 
 exports.loader = (fileName) => {
   fileName = decodeURIComponent(fileName);
-  console.log(fileName);
+  // console.log(fileName);
   isThere(fileName)
     ? fileLoad(fileName)
     : alert(`Missing or broken file: Could not open ${fileName}`);
@@ -173,13 +174,21 @@ rarExtractor = (fileName, tempFolder, looper) => {
   } else {
     return zipExtractor(fileName, tempFolder, Number(looper) + 1);
   }
+  // console.dir(extracted);
+  let counter = 0;
   extracted[1].files.forEach(function(file) {
+    counter++;
+    // console.dir(file);
     let dest = path.join(tempFolder, file.fileHeader.name);
     !file.fileHeader.flags.directory
       ? fs.appendFileSync(dest, new Buffer(file.extract[1]))
       : mkdirp.sync(path.join(tempFolder, file.fileHeader.name));
+    // console.log(`Counter = ${counter} || Files.length = ${extracted[1].files.length}`);
+    if (counter == extracted[1].files.length) {
+      console.log('Rar File proceeding to extract router.');
+      extractRouter(fileName, tempFolder, looper);
+    }
   });
-  extractRouter(fileName, tempFolder, looper);
 };
 
 zipExtractor = (fileName, tempFolder, looper) => {
@@ -189,22 +198,20 @@ zipExtractor = (fileName, tempFolder, looper) => {
 };
 
 extractRouter = (fileName, tempFolder, looper) => {
-  let extName = path.extname(fileName).toLowerCase();
   tempFolder = df.merge(tempFolder);
   extractedImages = fs.readdirSync(tempFolder);
   switch (true) {
     case(extractedImages.length == 0 && looper <= 3):
       looper++;
-      switch (extName) {
-        case '.cbz':
-          rarExtractor(fileName, tempFolder, looper);
-          break;
-        case '.cbr':
-          zipExtractor(fileName, tempFolder, looper);
-          break;
-        default:
-          alert('Possible broken file?');
-          postLoad();
+      if (!isZip(fileName)) {
+        console.log('Re-reading as ZIP');
+        zipExtractor(fileName, tempFolder, looper);
+      } else if (!isRar(fileName)) {
+        console.log('Re-reading as RAR');
+        rarExtractor(fileName, tempFolder, looper);
+      } else {
+        alert('Possible broken file?');
+        postLoad();
       }
       break;
     case(extractedImages.length != 0 && looper > 3):

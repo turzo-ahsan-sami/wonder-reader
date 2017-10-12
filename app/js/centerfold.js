@@ -1,5 +1,4 @@
 // centerfold.js returns an array with the index locations of supposed centerfolds
-
 const path = require('path');
 const sizeOf = require('image-size');
 
@@ -7,21 +6,16 @@ const sizeOf = require('image-size');
 exports.fold = (filePath, extractedImages) => {
   // variables
   let dimensions,
-    height,
-    spread,
-    width;
+    spread = [];
 
   // function variables
   let sortNumber = (a, b) => {
     return a - b;
   };
 
-  spread = [];
   for (let i = 0; i < extractedImages.length; i++) {
     dimensions = sizeOf(path.join(filePath, extractedImages[i]));
-    width = dimensions.width;
-    height = dimensions.height;
-    if (width >= height)
+    if (dimensions.width >= dimensions.height)
       spread.push(i);
   }
   return spread.sort(sortNumber);

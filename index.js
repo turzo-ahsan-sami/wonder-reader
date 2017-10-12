@@ -10,7 +10,7 @@ function createWindow () {
     height: 700,
     minWidth: 855,
     minHeight: 530,
-    icon: './shieldIcon.png',
+    icon: './wonderShield.png',
     title: 'Wonder Reader',
     show: false
   });
@@ -19,7 +19,7 @@ function createWindow () {
   win.once('ready-to-show', () => { win.show(); });
   win.on('closed', () => { win = null; });
 }
-const icon = nativeImage.createFromPath('./shieldIcon.png');
+const icon = nativeImage.createFromPath('./wonderShield.png');
 app.setName('Wonder Reader');
 if (process.platform === 'darwin') { app.dock.setIcon(icon); }
 app.on('ready', () => { createWindow(); });
