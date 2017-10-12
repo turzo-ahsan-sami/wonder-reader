@@ -3,6 +3,7 @@
 const bookmark = require('./bookmark.js');
 const center = require('./centerfold.js');
 const config = require('./config.js');
+const df = require('./directory.js');
 const path = require('path');
 const sizeOf = require('image-size');
 
@@ -29,6 +30,7 @@ exports.load = (file, DIR, IMAGES) => {
     r;
   filePath = DIR;
   extractedImages = IMAGES;
+  console.dir(extractedImages);
   centerFolds = center.fold(filePath, extractedImages);
 
   pageNumber = 0;
@@ -54,8 +56,10 @@ exports.load = (file, DIR, IMAGES) => {
 async function imageLoad() {
   loadedImages = [];
   for (let i = 0; i < extractedImages.length; i++) {
+    // console.log(path.join(filePath, extractedImages[i]));
+    // console.log(df.encode(path.join(filePath, extractedImages[i])));
     let img = new Image();
-    let imgSrc = path.join(filePath, encodeURIComponent(extractedImages[i]));
+    let imgSrc = df.encode(path.join(filePath, extractedImages[i]));
     img.src = imgSrc;
     loadedImages.push(img);
   }
@@ -114,9 +118,11 @@ pageTurn = (val) => {
 
 // For Single page viewing and styling
 singlePage = (filePath, extractedImages, pageNumber) => {
+  // console.log(path.join(filePath, extractedImages[pageNumber]));
+  // console.log(df.encode(path.join(filePath, extractedImages[pageNumber])));
   viewOne.style.width = '100%';
   viewTwo.style.display = 'none';
-  viewOne.src = path.join(filePath, encodeURIComponent(extractedImages[pageNumber]));
+  viewOne.src = df.encode(path.join(filePath, extractedImages[pageNumber]));
   viewTwo.src = path.join('images', 'FFFFFF-0.0.png');
   viewer.scrollTop = 0;
   viewer.scrollLeft = 0;
@@ -136,6 +142,10 @@ defaults = (filePath, extractedImages, pageNumber) => {
       if (pageNumber >= extractedImages.length - 1 || centerFolds.indexOf(pageNumber) > -1 || centerFolds.indexOf(pageNumber + 1) > -1) {
         singlePage(filePath, extractedImages, pageNumber);
       } else {
+        // console.log(path.join(filePath, extractedImages[pageNumber]));
+        // console.log(df.encode(path.join(filePath, extractedImages[pageNumber])));
+        // console.log(path.join(filePath, extractedImages[pageNumber + 1]));
+        // console.log(df.encode(path.join(filePath, extractedImages[pageNumber + 1])));
         viewOne.style.display = 'initial';
         viewTwo.style.display = 'initial';
 
@@ -147,8 +157,8 @@ defaults = (filePath, extractedImages, pageNumber) => {
         viewOne.style.width = `${ratioOne / (ratioOne + ratioTwo) * 100}%`;
         viewTwo.style.width = `${ratioTwo / (ratioOne + ratioTwo) * 100}%`;
 
-        viewOne.src = path.join(filePath, encodeURIComponent(extractedImages[pageNumber]));
-        viewTwo.src = path.join(filePath, encodeURIComponent(extractedImages[pageNumber + 1]));
+        viewOne.src = df.encode(path.join(filePath, extractedImages[pageNumber]));
+        viewTwo.src = df.encode(path.join(filePath, extractedImages[pageNumber + 1]));
 
         viewer.scrollTop = 0;
         viewer.scrollLeft = 0;

@@ -114,10 +114,11 @@ enable = (id) => {
 
 // After extraction, loads stuff into img tags, as well as other junk
 postExtract = (fileName, tempFolder, extractedImages) => {
+  console.dir([fileName, tempFolder, extractedImages]);
   extractedImages = strain(extractedImages);
 
-  viewOne.src = path.join(tempFolder, encodeURIComponent(extractedImages[0]));
-  viewTwo.src = path.join(tempFolder, encodeURIComponent(extractedImages[1]));
+  viewOne.src = df.encode(path.join(tempFolder, extractedImages[0]));
+  viewTwo.src = df.encode(path.join(tempFolder, extractedImages[1]));
 
   page.load(fileName, tempFolder, extractedImages);
   enable('pageLeft');
@@ -168,20 +169,26 @@ rarExtractor = (fileName, tempFolder, looper) => {
   let buf = Uint8Array.from(fs.readFileSync(fileName)).buffer;
   let extractor = unrar.createExtractorFromData(buf);
   let extracted = extractor.extractAll();
-  console.log(extracted);
   if (extracted[1]) {
     extracted[1].files = extracted[1].files.reverse();
   } else {
     return zipExtractor(fileName, tempFolder, Number(looper) + 1);
   }
+  console.dir(extracted);
+  let counter = 0;
   extracted[1].files.forEach(function(file) {
+    counter++;
     console.dir(file);
     let dest = path.join(tempFolder, file.fileHeader.name);
     !file.fileHeader.flags.directory
       ? fs.appendFileSync(dest, new Buffer(file.extract[1]))
       : mkdirp.sync(path.join(tempFolder, file.fileHeader.name));
+    console.log(`Counter = ${counter} || Files.length = ${extracted[1].files.length}`);
+    if (counter == extracted[1].files.length) {
+      console.log('Rar File proceeding to extract router.');
+      extractRouter(fileName, tempFolder, looper);
+    }
   });
-  extractRouter(fileName, tempFolder, looper);
 };
 
 zipExtractor = (fileName, tempFolder, looper) => {
