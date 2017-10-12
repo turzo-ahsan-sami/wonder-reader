@@ -315,7 +315,6 @@ button#trash {
 }
 #mainLib li.folder {
   font-weight: bold;
-  padding: 2px 0 2px 10px;
   background: rgba(255, 255, 255, 0.1);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -335,7 +334,7 @@ button#trash {
 }
 #mainLib #libList .fa-file {
   color: #91d5fd;
-  margin-right: 15px;
+  margin-right: 20px;
 }
 #mainLib #libList .fa-folder {
   color: #ecc76f;
