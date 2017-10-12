@@ -182,10 +182,10 @@ button#trash {
 }
 
 #optWindow {
-  background: rgba(0, 0, 0, 0.95);
+  background: rgba(0, 0, 0, 0.85);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.95);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.85);
   display: none;
   position: absolute;
   right: 20px;
@@ -271,14 +271,14 @@ button#trash {
 }
 
 #mainLib {
-  background: rgba(0, 0, 0, 0.95);
+  background: rgba(0, 0, 0, 0.85);
   position: absolute;
   top: 56px;
   right: 5%;
   width: 90%;
   height: 600px;
   z-index: 1;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.95);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.85);
 }
 #mainLib h1 {
   margin-left: 10px;
@@ -297,12 +297,12 @@ button#trash {
 }
 #mainLib ul {
   clear: both;
-  font-size: 12px;
-  color: #fff;
+  font-size: 16px;
+  color: #efefef;
 }
 #mainLib ul ul {
   margin-left: 0;
-  box-shadow: inset 0 5px 5px 3px rgba(0, 0, 0, 0.95);
+  box-shadow: inset 0 5px 5px 3px rgba(0, 0, 0, 0.85);
 }
 #mainLib li {
   padding: 2px 0 2px 15px;
@@ -334,13 +334,13 @@ button#trash {
 }
 #mainLib #libList .fa-file {
   color: #91d5fd;
-  margin-right: 20px;
+  margin-right: 25px;
 }
 #mainLib #libList .fa-folder {
   color: #ecc76f;
 }
 #mainLib #ulLib .fa {
-  font-size: 12px;
+  font-size: 16px;
 }
 #mainLib #ulLib span {
   display: block;
@@ -360,7 +360,6 @@ button#trash {
 }
 #mainLib .bmPercent {
   float: right;
-  font-size: 11px;
   padding-right: 5px !important;
 }
 
@@ -515,7 +514,7 @@ button#trash {
 }
 
 .directory {
-  background-color: rgba(0, 0, 0, 0.95);
+  background-color: rgba(0, 0, 0, 0.85);
 }
 .directory .fa {
   padding-right: 5px;
