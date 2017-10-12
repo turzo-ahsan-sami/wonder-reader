@@ -87,8 +87,8 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   // corrects a possible err with HTML loading
   if (process.platform == 'win32') {
     fileName = fileName.replace(/\//g, '\\');
-    console.log(fileName);
   }
+  console.log(fileName);
   comic = path.basename(fileName, path.extname(fileName)).replace(/#|!|,/g, '');
 
   document.getElementById('trash').dataset.current = comic;
@@ -114,7 +114,7 @@ enable = (id) => {
 
 // After extraction, loads stuff into img tags, as well as other junk
 postExtract = (fileName, tempFolder, extractedImages) => {
-  console.dir([fileName, tempFolder, extractedImages]);
+  // console.dir([fileName, tempFolder, extractedImages]);
   extractedImages = strain(extractedImages);
 
   viewOne.src = df.encode(path.join(tempFolder, extractedImages[0]));
@@ -141,7 +141,7 @@ exports.dialog = () => {
 
 exports.loader = (fileName) => {
   fileName = decodeURIComponent(fileName);
-  console.log(fileName);
+  // console.log(fileName);
   isThere(fileName)
     ? fileLoad(fileName)
     : alert(`Missing or broken file: Could not open ${fileName}`);
@@ -174,16 +174,16 @@ rarExtractor = (fileName, tempFolder, looper) => {
   } else {
     return zipExtractor(fileName, tempFolder, Number(looper) + 1);
   }
-  console.dir(extracted);
+  // console.dir(extracted);
   let counter = 0;
   extracted[1].files.forEach(function(file) {
     counter++;
-    console.dir(file);
+    // console.dir(file);
     let dest = path.join(tempFolder, file.fileHeader.name);
     !file.fileHeader.flags.directory
       ? fs.appendFileSync(dest, new Buffer(file.extract[1]))
       : mkdirp.sync(path.join(tempFolder, file.fileHeader.name));
-    console.log(`Counter = ${counter} || Files.length = ${extracted[1].files.length}`);
+    // console.log(`Counter = ${counter} || Files.length = ${extracted[1].files.length}`);
     if (counter == extracted[1].files.length) {
       console.log('Rar File proceeding to extract router.');
       extractRouter(fileName, tempFolder, looper);

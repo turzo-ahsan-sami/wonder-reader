@@ -41,7 +41,7 @@ databaseBuild = (filePath) => {
 };
 
 configSave = (type, val) => {
-  console.log(`${configFile} exists? ${isThere(configFile)}`);
+  // console.log(`${configFile} exists? ${isThere(configFile)}`);
   if (!isThere(configFile)) {
     jsonfile.writeFile(configFile, template, function(err) {
       if (err)
