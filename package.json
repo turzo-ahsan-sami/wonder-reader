@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "electron index.js",
-    "packager": "node scripts/packager.js"
+    "packager": "node scripts/packager.js",
+    "build-linux": "electron-builder --linux"
   },
   "repository": {
     "type": "git",
@@ -38,9 +39,26 @@
     "colors": "1.1.2",
     "electron": "1.7.9",
     "electron-packager": "9.1.0",
+    "electron-builder": "^19.50.0",
     "eslint": "4.8.0",
     "grunt": "1.0.1",
     "grunt-contrib-sass": "1.0.0",
     "grunt-contrib-watch": "1.0.0"
+  },
+  "build": {
+  "linux": {
+    "icon": "resources/icons/",
+    "target": [
+      "snap"
+    ]
+  },
+  "snap": {
+    "plugs": [
+      "default"
+    ],
+    "after": [
+      "desktop-gtk2"
+    ]
+  }
   }
 }
