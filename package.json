@@ -1,6 +1,6 @@
 {
   "name": "Wonder-Reader",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "A Comic Book Reader, written with Node, housed in Electron",
   "main": "index.js",
   "scripts": {
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "colors": "1.1.2",
-    "electron": "1.7.9",
+    "electron": "1.8.4",
     "electron-packager": "9.1.0",
     "eslint": "4.8.0",
     "grunt": "1.0.1",
