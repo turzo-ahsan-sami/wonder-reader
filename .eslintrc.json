@@ -5,11 +5,21 @@
     "es6": true,
     "node": true
   },
-  "extends": "eslint:recommended",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "parser": "babel-eslint",
   "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
     "ecmaVersion": 8,
     "sourceType": "module"
   },
+  "plugins": [
+    "react"
+  ],
   "rules": {
     "indent": [
       "error",
@@ -22,14 +32,41 @@
       "error",
       "unix"
     ],
+    "no-console": 0,
+    "no-fallthrough": [0],
     "quotes": [
       "error",
       "single"
+    ],
+    "react/jsx-max-props-per-line": [1, {
+      "maximum": 1,
+      "when": "always"
+    }],
+    "react/jsx-wrap-multilines": [1, {
+      "arrow": "parens-new-line",
+      "assignment": "parens-new-line",
+      "condition": "parens-new-line",
+      "declaration": "parens-new-line",
+      "logical": "parens",
+      "prop": "parens-new-line",
+      "return": "parens-new-line"
+    }],
+    "react/prop-types": [
+      0
     ],
     "semi": [
       "error",
       "always"
     ],
-    "no-console": 0
+    "strict": 0
+  },
+  "settings": {
+    "react": {
+      "createClass": "createReactClass",
+      "pragma": "React",
+      "version": "15.0",
+      "flowVersion": "0.53"
+    },
+    "propWrapperFunctions": ["forbidExtraProps"]
   }
 }
