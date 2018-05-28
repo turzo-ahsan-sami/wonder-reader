@@ -1,6 +1,15 @@
 {
+  "name": "Wonder-Reader",
+  "version": "0.5.1",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron index.js",
+    "packager": "node scripts/packager.js",
+  },
   "name": "wonder-reader-react",
   "author": "alice maldonado",
+  "description": "A Comic Book Reader, written with Node, housed in Electron",
+
   "version": "1.0.0a",
   "private": false,
   "repository": {
@@ -41,6 +50,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-linux": "electron-builder --linux"
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
@@ -56,5 +66,21 @@
     "eslint": "4.19.1",
     "eslint-plugin-react": "7.8.2",
     "wait-on": "2.1.0"
+  },
+  "build": {
+    "linux": {
+      "icon": "resources/icons/",
+      "target": [
+        "snap"
+      ]
+    },
+    "snap": {
+      "plugs": [
+        "default"
+      ],
+      "after": [
+        "desktop-gtk2"
+      ]
+    }
   }
 }
