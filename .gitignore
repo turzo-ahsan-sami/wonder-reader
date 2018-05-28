@@ -8,6 +8,10 @@
 
 # production
 /build
+/dist
+/parts
+/prime
+/snap
 
 # misc
 .DS_Store

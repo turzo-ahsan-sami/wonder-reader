@@ -1,15 +1,7 @@
 {
-  "name": "Wonder-Reader",
-  "version": "0.5.1",
-  "main": "index.js",
-  "scripts": {
-    "start": "electron index.js",
-    "packager": "node scripts/packager.js",
-  },
-  "name": "wonder-reader-react",
+  "name": "wonder-reader",
   "author": "alice maldonado",
-  "description": "A Comic Book Reader, written with Node, housed in Electron",
-
+  "description": "Comic Book Reader, created with React, Electron, and Node",
   "version": "1.0.0a",
   "private": false,
   "repository": {
@@ -19,12 +11,10 @@
   "dependencies": {
     "@fknop/node-unrar": "1.1.0",
     "@material-ui/core": "1.1.0",
-    "copydata": "git+https://github.com/alice-em/copy-data.git",
     "decompress": "4.2.0",
     "electron-is-dev": "0.3.0",
     "image-size": "0.6.2",
     "is-directory": "0.3.1",
-    "is-rar": "2.0.0",
     "is-zip": "1.0.0",
     "mkdirp": "0.5.1",
     "node-unrar": "0.1.5",
@@ -50,7 +40,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build-linux": "electron-builder --linux"
+    "build-linux": "electron-builder --linux",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
@@ -69,6 +59,7 @@
   },
   "build": {
     "linux": {
+      "category": "Graphics",
       "icon": "resources/icons/",
       "target": [
         "snap"
