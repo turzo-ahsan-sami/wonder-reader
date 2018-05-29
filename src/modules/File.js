@@ -6,7 +6,7 @@ import {
 
 const decompress = window.require('decompress');
 const fs = window.require('fs');
-const isRar = require('is-rar');
+const isRar = require('./isRar.js');
 const isZip = require('is-zip');
 const mkdirp = window.require('mkdirp');
 const os = window.require('os');
