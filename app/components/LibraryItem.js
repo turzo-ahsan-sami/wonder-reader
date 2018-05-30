@@ -1,22 +1,21 @@
-import 'typeface-montserrat';
-
 import React from 'react';
+import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import { FaFolderO, FaFileArchiveO, FaPercent } from 'react-icons/lib/fa';
 // import Bookmark from './Bookmark.js';
 
 const iconSize = 20;
-const LibraryItem = (PROPS) => {
-  const icon = PROPS.isDirectory
+const LibraryItem = (props) => {
+  const icon = props.isDirectory
     ? <FaFolderO size={iconSize} />
     : <FaFileArchiveO size={iconSize} />;
 
   return (
     <TableRow
       className='library-item'
-      key={PROPS.id}
-      onClick={PROPS.onRowClick}
+      key={props.id}
+      onClick={props.onRowClick}
       style={{
         cursor: 'pointer',
         fontFamily: 'Montserrat',
@@ -33,14 +32,14 @@ const LibraryItem = (PROPS) => {
       <TableCell style={{
         color: '#333'}}
       >
-        {PROPS.basename}
+        {props.basename}
       </TableCell>
       <TableCell
         numeric
         style={{
           color: '#bbb'}}
       >
-        {PROPS.dirname}
+        {props.dirname}
       </TableCell>
       <TableCell
         padding='checkbox'
@@ -55,5 +54,13 @@ const LibraryItem = (PROPS) => {
     </TableRow>
   );
 };
+
+LibraryItem.propTypes = {
+  basename: PropTypes.string.isRequired,
+  dirname: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  isDirectory: PropTypes.bool.isRequired,
+  onRowClick: PropTypes.func.isRequired
+}
 
 export default LibraryItem;

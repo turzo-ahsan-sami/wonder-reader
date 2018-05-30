@@ -1,10 +1,10 @@
 // centerfold.js returns an array with the index locations of supposed centerfolds
 import { strainComics } from './strain';
 
-const fs = window.require('fs');
+const fs = require('fs');
 const path = require('path');
 
-const sizeOf = window.require('image-size');
+const sizeOf = require('image-size');
 const { strainImages } = require('./strain.js');
 
 // function variables

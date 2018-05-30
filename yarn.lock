@@ -7735,6 +7735,10 @@ node-sass@^4.9.0:
     stdout-stream "^1.4.0"
     "true-case-path" "^1.0.2"
 
+node-stream-zip@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/node-stream-zip/-/node-stream-zip-1.7.0.tgz#26f766f6b34be00ba5bbe5d32a810feddb24f779"
+
 node-unrar@0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/node-unrar/-/node-unrar-0.1.5.tgz#a40ec1b0af91ccef9be40f955c4ca9efd20b7d52"

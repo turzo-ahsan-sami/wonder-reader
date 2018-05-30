@@ -1,3 +1,6 @@
+import 'typeface-carter-one';
+import 'typeface-montserrat';
+
 import React, { Component } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
@@ -158,7 +161,9 @@ export default class Main extends Component {
   }
 
   generatePages = (tempdir, cb) => {
+    console.log('generatePages');
     fs.readdir(tempdir, (err, files) => {
+      console.log(files);
       const pages = files.map((file, i) => {
         const fullpath = path.join(tempdir, file);
         return {
@@ -167,6 +172,7 @@ export default class Main extends Component {
           key: i,
         };
       });
+      console.log('pages Generated')
       cb(pages);
     });
   }
@@ -178,7 +184,8 @@ export default class Main extends Component {
   openComic = (fullpath) => {
     const comic = new File(fullpath);
     comic.extract((comic) => {
-      if(comic.error) {this.throwError(true, comic.errorMessage);}
+      if (comic.error) {this.throwError(true, comic.errorMessage);}
+      console.log('post-extraction');
       this.generatePages(comic.tempdir, (pages) => {
         console.log(pages);
         const centerfolds = generateCenterfolds(pages);
@@ -303,7 +310,7 @@ export default class Main extends Component {
             saveContentDataToMain={this.saveContentDataToMain}/>
           <PageViewer
             comic={this.state.openedComic}
-            pages={this.state.pages}
+            pages={this.state.encodedPages}
             openComic={this.openComic}
             pageCount={this.state.pageCount}
             turnPage={this.turnPage}

@@ -4,8 +4,7 @@ import {
   strainImages
 } from '../modules/strain';
 
-const decompress = window.require('decompress');
-const fs = window.require('fs');
+const fs = require('fs');
 const isRar = require('./isRar.js');
 const isZip = require('is-zip');
 const mkdirp = require('mkdirp');
@@ -13,6 +12,7 @@ const os = require('os');
 const path = require('path');
 const rar = require('@fknop/node-unrar');
 const rimraf = require('rimraf');
+const StreamZip = require('node-stream-zip');
 const Unrar = require('node-unrar');
 
 const temp = path.join(os.tmpdir(), 'wonderReader');
@@ -45,6 +45,7 @@ class File {
             this.errorMessage = 'Error: Failed to create temp folder;';
             return;
           }
+          console.log('mkdirp successful');
           if (this.isRar()) {
             this.extractRar(cb);
           } else if (this.isZip()) {
@@ -87,14 +88,21 @@ class File {
 
   extractZip(cb) {
     console.log('Inflating file (zip)');
-    decompress(this.origin, this.tempdir)
-      .then(() => {
+    const zip = new StreamZip({
+      file: this.origin,
+      storeEntries: true
+    });
+    zip.on('ready', () => {
+      zip.extract(null, this.tempdir, (err) => {
+        console.log(err);
         this.standardize(this.tempdir);
         this.updatePages(cb);
       });
+    });
   }
 
   fileMover(filepath) {
+    console.log('moving:', filepath);
     const stats = fs.statSync(filepath);
     if (stats.isDirectory()) {
       this.standardize(filepath);
@@ -109,24 +117,28 @@ class File {
   }
 
   isRar() {
+    console.log('is-it?');
     return isRar(this.data);
   }
 
   isZip() {
+    console.log('is-it?');
     return isZip(this.data);
   }
 
   // initialize with this.tempdir
   standardize(directory) {
+    console.log('standardizing,', directory);
     const files = fs.readdirSync(directory);
     const filepaths = files.map((file) => path.join(directory, file));
-    for (const filepath of filepaths) {
+    filepaths.forEach((filepath) => {
       this.fileMover(filepath);
-    }
+    });
   }
 
   updatePages(cb) {
     fs.readdir(this.tempdir, (err, files) => {
+      console.log('updatingPages:', files);
       const strainedFiles = strainImages(files);
       this.pages = strainedFiles;
       cb(this);

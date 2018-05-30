@@ -25,7 +25,6 @@ class Library extends Component {
 
   render() {
     const { classes } = this.props;
-    console.log(classes);
     return (
       <div
         className="Library"
@@ -68,7 +67,7 @@ Library.defaultProps = {
 };
 
 Library.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.object).isRequired,
+  classes: PropTypes.object.isRequired, // eslint-disable-line
   closeDrawer: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   openComic: PropTypes.func.isRequired,

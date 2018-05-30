@@ -15,8 +15,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@fknop/node-unrar": "1.1.0",
-    "decompress": "4.2.0",
-    "node-unrar": "0.1.5"
+    "@fknop/node-unrar": "1.1.0"
   }
 }
