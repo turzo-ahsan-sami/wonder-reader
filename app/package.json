@@ -1,0 +1,20 @@
+{
+  "name": "wonder-reader",
+  "productName": "wonder-reader",
+  "version": "1.0.1a",
+  "description": "A Comic Book Reader, made with React, Electron, and Node",
+  "main": "./main.prod.js",
+  "author": {
+    "name": "Alice Maldonado",
+    "email": "the.alice.maldonado@gmail.com",
+    "url": "https://github.com/alice-em"
+  },
+  "scripts": {
+    "electron-rebuild": "node -r babel-register ../internals/scripts/ElectronRebuild.js",
+    "postinstall": "npm run electron-rebuild"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@fknop/node-unrar": "1.1.0"
+  }
+}
