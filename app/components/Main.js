@@ -31,11 +31,7 @@ export default class Main extends Component {
       errorMessage: '',
       stat: '',
     },
-    pages: [{
-      pagePath: null,
-      encodedPagePath: null,
-      key: null,
-    }],
+    pages: [],
 
     // Page Data for Main => PageViewer => Page
     centerfolds: [],
@@ -307,7 +303,7 @@ export default class Main extends Component {
             saveContentDataToMain={this.saveContentDataToMain}/>
           <PageViewer
             comic={this.state.openedComic}
-            encodedPages={this.state.encodedPages}
+            pages={this.state.pages}
             openComic={this.openComic}
             pageCount={this.state.pageCount}
             turnPage={this.turnPage}

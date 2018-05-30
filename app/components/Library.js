@@ -25,6 +25,7 @@ class Library extends Component {
 
   render() {
     const { classes } = this.props;
+    console.log(classes);
     return (
       <div
         className="Library"
@@ -62,13 +63,17 @@ class Library extends Component {
   }
 }
 
+Library.defaultProps = {
+  style: {}
+};
+
 Library.propTypes = {
-  classes: PropTypes.isRequired,
+  classes: PropTypes.objectOf(PropTypes.object).isRequired,
   closeDrawer: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   openComic: PropTypes.func.isRequired,
   saveContentDataToMain: PropTypes.func.isRequired,
-  style: PropTypes.objectOf(PropTypes.object.isRequired).isRequired
+  style: PropTypes.objectOf(PropTypes.object.isRequired)
 };
 
 export default withStyles(styles)(Library);

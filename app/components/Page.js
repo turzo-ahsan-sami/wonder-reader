@@ -15,8 +15,8 @@ const Page = (props) =>  (
 
 Page.propTypes = {
   alt: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  src: PropTypes.string,
   width: PropTypes.number.isRequired
 }
 

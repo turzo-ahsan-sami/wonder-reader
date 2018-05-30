@@ -60,22 +60,22 @@ class PageViewer extends Component {
   }
 
   render() {
-    const {encodedPages} = this.props;
-    const areThereEncodedPages = encodedPages && encodedPages.length > 0;
+    const {pages} = this.props;
+    const areThereEncodedPages = pages && pages.length > 0;
     let totalSize = 0;
-    let pages = null;
+    let newPages = null
 
     if (areThereEncodedPages) {
-      for (const page of encodedPages) {totalSize += page.width;}
+      for (const page of pages) {totalSize += page.width;}
       console.log(totalSize);
-      pages = encodedPages.map((page) => {
+      newPages = pages.map((page) => {
         console.log('totalSize', totalSize, ':: page.width', page.width);
         return (
           <Page
             key={page.key}
             width={(page.width / totalSize) * 100}
             alt="comic page"
-            src={page.page}
+            src={page.encodedPagePath}
           />
         );
       });
@@ -96,15 +96,19 @@ class PageViewer extends Component {
             marginTop: this.state.marginTop,
             width: `${this.props.zoomLevel}%`}}
         >
-          {pages}
+          {newPages}
         </div>
       </div>
     );
   }
 }
 
+PageViewer.defaultProps = {
+  pages: []
+};
+
 PageViewer.propTypes = {
-  encodedPages: PropTypes.array.isRequired,
+  pages: PropTypes.array,
   zoomLevel: PropTypes.number.isRequired
 }
 

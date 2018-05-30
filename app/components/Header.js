@@ -34,7 +34,7 @@ const Header = (props) =>
 ;
 
 Header.propTypes = {
-  buttons: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  buttons: PropTypes.objectOf(PropTypes.object.isRequired).isRequired,
   changePageCount: PropTypes.func.isRequired,
   pageCount: PropTypes.number.isRequired,
   setZoomLevel: PropTypes.func.isRequired,

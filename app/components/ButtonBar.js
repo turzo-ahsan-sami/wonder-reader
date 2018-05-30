@@ -122,7 +122,7 @@ class ButtonBar extends Component {
 }
 
 ButtonBar.propTypes = {
-  buttons: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  buttons: PropTypes.objectOf(PropTypes.object.isRequired).isRequired,
   pageCount: PropTypes.number.isRequired,
   setZoomLevel: PropTypes.func.isRequired,
   zoomLevel: PropTypes.number.isRequired
