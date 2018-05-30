@@ -19,55 +19,58 @@ class PageViewer extends Component {
     marginTop: 0,
   }
 
-  // componentDidUpdate() {
-  //   const P = this.props;
-  //   const S = this.state;
-  //   const pageViewer = document.getElementById('pageViewer');
-  //   const pageWrapper = document.getElementById('pageWrapper');
-  //
-  //   if (P.encodedPages) {
-  //     if (S.currentComicPage !== P.encodedPages[0].page) {
-  //       pageViewer.scrollLeft = 0;
-  //       pageViewer.scrollTop = 0;
-  //       this.setState({currentComicPage: P.encodedPages[0].page}); // eslint-disable-line
-  //     } else if (P.zoomLevel >= 100
-  //       &&  S.currentZoomLevel !== P.zoomLevel) {
-  //       // Center Points X || Y
-  //       const cPX = pageViewer.scrollLeft + pageViewer.clientWidth / 2;
-  //       const cPY = pageViewer.scrollTop + pageViewer.clientHeight / 2;
-  //
-  //       // Position Ratios to whole
-  //       const cPXR = cPX / pageWrapper.clientWidth;
-  //       const cPYR = cPY / pageWrapper.clientHeight;
-  //
-  //       const marginLeft = P.zoomLevel < 100
-  //         ? `${ (100 - P.zoomLevel) / 2 }%`
-  //         : 0;
-  //       const marginTop = pageViewer.clientHeight > pageWrapper.clientHeight
-  //         ? `${ (pageViewer.clientHeight - pageWrapper.clientHeight) / 2}px`
-  //         : 0;
-  //
-  //       pageViewer.scrollTop = pageWrapper.clientHeight * cPXR - pageViewer.clientHeight / 2;
-  //       pageViewer.scrollLeft = pageWrapper.clientWidth * cPYR - pageViewer.clientWidth / 2;
-  //
-  //       this.setState({ // eslint-disable-line
-  //         currentZoomLevel: P.zoomLevel,
-  //         marginLeft,
-  //         marginTop
-  //       });
-  //     }
-  //   }
-  // }
+  componentDidUpdate() {
+    const P = this.props;
+    const S = this.state;
+    const pageViewer = document.getElementById('pageViewer');
+    const pageWrapper = document.getElementById('pageWrapper');
+
+    if (this.areTherePageProps()) {
+      if (S.currentComicPage !== P.pages[0].page) {
+        pageViewer.scrollLeft = 0;
+        pageViewer.scrollTop = 0;
+        this.setState({currentComicPage: P.pages[0].page}); // eslint-disable-line
+      } else if (P.zoomLevel >= 100
+        &&  S.currentZoomLevel !== P.zoomLevel) {
+        // Center Points X || Y
+        const cPX = pageViewer.scrollLeft + pageViewer.clientWidth / 2;
+        const cPY = pageViewer.scrollTop + pageViewer.clientHeight / 2;
+
+        // Position Ratios to whole
+        const cPXR = cPX / pageWrapper.clientWidth;
+        const cPYR = cPY / pageWrapper.clientHeight;
+
+        const marginLeft = P.zoomLevel < 100
+          ? `${ (100 - P.zoomLevel) / 2 }%`
+          : 0;
+        const marginTop = pageViewer.clientHeight > pageWrapper.clientHeight
+          ? `${ (pageViewer.clientHeight - pageWrapper.clientHeight) / 2}px`
+          : 0;
+
+        pageViewer.scrollTop = pageWrapper.clientHeight * cPXR - pageViewer.clientHeight / 2;
+        pageViewer.scrollLeft = pageWrapper.clientWidth * cPYR - pageViewer.clientWidth / 2;
+
+        this.setState({ // eslint-disable-line
+          currentZoomLevel: P.zoomLevel,
+          marginLeft,
+          marginTop
+        });
+      }
+    }
+  }
+
+  areTherePageProps = () => ( Array.isArray(this.props.pages) && this.props.pages.length > 0 )
 
   render() {
     console.log('PageViewer:', this.props);
     let totalSize = 0;
     let newPages = null
 
-    if (this.props.comic.name !== null && this.prop.pages && this.props.pages.length > 0) {
-      for (let i = 0; i < this.props.pageCount; i++) { // eslint-disable-line
-          totalSize += this.props.pages[i].width;
-      }
+    if (this.areTherePageProps()) {
+      this.props.pages.forEach((page) => {
+        console.log(page);
+        totalSize += page.width;
+      })
       console.log(totalSize);
       newPages = this.props.pages.map((page) => {
         console.log('totalSize', totalSize, ':: page.width', page.width);

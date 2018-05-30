@@ -4,7 +4,7 @@ const path = require('path');
 const encodepath = (filepath) => {
   let newPath = '';
   const tempPath = filepath.split(path.sep);
-  console.log('ecnoding')
+  // console.log('ecnoding')
   // Encodes each folder, then merging it all together
   if (os.platform === 'win32') {
     // Saves letter drive information
@@ -21,7 +21,7 @@ const encodepath = (filepath) => {
     newPath = `/${newPath}`; // To set root folder
     newPath = newPath.replace(/'/g, '\\\''); // Fixes err with the character \'
   }
-  console.log('newPath', newPath);
+  // console.log('newPath', newPath);
   return newPath;
 };
 
