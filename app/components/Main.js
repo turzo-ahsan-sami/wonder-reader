@@ -7,6 +7,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from './theme';
 import Header from './Header';
 import Library from './Library';
+import Loading from './Loading';
 import PageViewer from './PageViewer';
 
 import ButtonFunction from '../modules/ButtonFunction';
@@ -98,6 +99,9 @@ export default class Main extends Component {
 
     // Zoom data for PageViewer
     zoomLevel: 100,
+
+    // bool to display loading screen
+    isLoading: false
   };
 
   componentDidMount() {
@@ -183,26 +187,30 @@ export default class Main extends Component {
 
   openComic = (fullpath) => {
     const comic = new File(fullpath);
-    comic.extract((comic) => {
-      if (comic.error) {this.throwError(true, comic.errorMessage);}
-      console.log('post-extraction');
-      this.generatePages(comic.tempdir, (pages) => {
-        console.log(pages);
-        const centerfolds = generateCenterfolds(pages);
-        this.setState({
-          centerfolds: centerfolds,
-          openedComic: comic,
-          pages: pages,
-          top: false
-        }, () => {
-          console.log('openComic:', this.state);
-          const pagesToDisplay = this.state.centerfolds.indexOf(0) > -1
-            ? 2
-            : 1;
-          this.setCurrentPages(0, pagesToDisplay);
+    this.setState({isLoading: true}, () => {
+      comic.extract((comic) => {
+        if (comic.error) {this.throwError(true, comic.errorMessage);}
+        console.log('post-extraction');
+        this.generatePages(comic.tempdir, (pages) => {
+          console.log(pages);
+          const centerfolds = generateCenterfolds(pages);
+          this.setState({
+            centerfolds: centerfolds,
+            openedComic: comic,
+            isLoading: false,
+            pages: pages,
+            top: false
+          }, () => {
+            console.log('openComic:', this.state);
+            const pagesToDisplay = this.state.centerfolds.indexOf(0) > -1
+              ? 2
+              : 1;
+            this.setCurrentPages(0, pagesToDisplay);
+          });
         });
       });
-    });
+    })
+
   }
 
   openLibrary = () => {
@@ -304,6 +312,7 @@ export default class Main extends Component {
             zoomLevel={this.state.zoomLevel}/>
           <Library
             closeDrawer={this.closeLibrary}
+            loadedLibrary={this.state.content.fullpath}
             openComic={this.openComic}
             throwError={this.throwError}
             open={this.state.top}
@@ -312,9 +321,9 @@ export default class Main extends Component {
             comic={this.state.openedComic}
             pages={this.state.encodedPages}
             openComic={this.openComic}
-            pageCount={this.state.pageCount}
             turnPage={this.turnPage}
             zoomLevel={this.state.zoomLevel}/>
+          <Loading isLoading={this.state.isLoading}/>
         </div>
       </MuiThemeProvider>
     );

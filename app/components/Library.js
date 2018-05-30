@@ -7,46 +7,41 @@ import LibraryLayout from './LibraryLayout';
 
 const styles = {
   list: {
-    width: 250,
+    width: 250
   },
   fullList: {
-    width: 'auto',
-  },
+    width: 'auto'
+  }
 };
 
 class Library extends Component {
   state = {
-    root: null,
-  }
+    root: this.props.loadedLibrary
+  };
 
-  updateRoot = (filepath) => {
-    this.setState({root: filepath});
-  }
+  updateRoot = filepath => {
+    this.setState({ root: filepath });
+  };
 
   render() {
     const { classes } = this.props;
     return (
-      <div
-        className="Library"
-        style={this.props.style}
-      >
+      <div className="Library" style={this.props.style}>
         <Drawer
           anchor="top"
           open={this.props.open}
           onClose={this.props.closeDrawer}
-          PaperProps={{style: {
-            borderRadius: '0px 0px 0px 15px',
-            margin: 'auto',
-            maxWidth: '960px',
-          }}}
-          variant='temporary'
+          PaperProps={{
+            style: {
+              borderRadius: '0px 0px 0px 15px',
+              margin: 'auto',
+              maxWidth: '960px'
+            }
+          }}
+          variant="temporary"
           transitionDuration={125}
         >
-          <div
-            tabIndex={0}
-            role="button"
-            onKeyDown={this.props.closeDrawer}
-          >
+          <div tabIndex={0} role="button" onKeyDown={this.props.closeDrawer}>
             <LibraryLayout
               className={classes.list}
               closeLibrary={this.props.closeDrawer}
@@ -63,12 +58,14 @@ class Library extends Component {
 }
 
 Library.defaultProps = {
+  loadedLibrary: null,
   style: {}
 };
 
 Library.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line
   closeDrawer: PropTypes.func.isRequired,
+  loadedLibrary: PropTypes.string,
   open: PropTypes.bool.isRequired,
   openComic: PropTypes.func.isRequired,
   saveContentDataToMain: PropTypes.func.isRequired,

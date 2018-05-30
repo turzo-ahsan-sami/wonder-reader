@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Page from './Page';
@@ -16,8 +16,8 @@ class PageViewer extends Component {
     // currentComicPage: null,
     // currentZoomLevel: 100,
     marginLeft: 0,
-    marginTop: 0,
-  }
+    marginTop: 0
+  };
 
   componentDidUpdate() {
     const P = this.props;
@@ -29,9 +29,8 @@ class PageViewer extends Component {
       if (S.currentComicPage !== P.pages[0].page) {
         pageViewer.scrollLeft = 0;
         pageViewer.scrollTop = 0;
-        this.setState({currentComicPage: P.pages[0].page}); // eslint-disable-line
-      } else if (P.zoomLevel >= 100
-        &&  S.currentZoomLevel !== P.zoomLevel) {
+        this.setState({ currentComicPage: P.pages[0].page }); // eslint-disable-line
+      } else if (P.zoomLevel >= 100 && S.currentZoomLevel !== P.zoomLevel) {
         // Center Points X || Y
         const cPX = pageViewer.scrollLeft + pageViewer.clientWidth / 2;
         const cPY = pageViewer.scrollTop + pageViewer.clientHeight / 2;
@@ -40,17 +39,20 @@ class PageViewer extends Component {
         const cPXR = cPX / pageWrapper.clientWidth;
         const cPYR = cPY / pageWrapper.clientHeight;
 
-        const marginLeft = P.zoomLevel < 100
-          ? `${ (100 - P.zoomLevel) / 2 }%`
-          : 0;
-        const marginTop = pageViewer.clientHeight > pageWrapper.clientHeight
-          ? `${ (pageViewer.clientHeight - pageWrapper.clientHeight) / 2}px`
-          : 0;
+        const marginLeft =
+          P.zoomLevel < 100 ? `${(100 - P.zoomLevel) / 2}%` : 0;
+        const marginTop =
+          pageViewer.clientHeight > pageWrapper.clientHeight
+            ? `${(pageViewer.clientHeight - pageWrapper.clientHeight) / 2}px`
+            : 0;
 
-        pageViewer.scrollTop = pageWrapper.clientHeight * cPXR - pageViewer.clientHeight / 2;
-        pageViewer.scrollLeft = pageWrapper.clientWidth * cPYR - pageViewer.clientWidth / 2;
+        pageViewer.scrollTop =
+          pageWrapper.clientHeight * cPXR - pageViewer.clientHeight / 2;
+        pageViewer.scrollLeft =
+          pageWrapper.clientWidth * cPYR - pageViewer.clientWidth / 2;
 
-        this.setState({ // eslint-disable-line
+        this.setState({
+          // eslint-disable-line
           currentZoomLevel: P.zoomLevel,
           marginLeft,
           marginTop
@@ -59,25 +61,26 @@ class PageViewer extends Component {
     }
   }
 
-  areTherePageProps = () => ( Array.isArray(this.props.pages) && this.props.pages.length > 0 )
+  areTherePageProps = () =>
+    Array.isArray(this.props.pages) && this.props.pages.length > 0;
 
   render() {
     console.log('PageViewer:', this.props);
     let totalSize = 0;
-    let newPages = null
+    let newPages = null;
 
     if (this.areTherePageProps()) {
-      this.props.pages.forEach((page) => {
+      this.props.pages.forEach(page => {
         console.log(page);
         totalSize += page.width;
-      })
+      });
       console.log(totalSize);
-      newPages = this.props.pages.map((page) => {
+      newPages = this.props.pages.map(page => {
         console.log('totalSize', totalSize, ':: page.width', page.width);
         return (
           <Page
             key={page.key}
-            width={(page.width / totalSize) * 100}
+            width={page.width / totalSize * 100}
             alt="comic page"
             src={page.page}
           />
@@ -86,19 +89,16 @@ class PageViewer extends Component {
     }
 
     return (
-      <div
-        className='PageViewer dragscroll'
-        id='pageViewer'
-        style={style}
-      >
+      <div className="PageViewer dragscroll" id="pageViewer" style={style}>
         <div
-          className='pages'
-          id='pageWrapper'
+          className="pages"
+          id="pageWrapper"
           style={{
             marginLeft: this.state.marginLeft,
             marginTop: this.state.marginTop,
             height: `${this.props.zoomLevel}%`,
-            width: `${this.props.zoomLevel}%`}}
+            width: `${this.props.zoomLevel}%`
+          }}
         >
           {newPages}
         </div>
@@ -109,9 +109,8 @@ class PageViewer extends Component {
 
 PageViewer.propTypes = {
   comic: PropTypes.object.isRequired, // eslint-disable-line
-  pageCount: PropTypes.number.isRequired,
   pages: PropTypes.array, // eslint-disable-line
   zoomLevel: PropTypes.number.isRequired
-}
+};
 
 export default PageViewer;
