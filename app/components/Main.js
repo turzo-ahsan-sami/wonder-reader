@@ -101,7 +101,10 @@ export default class Main extends Component {
     zoomLevel: 100,
 
     // bool to display loading screen
-    isLoading: false
+    isLoading: false,
+
+    // Image cache
+    images: []
   };
 
   componentDidMount() {
@@ -185,6 +188,16 @@ export default class Main extends Component {
     console.log(e);
   }
 
+  loadImages = () => {
+    const loadedImages = this.state.pages.map((page) => {
+      const img = new Image();
+      const imgSrc = page.encodedPagePath;
+      img.src = imgSrc;
+      return img;
+    });
+    this.setState({images: loadedImages});
+  }
+
   openComic = (fullpath) => {
     const comic = new File(fullpath);
     this.setState({isLoading: true}, () => {
@@ -201,6 +214,7 @@ export default class Main extends Component {
             pages: pages,
             top: false
           }, () => {
+            this.loadImages();
             console.log('openComic:', this.state);
             const pagesToDisplay = this.state.centerfolds.indexOf(0) > -1
               ? 2
