@@ -8,14 +8,11 @@ import ButtonBar from './ButtonBar';
 import headerStyle from './headerStyle';
 
 // Insert props to pass onto
-const Header = (props) => (
+const Header = props => (
   <AppBar>
     <Toolbar>
-      <Typography
-        variant="title"
-        style={headerStyle}
-      >
-          Wonder Reader
+      <Typography variant="title" style={headerStyle}>
+        Wonder Reader
       </Typography>
       <ButtonBar
         buttons={props.buttons}
@@ -29,11 +26,10 @@ const Header = (props) => (
 );
 
 Header.propTypes = {
-  buttons: PropTypes.object.isRequired, // eslint-disable-line
   changePageCount: PropTypes.func.isRequired,
   pageCount: PropTypes.number.isRequired,
   setZoomLevel: PropTypes.func.isRequired,
   zoomLevel: PropTypes.number.isRequired
-}
+};
 
 export default Header;

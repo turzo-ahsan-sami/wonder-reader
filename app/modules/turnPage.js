@@ -1,29 +1,34 @@
 // Page turning engine 2.0
 
-const turnPage = (currentPageIndex, centerfolds, pageCount, pagesLength, polarity, cb) => {
+const turnPage = (
+  currentPageIndex,
+  centerfolds,
+  pageCount,
+  pagesLength,
+  polarity,
+  cb
+) => {
   // centerfolds for singlePaging ( [2, 5, 11]  )
   // currentPageIndex for currentPage, which will make a new var newPageIndex ( Num )
   // pageCount for number of pages turned ( 2 || 1 )
   // pagesLength for full comic scope ( 18 )
   // polarity for left or right ( 1 || -1 )
 
-  function isCenterfold(index) {
-    return centerfolds.includes(index);
-  }
+  const isCenterfold = index => centerfolds.includes(index);
 
   let newPageIndex = null;
   let pagesToDisplay = null;
 
   // For the Last Page
   // 17 + 2 > 18
-  if (currentPageIndex + (pageCount * polarity) >= pagesLength - 1) {
+  if (currentPageIndex + pageCount * polarity >= pagesLength - 1) {
     newPageIndex = pagesLength - 1;
     pagesToDisplay = 1;
     console.log('newPageIndex', newPageIndex);
     console.log('pagesToDisplay', pagesToDisplay);
     // For the First Page
     // 1 - 2 < 0 || Index 0 might be a CenterFold
-  } else if (currentPageIndex + (pageCount * polarity) < 0 ) {
+  } else if (currentPageIndex + pageCount * polarity < 0) {
     newPageIndex = 0;
     pagesToDisplay = isCenterfold(0) || isCenterfold(1) ? 1 : 2;
     console.log('newPageIndex', newPageIndex);
@@ -47,15 +52,21 @@ const turnPage = (currentPageIndex, centerfolds, pageCount, pagesLength, polarit
       console.log('newPageIndex', newPageIndex);
       console.log('pagesToDisplay', pagesToDisplay);
       // Checks if the next few pages might be centerfolds
-    } else if ( isCenterfold(currentPageIndex + 1)
-    || isCenterfold(currentPageIndex + 2)
-    || isCenterfold(currentPageIndex + 3)) {
+    } else if (isCenterfold(currentPageIndex + 1)) {
       newPageIndex = currentPageIndex + 1;
       pagesToDisplay = 1;
       console.log('newPageIndex', newPageIndex);
       console.log('pagesToDisplay', pagesToDisplay);
       // No upcoming centerfolds and you're displaying 2 pages!
       // You're in the clear, toots!
+    } else if (
+      isCenterfold(currentPageIndex + 2) ||
+      isCenterfold(currentPageIndex + 3)
+    ) {
+      newPageIndex = currentPageIndex + 2;
+      pagesToDisplay = 1;
+      console.log('newPageIndex', newPageIndex);
+      console.log('pagesToDisplay', pagesToDisplay);
     } else {
       newPageIndex = currentPageIndex + 2;
       pagesToDisplay = 2;
@@ -65,8 +76,10 @@ const turnPage = (currentPageIndex, centerfolds, pageCount, pagesLength, polarit
     // Here we are going left instead, and into negatives
     // If you're currently on a centerfold, it doesn't matter with the previous pages.
     // If those preceeding pages were centerfolds, this is where it is figured out
-  } else if (isCenterfold(currentPageIndex - 1)
-    || isCenterfold(currentPageIndex - 2)) {
+  } else if (
+    isCenterfold(currentPageIndex - 1) ||
+    isCenterfold(currentPageIndex - 2)
+  ) {
     newPageIndex = currentPageIndex - 1;
     pagesToDisplay = 1;
     console.log('newPageIndex', newPageIndex);
@@ -84,6 +97,7 @@ const turnPage = (currentPageIndex, centerfolds, pageCount, pagesLength, polarit
   pagesToDisplay = Math.min(pagesToDisplay, pageCount);
   console.log('pagesToDisplay:', pagesToDisplay);
   console.log('pageCount:', pageCount);
+  console.log(centerfolds);
   cb(newPageIndex, pagesToDisplay);
 };
 

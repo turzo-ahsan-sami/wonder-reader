@@ -1,12 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import Main from './components/Main';
+import App from './components/App';
 import './app.global.css';
 
 render(
   <AppContainer>
-    <Main />
+    <App />
   </AppContainer>,
   document.getElementById('root')
 );

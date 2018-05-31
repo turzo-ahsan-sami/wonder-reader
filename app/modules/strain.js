@@ -1,14 +1,14 @@
 // strain.js cleans out the dirty files, like .DS_Store
-const {copyArray} = require('./copyData');
+const { copyArray } = require('./copyData');
 const isDirectory = require('is-directory');
 const path = require('path');
 
 const comicTypes = ['.cbr', '.cbz'];
 const imageTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
 
-const isComic = (filename) => isSomething(filename, comicTypes);
+const isComic = filename => isSomething(filename, comicTypes);
 
-const isImage = (filename) => isSomething(filename, imageTypes);
+const isImage = filename => isSomething(filename, imageTypes);
 
 const isSomething = (filename, types) => {
   const extname = path.extname(filename).toLowerCase();
@@ -16,12 +16,12 @@ const isSomething = (filename, types) => {
   return IsSomething;
 };
 
-const sortArrayByAlpha = (ARRAY) => {
+const sortArrayByAlpha = ARRAY => {
   const newARRAY = copyArray(ARRAY);
   newARRAY.sort((a, b) => {
     const nameA = a.toLowerCase();
     const nameB = b.toLowerCase();
-    const polarity = nameA < nameB ? -1 : 1
+    const polarity = nameA < nameB ? -1 : 1;
     return nameA === nameB ? 0 : polarity;
   });
   return newARRAY;
@@ -29,27 +29,23 @@ const sortArrayByAlpha = (ARRAY) => {
 
 // Cleans out non image files from ARRAY
 const strainer = (fileTypes, ARRAY, dirname) => {
+  console.log(ARRAY);
   function isProperFileType(x, i) {
-    let isThisAProperFileType = fileTypes.indexOf(path.extname(ARRAY[i]).toLowerCase()) > -1;
+    let isThisAProperFileType =
+      fileTypes.indexOf(path.extname(ARRAY[i]).toLowerCase()) > -1;
     if (dirname) {
       const filepath = path.join(dirname, ARRAY[i]);
-      isThisAProperFileType = (isThisAProperFileType || isDirectory.sync(filepath));
+      isThisAProperFileType =
+        isThisAProperFileType || isDirectory.sync(filepath);
     }
     return isThisAProperFileType;
   }
-  ARRAY.filter((x,i) => isProperFileType(x, i));
+  ARRAY.filter((x, i) => isProperFileType(x, i));
   return sortArrayByAlpha(ARRAY);
 };
 
-const strainComics = (ARRAY, dirname) => {
-  const strained = strainer(comicTypes, ARRAY, dirname);
-  return strained;
-};
-
-const strainImages = (ARRAY) => {
-  const strained = (imageTypes, ARRAY);
-  return strained;
-};
+const strainComics = (ARRAY, dirname) => strainer(comicTypes, ARRAY, dirname);
+const strainImages = ARRAY => strainer(imageTypes, ARRAY);
 
 export {
   comicTypes,

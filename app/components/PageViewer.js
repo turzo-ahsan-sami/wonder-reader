@@ -71,21 +71,18 @@ class PageViewer extends Component {
 
     if (this.areTherePageProps()) {
       this.props.pages.forEach(page => {
-        console.log(page);
+        // console.log(page);
         totalSize += page.width;
       });
-      console.log(totalSize);
-      newPages = this.props.pages.map(page => {
-        console.log('totalSize', totalSize, ':: page.width', page.width);
-        return (
-          <Page
-            key={page.key}
-            width={page.width / totalSize * 100}
-            alt="comic page"
-            src={page.page}
-          />
-        );
-      });
+      // console.log(totalSize);
+      newPages = this.props.pages.map(page => (
+        <Page
+          key={page.key}
+          width={page.width / totalSize * 100}
+          alt="comic page"
+          src={page.page}
+        />
+      ));
     }
 
     return (
