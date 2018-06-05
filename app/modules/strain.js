@@ -45,6 +45,7 @@ const strainer = (fileTypes, ARRAY, dirname) => {
 };
 
 const strainComics = (ARRAY, dirname) => strainer(comicTypes, ARRAY, dirname);
+const strainOnlyComics = ARRAY => strainer(comicTypes, ARRAY);
 const strainImages = ARRAY => strainer(imageTypes, ARRAY);
 
 export {
@@ -54,5 +55,6 @@ export {
   isImage,
   sortArrayByAlpha,
   strainComics,
+  strainOnlyComics,
   strainImages
 };

@@ -10,11 +10,10 @@ import Library from './Library';
 import Loading from './Loading';
 import PageViewer from './PageViewer';
 
-import ButtonFunction from '../modules/ButtonFunction';
-import { copyDeepObject } from '../modules/copyData';
 import encodepath from '../modules/encodepath';
 import File from '../modules/File';
-import { generateCenterfolds, generateNextComics } from '../modules/generate';
+import { generateCenterfolds } from '../modules/generate';
+import { strainOnlyComics } from '../modules/strain';
 import turnPage from '../modules/turnPage';
 
 const fs = require('fs');
@@ -57,8 +56,10 @@ export default class App extends Component {
       },
       nextComic: {
         name: 'nextComic',
-        disabled: true,
-        func: () => {}
+        disabled: false,
+        func: () => {
+          this.openNextComic();
+        }
       },
       openLibrary: {
         name: 'openLibrary',
@@ -69,22 +70,24 @@ export default class App extends Component {
       },
       pageLeft: {
         name: 'pageLeft',
-        disabled: true,
+        disabled: false,
         func: () => {
           this.turnPageLeft();
         }
       },
       pageRight: {
         name: 'pageRight',
-        disabled: true,
+        disabled: false,
         func: () => {
           this.turnPageRight();
         }
       },
       prevComic: {
         name: 'prevComic',
-        disabled: true,
-        func: () => {}
+        disabled: false,
+        func: () => {
+          this.openPrevComic();
+        }
       },
       options: {
         name: 'options',
@@ -165,29 +168,29 @@ export default class App extends Component {
     this.toggleDrawer('top', false);
   };
 
-  generateAdjacentComics = () => {
-    const newButtons = copyDeepObject(this.state.buttons);
-    console.log(newButtons);
-    const nextComic = new ButtonFunction();
-    const prevComic = new ButtonFunction();
-    generateNextComics(this.state.openedComic, (nextOrigin, prevOrigin) => {
-      if (nextOrigin) {
-        nextComic.set(() => {
-          this.openComic(nextOrigin);
-        }, nextOrigin);
-      }
-      if (prevOrigin) {
-        prevComic.set(() => {
-          this.openComic(prevOrigin);
-        }, prevOrigin);
-      }
-      console.log(nextComic, prevComic);
-      newButtons.nextComic = nextComic;
-      newButtons.prevComic = prevComic;
-      console.log(newButtons);
-      this.setState({ buttons: newButtons });
-    });
-  };
+  // generateAdjacentComics = () => {
+  //   const newButtons = copyDeepObject(this.state.buttons);
+  //   console.log(newButtons);
+  //   const nextComic = new ButtonFunction();
+  //   const prevComic = new ButtonFunction();
+  //   generateNextComics(this.state.openedComic, (nextOrigin, prevOrigin) => {
+  //     if (nextOrigin) {
+  //       nextComic.set(() => {
+  //         this.openComic(nextOrigin);
+  //       }, nextOrigin);
+  //     }
+  //     if (prevOrigin) {
+  //       prevComic.set(() => {
+  //         this.openComic(prevOrigin);
+  //       }, prevOrigin);
+  //     }
+  //     console.log(nextComic, prevComic);
+  //     newButtons.nextComic = nextComic;
+  //     newButtons.prevComic = prevComic;
+  //     console.log(newButtons);
+  //     this.setState({ buttons: newButtons });
+  //   });
+  // };
 
   generateKeys = (pages, cb) => {
     const pageKeys = Array(...{ length: pages.length }).map(
@@ -251,7 +254,7 @@ export default class App extends Component {
             },
             () => {
               this.loadImages();
-              this.generateAdjacentComics();
+              // this.generateAdjacentComics();
               const pagesToDisplay = this.state.centerfolds.includes(0) ? 1 : 2;
               this.setCurrentPages(0, pagesToDisplay);
             }
@@ -261,22 +264,54 @@ export default class App extends Component {
     });
   };
 
+  openAdjacentComic = polarity => {
+    if (this.state.openedComic.name === null) {
+      return;
+    }
+    const originDirname = path.dirname(this.origin);
+    fs.readdir(originDirname, (err, files) => {
+      const strainedComics = strainOnlyComics(files);
+      const index = strainedComics.indexOf(this.state.openedComic.name);
+      const newIndex = index + polarity;
+      if (newIndex > -1 && newIndex < strainedComics.length) {
+        const newComicName = strainedComics[newIndex];
+        const newComicFilepath = path.join(originDirname, newComicName);
+        this.openComic(newComicFilepath);
+      }
+    });
+  };
+
   openLibrary = () => {
     this.toggleDrawer('top', true);
   };
 
-  renderButtons = () => {
-    const newButtons = copyDeepObject(this.state.buttons);
-    newButtons.pageLeft.disabled = true;
-    newButtons.pageRight.disabled = true;
-    if (this.shouldPageTurnLeft()) {
-      newButtons.pageLeft.disabled = false;
-    }
-    if (this.shouldPageTurnRight()) {
-      newButtons.pageRight.disabled = false;
-    }
-    this.setState({ buttons: newButtons });
+  openNextComic = () => {
+    const polarity = 1;
+    this.openAdjacentComic(polarity);
   };
+
+  openPrevComic = () => {
+    const polarity = -1;
+    this.openAdjacentComic(polarity);
+  };
+
+  // renderButtons = () => {
+  //   const newButtons = copyDeepObject(this.state.buttons);
+  //   console.log('rendering buttons');
+  //   newButtons.pageLeft.disabled = true;
+  //   newButtons.pageRight.disabled = true;
+  //   if (this.shouldPageTurnLeft()) {
+  //     console.log('Left');
+  //     newButtons.pageLeft.disabled = false;
+  //   }
+  //   if (this.shouldPageTurnRight()) {
+  //     console.log('Right');
+  //     newButtons.pageRight.disabled = false;
+  //   }
+  //   this.setState({ buttons: newButtons },() => {
+  //     console.log('Buttons rendered:', newButtons);
+  //   });
+  // };
 
   saveContentDataToMain = content => {
     this.setState({ content });
@@ -289,8 +324,7 @@ export default class App extends Component {
     const pagesToRender = Math.min(S.pageCount, pagesToDisplay);
     console.log(pagesToRender);
     console.log('setCurrentPages: ', S.openedComic);
-    for (let i = 0; i < pagesToRender; i++) {
-      // eslint-disable-line
+    for (let i = 0; i < pagesToRender; i += 1) {
       const totalIndex = newPageIndex + i;
       if (totalIndex < S.openedComic.pages.length) {
         const comicPagePath = path.join(
@@ -355,17 +389,18 @@ export default class App extends Component {
   };
 
   turnPage = polarity => {
-    // console.log('TurningPage: ', this);
-    turnPage(
-      this.state.currentPageIndex,
-      this.state.centerfolds,
-      this.state.pageCount,
-      this.state.pages.length,
-      polarity,
-      (newPageIndex, pagesToDisplay) => {
-        this.setCurrentPages(newPageIndex, pagesToDisplay);
-      }
-    );
+    if (this.state.openedComic.name) {
+      turnPage(
+        this.state.currentPageIndex,
+        this.state.centerfolds,
+        this.state.pageCount,
+        this.state.pages.length,
+        polarity,
+        (newPageIndex, pagesToDisplay) => {
+          this.setCurrentPages(newPageIndex, pagesToDisplay);
+        }
+      );
+    }
   };
 
   turnPageLeft = () => {
