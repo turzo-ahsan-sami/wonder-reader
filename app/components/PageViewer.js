@@ -23,40 +23,40 @@ class PageViewer extends Component {
     const P = this.props;
     const S = this.state;
     const pageViewer = document.getElementById('pageViewer');
-    const pageWrapper = document.getElementById('pageWrapper');
+    // const pageWrapper = document.getElementById('pageWrapper');
 
     if (this.areTherePageProps()) {
       if (S.currentComicPage !== P.pages[0].page) {
         pageViewer.scrollLeft = 0;
         pageViewer.scrollTop = 0;
         this.setState({ currentComicPage: P.pages[0].page }); // eslint-disable-line
-      } else if (P.zoomLevel >= 100 && S.currentZoomLevel !== P.zoomLevel) {
-        // Center Points X || Y
-        const cPX = pageViewer.scrollLeft + pageViewer.clientWidth / 2;
-        const cPY = pageViewer.scrollTop + pageViewer.clientHeight / 2;
-
-        // Position Ratios to whole
-        const cPXR = cPX / pageWrapper.clientWidth;
-        const cPYR = cPY / pageWrapper.clientHeight;
-
-        const marginLeft =
-          P.zoomLevel < 100 ? `${(100 - P.zoomLevel) / 2}%` : 0;
-        const marginTop =
-          pageViewer.clientHeight > pageWrapper.clientHeight
-            ? `${(pageViewer.clientHeight - pageWrapper.clientHeight) / 2}px`
-            : 0;
-
-        pageViewer.scrollTop =
-          pageWrapper.clientHeight * cPXR - pageViewer.clientHeight / 2;
-        pageViewer.scrollLeft =
-          pageWrapper.clientWidth * cPYR - pageViewer.clientWidth / 2;
-
-        this.setState({
-          // eslint-disable-line
-          currentZoomLevel: P.zoomLevel,
-          marginLeft,
-          marginTop
-        });
+        // } else if (P.zoomLevel >= 100 && S.currentZoomLevel !== P.zoomLevel) {
+        //   // Center Points X || Y
+        //   const cPX = pageViewer.scrollLeft + pageViewer.clientWidth / 2;
+        //   const cPY = pageViewer.scrollTop + pageViewer.clientHeight / 2;
+        //
+        //   // Position Ratios to whole
+        //   const cPXR = cPX / pageWrapper.clientWidth;
+        //   const cPYR = cPY / pageWrapper.clientHeight;
+        //
+        //   const marginLeft =
+        //     P.zoomLevel < 100 ? `${(100 - P.zoomLevel) / 2}%` : 0;
+        //   const marginTop =
+        //     pageViewer.clientHeight > pageWrapper.clientHeight
+        //       ? `${(pageViewer.clientHeight - pageWrapper.clientHeight) / 2}px`
+        //       : 0;
+        //
+        //   pageViewer.scrollTop =
+        //     pageWrapper.clientHeight * cPXR - pageViewer.clientHeight / 2;
+        //   pageViewer.scrollLeft =
+        //     pageWrapper.clientWidth * cPYR - pageViewer.clientWidth / 2;
+        //
+        //   this.setState({
+        //     // eslint-disable-line
+        //     currentZoomLevel: P.zoomLevel,
+        //     marginLeft,
+        //     marginTop
+        //   });
       }
     }
   }

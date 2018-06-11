@@ -88,21 +88,21 @@ export default class App extends Component {
         func: () => {
           this.openPrevComic();
         }
-      },
-      options: {
-        name: 'options',
-        disabled: false,
-        func: () => {
-          this.toggleOptions();
-        }
-      },
-      trash: {
-        name: 'trash',
-        disabled: false,
-        func: () => {
-          this.clearCache();
-        }
       }
+      // options: {
+      //   name: 'options',
+      //   disabled: false,
+      //   func: () => {
+      //     this.toggleOptions();
+      //   }
+      // },
+      // trash: {
+      //   name: 'trash',
+      //   disabled: false,
+      //   func: () => {
+      //     this.clearCache();
+      //   }
+      // }
     },
 
     // Material UI Drawer data

@@ -6,11 +6,11 @@ import {
   FaAngleLeft,
   FaAngleRight,
   FaBook,
-  FaCog,
+  // FaCog,
   FaMinusSquareO,
   FaSquareO
 } from 'react-icons/lib/fa';
-import MdDelete from 'react-icons/lib/md/delete';
+// import MdDelete from 'react-icons/lib/md/delete';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
@@ -59,20 +59,20 @@ class ButtonBar extends Component {
           icon: <FaAngleDoubleRight />,
           rotation: 0,
           key: '005'
-        },
-        {
-          name: 'options',
-          icon: <FaCog />,
-          rotation: 0,
-          key: '006'
-        },
-        {
-          name: 'trash',
-          icon: <MdDelete />,
-          rotation: 0,
-          key: '007',
-          color: 'secondary'
         }
+        // {
+        //   name: 'options',
+        //   icon: <FaCog />,
+        //   rotation: 0,
+        //   key: '006'
+        // },
+        // {
+        //   name: 'trash',
+        //   icon: <MdDelete />,
+        //   rotation: 0,
+        //   key: '007',
+        //   color: 'secondary'
+        // }
       ]
     };
   }
