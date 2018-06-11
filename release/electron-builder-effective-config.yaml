@@ -1,0 +1,39 @@
+directories:
+  output: release
+  buildResources: resources
+productName: Wonder Reader
+appId: org.develar.WonderReader
+files:
+  - dist/
+  - node_modules/
+  - app.html
+  - main.prod.js
+  - main.prod.js.map
+  - package.json
+dmg:
+  contents:
+    - x: 130
+      'y': 220
+    - x: 410
+      'y': 220
+      type: link
+      path: /Applications
+win:
+  target:
+    - nsis
+linux:
+  target:
+    - AppImage
+    - deb
+    - rpm
+    - snap
+  category: Graphics
+  depends:
+    - gconf2
+    - gconf-service
+    - libnotify4
+    - libappindicator1
+    - libxtst6
+    - libnss3
+    - unrar
+electronVersion: 2.0.2
