@@ -1,7 +1,7 @@
 {
   "name": "wonder-reader",
-  "productName": "wonder-reader",
-  "version": "1.0.1a",
+  "productName": "Wonder Reader",
+  "version": "1.0.0",
   "description": "A Comic Book Reader, made with React, Electron, and Node",
   "main": "./main.prod.js",
   "author": {

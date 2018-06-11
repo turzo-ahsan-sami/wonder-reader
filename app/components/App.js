@@ -1,6 +1,3 @@
-import 'typeface-carter-one'; // eslint-disable-line
-import 'typeface-montserrat'; // eslint-disable-line
-
 import React, { Component } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
