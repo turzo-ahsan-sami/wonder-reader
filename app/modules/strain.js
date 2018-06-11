@@ -7,9 +7,7 @@ const comicTypes = ['.cbr', '.cbz'];
 const imageTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
 
 const isComic = filename => isSomething(filename, comicTypes);
-
 const isImage = filename => isSomething(filename, imageTypes);
-
 const isSomething = (filename, types) => {
   const extname = path.extname(filename).toLowerCase();
   const IsSomething = types.indexOf(extname) > -1;
@@ -29,7 +27,7 @@ const sortArrayByAlpha = ARRAY => {
 
 // Cleans out non image files from ARRAY
 const strainer = (fileTypes, ARRAY, dirname) => {
-  console.log(ARRAY);
+  // console.log(ARRAY);
   function isProperFileType(x, i) {
     let isThisAProperFileType =
       fileTypes.indexOf(path.extname(ARRAY[i]).toLowerCase()) > -1;

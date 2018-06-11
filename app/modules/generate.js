@@ -12,16 +12,12 @@ const { strainImages } = require('./strain.js');
 
 // Returns with an array of indices for double page images for core array of image files
 const generateCenterfolds = pages => {
-  console.log(pages);
   const strainedPages = strainImages(pages);
-  console.log(strainedPages);
   const filtered = strainedPages.filter(page => {
     const dimensions = sizeOf(page);
     return dimensions.width >= dimensions.height;
   });
-  console.log(filtered);
   const spread = filtered.map(item => strainedPages.indexOf(item));
-  console.log(spread);
   return spread;
 };
 
@@ -74,39 +70,9 @@ const generateNestedContentFromFilepath = (filepath, cb) => {
   });
 };
 
-const generateNextComics = (filepath, cb) => {
-  let nextOrigin = null;
-  let prevOrigin = null;
-  console.log(filepath);
-
-  const { name, origin } = filepath;
-  const dirname = path.dirname(origin);
-  fs.readdir(dirname, (err, comics) => {
-    console.log(err, comics);
-    const strainedComics = strainComics(comics);
-    // Gets index position of file inside directory array
-    const currentIssue = strainedComics.indexOf(name);
-    if (comics.length > 1) {
-      if (currentIssue <= 0) {
-        // If loaded comic is first comic in directory
-        nextOrigin = path.join(dirname, strainedComics[currentIssue + 1]);
-      } else if (currentIssue >= comics.length - 1) {
-        // If loaded comic is the last comic in directory
-        prevOrigin = path.join(dirname, strainedComics[currentIssue - 1]);
-      } else {
-        // If comic is somewhere in the middle of the directory array
-        nextOrigin = path.join(dirname, strainedComics[currentIssue + 1]);
-        prevOrigin = path.join(dirname, strainedComics[currentIssue - 1]);
-      }
-    }
-    cb(nextOrigin, prevOrigin);
-  });
-};
-
 export {
   generateCenterfolds,
   generateContent,
   generateContents,
-  generateNestedContentFromFilepath,
-  generateNextComics
+  generateNestedContentFromFilepath
 };

@@ -2,6 +2,7 @@
 import { isImage, strainImages } from '../modules/strain';
 
 const fs = require('fs');
+const isDirectory = require('is-directory');
 const isRar = require('./isRar.js');
 const isZip = require('is-zip');
 const mkdirp = require('mkdirp');
@@ -36,6 +37,9 @@ class File {
     fs.readFile(this.origin, (err, data) => {
       if (!err) {
         this.data = data;
+        if (isDirectory.sync(this.tempdir)) {
+          rimraf.sync(this.tempdir);
+        }
         mkdirp(this.tempdir, errd => {
           if (errd) {
             this.error = true;
@@ -113,7 +117,6 @@ class File {
 
   // initialize with this.tempdir
   standardize(directory) {
-    console.log('standardizing,', directory);
     const files = fs.readdirSync(directory);
     const filepaths = files.map(file => path.join(directory, file));
     filepaths.forEach(filepath => {
@@ -123,7 +126,6 @@ class File {
 
   updatePages(cb) {
     fs.readdir(this.tempdir, (err, files) => {
-      console.log('updatingPages:', files);
       const strainedFiles = strainImages(files);
       this.pages = strainedFiles;
       cb(this);

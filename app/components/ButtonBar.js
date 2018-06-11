@@ -78,9 +78,7 @@ class ButtonBar extends Component {
   }
 
   renderButton = item => {
-    // console.log(item, this.props);
     const thisProp = this.props.buttons[item.name];
-    // console.log(thisProp);
     const icons =
       this.props.pageCount === 2 ? <FaMinusSquareO /> : <FaSquareO />;
     const icon = item.name === 'changePageCount' ? icons : item.icon;
@@ -110,7 +108,6 @@ class ButtonBar extends Component {
 
   render() {
     const buttons = copyArray(this.state.buttons);
-    // console.log(buttons)
     const renderedButtons = buttons.map(button => this.renderButton(button));
     return (
       <MuiThemeProvider theme={buttonTheme}>

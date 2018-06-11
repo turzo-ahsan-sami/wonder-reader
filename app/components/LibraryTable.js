@@ -18,47 +18,41 @@ class LibraryTable extends Component {
       fullpath={content.fullpath}
       isDirectory={content.isDirectory}
       contents={content.contents}
-      onRowClick={() => {props.onContentClick(content);}}
-
+      onRowClick={() => {
+        props.onContentClick(content);
+      }}
       style={{
-          marginLeft: '5vw',
-          maxHeight: '50vh',
-          maxWidth: '50vw'
-        }}
+        marginLeft: '5vw',
+        maxHeight: '50vh',
+        maxWidth: '50vw'
+      }}
     />
-    )
+  );
 
-  generateLibraryItems = (props) => {
-    // console.log('generateLibraryItems', props);
-    const {contents} = props;
-    return contents.map((content) => this.generateLibraryItem(content, props));
-  }
+  generateLibraryItems = props => {
+    const { contents } = props;
+    return contents.map(content => this.generateLibraryItem(content, props));
+  };
 
   render() {
-    // console.log('LibraryTable', this.props);
     const libraryItems = this.generateLibraryItems(this.props);
-    return(
-      <Table
-        className="library-menu"
-        selectable='false'
-      >
+    return (
+      <Table className="library-menu" selectable="false">
         <TableHead>
-          <TableRow style={{
-            fontFamily: 'Carter One'}}
+          <TableRow
+            style={{
+              fontFamily: 'Carter One'
+            }}
           >
-            <TableCell padding='checkbox' />
+            <TableCell padding="checkbox" />
             <TableCell>Name</TableCell>
-            <TableCell numeric>
-              Directory
-            </TableCell>
-            <TableCell padding='checkbox'>
+            <TableCell numeric>Directory</TableCell>
+            <TableCell padding="checkbox">
               <FaPercent />
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {libraryItems}
-        </TableBody>
+        <TableBody>{libraryItems}</TableBody>
       </Table>
     );
   }
