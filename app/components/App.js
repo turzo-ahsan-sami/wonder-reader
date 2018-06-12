@@ -39,7 +39,7 @@ export default class App extends Component {
     pageCount: 2,
 
     // Errors
-    error: false,
+    // error: false,
     errorMessage: '',
 
     // Button Data to pass to Main => Header => ButtonBar
@@ -104,7 +104,7 @@ export default class App extends Component {
 
     // Material UI Drawer data
     top: false,
-    options: false,
+    // options: false,
 
     // Contents data for Library
     content: {},
@@ -139,35 +139,27 @@ export default class App extends Component {
   changePageCount = () => {
     const newPageCount = this.state.pageCount === 2 ? 1 : 2;
     this.setState({ pageCount: newPageCount }, () => {
-      if (this.state.pageCount === 2) {
-        if (
-          this.state.centerfolds.indexOf(this.state.currentPageIndex) > -1 ||
-          this.state.centerfolds.indexOf(this.state.currentPageIndex + 1) > -1
-        ) {
-          this.setCurrentPages(this.state.currentPageIndex, 1);
-          return;
-        }
-      }
       if (this.state.openedComic.name !== null) {
+        if (this.state.pageCount === 2) {
+          if (
+            this.state.centerfolds.indexOf(this.state.currentPageIndex) > -1 ||
+            this.state.centerfolds.indexOf(this.state.currentPageIndex + 1) > -1
+          ) {
+            this.setCurrentPages(this.state.currentPageIndex, 1);
+            return;
+          }
+        }
         this.setCurrentPages(this.state.currentPageIndex, this.state.pageCount);
       }
     });
   };
 
-  clearCache = () => {
-    console.log('clearing cache');
-  };
+  // clearCache = () => {
+  //   console.log('clearing cache');
+  // };
 
   closeLibrary = () => {
     this.toggleDrawer('top', false);
-  };
-
-  generateKeys = (pages, cb) => {
-    const pageKeys = Array(...{ length: pages.length }).map(
-      Function.call,
-      Number
-    );
-    this.setState({ pageKeys }, cb);
   };
 
   generatePages = (tempdir, cb) => {
@@ -187,13 +179,13 @@ export default class App extends Component {
   isCenterfold = index => this.state.centerfolds.includes(index);
 
   loadImages = () => {
-    const loadedImages = this.state.pages.map(page => {
+    const images = this.state.pages.map(page => {
       const img = new Image();
       const imgSrc = page.encodedPagePath;
       img.src = imgSrc;
       return img;
     });
-    this.setState({ images: loadedImages });
+    this.setState({ images });
   };
 
   openComic = fullpath => {
@@ -216,14 +208,12 @@ export default class App extends Component {
             },
             () => {
               this.loadImages();
-              let pagesToDisplay = 2;
-              if (
+              const pagesToDisplay =
                 this.state.centerfolds.includes(0) ||
                 this.state.centerfolds.includes(1) ||
                 this.state.pageCount === 1
-              ) {
-                pagesToDisplay = 1;
-              }
+                  ? 1
+                  : 2;
               this.setCurrentPages(0, pagesToDisplay);
             }
           );
@@ -269,7 +259,6 @@ export default class App extends Component {
 
   setCurrentPages = (newPageIndex, pagesToDisplay) => {
     const S = this.state;
-    const newCurrentPages = [];
     const newEncodedPages = [];
     const pagesToRender = Math.min(S.pageCount, pagesToDisplay);
     for (let i = 0; i < pagesToRender; i += 1) {
@@ -280,8 +269,6 @@ export default class App extends Component {
           S.openedComic.pages[totalIndex]
         );
         const { width } = sizeOf(comicPagePath);
-        newCurrentPages[i] = comicPagePath;
-
         newEncodedPages[i] = {
           page: encodepath(comicPagePath),
           key: totalIndex,
@@ -291,13 +278,12 @@ export default class App extends Component {
     }
     this.setState({
       currentPageIndex: newPageIndex,
-      currentPages: newCurrentPages,
       encodedPages: newEncodedPages
     });
   };
 
-  setZoomLevel = value => {
-    this.setState({ zoomLevel: value });
+  setZoomLevel = zoomLevel => {
+    this.setState({ zoomLevel });
   };
 
   shouldPageTurn = (a, b) =>
@@ -328,7 +314,7 @@ export default class App extends Component {
 
   throwError = (error, errorMessage) => {
     if (error) {
-      this.setState({ error, errorMessage }, () => {
+      this.setState({ errorMessage }, () => {
         console.log(this.state.errorMessage);
         // TODO Spawn error module;
       });

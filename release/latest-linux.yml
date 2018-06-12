@@ -1,9 +1,0 @@
-version: 1.0.0
-files:
-  - url: wonder-reader-1.0.0-x86_64.AppImage
-    sha512: yRDTABTYtizAmSsZ0NnQe5J27COfXS1e7GN6qcdxhVcRbnmPT46cmpEHBwA0Mkg6dyEvc4aGgap6KBg0ABOoag==
-    size: 52371833
-    blockMapSize: 55997
-path: wonder-reader-1.0.0-x86_64.AppImage
-sha512: yRDTABTYtizAmSsZ0NnQe5J27COfXS1e7GN6qcdxhVcRbnmPT46cmpEHBwA0Mkg6dyEvc4aGgap6KBg0ABOoag==
-releaseDate: '2018-06-11T08:18:32.636Z'
