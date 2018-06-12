@@ -3,30 +3,10 @@
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
 
- @font-face {
-   font-family: 'Montserrat';
-   font-style: normal;
-   font-display: swap;
-   font-weight: 400;
-   src:
-    local('Montserrat Regular '),
-    local('Montserrat-Regular'),
-    url('./fonts/Montserrat-Regular.ttf') format('truetype')
-}
-
- @font-face {
-  font-family: 'Carter One';
-  font-style: normal;
-  font-display: swap;
-  font-weight: 400;
-  src:
-    local('Carter One Regular '),
-    local('Carter One-Regular'),
-    url('./fonts/CarterOne.ttf') format('truetype')
- }
-
-
 @import "~font-awesome/css/font-awesome.css";
+@import "~typeface-carter-one/index.css";
+@import "~typeface-montserrat/index.css";
+
 body {
   position: relative;
   color: white;

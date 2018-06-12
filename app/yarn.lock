@@ -16,3 +16,11 @@ bindings@^1.2.1:
 nan@^2.4.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
+
+typeface-carter-one@^0.0.54:
+  version "0.0.54"
+  resolved "https://registry.yarnpkg.com/typeface-carter-one/-/typeface-carter-one-0.0.54.tgz#3a4c959f88883bc941efb06dbae9e64053434769"
+
+typeface-montserrat@^0.0.54:
+  version "0.0.54"
+  resolved "https://registry.yarnpkg.com/typeface-montserrat/-/typeface-montserrat-0.0.54.tgz#3fc338db6428d73485b75aa7bd2af8c9a55b9ab3"
