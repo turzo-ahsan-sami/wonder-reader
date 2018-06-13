@@ -268,11 +268,14 @@ export default class App extends Component {
           S.openedComic.tempdir,
           S.openedComic.pages[totalIndex]
         );
-        const { width } = sizeOf(comicPagePath);
+        const { width, height } = sizeOf(comicPagePath);
+        const ratio =
+          totalIndex === newPageIndex ? 1 : newEncodedPages[0].height / height;
         newEncodedPages[i] = {
           page: encodepath(comicPagePath),
           key: totalIndex,
-          width
+          width: width * ratio,
+          height: height * ratio
         };
       }
     }
