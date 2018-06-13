@@ -52,3 +52,11 @@ input[type=range]::-webkit-slider-runnable-track {
 input[type=range]:focus::-webkit-slider-runnable-track {
   box-shadow: 0 0 5px 2px #91d5fd;
 }
+
+.PageViewer {
+  background-color: #d8d8d8;
+  height: calc(100vh - 64px);
+  margin-top: 64px;
+  width: 100vw;
+  overflow: auto;
+}

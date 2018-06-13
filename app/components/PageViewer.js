@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+import DragScroll from 'react-dragscroll';
 import PropTypes from 'prop-types';
 
 import Page from './Page';
 
-const style = {
-  backgroundColor: '#d8d8d8',
-  height: 'calc(100vh - 64px)',
-  marginTop: '64px',
-  overflow: 'auto',
-  width: '100vw'
-};
+// const style = {
+//   backgroundColor: '#d8d8d8',
+//   height: 'calc(100vh - 64px)',
+//   marginTop: '64px',
+//   overflow: 'auto',
+//   width: '100vw'
+// };
 
 class PageViewer extends Component {
   state = {
@@ -22,7 +23,7 @@ class PageViewer extends Component {
   componentDidUpdate() {
     const P = this.props;
     const S = this.state;
-    const pageViewer = document.getElementById('pageViewer');
+    const pageViewer = document.querySelector('.PageViewer');
     // const pageWrapper = document.getElementById('pageWrapper');
 
     if (this.areTherePageProps()) {
@@ -84,10 +85,9 @@ class PageViewer extends Component {
     }
 
     return (
-      <div className="PageViewer dragscroll" id="pageViewer" style={style}>
+      <DragScroll className="PageViewer dragscroll">
         <div
           className="pages"
-          id="pageWrapper"
           style={{
             marginLeft: this.state.marginLeft,
             marginTop: this.state.marginTop,
@@ -97,7 +97,7 @@ class PageViewer extends Component {
         >
           {newPages}
         </div>
-      </div>
+      </DragScroll>
     );
   }
 }

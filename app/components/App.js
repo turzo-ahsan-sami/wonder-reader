@@ -282,8 +282,8 @@ export default class App extends Component {
     });
   };
 
-  setZoomLevel = zoomLevel => {
-    this.setState({ zoomLevel });
+  setZoomLevel = value => {
+    this.setState({ zoomLevel: Number(value) });
   };
 
   shouldPageTurn = (a, b) =>
