@@ -31,7 +31,10 @@ const turnPage = (
   } else if (polarity > 0) {
     if (isCenterfold(currentPageIndex)) {
       newPageIndex = currentPageIndex + 1;
-      pagesToDisplay = isCenterfold(newPageIndex) ? 1 : 2;
+      pagesToDisplay =
+        isCenterfold(currentPageIndex + 1) || isCenterfold(currentPageIndex + 2)
+          ? 1
+          : 2;
     } else if (isCenterfold(currentPageIndex + 1)) {
       newPageIndex = currentPageIndex + 1;
       pagesToDisplay = 1;
