@@ -3,7 +3,7 @@ import { isImage, strainImages } from '../modules/strain';
 
 const fs = require('fs');
 const isDirectory = require('is-directory');
-const isRar = require('./isRar.js');
+const isRar = require('is-rar');
 const isZip = require('is-zip');
 const mkdirp = require('mkdirp');
 const os = require('os');

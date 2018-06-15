@@ -4,14 +4,6 @@ import PropTypes from 'prop-types';
 
 import Page from './Page';
 
-// const style = {
-//   backgroundColor: '#d8d8d8',
-//   height: 'calc(100vh - 64px)',
-//   marginTop: '64px',
-//   overflow: 'auto',
-//   width: '100vw'
-// };
-
 class PageViewer extends Component {
   state = {
     // currentComicPage: null,
