@@ -1,3 +1,5 @@
+[![devDependencies Status](https://david-dm.org/alice-em/wonder-reader/dev-status.svg?style=flat-square)](https://david-dm.org/alice-em/wonder-reader?type=dev)
+
 ## Wonder Reader :: A modern comic book reader for Windows, OSX, and Linux
 Wonder Reader was written with React, Electron, Node, and a love for all things dorky.
 
