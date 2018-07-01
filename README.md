@@ -5,6 +5,8 @@ Wonder Reader was written with React, Electron, Node, and a love for all things 
 ###### Windows
 * [.exe](http://sevenouncestudios.com/wonder-reader/bin/Wonder%20Reader%20Setup%201.0.1.exe)
 ###### OSX / Darwin
+* [.dmg](http://sevenouncestudios.com/wonder-reader/bin/Wonder%20Reader-1.0.1.dmg)
+* [.zip](http://sevenouncestudios.com/wonder-reader/bin/Wonder%20Reader-1.0.1-mac.zip)
 ###### Linux
 * [.AppImage](http://sevenouncestudios.com/wonder-reader/bin/wonder-reader-1.0.1-x86_64.AppImage)
 * [.deb](http://sevenouncestudios.com/wonder-reader/bin/wonder-reader_1.0.1_amd64.deb)
