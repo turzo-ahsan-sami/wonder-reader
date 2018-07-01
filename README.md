@@ -1,11 +1,15 @@
 ## Wonder Reader :: A modern comic book reader for Windows, OSX, and Linux
 Wonder Reader was written with React, Electron, Node, and a love for all things dorky.
 
-## Downloads
+## Downloads `version 1.0.1`
 ###### Windows
+* [.exe](http://sevenouncestudios.com/wonder-reader/bin/Wonder%20Reader%20Setup%201.0.1.exe)
 ###### OSX / Darwin
 ###### Linux
-* Also available via Snapcraft!
+* [.AppImage](http://sevenouncestudios.com/wonder-reader/bin/wonder-reader-1.0.1-x86_64.AppImage)
+* [.deb](http://sevenouncestudios.com/wonder-reader/bin/wonder-reader_1.0.1_amd64.deb)
+* [.rpm](http://sevenouncestudios.com/wonder-reader/bin/wonder-reader-1.0.1.x86_64.rpm)
+* [.snap](http://sevenouncestudios.com/wonder-reader/bin/wonder-reader_1.0.1_amd64.snap)
 * `snap install wonder-reader`
 
 ## Requirements for development
