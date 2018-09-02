@@ -1,32 +1,11 @@
-const copyArray = (array) => {
-  const i = [].slice.call(array);
-  return i;
-};
+const copyArray = array => [].slice.call(array);
 
-const copyFunction = (func) => {
-  const i = func.bind({});
-  return i;
-};
+const copyFunction = func => func.bind({});
 
-const copyObject = (obj) => {
-  const i = Object.assign({}, obj);
-  return i;
-};
+const copyObject = obj => Object.assign({}, obj);
 
-const copyDeepObject = (obj) => {
-  const i = JSON.parse(JSON.stringify(obj));
-  return i;
-};
+const copyDeepObject = obj => JSON.parse(JSON.stringify(obj));
 
-const copyString = (string) => {
-  const i = string.slice(0);
-  return i;
-};
+const copyString = string => string.slice(0);
 
-export {
-  copyArray,
-  copyFunction,
-  copyObject,
-  copyDeepObject,
-  copyString
-};
+export { copyArray, copyFunction, copyObject, copyDeepObject, copyString };

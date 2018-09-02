@@ -8,14 +8,12 @@ const encodepath = filepath => {
   if (os.platform === 'win32') {
     // Saves letter drive information
     const c = tempPath[0]; // eslint-disable-line
-    for (let j = 1; j < tempPath.length; j++) {
-      // eslint-disable-line
+    for (let j = 1; j < tempPath.length; j += 1) {
       newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
     }
     newPath = path.join(c, newPath); // returns c:\path\to\file.cbz
   } else {
-    for (let j = 0; j < tempPath.length; j++) {
-      // eslint-disable-line
+    for (let j = 0; j < tempPath.length; j += 1) {
       newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
     }
     newPath = `/${newPath}`; // To set root folder

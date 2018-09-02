@@ -15,6 +15,8 @@ const turnPage = (
   // polarity for left or right ( 1 || -1 )
 
   const isCenterfold = index => centerfolds.includes(index);
+  const areThereUpcomingCenterfolds = index =>
+    isCenterfold(index) || isCenterfold(index + 1);
 
   let newPageIndex = null;
   let pagesToDisplay = null;
@@ -24,43 +26,33 @@ const turnPage = (
     pagesToDisplay = 1;
   } else if (currentPageIndex + pageCount * polarity < 0) {
     newPageIndex = 0;
-    pagesToDisplay = isCenterfold(0) || isCenterfold(1) ? 1 : 2;
+    pagesToDisplay = areThereUpcomingCenterfolds(0) ? 1 : 2;
   } else if (pageCount === 1) {
     newPageIndex = currentPageIndex + polarity;
     pagesToDisplay = 1;
   } else if (polarity > 0) {
     if (isCenterfold(currentPageIndex)) {
       newPageIndex = currentPageIndex + 1;
-      pagesToDisplay =
-        isCenterfold(currentPageIndex + 1) || isCenterfold(currentPageIndex + 2)
-          ? 1
-          : 2;
+      pagesToDisplay = areThereUpcomingCenterfolds(currentPageIndex + 1)
+        ? 1
+        : 2;
     } else if (isCenterfold(currentPageIndex + 1)) {
       newPageIndex = currentPageIndex + 1;
       pagesToDisplay = 1;
-    } else if (
-      isCenterfold(currentPageIndex + 2) ||
-      isCenterfold(currentPageIndex + 3)
-    ) {
+    } else if (areThereUpcomingCenterfolds(currentPageIndex + 2)) {
       newPageIndex = currentPageIndex + 2;
       pagesToDisplay = 1;
     } else {
       newPageIndex = currentPageIndex + 2;
       pagesToDisplay = 2;
     }
-  } else if (
-    isCenterfold(currentPageIndex - 1) ||
-    isCenterfold(currentPageIndex - 2)
-  ) {
+  } else if (areThereUpcomingCenterfolds(currentPageIndex - 2)) {
     newPageIndex = currentPageIndex - 1;
     pagesToDisplay = 1;
   } else {
     newPageIndex = currentPageIndex - 2;
     pagesToDisplay = 2;
   }
-
-  // one last check if a single edge case with ( 2 === pagesToDisplay ) with a single page view;
-  pagesToDisplay = Math.min(pagesToDisplay, pageCount);
   cb(newPageIndex, pagesToDisplay);
 };
 

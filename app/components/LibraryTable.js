@@ -39,11 +39,7 @@ class LibraryTable extends Component {
     return (
       <Table className="library-menu" selectable="false">
         <TableHead>
-          <TableRow
-            style={{
-              fontFamily: 'Carter One'
-            }}
-          >
+          <TableRow style={{ fontFamily: 'Carter One' }}>
             <TableCell padding="checkbox" />
             <TableCell>Name</TableCell>
             <TableCell numeric>Directory</TableCell>

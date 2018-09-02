@@ -27,7 +27,6 @@ const sortArrayByAlpha = ARRAY => {
 
 // Cleans out non image files from ARRAY
 const strainer = (fileTypes, ARRAY, dirname) => {
-  // console.log(ARRAY);
   function isProperFileType(x, i) {
     let isThisAProperFileType =
       fileTypes.indexOf(path.extname(ARRAY[i]).toLowerCase()) > -1;
