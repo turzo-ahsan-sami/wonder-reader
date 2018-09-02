@@ -11,6 +11,11 @@ const styles = {
   },
   fullList: {
     width: 'auto'
+  },
+  PaperProps: {
+    borderRadius: '0px 0px 0px 15px',
+    margin: 'auto',
+    maxWidth: '960px'
   }
 };
 
@@ -23,35 +28,52 @@ class Library extends Component {
     this.setState({ root: filepath });
   };
 
-  render() {
-    const { classes } = this.props;
+  renderDrawer = () => {
+    const { closeDrawer, open } = this.props;
+
     return (
-      <div className="Library" style={this.props.style}>
-        <Drawer
-          anchor="top"
-          open={this.props.open}
-          onClose={this.props.closeDrawer}
-          PaperProps={{
-            style: {
-              borderRadius: '0px 0px 0px 15px',
-              margin: 'auto',
-              maxWidth: '960px'
-            }
-          }}
-          variant="temporary"
-          transitionDuration={125}
-        >
-          <div tabIndex={0} role="button" onKeyDown={this.props.closeDrawer}>
-            <LibraryLayout
-              className={classes.list}
-              closeLibrary={this.props.closeDrawer}
-              openComic={this.props.openComic}
-              root={this.state.root}
-              saveContentDataToParent={this.props.saveContentDataToMain}
-              updateRoot={this.updateRoot}
-            />
-          </div>
-        </Drawer>
+      <Drawer
+        anchor="top"
+        open={open}
+        onClose={closeDrawer}
+        PaperProps={{ style: styles.PaperProps }}
+        variant="temporary"
+        transitionDuration={125}
+      >
+        <div tabIndex={0} role="button" onKeyDown={closeDrawer}>
+          {this.renderLibraryLayout()}
+        </div>
+      </Drawer>
+    );
+  };
+
+  renderLibraryLayout = () => {
+    const {
+      classes,
+      closeDrawer,
+      openComic,
+      saveContentDataToMain
+    } = this.props;
+    const { root } = this.state;
+
+    return (
+      <LibraryLayout
+        className={classes.list}
+        closeLibrary={closeDrawer}
+        openComic={openComic}
+        root={root}
+        saveContentDataToParent={saveContentDataToMain}
+        updateRoot={this.updateRoot}
+      />
+    );
+  };
+
+  render() {
+    const { style } = this.props;
+
+    return (
+      <div className="Library" style={style}>
+        {this.renderDrawer()}
       </div>
     );
   }

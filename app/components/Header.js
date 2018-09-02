@@ -7,19 +7,24 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBar from './ButtonBar';
 import headerStyle from './headerStyle';
 
-// Insert props to pass onto
-const Header = props => (
+const Header = ({
+  buttons,
+  changePageCount,
+  pageCount,
+  setZoomLevel,
+  zoomLevel
+}) => (
   <AppBar>
     <Toolbar>
       <Typography variant="title" style={headerStyle}>
         Wonder Reader
       </Typography>
       <ButtonBar
-        buttons={props.buttons}
-        changePageCount={props.changePageCount}
-        pageCount={props.pageCount}
-        setZoomLevel={props.setZoomLevel}
-        zoomLevel={props.zoomLevel}
+        buttons={buttons}
+        changePageCount={changePageCount}
+        pageCount={pageCount}
+        setZoomLevel={setZoomLevel}
+        zoomLevel={zoomLevel}
       />
     </Toolbar>
   </AppBar>

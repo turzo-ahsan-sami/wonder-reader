@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 import LibraryHeader from './LibraryHeader';
 import LibraryTable from './LibraryTable';
 
-// const { comicDirectory } = require('../modules/private.js');
 const { copyArray, copyDeepObject } = require('../modules/copyData.js');
 const { dialog } = require('electron').remote;
 const { generateNestedContentFromFilepath } = require('../modules/generate.js');
+const polaritySort = require('../modules/polaritySort');
 
 class LibraryLayout extends Component {
   state = {
@@ -24,8 +24,9 @@ class LibraryLayout extends Component {
   };
 
   componentDidMount() {
-    if (this.props.root) {
-      this.updateContent(this.props.root);
+    const { root } = this.props;
+    if (root) {
+      this.updateContent(root);
     }
   }
 
@@ -33,23 +34,54 @@ class LibraryLayout extends Component {
     this.props.saveContentDataToParent(this.state);
   }
 
-  generateButtons = () => (
+  renderButtons = () => (
     <div>
-      <IconButton onClick={this.openDirectory} color="primary">
-        <FaFolderOpen />
-      </IconButton>
-      <IconButton onClick={this.setParentAsLibrary} color="primary">
-        <FaLevelUp />
-      </IconButton>
-      <IconButton
-        onClick={this.props.closeLibrary}
-        color="primary"
-        style={{ background: '#ef5350' }}
-      >
-        <FaClose />
-      </IconButton>
+      {this.renderFolderOpen()}
+      {this.renderLevelUp()}
+      {this.renderClose()}
     </div>
   );
+
+  renderClose = () => (
+    <IconButton
+      onClick={this.props.closeLibrary}
+      color="primary"
+      style={styles.closeButton}
+    >
+      <FaClose />
+    </IconButton>
+  );
+
+  renderFolderOpen = () => (
+    <IconButton onClick={this.openDirectory} color="primary">
+      <FaFolderOpen />
+    </IconButton>
+  );
+
+  renderLevelUp = () => (
+    <IconButton onClick={this.setParentAsLibrary} color="primary">
+      <FaLevelUp />
+    </IconButton>
+  );
+
+  renderLibary = () => {
+    const { basename, bookmark, contents, dirname, fullpath, id } = this.state;
+
+    return (
+      <LibraryTable
+        key={id}
+        basename={basename}
+        bookmark={bookmark}
+        dirname={dirname}
+        fullpath={fullpath}
+        isDirectory
+        contents={contents}
+        onContentClick={this.onClick}
+        saveContentDataToParent={this.saveContentDataToParent}
+        saveContentsDataToParent={this.saveContentsDataToParent}
+      />
+    );
+  };
 
   onClick = content => {
     if (content.isDirectory) {
@@ -69,13 +101,19 @@ class LibraryLayout extends Component {
 
   // Function to open `Load` window, and pass path to generateContent, then setstate
   openDirectory = () => {
-    dialog.showOpenDialog({ properties: ['openDirectory'] }, filepaths => {
-      if (Array.isArray(filepaths)) {
-        const filepath = filepaths[0];
-        this.props.updateRoot(filepath);
-        this.updateContent(filepath);
+    const { updateRoot } = this.props;
+    dialog.showOpenDialog(
+      {
+        properties: ['openDirectory']
+      },
+      filepaths => {
+        if (Array.isArray(filepaths)) {
+          const filepath = filepaths[0];
+          updateRoot(filepath);
+          this.updateContent(filepath);
+        }
       }
-    });
+    );
   };
 
   saveContentDataToParent = content => {
@@ -90,7 +128,8 @@ class LibraryLayout extends Component {
   };
 
   setParentAsLibrary = () => {
-    this.updateContent(this.state.dirname);
+    const { dirname } = this.state;
+    this.updateContent(dirname);
   };
 
   sortContents = contents => {
@@ -98,12 +137,7 @@ class LibraryLayout extends Component {
       return [];
     }
     const sortedContent = copyArray(contents);
-    sortedContent.sort((a, b) => {
-      const nameA = a.basename.toLowerCase();
-      const nameB = b.basename.toLowerCase();
-      const polarity = nameA < nameB ? -1 : 1;
-      return nameA === nameB ? 0 : polarity;
-    });
+    sortedContent.sort((a, b) => polaritySort(a, b, 'basename'));
     return sortedContent;
   };
 
@@ -116,34 +150,15 @@ class LibraryLayout extends Component {
   };
 
   render() {
-    const content = this.state;
-    const libraryTable = content.fullpath ? (
-      <LibraryTable
-        key={content.id}
-        basename={content.basename}
-        bookmark={content.bookmark}
-        dirname={content.dirname}
-        fullpath={content.fullpath}
-        isDirectory
-        contents={content.contents}
-        onContentClick={this.onClick}
-        saveContentDataToParent={this.saveContentDataToParent}
-        saveContentsDataToParent={this.saveContentsDataToParent}
-      />
-    ) : null;
+    const { fullpath } = this.state;
+
+    const libraryTable = fullpath ? this.renderLibary() : null;
     return (
-      <div
-        className="library"
-        style={{
-          marginTop: '64px',
-          maxHeight: 'calc(90vh - 64px)',
-          overflowY: 'auto'
-        }}
-      >
+      <div className="library" style={styles.libraryStyles}>
         <LibraryHeader
           position="fixed"
           title="Library"
-          buttons={this.generateButtons()}
+          buttons={this.renderButtons()}
           onContentClick={this.onClick}
         />
         {libraryTable}
@@ -162,6 +177,17 @@ LibraryLayout.propTypes = {
   root: PropTypes.string,
   saveContentDataToParent: PropTypes.func.isRequired,
   updateRoot: PropTypes.func.isRequired
+};
+
+const styles = {
+  closeButton: {
+    background: '#ef5350'
+  },
+  libraryStyles: {
+    marginTop: '64px',
+    maxHeight: 'calc(90vh - 64px)',
+    overflowY: 'auto'
+  }
 };
 
 export default LibraryLayout;
