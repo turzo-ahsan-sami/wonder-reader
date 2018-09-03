@@ -17,41 +17,44 @@ const generateCenterfolds = pages => {
     const dimensions = sizeOf(page);
     return dimensions.width >= dimensions.height;
   });
-  const spread = filtered.map(item => strainedPages.indexOf(item));
-  return spread;
+  return filtered.map(item => strainedPages.indexOf(item));
 };
 
-// Must return object
 const generateContent = fullpath => {
+  // Must return object
   if (fullpath && fullpath === null) {
     return null;
   }
   const stats = fs.statSync(fullpath);
   const isDirectory = stats.isDirectory();
-  const content = {
-    id: encodeURIComponent(fullpath),
-    basename: path.basename(fullpath),
-    bookmark: isDirectory ? NaN : 0,
-    dirname: path.dirname(fullpath),
-    extname: path.extname(fullpath),
-    fullpath,
-    isDirectory,
-    contents: []
-  };
+  const content = generateContentPrototype(fullpath, isDirectory);
   return content;
 };
 
+const generateContentPrototype = (fullpath, isDirectory) => ({
+  id: encodeURIComponent(fullpath),
+  basename: path.basename(fullpath),
+  bookmark: isDirectory ? NaN : 0,
+  dirname: path.dirname(fullpath),
+  extname: path.extname(fullpath),
+  fullpath,
+  isDirectory,
+  contents: []
+});
+
 // Must return array of object
 const generateContents = (content, cb) => {
+  console.log(content);
   if (content.isDirectory) {
-    const filepath = content.fullpath;
-    fs.readdir(filepath, (err, files) => {
+    const renderContent = file => {
+      const filepath = path.join(content.fullpath, file);
+      return generateContent(filepath);
+    };
+
+    fs.readdir(content.fullpath, (err, files) => {
       if (!err) {
-        const strainedFiles = strainComics(files, filepath);
-        const contents = strainedFiles.map(file => {
-          const fullpath = path.join(filepath, file);
-          return generateContent(fullpath);
-        });
+        const strainedFiles = strainComics(files, content.fullpath);
+        const contents = strainedFiles.map(renderContent);
         cb(err, contents);
       } else {
         cb(null, {});

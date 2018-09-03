@@ -16,6 +16,10 @@ const Unrar = require('node-unrar');
 const temp = path.join(os.tmpdir(), 'wonderReader');
 const regex = /`|~|!|@|#|\$|%|\^|&|\*|\(|\)|\+|=|\[|\{|\]|\}|\||\\|'|<|,|\.|>|\?|\/|""|;|:/gi;
 
+const failedTempDir = 'Error: Failed to create temp folder';
+const failedFileType =
+  'Error: File must be a CBR or CBZ. Compression method is incorrect;';
+
 class File {
   constructor(filepath) {
     this.name = path.basename(filepath);
@@ -41,18 +45,7 @@ class File {
           rimraf.sync(this.tempdir);
         }
         mkdirp(this.tempdir, errd => {
-          if (errd) {
-            this.error = true;
-            this.errorMessage = 'Error: Failed to create temp folder;';
-          } else if (this.isRar()) {
-            this.extractRar(cb);
-          } else if (this.isZip()) {
-            this.extractZip(cb);
-          } else {
-            this.error = true;
-            this.errorMessage =
-              'Error: File must be a CBR or CBZ. Compression method is incorrect;';
-          }
+          this.routeExtraction(errd, cb);
         });
       }
     });
@@ -115,8 +108,22 @@ class File {
 
   isZip = () => isZip(this.data);
 
-  // initialize with this.tempdir
+  routeExtraction = (err, cb) => {
+    if (err) {
+      this.error = true;
+      this.errorMessage = failedTempDir;
+    } else if (this.isRar()) {
+      this.extractRar(cb);
+    } else if (this.isZip()) {
+      this.extractZip(cb);
+    } else {
+      this.error = true;
+      this.errorMessage = failedFileType;
+    }
+  };
+
   standardize(directory) {
+    // initialize with this.tempdir
     const files = fs.readdirSync(directory);
     const filepaths = files.map(file => path.join(directory, file));
     filepaths.forEach(filepath => {

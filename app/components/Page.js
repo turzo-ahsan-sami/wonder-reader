@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Page = props => (
+const Page = ({ alt, id, src, width }) => (
   <img
-    id={props.id}
-    key={props.id}
+    id={id}
+    key={id}
     className="image"
     draggable="false"
-    alt={props.alt}
-    src={`file:///${props.src}`}
-    style={{ width: `${props.width}%` }}
+    alt={alt}
+    src={`file:///${src}`}
+    style={{ width: `${width}%` }}
   />
 );
 

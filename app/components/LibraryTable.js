@@ -8,50 +8,67 @@ import { FaPercent } from 'react-icons/lib/fa';
 
 import LibraryItem from './LibraryItem';
 
-class LibraryTable extends Component {
-  generateLibraryItem = (content, props) => (
-    <LibraryItem
-      key={content.id}
-      id={content.id}
-      basename={content.basename}
-      dirname={content.dirname}
-      fullpath={content.fullpath}
-      isDirectory={content.isDirectory}
-      contents={content.contents}
-      onRowClick={() => {
-        props.onContentClick(content);
-      }}
-      style={{
-        marginLeft: '5vw',
-        maxHeight: '50vh',
-        maxWidth: '50vw'
-      }}
-    />
-  );
+const HeaderRow = () => (
+  <TableRow style={styles.font}>
+    <TableCell padding="checkbox" />
+    <TableCell>Name</TableCell>
+    <TableCell numeric>Directory</TableCell>
+    <TableCell padding="checkbox">
+      <FaPercent />
+    </TableCell>
+  </TableRow>
+);
 
-  generateLibraryItems = props => {
-    const { contents } = props;
-    return contents.map(content => this.generateLibraryItem(content, props));
+class LibraryTable extends Component {
+  generateLibraryItem = content => {
+    const { basename, contents, dirname, fullpath, id, isDirectory } = content;
+
+    const { onContentClick } = this.props;
+
+    return (
+      <LibraryItem
+        key={id}
+        id={id}
+        basename={basename}
+        dirname={dirname}
+        fullpath={fullpath}
+        isDirectory={isDirectory}
+        contents={contents}
+        onRowClick={() => {
+          onContentClick(content);
+        }}
+        style={styles.LibraryItem}
+      />
+    );
+  };
+
+  generateLibraryItems = () => {
+    const { contents } = this.props;
+    return contents.map(this.generateLibraryItem);
   };
 
   render() {
-    const libraryItems = this.generateLibraryItems(this.props);
+    const libraryItems = this.generateLibraryItems();
     return (
       <Table className="library-menu" selectable="false">
         <TableHead>
-          <TableRow style={{ fontFamily: 'Carter One' }}>
-            <TableCell padding="checkbox" />
-            <TableCell>Name</TableCell>
-            <TableCell numeric>Directory</TableCell>
-            <TableCell padding="checkbox">
-              <FaPercent />
-            </TableCell>
-          </TableRow>
+          <HeaderRow />
         </TableHead>
         <TableBody>{libraryItems}</TableBody>
       </Table>
     );
   }
 }
+
+const styles = {
+  font: {
+    fontFamily: 'Carter One'
+  },
+  LibraryItem: {
+    marginLeft: '5vw',
+    maxHeight: '50vh',
+    maxWidth: '50vw'
+  }
+};
 
 export default LibraryTable;

@@ -13,16 +13,16 @@ class PageViewer extends Component {
   };
 
   componentDidUpdate() {
-    const P = this.props;
-    const S = this.state;
+    const { pages } = this.props;
+    const { currentComicPage } = this.state;
     const pageViewer = document.querySelector('.PageViewer');
     // const pageWrapper = document.getElementById('pageWrapper');
 
     if (this.areTherePageProps()) {
-      if (S.currentComicPage !== P.pages[0].page) {
+      if (currentComicPage !== pages[0].page) {
         pageViewer.scrollLeft = 0;
         pageViewer.scrollTop = 0;
-        this.setState({ currentComicPage: P.pages[0].page }); // eslint-disable-line
+        this.setState({ currentComicPage: pages[0].page }); // eslint-disable-line
         // } else if (P.zoomLevel >= 100 && S.currentZoomLevel !== P.zoomLevel) {
         //   // Center Points X || Y
         //   const cPX = pageViewer.scrollLeft + pageViewer.clientWidth / 2;
@@ -54,26 +54,30 @@ class PageViewer extends Component {
     }
   }
 
-  areTherePageProps = () =>
-    Array.isArray(this.props.pages) && this.props.pages.length > 0;
+  areTherePageProps = () => {
+    const { pages } = this.props;
+    return Array.isArray(pages) && pages.length > 0;
+  };
 
   render() {
     console.log('PageViewer:', this.props);
+    const { pages, zoomLevel } = this.props;
     let totalSize = 0;
     let newPages = null;
 
+    const increaseTotalSize = page => {
+      totalSize += page.width;
+    };
+
     if (this.areTherePageProps()) {
-      this.props.pages.forEach(page => {
-        totalSize += page.width;
+      pages.forEach(increaseTotalSize);
+      newPages = pages.map(item => {
+        const { key, page, width } = item;
+        const ratio = width / totalSize;
+        return (
+          <Page key={key} width={ratio * 100} alt="comic page" src={page} />
+        );
       });
-      newPages = this.props.pages.map(page => (
-        <Page
-          key={page.key}
-          width={(page.width / totalSize) * 100}
-          alt="comic page"
-          src={page.page}
-        />
-      ));
     }
 
     return (
@@ -83,8 +87,8 @@ class PageViewer extends Component {
           style={{
             marginLeft: this.state.marginLeft,
             marginTop: this.state.marginTop,
-            height: `${this.props.zoomLevel}%`,
-            width: `${this.props.zoomLevel}%`
+            height: `${zoomLevel}%`,
+            width: `${zoomLevel}%`
           }}
         >
           {newPages}

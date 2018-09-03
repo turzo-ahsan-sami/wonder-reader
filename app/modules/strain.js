@@ -3,33 +3,33 @@ const { copyArray } = require('./copyData');
 const isDirectory = require('is-directory');
 const path = require('path');
 
+const polaritySort = require('../modules/polaritySort.js');
+
 const comicTypes = ['.cbr', '.cbz'];
 const imageTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
 
 const isComic = filename => isSomething(filename, comicTypes);
 const isImage = filename => isSomething(filename, imageTypes);
+
+// const isProperFileType = (x, i)
+
 const isSomething = (filename, types) => {
   const extname = path.extname(filename).toLowerCase();
-  const IsSomething = types.indexOf(extname) > -1;
-  return IsSomething;
+  return types.includes(extname);
 };
 
 const sortArrayByAlpha = ARRAY => {
   const newARRAY = copyArray(ARRAY);
-  newARRAY.sort((a, b) => {
-    const nameA = a.toLowerCase();
-    const nameB = b.toLowerCase();
-    const polarity = nameA < nameB ? -1 : 1;
-    return nameA === nameB ? 0 : polarity;
-  });
+  newARRAY.sort((a, b) => polaritySort(a, b));
   return newARRAY;
 };
 
 // Cleans out non image files from ARRAY
 const strainer = (fileTypes, ARRAY, dirname) => {
   function isProperFileType(x, i) {
-    let isThisAProperFileType =
-      fileTypes.indexOf(path.extname(ARRAY[i]).toLowerCase()) > -1;
+    // console.log(x, i);
+    const extname = path.extname(ARRAY[i]);
+    let isThisAProperFileType = fileTypes.includes(extname.toLowerCase());
     if (dirname) {
       const filepath = path.join(dirname, ARRAY[i]);
       isThisAProperFileType =
@@ -37,8 +37,8 @@ const strainer = (fileTypes, ARRAY, dirname) => {
     }
     return isThisAProperFileType;
   }
-  ARRAY.filter((x, i) => isProperFileType(x, i));
-  return sortArrayByAlpha(ARRAY);
+  const newARRAY = ARRAY.filter((x, i) => isProperFileType(x, i));
+  return sortArrayByAlpha(newARRAY);
 };
 
 const strainComics = (ARRAY, dirname) => strainer(comicTypes, ARRAY, dirname);
