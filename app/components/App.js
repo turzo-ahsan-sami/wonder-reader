@@ -17,20 +17,25 @@ const fs = require('fs');
 const path = require('path');
 const sizeOf = require('image-size');
 
+const openedComicPrototype = {
+  name: null,
+  basename: '',
+  tempdir: '',
+  extname: '',
+  origin: '',
+
+  pending: 0,
+  error: false,
+  errorMessage: '',
+  stat: ''
+};
+
+const includes = (ARRAY, index) =>
+  ARRAY.includes(index) || ARRAY.includes(index + 1);
+
 export default class App extends Component {
   state = {
-    openedComic: {
-      name: null,
-      basename: '',
-      tempdir: '',
-      extname: '',
-      origin: '',
-
-      pending: 0,
-      error: false,
-      errorMessage: '',
-      stat: ''
-    },
+    openedComic: openedComicPrototype,
     pages: [],
     encodedPages: [],
 
@@ -40,7 +45,7 @@ export default class App extends Component {
     pageCount: 2,
 
     // Errors
-    // error: false,
+    error: false,
     errorMessage: '',
 
     // Button Data to pass to Main => Header => ButtonBar
@@ -122,13 +127,8 @@ export default class App extends Component {
 
   componentDidMount() {
     window.addEventListener('keydown', e => {
-      const { openedComic } = this.state;
-
-      const isComicActive = openedComic.name !== null;
       const isActiveElemInput = document.activeElement.tagName === 'input';
-
-      const shouldTurn = isComicActive && !isActiveElemInput;
-
+      const shouldTurn = this.isComicActive && !isActiveElemInput;
       if (shouldTurn) {
         this.arrowKeyTurnPage(e.code, shouldTurn);
       }
@@ -157,26 +157,19 @@ export default class App extends Component {
 
   determineAvailableAdjComic = (err, files, polarity) => {
     const { openedComic } = this.state;
-    const originDirname = path.dirname(openedComic.origin);
+    const { name, origin } = openedComic;
+
     const strainedComics = strainOnlyComics(files);
-    const index = strainedComics.indexOf(openedComic.name);
-    const newIndex = index + polarity;
-    if (newIndex > -1 && newIndex < strainedComics.length) {
-      const newComicName = strainedComics[newIndex];
-      const newComicFilepath = path.join(originDirname, newComicName);
+    const newIndex = strainedComics.indexOf(name) + polarity;
+    const isNewIndexWithinPageLimits =
+      newIndex > -1 && newIndex < strainedComics.length;
+    if (isNewIndexWithinPageLimits) {
+      const newComicFilepath = path.join(
+        path.dirname(origin),
+        strainedComics[newIndex]
+      );
       this.openComic(newComicFilepath);
     }
-  };
-
-  determinePages = () => {
-    this.loadImages();
-    const pagesToDisplay = this.determinePagesToDisplay();
-    this.setCurrentPages(0, pagesToDisplay);
-  };
-
-  determinePagesToDisplay = () => {
-    const { pageCount } = this.state;
-    return this.isCenterfoldsComing(0) || pageCount === 1 ? 1 : 2;
   };
 
   generatePages = (tempdir, cb) => {
@@ -186,32 +179,43 @@ export default class App extends Component {
     });
   };
 
+  generateEncodedPage = (key, bool, encodedPages) => {
+    const { openedComic } = this.state;
+    const { pages, tempdir } = openedComic;
+
+    const pagePath = path.join(tempdir, pages[key]);
+    const page = encodepath(pagePath);
+    const { width, height } = sizeOf(pagePath);
+    const ratio = bool ? 1 : encodedPages[0].height / height;
+    const applyRatio = item => item * ratio;
+    const [WIDTH, HEIGHT] = [width, height].map(applyRatio);
+    return {
+      page,
+      key,
+      width: WIDTH,
+      height: HEIGHT
+    };
+  };
+
   generateEncodedPages = (newPageIndex, pagesToDisplay) => {
-    const { openedComic, pageCount, pages } = this.state;
+    const { pageCount, pages } = this.state;
 
     const encodedPages = [];
     const pagesToRender = Math.min(pageCount, pagesToDisplay);
     for (let i = 0; i < pagesToRender; i += 1) {
       const key = newPageIndex + i;
       if (key < pages.length) {
-        // Stops from trying to read beyond comic page length
-        const temp = openedComic.tempdir;
-        const pageKey = openedComic.pages[key];
-        const pagePath = path.join(temp, pageKey);
-        const page = encodepath(pagePath);
-        const { width, height } = sizeOf(pagePath);
-        const ratio =
-          key === newPageIndex ? 1 : encodedPages[0].height / height;
-
-        encodedPages[i] = {
-          page,
-          key,
-          width: width * ratio,
-          height: height * ratio
-        };
+        const bool = key === newPageIndex;
+        encodedPages[i] = this.generateEncodedPage(key, bool, encodedPages);
       }
     }
     return encodedPages;
+  };
+
+  generatePageImage = page => {
+    const img = new Image();
+    img.src = page.encodedPagePath;
+    return img;
   };
 
   isCenterfold = index => {
@@ -220,20 +224,13 @@ export default class App extends Component {
   };
 
   isCenterfoldsComing = () => {
-    const { currentPageIndex } = this.state;
-    return (
-      this.isCenterfold(currentPageIndex) ||
-      this.isCenterfold(currentPageIndex + 1)
-    );
+    const { centerfolds, currentPageIndex } = this.state;
+    return includes(centerfolds, currentPageIndex);
   };
-  loadImages = () => {
-    const { pages } = this.state;
-    const images = pages.map(page => {
-      const img = new Image();
-      img.src = page.encodedPagePath;
-      return img;
-    });
-    this.setState({ images });
+
+  isComicActive = () => {
+    const { openedComic } = this.state;
+    return openedComic.name !== null;
   };
 
   mapPages = (files, tempdir) =>
@@ -241,25 +238,22 @@ export default class App extends Component {
       const pagePath = path.join(tempdir, file);
       const encodedPagePath = encodepath(pagePath);
       return {
-        pagePath,
+        key,
         encodedPagePath,
-        key
+        pagePath
       };
     });
 
   openComic = fullpath => {
-    const Comic = new File(fullpath);
-    const isLoading = true;
-    this.setState({ isLoading }, () => {
-      Comic.extract(comic => {
-        this.postComicExtract(comic);
-      });
+    this.setState({ isLoading: true }, () => {
+      const Comic = new File(fullpath);
+      Comic.extract(this.postComicExtract);
     });
   };
 
   openAdjacentComic = polarity => {
     const { openedComic } = this.state;
-    if (openedComic.name !== null) {
+    if (this.isComicActive()) {
       const originDirname = path.dirname(openedComic.origin);
       fs.readdir(originDirname, (err, files) => {
         this.determineAvailableAdjComic(err, files, polarity);
@@ -272,21 +266,21 @@ export default class App extends Component {
   };
 
   openNextComic = () => {
-    this.openAdjacentComic(1);
+    const polarity = 1;
+    this.openAdjacentComic(polarity);
   };
 
   openPrevComic = () => {
-    this.openAdjacentComic(-1);
+    const polarity = -1;
+    this.openAdjacentComic(polarity);
   };
 
   postChangePageCount = () => {
-    const { currentPageIndex, openedComic, pageCount } = this.state;
+    const { currentPageIndex, pageCount } = this.state;
 
-    if (openedComic.name !== null) {
-      if (pageCount === 2) {
-        if (this.isCenterfoldsComing()) {
-          this.setCurrentPages(currentPageIndex, 1);
-        }
+    if (this.isComicActive()) {
+      if (pageCount === 2 && this.isCenterfoldsComing()) {
+        this.setCurrentPages(currentPageIndex, 1);
       } else {
         this.setCurrentPages(currentPageIndex, pageCount);
       }
@@ -303,23 +297,44 @@ export default class App extends Component {
     }
   };
 
-  postGeneratePages = (pages, openedComic) => {
-    const pagePaths = pages.map(page => page.pagePath);
+  generateInitialLoadState = pages => {
+    const { pageCount } = this.state;
+    const getPagePath = page => page.pagePath;
+    const pagePaths = pages.map(getPagePath);
     const centerfolds = generateCenterfolds(pagePaths);
-    const isLoading = false;
-    const top = false;
-    this.setState(
-      {
-        centerfolds,
-        openedComic,
-        isLoading,
-        pages,
-        top
-      },
-      () => {
-        this.determinePages();
-      }
-    );
+    const pagesToDisplay = includes(centerfolds, 0) || pageCount === 1 ? 1 : 2;
+    const encodedPages = this.generateEncodedPages(0, pagesToDisplay);
+
+    return {
+      centerfolds,
+      currentPageIndex: 0,
+      encodedPages,
+      images: pages.map(this.generatePageImages),
+      isLoading: false,
+      top: false
+    };
+  };
+
+  postGeneratePages = (pages, openedComic) => {
+    const {
+      centerfolds,
+      currentPageIndex,
+      encodedPages,
+      images,
+      isLoading,
+      top
+    } = this.generateInitialLoadState(pages);
+
+    this.setState({
+      centerfolds,
+      currentPageIndex,
+      encodedPages,
+      openedComic,
+      images,
+      isLoading,
+      pages,
+      top
+    });
   };
 
   saveContentDataToMain = content => {
@@ -327,7 +342,6 @@ export default class App extends Component {
   };
 
   setCurrentPages = (newPageIndex, pagesToDisplay) => {
-    console.log('setCurrentPages', newPageIndex, pagesToDisplay);
     const encodedPages = this.generateEncodedPages(
       newPageIndex,
       pagesToDisplay
@@ -339,24 +353,24 @@ export default class App extends Component {
   };
 
   setZoomLevel = value => {
-    this.setState({ zoomLevel: Number(value) });
+    const zoomLevel = Number(value);
+    this.setState({ zoomLevel });
   };
 
   shouldPageTurn = () => {
     const { currentPageIndex, pageCount, pages } = this.state;
+    const isUltimatePage = currentPageIndex === pages.length - 1;
+    const isPenultimatePage = currentPageIndex === pages.length - 2;
 
-    const ultimatePage = pages.length - 1;
-    const penultimatePage = pages.length - 2;
+    const offChance =
+      // Is current page second to last? And...?
+      isPenultimatePage &&
+      // And is the viewer set to 2 pages?
+      pageCount === 2 &&
+      // Also if there is a CenterFold for the (pen/)ultimate page, don't skip it!
+      !this.isCenterfoldsComing();
 
-    const isUltimatePage = currentPageIndex === ultimatePage;
-    const isPenultimatePage = currentPageIndex === penultimatePage;
-
-    return !(
-      isUltimatePage ||
-      (isPenultimatePage &&
-        pageCount === 2 &&
-        this.isCenterfoldsComing(penultimatePage))
-    );
+    return !(isUltimatePage || offChance);
   };
 
   shouldPageTurnLeft = () => {
@@ -389,16 +403,9 @@ export default class App extends Component {
   };
 
   turnPage = polarity => {
-    const {
-      centerfolds,
-      currentPageIndex,
-      openedComic,
-      pageCount,
-      pages
-    } = this.state;
+    const { centerfolds, currentPageIndex, pageCount, pages } = this.state;
 
-    console.log(openedComic);
-    if (openedComic.name.length > 0) {
+    if (this.isComicActive()) {
       turnPage(
         currentPageIndex,
         centerfolds,
@@ -423,51 +430,54 @@ export default class App extends Component {
 
   turnPageRight = () => {
     const polarity = 1;
-    console.log('turnPageRight');
-    console.log(this.shouldPageTurnRight());
     if (this.shouldPageTurnRight()) {
       this.turnPage(polarity);
     }
   };
 
+  renderHeader = () => {
+    const { buttons, pageCount, zoomLevel } = this.state;
+
+    return (
+      <Header
+        buttons={buttons}
+        pageCount={pageCount}
+        setZoomLevel={this.setZoomLevel}
+        zoomLevel={zoomLevel}
+      />
+    );
+  };
+
+  renderLibrary = () => {
+    const { content, top } = this.state;
+
+    return (
+      <Library
+        closeDrawer={this.closeLibrary}
+        loadedLibrary={content.fullpath}
+        openComic={this.openComic}
+        saveContentDataToMain={this.saveContentDataToMain}
+        top={top}
+      />
+    );
+  };
+
+  renderPageViewer = () => {
+    const { encodedPages, zoomLevel } = this.state;
+
+    return <PageViewer encodedPages={encodedPages} zoomLevel={zoomLevel} />;
+  };
+
   render() {
     console.log('Main (state):', this.state);
-    const {
-      buttons,
-      content,
-      encodedPages,
-      isLoading,
-      openedComic,
-      pageCount,
-      top,
-      zoomLevel
-    } = this.state;
+    const { isLoading } = this.state;
 
     return (
       <MuiThemeProvider theme={theme}>
         <div className="main">
-          <Header
-            buttons={buttons}
-            changePageCount={this.changePageCount}
-            pageCount={pageCount}
-            setZoomLevel={this.setZoomLevel}
-            zoomLevel={zoomLevel}
-          />
-          <Library
-            closeDrawer={this.closeLibrary}
-            loadedLibrary={content.fullpath}
-            openComic={this.openComic}
-            throwError={this.throwError}
-            open={top}
-            saveContentDataToMain={this.saveContentDataToMain}
-          />
-          <PageViewer
-            comic={openedComic}
-            pages={encodedPages}
-            openComic={this.openComic}
-            turnPage={this.turnPage}
-            zoomLevel={zoomLevel}
-          />
+          {this.renderHeader()}
+          {this.renderLibrary()}
+          {this.renderPageViewer()}
           <Loading isLoading={isLoading} />
         </div>
       </MuiThemeProvider>

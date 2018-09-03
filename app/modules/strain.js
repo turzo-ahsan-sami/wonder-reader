@@ -20,8 +20,7 @@ const isSomething = (filename, types) => {
 
 const sortArrayByAlpha = ARRAY => {
   const newARRAY = copyArray(ARRAY);
-  newARRAY.sort((a, b) => polaritySort(a, b));
-  return newARRAY;
+  return newARRAY.sort((a, b) => polaritySort(a, b));
 };
 
 // Cleans out non image files from ARRAY

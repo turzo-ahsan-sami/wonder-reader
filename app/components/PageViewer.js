@@ -4,104 +4,146 @@ import PropTypes from 'prop-types';
 
 import Page from './Page';
 
+const getWidth = page => page.width;
+const increaseTotalSize = (accumulator, page) => accumulator + page;
+
 class PageViewer extends Component {
   state = {
-    // currentComicPage: null,
-    // currentZoomLevel: 100,
     marginLeft: 0,
-    marginTop: 0
+    marginTop: 0,
+    scrollLeft: 0,
+    scrollTop: 0
   };
 
   componentDidUpdate() {
-    const { pages } = this.props;
-    const { currentComicPage } = this.state;
     const pageViewer = document.querySelector('.PageViewer');
-    // const pageWrapper = document.getElementById('pageWrapper');
-
     if (this.areTherePageProps()) {
-      if (currentComicPage !== pages[0].page) {
-        pageViewer.scrollLeft = 0;
-        pageViewer.scrollTop = 0;
-        this.setState({ currentComicPage: pages[0].page }); // eslint-disable-line
-        // } else if (P.zoomLevel >= 100 && S.currentZoomLevel !== P.zoomLevel) {
-        //   // Center Points X || Y
-        //   const cPX = pageViewer.scrollLeft + pageViewer.clientWidth / 2;
-        //   const cPY = pageViewer.scrollTop + pageViewer.clientHeight / 2;
-        //
-        //   // Position Ratios to whole
-        //   const cPXR = cPX / pageWrapper.clientWidth;
-        //   const cPYR = cPY / pageWrapper.clientHeight;
-        //
-        //   const marginLeft =
-        //     P.zoomLevel < 100 ? `${(100 - P.zoomLevel) / 2}%` : 0;
-        //   const marginTop =
-        //     pageViewer.clientHeight > pageWrapper.clientHeight
-        //       ? `${(pageViewer.clientHeight - pageWrapper.clientHeight) / 2}px`
-        //       : 0;
-        //
-        //   pageViewer.scrollTop =
-        //     pageWrapper.clientHeight * cPXR - pageViewer.clientHeight / 2;
-        //   pageViewer.scrollLeft =
-        //     pageWrapper.clientWidth * cPYR - pageViewer.clientWidth / 2;
-        //
-        //   this.setState({
-        //     // eslint-disable-line
-        //     currentZoomLevel: P.zoomLevel,
-        //     marginLeft,
-        //     marginTop
-        //   });
-      }
+      pageViewer.scrollLeft = 0;
+      pageViewer.scrollTop = 0;
+      this.setRatio();
     }
   }
 
+  getPageViewer = () => document.querySelector('.PageViewer');
+  getPageWrapper = () => document.getElementById('pageWrapper');
+
+  getMargins = () => {
+    const pageViewer = this.getPageViewer();
+    const pageWrapper = this.getPageWrapper();
+    const { zoomLevel } = this.props;
+
+    // Center Points X || Y
+    const cPX = pageViewer.scrollLeft + pageViewer.clientWidth / 2;
+    const cPY = pageViewer.scrollTop + pageViewer.clientHeight / 2;
+
+    // Position Ratios to whole
+    const ratioX = cPX / pageWrapper.clientWidth;
+    const ratioY = cPY / pageWrapper.clientHeight;
+
+    const marginLeft = zoomLevel < 100 ? `${(100 - zoomLevel) / 2}%` : 0;
+    const marginTop =
+      pageViewer.clientHeight > pageWrapper.clientHeight
+        ? `${(pageViewer.clientHeight - pageWrapper.clientHeight) / 2}px`
+        : 0;
+
+    const scrollLeft =
+      pageWrapper.clientWidth * ratioY - pageViewer.clientWidth / 2;
+    const scrollTop =
+      pageWrapper.clientHeight * ratioX - pageViewer.clientHeight / 2;
+
+    return {
+      marginLeft,
+      marginTop,
+      ratioX,
+      ratioY,
+      scrollLeft,
+      scrollTop
+    };
+  };
+
+  setRatio = () => {
+    const { marginLeft, marginTop, scrollLeft, scrollTop } = this.getMargins();
+
+    this.setState({
+      marginLeft,
+      marginTop,
+      scrollLeft,
+      scrollTop
+    });
+  };
+
+  getPageViewerStyle = () => {
+    const { marginLeft, marginTop } = this.state;
+    const { zoomLevel } = this.props;
+    const zoom = `${zoomLevel}%`;
+
+    return {
+      marginLeft,
+      marginTop,
+      height: zoom,
+      width: zoom
+    };
+  };
   areTherePageProps = () => {
-    const { pages } = this.props;
-    return Array.isArray(pages) && pages.length > 0;
+    const { encodedPages } = this.props;
+    return Array.isArray(encodedPages) && encodedPages.length > 0;
+  };
+
+  applyScrolling = () => {
+    const pageViewer = this.getPageViewer();
+    const { scrollLeft, scrollTop } = this.state;
+    pageViewer.scrollLeft = scrollLeft;
+    pageViewer.scrollTop = scrollTop;
+  };
+
+  renderPage = (item, totalSize) => (
+    <Page
+      alt="comic page"
+      id={item.key}
+      key={item.key}
+      width={(item.width / totalSize) * 100}
+      src={item.page}
+    />
+  );
+
+  renderPages = () => {
+    const { encodedPages } = this.props;
+
+    const totalSize = encodedPages.map(getWidth).reduce(increaseTotalSize, 0);
+
+    return this.areTherePageProps()
+      ? encodedPages.map(item => this.renderPage(item, totalSize))
+      : null;
+  };
+
+  renderPageViewer = () => {
+    const newPages = this.renderPages();
+    const style = this.getPageViewerStyle();
+
+    return (
+      <div className="pages" style={style}>
+        {newPages}
+      </div>
+    );
   };
 
   render() {
     console.log('PageViewer:', this.props);
-    const { pages, zoomLevel } = this.props;
-    let totalSize = 0;
-    let newPages = null;
-
-    const increaseTotalSize = page => {
-      totalSize += page.width;
-    };
-
-    if (this.areTherePageProps()) {
-      pages.forEach(increaseTotalSize);
-      newPages = pages.map(item => {
-        const { key, page, width } = item;
-        const ratio = width / totalSize;
-        return (
-          <Page key={key} width={ratio * 100} alt="comic page" src={page} />
-        );
-      });
-    }
-
     return (
       <DragScroll className="PageViewer dragscroll">
-        <div
-          className="pages"
-          style={{
-            marginLeft: this.state.marginLeft,
-            marginTop: this.state.marginTop,
-            height: `${zoomLevel}%`,
-            width: `${zoomLevel}%`
-          }}
-        >
-          {newPages}
-        </div>
+        {this.renderPageViewer()}
       </DragScroll>
     );
   }
 }
 
 PageViewer.propTypes = {
-  comic: PropTypes.object.isRequired, // eslint-disable-line
-  pages: PropTypes.array, // eslint-disable-line
+  encodedPages: PropTypes.array,
   zoomLevel: PropTypes.number.isRequired
+};
+
+PageViewer.defaultProps = {
+  encodedPages: []
 };
 
 export default PageViewer;

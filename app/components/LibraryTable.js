@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -21,19 +22,15 @@ const HeaderRow = () => (
 
 class LibraryTable extends Component {
   generateLibraryItem = content => {
-    const { basename, contents, dirname, fullpath, id, isDirectory } = content;
-
+    const { basename, dirname, id, isDirectory } = content;
     const { onContentClick } = this.props;
 
     return (
       <LibraryItem
-        key={id}
-        id={id}
         basename={basename}
         dirname={dirname}
-        fullpath={fullpath}
+        id={id}
         isDirectory={isDirectory}
-        contents={contents}
         onRowClick={() => {
           onContentClick(content);
         }}
@@ -47,18 +44,31 @@ class LibraryTable extends Component {
     return contents.map(this.generateLibraryItem);
   };
 
-  render() {
+  renderTableBody = () => {
     const libraryItems = this.generateLibraryItems();
+    return <TableBody>{libraryItems}</TableBody>;
+  };
+
+  renderTableHead = () => (
+    <TableHead>
+      <HeaderRow />
+    </TableHead>
+  );
+
+  render() {
     return (
       <Table className="library-menu" selectable="false">
-        <TableHead>
-          <HeaderRow />
-        </TableHead>
-        <TableBody>{libraryItems}</TableBody>
+        {this.renderTableHead()}
+        {this.renderTableBody()}
       </Table>
     );
   }
 }
+
+LibraryTable.propTypes = {
+  contents: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onContentClick: PropTypes.func.isRequired
+};
 
 const styles = {
   font: {

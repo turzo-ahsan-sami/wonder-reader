@@ -1,5 +1,81 @@
 // Page turning engine 2.0
 
+const includes = ARRAY => index => ARRAY.includes(index);
+
+const areThereUpcomingIncludes = ARRAY => index =>
+  includes(ARRAY)(index) || includes(ARRAY)(index + 1);
+
+const determineProperBool = ({
+  currentPageIndex,
+  centerfolds,
+  pageCount,
+  pagesLength,
+  polarity
+}) => {
+  const isCenterfold = includes(centerfolds);
+  const areThereUpcomingCenterfolds = areThereUpcomingIncludes(centerfolds);
+  const wouldLoadFirstPage = currentPageIndex + pageCount * polarity < 0;
+  const wouldLoadLastPage =
+    currentPageIndex + pageCount * polarity >= pagesLength - 1;
+  const singlePageView = pageCount === 1;
+  const positivePolarity = polarity > 0;
+  const isCurrentPageACenterfold = isCenterfold(currentPageIndex);
+  const isNextPageACenterfold = isCenterfold(currentPageIndex + 1);
+  const areThereUpcomingCenterfoldsInAFewPages = areThereUpcomingCenterfolds(
+    currentPageIndex + 2
+  );
+  const areTherePrecedingCenterfoldsInAFewPages = areThereUpcomingCenterfolds(
+    currentPageIndex - 2
+  );
+
+  return {
+    areTherePrecedingCenterfoldsInAFewPages,
+    areThereUpcomingCenterfolds,
+    areThereUpcomingCenterfoldsInAFewPages,
+    isCurrentPageACenterfold,
+    isNextPageACenterfold,
+    positivePolarity,
+    singlePageView,
+    wouldLoadFirstPage,
+    wouldLoadLastPage
+  };
+};
+
+const determinePositivePolarityValue = ({
+  currentPageIndex,
+  centerfolds,
+  pageCount,
+  pagesLength,
+  polarity
+}) => {
+  const {
+    areThereUpcomingCenterfolds,
+    areThereUpcomingCenterfoldsInAFewPages,
+    isCurrentPageACenterfold,
+    isNextPageACenterfold
+  } = determineProperBool({
+    currentPageIndex,
+    centerfolds,
+    pageCount,
+    pagesLength,
+    polarity
+  });
+
+  let newPageIndex, pagesToDisplay;
+
+  if (isCurrentPageACenterfold) {
+    const value = areThereUpcomingCenterfolds(currentPageIndex + 1) ? 1 : 2;
+    [newPageIndex, pagesToDisplay] = [currentPageIndex + 1, value];
+  } else if (isNextPageACenterfold) {
+    [newPageIndex, pagesToDisplay] = [currentPageIndex + 1, 1];
+  } else if (areThereUpcomingCenterfoldsInAFewPages) {
+    [newPageIndex, pagesToDisplay] = [currentPageIndex + 2, 1];
+  } else {
+    [newPageIndex, pagesToDisplay] = [currentPageIndex + 2, 2];
+  }
+  return [newPageIndex, pagesToDisplay];
+};
+
 const turnPage = (
   currentPageIndex,
   centerfolds,
@@ -8,50 +84,37 @@ const turnPage = (
   polarity,
   cb
 ) => {
-  // centerfolds for singlePaging ( [2, 5, 11]  )
-  // currentPageIndex for currentPage, which will make a new var newPageIndex ( Num )
-  // pageCount for number of pages turned ( 2 || 1 )
-  // pagesLength for full comic scope ( 18 )
-  // polarity for left or right ( 1 || -1 )
+  const batch = {
+    currentPageIndex,
+    centerfolds,
+    pageCount,
+    pagesLength,
+    polarity
+  };
+  const {
+    areTherePrecedingCenterfoldsInAFewPages,
+    areThereUpcomingCenterfolds,
+    positivePolarity,
+    singlePageView,
+    wouldLoadFirstPage,
+    wouldLoadLastPage
+  } = determineProperBool(batch);
 
-  const isCenterfold = index => centerfolds.includes(index);
-  const areThereUpcomingCenterfolds = index =>
-    isCenterfold(index) || isCenterfold(index + 1);
+  let newPageIndex, pagesToDisplay;
 
-  let newPageIndex = null;
-  let pagesToDisplay = null;
-
-  if (currentPageIndex + pageCount * polarity >= pagesLength - 1) {
-    newPageIndex = pagesLength - 1;
-    pagesToDisplay = 1;
-  } else if (currentPageIndex + pageCount * polarity < 0) {
-    newPageIndex = 0;
-    pagesToDisplay = areThereUpcomingCenterfolds(0) ? 1 : 2;
-  } else if (pageCount === 1) {
-    newPageIndex = currentPageIndex + polarity;
-    pagesToDisplay = 1;
-  } else if (polarity > 0) {
-    if (isCenterfold(currentPageIndex)) {
-      newPageIndex = currentPageIndex + 1;
-      pagesToDisplay = areThereUpcomingCenterfolds(currentPageIndex + 1)
-        ? 1
-        : 2;
-    } else if (isCenterfold(currentPageIndex + 1)) {
-      newPageIndex = currentPageIndex + 1;
-      pagesToDisplay = 1;
-    } else if (areThereUpcomingCenterfolds(currentPageIndex + 2)) {
-      newPageIndex = currentPageIndex + 2;
-      pagesToDisplay = 1;
-    } else {
-      newPageIndex = currentPageIndex + 2;
-      pagesToDisplay = 2;
-    }
-  } else if (areThereUpcomingCenterfolds(currentPageIndex - 2)) {
-    newPageIndex = currentPageIndex - 1;
-    pagesToDisplay = 1;
+  if (wouldLoadLastPage) {
+    [newPageIndex, pagesToDisplay] = [pagesLength - 1, 1];
+  } else if (wouldLoadFirstPage) {
+    const value = areThereUpcomingCenterfolds(0) ? 1 : 2;
+    [newPageIndex, pagesToDisplay] = [0, value];
+  } else if (singlePageView) {
+    [newPageIndex, pagesToDisplay] = [currentPageIndex + polarity, 1];
+  } else if (positivePolarity) {
+    [newPageIndex, pagesToDisplay] = determinePositivePolarityValue(batch);
+  } else if (areTherePrecedingCenterfoldsInAFewPages) {
+    [newPageIndex, pagesToDisplay] = [currentPageIndex - 1, 1];
   } else {
-    newPageIndex = currentPageIndex - 2;
-    pagesToDisplay = 2;
+    [newPageIndex, pagesToDisplay] = [currentPageIndex - 2, 2];
   }
   cb(newPageIndex, pagesToDisplay);
 };

@@ -6,10 +6,8 @@ import PropTypes from 'prop-types';
 import LibraryHeader from './LibraryHeader';
 import LibraryTable from './LibraryTable';
 
-const { copyArray, copyDeepObject } = require('../modules/copyData.js');
 const { dialog } = require('electron').remote;
 const { generateNestedContentFromFilepath } = require('../modules/generate.js');
-const polaritySort = require('../modules/polaritySort');
 
 class LibraryLayout extends Component {
   state = {
@@ -19,20 +17,58 @@ class LibraryLayout extends Component {
     dirname: '',
     fullpath: null,
     isDirectory: true,
-    root: '',
+    loadedLibrary: '',
     contents: []
   };
 
   componentDidMount() {
-    const { root } = this.props;
-    if (root) {
-      this.updateContent(root);
+    const { loadedLibrary } = this.props;
+    if (loadedLibrary) {
+      this.updateContent(loadedLibrary);
     }
   }
 
   componentWillUnmount() {
     this.props.saveContentDataToParent(this.state);
   }
+
+  onClick = content => {
+    if (content.isDirectory) {
+      this.onDirectoryClick(content);
+    } else {
+      this.onFileClick(content);
+    }
+  };
+
+  onDirectoryClick = content => {
+    this.updateContent(content.fullpath);
+  };
+
+  onFileClick = content => {
+    this.props.openComic(content.fullpath);
+  };
+
+  setParentAsLibrary = () => {
+    const { dirname } = this.state;
+    this.updateContent(dirname);
+  };
+
+  openDirectory = () => {
+    const { updateLoadedLibrary } = this.props;
+    dialog.showOpenDialog({ properties: ['openDirectory'] }, filepaths => {
+      if (Array.isArray(filepaths)) {
+        const filepath = filepaths[0];
+        updateLoadedLibrary(filepath);
+        this.updateContent(filepath);
+      }
+    });
+  };
+
+  updateContent = path => {
+    generateNestedContentFromFilepath(path, content => {
+      this.setState(content);
+    });
+  };
 
   renderButtons = () => (
     <div>
@@ -65,94 +101,15 @@ class LibraryLayout extends Component {
   );
 
   renderLibary = () => {
-    const { basename, bookmark, contents, dirname, fullpath, id } = this.state;
+    const { contents } = this.state;
 
-    return (
-      <LibraryTable
-        key={id}
-        basename={basename}
-        bookmark={bookmark}
-        dirname={dirname}
-        fullpath={fullpath}
-        isDirectory
-        contents={contents}
-        onContentClick={this.onClick}
-        saveContentDataToParent={this.saveContentDataToParent}
-        saveContentsDataToParent={this.saveContentsDataToParent}
-      />
-    );
+    return <LibraryTable contents={contents} onContentClick={this.onClick} />;
   };
-
-  onClick = content => {
-    if (content.isDirectory) {
-      this.onDirectoryClick(content);
-    } else {
-      this.onFileClick(content);
-    }
-  };
-
-  onDirectoryClick = content => {
-    this.updateContent(content.fullpath);
-  };
-
-  onFileClick = content => {
-    this.props.openComic(content.fullpath);
-  };
-
-  // Function to open `Load` window, and pass path to generateContent, then setstate
-  openDirectory = () => {
-    const { updateRoot } = this.props;
-    dialog.showOpenDialog(
-      {
-        properties: ['openDirectory']
-      },
-      filepaths => {
-        if (Array.isArray(filepaths)) {
-          const filepath = filepaths[0];
-          updateRoot(filepath);
-          this.updateContent(filepath);
-        }
-      }
-    );
-  };
-
-  saveContentDataToParent = content => {
-    const newContent = copyDeepObject(content);
-    this.setState(newContent);
-  };
-
-  saveContentsDataToParent = contents => {
-    const newContent = copyDeepObject(this.state);
-    newContent.contents = contents;
-    this.setState({ contents: newContent });
-  };
-
-  setParentAsLibrary = () => {
-    const { dirname } = this.state;
-    this.updateContent(dirname);
-  };
-
-  sortContents = contents => {
-    if (!contents) {
-      return [];
-    }
-    const sortedContent = copyArray(contents);
-    sortedContent.sort((a, b) => polaritySort(a, b, 'basename'));
-    return sortedContent;
-  };
-
-  updateContent = fullpath => {
-    generateNestedContentFromFilepath(fullpath, content => {
-      const newContent = content;
-      newContent.id = 'libraryRoot';
-      this.setState(newContent);
-    });
-  };
-
   render() {
     const { fullpath } = this.state;
 
     const libraryTable = fullpath ? this.renderLibary() : null;
+
     return (
       <div className="library" style={styles.libraryStyles}>
         <LibraryHeader
@@ -168,15 +125,15 @@ class LibraryLayout extends Component {
 }
 
 LibraryLayout.defaultProps = {
-  root: null
+  loadedLibrary: null
 };
 
 LibraryLayout.propTypes = {
   closeLibrary: PropTypes.func.isRequired,
+  loadedLibrary: PropTypes.string,
   openComic: PropTypes.func.isRequired,
-  root: PropTypes.string,
   saveContentDataToParent: PropTypes.func.isRequired,
-  updateRoot: PropTypes.func.isRequired
+  updateLoadedLibrary: PropTypes.func.isRequired
 };
 
 const styles = {

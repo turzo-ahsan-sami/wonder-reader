@@ -7,21 +7,18 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBar from './ButtonBar';
 import headerStyle from './headerStyle';
 
-const Header = ({
-  buttons,
-  changePageCount,
-  pageCount,
-  setZoomLevel,
-  zoomLevel
-}) => (
+const HeaderText = () => (
+  <Typography variant="title" style={headerStyle}>
+    Wonder Reader
+  </Typography>
+);
+
+const Header = ({ buttons, pageCount, setZoomLevel, zoomLevel }) => (
   <AppBar>
     <Toolbar>
-      <Typography variant="title" style={headerStyle}>
-        Wonder Reader
-      </Typography>
+      <HeaderText />
       <ButtonBar
         buttons={buttons}
-        changePageCount={changePageCount}
         pageCount={pageCount}
         setZoomLevel={setZoomLevel}
         zoomLevel={zoomLevel}
@@ -31,7 +28,7 @@ const Header = ({
 );
 
 Header.propTypes = {
-  changePageCount: PropTypes.func.isRequired,
+  buttons: PropTypes.object.isRequired,
   pageCount: PropTypes.number.isRequired,
   setZoomLevel: PropTypes.func.isRequired,
   zoomLevel: PropTypes.number.isRequired

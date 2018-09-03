@@ -8,21 +8,37 @@ import React from 'react';
 import { buttonStyle, buttonTheme } from './buttonStyle';
 import headerStyle from './headerStyle';
 
+const LibraryButtons = ({ buttons }) => (
+  <MuiThemeProvider theme={buttonTheme}>
+    <div style={buttonStyle}>{buttons}</div>
+  </MuiThemeProvider>
+);
+
+LibraryButtons.propTypes = {
+  buttons: PropTypes.object.isRequired
+};
+
+const LibraryTitle = ({ title }) => (
+  <Typography variant="title" style={headerStyle}>
+    {title}
+  </Typography>
+);
+
+LibraryTitle.propTypes = {
+  title: PropTypes.string.isRequired
+};
+
 const LibraryHeader = ({ buttons, position, title }) => (
   <AppBar style={{ position }}>
     <Toolbar>
-      <Typography variant="title" style={headerStyle}>
-        {title}
-      </Typography>
-      <MuiThemeProvider theme={buttonTheme}>
-        <div style={buttonStyle}>{buttons}</div>
-      </MuiThemeProvider>
+      <LibraryTitle title={title} />
+      <LibraryButtons buttons={buttons} />
     </Toolbar>
   </AppBar>
 );
 
 LibraryHeader.propTypes = {
-  buttons: PropTypes.object.isRequired, // eslint-disable-line
+  buttons: PropTypes.object.isRequired,
   position: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired
 };

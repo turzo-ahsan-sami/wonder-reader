@@ -91,6 +91,7 @@ class ButtonBar extends Component {
     if (item.color) {
       style.background = '#ef5350';
     }
+
     return (
       <IconButton
         key={item.key}
@@ -120,6 +121,7 @@ class ButtonBar extends Component {
 }
 
 ButtonBar.propTypes = {
+  buttons: PropTypes.object.isRequired,
   pageCount: PropTypes.number.isRequired,
   setZoomLevel: PropTypes.func.isRequired,
   zoomLevel: PropTypes.number.isRequired

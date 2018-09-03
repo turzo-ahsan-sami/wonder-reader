@@ -31,11 +31,20 @@ const styles = theme => ({
 const Loading = ({ classes, isLoading }) =>
   isLoading ? <LoaderElement classes={classes} /> : null;
 
+Loading.propTypes = {
+  classes: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired
+};
+
 const LoaderElement = ({ classes }) => (
   <div style={styles.LoaderElement}>
     <PaperElement classes={classes} />
   </div>
 );
+
+LoaderElement.propTypes = {
+  classes: PropTypes.object.isRequired
+};
 
 const PaperElement = ({ classes }) => (
   <Paper className={classes.root} elevation={4} style={styles.Paper}>
@@ -47,9 +56,8 @@ const PaperElement = ({ classes }) => (
   </Paper>
 );
 
-Loading.propTypes = {
-  classes: PropTypes.object.isRequired, // eslint-disable-line
-  isLoading: PropTypes.bool.isRequired
+PaperElement.propTypes = {
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Loading);

@@ -21,20 +21,20 @@ const styles = {
 
 class Library extends Component {
   state = {
-    root: this.props.loadedLibrary
+    loadedLibrary: this.props.loadedLibrary
   };
 
-  updateRoot = filepath => {
-    this.setState({ root: filepath });
+  updateLoadedLibrary = loadedLibrary => {
+    this.setState({ loadedLibrary });
   };
 
   renderDrawer = () => {
-    const { closeDrawer, open } = this.props;
+    const { closeDrawer, top } = this.props;
 
     return (
       <Drawer
         anchor="top"
-        open={open}
+        open={top}
         onClose={closeDrawer}
         PaperProps={{ style: styles.PaperProps }}
         variant="temporary"
@@ -54,16 +54,16 @@ class Library extends Component {
       openComic,
       saveContentDataToMain
     } = this.props;
-    const { root } = this.state;
+    const { loadedLibrary } = this.state;
 
     return (
       <LibraryLayout
         className={classes.list}
         closeLibrary={closeDrawer}
         openComic={openComic}
-        root={root}
+        loadedLibrary={loadedLibrary}
         saveContentDataToParent={saveContentDataToMain}
-        updateRoot={this.updateRoot}
+        updateLoadedLibrary={this.updateLoadedLibrary}
       />
     );
   };
@@ -85,13 +85,13 @@ Library.defaultProps = {
 };
 
 Library.propTypes = {
-  classes: PropTypes.object.isRequired, // eslint-disable-line
+  classes: PropTypes.object.isRequired,
   closeDrawer: PropTypes.func.isRequired,
   loadedLibrary: PropTypes.string,
-  open: PropTypes.bool.isRequired,
   openComic: PropTypes.func.isRequired,
   saveContentDataToMain: PropTypes.func.isRequired,
-  style: PropTypes.objectOf(PropTypes.object.isRequired)
+  style: PropTypes.objectOf(PropTypes.object.isRequired),
+  top: PropTypes.bool.isRequired
 };
 
 export default withStyles(styles)(Library);

@@ -3,7 +3,7 @@ import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { FaFolderO, FaFileArchiveO, FaPercent } from 'react-icons/lib/fa';
+import { FaFileArchiveO, FaFolderO, FaPercent } from 'react-icons/lib/fa';
 // import Bookmark from './Bookmark.js';
 
 const iconSize = 20;
@@ -33,17 +33,29 @@ const CellBaseName = ({ basename }) => (
   <TableCell style={styles.three33}>{basename}</TableCell>
 );
 
+CellBaseName.propTypes = {
+  basename: PropTypes.string.isRequired
+};
+
 const CellDirname = ({ dirname }) => (
   <TableCell numeric style={styles.bbb}>
     {dirname}
   </TableCell>
 );
 
+CellDirname.propTypes = {
+  dirname: PropTypes.string.isRequired
+};
+
 const CellIcon = ({ icon }) => (
   <TableCell numeric padding="checkbox" style={styles.wide}>
     {icon}
   </TableCell>
 );
+
+CellIcon.propTypes = {
+  icon: PropTypes.element.isRequired
+};
 
 const CellPercent = () => (
   <TableCell padding="checkbox" style={styles.wide}>

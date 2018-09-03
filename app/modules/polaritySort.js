@@ -1,11 +1,12 @@
+const isPropPresent = prop => typeof prop !== 'undefined';
+const targetProperty = (val, prop) =>
+  isPropPresent(prop) ? val[prop].toLowerCase() : val.toLowerCase();
+
 const basenameSort = (a, b, prop) => {
-  const targetProp = typeof prop !== 'undefined';
-  const selectProperty = val =>
-    targetProp ? val[prop].toLowerCase() : val.toLowerCase();
-  const nameA = selectProperty(a);
-  const nameB = selectProperty(b);
-  const polarity = nameA < nameB ? -1 : 1;
-  return nameA === nameB ? 0 : polarity;
+  const selectProp = item => targetProperty(item, prop);
+  const [A, B] = [a, b].map(selectProp);
+  const polarity = A < B ? -1 : 1;
+  return A === B ? 0 : polarity;
 };
 
 export default basenameSort;

@@ -8,15 +8,14 @@ class Slider extends Component {
       .addEventListener('mouseleave', this.blurSliderInput);
   }
 
-  blurSliderInput = () => {
-    document.getElementById('SliderInput').blur();
-  };
-
   onChange = e => {
     const { onChange } = this.props;
     const { value } = e.target;
-    console.log(value);
     onChange(value);
+  };
+
+  blurSliderInput = () => {
+    document.getElementById('SliderInput').blur();
   };
 
   render() {
@@ -48,11 +47,20 @@ const Input = ({ onChange, value }) => (
   />
 );
 
+Input.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.number.isRequired
+};
+
 const ZoomLevel = ({ value }) => (
   <div className="zoomLevel" style={styles.zoomLevel}>
     {value}
   </div>
 );
+
+ZoomLevel.propTypes = {
+  value: PropTypes.number.isRequired
+};
 
 const boxShadow =
   'inset rgb(135, 169, 214) 0px 3px 0px, inset rgba(0, 0, 0, 0.15) 0px 10px 10px';
