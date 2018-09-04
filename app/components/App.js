@@ -13,117 +13,17 @@ import { generateCenterfolds } from '../modules/generate';
 import { strainOnlyComics } from '../modules/strain';
 import turnPage from '../modules/turnPage';
 
+import initState from '../store/initState';
+
 const fs = require('fs');
 const path = require('path');
 const sizeOf = require('image-size');
-
-const openedComicPrototype = {
-  name: null,
-  basename: '',
-  tempdir: '',
-  extname: '',
-  origin: '',
-
-  pending: 0,
-  error: false,
-  errorMessage: '',
-  stat: ''
-};
 
 const includes = (ARRAY, index) =>
   ARRAY.includes(index) || ARRAY.includes(index + 1);
 
 export default class App extends Component {
-  state = {
-    openedComic: openedComicPrototype,
-    pages: [],
-    encodedPages: [],
-
-    // Page Data for Main => PageViewer => Page
-    centerfolds: [],
-    currentPageIndex: '',
-    pageCount: 2,
-
-    // Errors
-    error: false,
-    errorMessage: '',
-
-    // Button Data to pass to Main => Header => ButtonBar
-    buttons: {
-      changePageCount: {
-        name: 'changePageCount',
-        disabled: false,
-        func: () => {
-          this.changePageCount();
-        }
-      },
-      nextComic: {
-        name: 'nextComic',
-        disabled: false,
-        func: () => {
-          this.openNextComic();
-        }
-      },
-      openLibrary: {
-        name: 'openLibrary',
-        disabled: false,
-        func: () => {
-          this.openLibrary();
-        }
-      },
-      pageLeft: {
-        name: 'pageLeft',
-        disabled: false,
-        func: () => {
-          this.turnPageLeft();
-        }
-      },
-      pageRight: {
-        name: 'pageRight',
-        disabled: false,
-        func: () => {
-          this.turnPageRight();
-        }
-      },
-      prevComic: {
-        name: 'prevComic',
-        disabled: false,
-        func: () => {
-          this.openPrevComic();
-        }
-      }
-      // options: {
-      //   name: 'options',
-      //   disabled: false,
-      //   func: () => {
-      //     this.toggleOptions();
-      //   }
-      // },
-      // trash: {
-      //   name: 'trash',
-      //   disabled: false,
-      //   func: () => {
-      //     this.clearCache();
-      //   }
-      // }
-    },
-
-    // Material UI Drawer data
-    top: false,
-    // options: false,
-
-    // Contents data for Library
-    content: {},
-
-    // Zoom data for PageViewer
-    zoomLevel: 100,
-
-    // bool to display loading screen
-    isLoading: false,
-
-    // Image cache
-    images: []
-  };
+  state = initState;
 
   componentDidMount() {
     window.addEventListener('keydown', e => {
@@ -216,6 +116,25 @@ export default class App extends Component {
     const img = new Image();
     img.src = page.encodedPagePath;
     return img;
+  };
+
+  ButtonFunctions = () => {
+    const {
+      changePageCount,
+      openLibrary,
+      openNextComic,
+      openPrevComic,
+      turnPageLeft,
+      turnPageRight
+    } = this;
+    return {
+      changePageCount,
+      openLibrary,
+      openNextComic,
+      openPrevComic,
+      turnPageLeft,
+      turnPageRight
+    };
   };
 
   isCenterfold = index => {
@@ -436,11 +355,11 @@ export default class App extends Component {
   };
 
   renderHeader = () => {
-    const { buttons, pageCount, zoomLevel } = this.state;
+    const { pageCount, zoomLevel } = this.state;
 
     return (
       <Header
-        buttons={buttons}
+        ButtonFunctions={this.ButtonFunctions}
         pageCount={pageCount}
         setZoomLevel={this.setZoomLevel}
         zoomLevel={zoomLevel}
@@ -464,7 +383,6 @@ export default class App extends Component {
 
   renderPageViewer = () => {
     const { encodedPages, zoomLevel } = this.state;
-
     return <PageViewer encodedPages={encodedPages} zoomLevel={zoomLevel} />;
   };
 

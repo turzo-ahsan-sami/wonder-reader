@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import { FaClose, FaFolderOpen, FaLevelUp } from 'react-icons/lib/fa';
+import { remote } from 'electron';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
+import { ButtonClose, ButtonLevelUp, ButtonOpenFolder } from './Buttons';
 import LibraryHeader from './LibraryHeader';
 import LibraryTable from './LibraryTable';
 
-const { dialog } = require('electron').remote;
+const { dialog } = remote;
 const { generateNestedContentFromFilepath } = require('../modules/generate.js');
 
 class LibraryLayout extends Component {
@@ -33,19 +33,16 @@ class LibraryLayout extends Component {
   }
 
   onClick = content => {
+    const { openComic } = this.props;
     if (content.isDirectory) {
       this.onDirectoryClick(content);
     } else {
-      this.onFileClick(content);
+      openComic(content.fullpath);
     }
   };
 
   onDirectoryClick = content => {
     this.updateContent(content.fullpath);
-  };
-
-  onFileClick = content => {
-    this.props.openComic(content.fullpath);
   };
 
   setParentAsLibrary = () => {
@@ -70,35 +67,16 @@ class LibraryLayout extends Component {
     });
   };
 
-  renderButtons = () => (
-    <div>
-      {this.renderFolderOpen()}
-      {this.renderLevelUp()}
-      {this.renderClose()}
-    </div>
-  );
-
-  renderClose = () => (
-    <IconButton
-      onClick={this.props.closeLibrary}
-      color="primary"
-      style={styles.closeButton}
-    >
-      <FaClose />
-    </IconButton>
-  );
-
-  renderFolderOpen = () => (
-    <IconButton onClick={this.openDirectory} color="primary">
-      <FaFolderOpen />
-    </IconButton>
-  );
-
-  renderLevelUp = () => (
-    <IconButton onClick={this.setParentAsLibrary} color="primary">
-      <FaLevelUp />
-    </IconButton>
-  );
+  renderButtons = () => {
+    const { closeLibrary } = this.props;
+    return (
+      <div>
+        <ButtonOpenFolder onClick={this.openDirectory} />
+        <ButtonLevelUp onClick={this.setParentAsLibrary} />
+        <ButtonClose onClick={closeLibrary} />
+      </div>
+    );
+  };
 
   renderLibary = () => {
     const { contents } = this.state;
@@ -111,7 +89,7 @@ class LibraryLayout extends Component {
     const libraryTable = fullpath ? this.renderLibary() : null;
 
     return (
-      <div className="library" style={styles.libraryStyles}>
+      <div className="library" style={styles}>
         <LibraryHeader
           position="fixed"
           title="Library"
@@ -137,14 +115,9 @@ LibraryLayout.propTypes = {
 };
 
 const styles = {
-  closeButton: {
-    background: '#ef5350'
-  },
-  libraryStyles: {
-    marginTop: '64px',
-    maxHeight: 'calc(90vh - 64px)',
-    overflowY: 'auto'
-  }
+  marginTop: '64px',
+  maxHeight: 'calc(90vh - 64px)',
+  overflowY: 'auto'
 };
 
 export default LibraryLayout;

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import ButtonBar from './ButtonBar';
+import FunctionBar from './FunctionBar';
 import headerStyle from './headerStyle';
 
 const HeaderText = () => (
@@ -13,12 +13,12 @@ const HeaderText = () => (
   </Typography>
 );
 
-const Header = ({ buttons, pageCount, setZoomLevel, zoomLevel }) => (
+const Header = ({ ButtonFunctions, pageCount, setZoomLevel, zoomLevel }) => (
   <AppBar>
     <Toolbar>
       <HeaderText />
-      <ButtonBar
-        buttons={buttons}
+      <FunctionBar
+        ButtonFunctions={ButtonFunctions}
         pageCount={pageCount}
         setZoomLevel={setZoomLevel}
         zoomLevel={zoomLevel}
@@ -28,7 +28,7 @@ const Header = ({ buttons, pageCount, setZoomLevel, zoomLevel }) => (
 );
 
 Header.propTypes = {
-  buttons: PropTypes.object.isRequired,
+  ButtonFunctions: PropTypes.func.isRequired,
   pageCount: PropTypes.number.isRequired,
   setZoomLevel: PropTypes.func.isRequired,
   zoomLevel: PropTypes.number.isRequired

@@ -67,14 +67,15 @@ const boxShadow =
 
 const styles = {
   Slider: {
+    alignItems: 'center',
     border: '1px solid rgba(255,255,255,0.3)',
-    borderTop: '2px solid rgba(255,255,255,0.8)',
     borderRadius: '5px',
+    borderTop: '2px solid rgba(255,255,255,0.8)',
+    boxShadow,
     display: 'flex',
-    float: 'left',
-    padding: '3px',
+    justifyContent: 'center',
     marginTop: '7px',
-    boxShadow
+    padding: '3px'
   },
   wide: {
     width: '100px'
