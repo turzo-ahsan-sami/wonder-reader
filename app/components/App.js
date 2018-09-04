@@ -340,8 +340,6 @@ export default class App extends Component {
 
   turnPageLeft = () => {
     const polarity = -1;
-    console.log('turnPageLeft');
-    console.log(this.shouldPageTurnLeft());
     if (this.shouldPageTurnLeft()) {
       this.turnPage(polarity);
     }
