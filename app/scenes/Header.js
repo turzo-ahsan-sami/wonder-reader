@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import FunctionBar from './FunctionBar';
-import headerStyle from './headerStyle';
+import FunctionBar from '../components/FunctionBar';
+import headerStyle from '../styles/headerStyle';
 
 const HeaderText = () => (
   <Typography variant="title" style={headerStyle}>

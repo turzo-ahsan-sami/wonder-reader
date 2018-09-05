@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import Home from '../components/App';
+import Home from '../App';
 
 type Props = {};
 

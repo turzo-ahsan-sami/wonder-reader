@@ -75,7 +75,7 @@
     "react/require-default-props": [
       1
     ],
-    "react/sort-comp": 1,
+    "react/sort-comp": 0,
     "semi": [
       "error",
       "always"

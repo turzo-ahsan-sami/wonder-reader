@@ -9,19 +9,35 @@ import { FaPercent } from 'react-icons/lib/fa';
 
 import LibraryItem from './LibraryItem';
 
+const CellDirectory = () => (
+  <TableCell numeric>Directory</TableCell>
+);
+
+const CellName = () => (
+  <TableCell>Name</TableCell>
+);
+
+const CellPercent = () => (
+  <TableCell padding="checkbox">
+    <FaPercent />
+  </TableCell>
+);
+
+const CellPrime = () => (
+  <TableCell padding="checkbox" />
+);
+
 const HeaderRow = () => (
   <TableRow style={styles.font}>
-    <TableCell padding="checkbox" />
-    <TableCell>Name</TableCell>
-    <TableCell numeric>Directory</TableCell>
-    <TableCell padding="checkbox">
-      <FaPercent />
-    </TableCell>
+    <CellPrime />
+    <CellName />
+    <CellDirectory />
+    <CellPercent />
   </TableRow>
 );
 
 class LibraryTable extends Component {
-  generateLibraryItem = content => {
+  renderLibraryItem = content => {
     const { basename, dirname, id, isDirectory } = content;
     const { onContentClick } = this.props;
 
@@ -37,17 +53,20 @@ class LibraryTable extends Component {
         style={styles.LibraryItem}
       />
     );
-  };
+  }
 
-  generateLibraryItems = () => {
+  renderLibraryItems = () => {
     const { contents } = this.props;
-    return contents.map(this.generateLibraryItem);
-  };
+    return contents.map(this.renderLibraryItem);
+  }
 
-  renderTableBody = () => {
-    const libraryItems = this.generateLibraryItems();
-    return <TableBody>{libraryItems}</TableBody>;
-  };
+
+
+  renderTableBody = () => (
+    <TableBody>
+      {this.renderLibraryItems()}
+    </TableBody>
+  );
 
   renderTableHead = () => (
     <TableHead>

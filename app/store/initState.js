@@ -1,18 +1,7 @@
-const openedComicPrototype = {
-  name: null,
-  basename: '',
-  tempdir: '',
-  extname: '',
-  origin: '',
-
-  pending: 0,
-  error: false,
-  errorMessage: '',
-  stat: ''
-};
+import OpenedComicStore from './OpenedComicStore';
 
 export default {
-  openedComic: openedComicPrototype,
+  openedComic: OpenedComicStore.getAll(),
   pages: [],
   encodedPages: [],
 
@@ -25,8 +14,6 @@ export default {
   error: false,
   errorMessage: '',
 
-  // Material UI Drawer data
-  top: false,
   // options: false,
 
   // Contents data for Library

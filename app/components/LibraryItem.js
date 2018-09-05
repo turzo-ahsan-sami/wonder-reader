@@ -30,7 +30,9 @@ const styles = {
 };
 
 const CellBaseName = ({ basename }) => (
-  <TableCell style={styles.three33}>{basename}</TableCell>
+  <TableCell style={styles.three33}>
+    {basename}
+  </TableCell>
 );
 
 CellBaseName.propTypes = {

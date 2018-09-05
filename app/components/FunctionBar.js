@@ -2,7 +2,7 @@ import React from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
-import { buttonStyle, buttonTheme } from './buttonStyle';
+import { buttonStyle, buttonTheme } from '../styles/buttonStyle';
 import Slider from './Slider';
 import {
   ButtonChangePageCountDouble,

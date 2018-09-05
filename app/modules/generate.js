@@ -9,14 +9,14 @@ const sizeOf = require('image-size');
 const determineIfDirectory = fullpath => fs.statSync(fullpath).isDirectory();
 
 const determineDimensions = image => {
-  const dimensions = sizeOf(image);
-  return dimensions.width >= dimensions.height;
+  const {width, height} = sizeOf(image);
+  return width >= height;
 };
 
 const generateCenterfolds = pages => {
   const strainedPages = strainImages(pages);
-  const filtered = strainedPages.filter(determineDimensions);
-  return filtered.map(item => strainedPages.indexOf(item));
+  const determinedDimensions = strainedPages.filter(determineDimensions);
+  return determinedDimensions.map(item => strainedPages.indexOf(item));
 };
 
 const generateContent = fullpath =>
@@ -63,8 +63,8 @@ const strainContents = (err, files, fullpath, cb) => {
   };
 
   if (!err) {
-    const strainedFiles = strainComics(files, fullpath);
-    const contents = strainedFiles.map(renderContent);
+    const strainedComics = strainComics(files, fullpath);
+    const contents = strainedComics.map(renderContent);
     cb(err, contents);
   } else {
     cb(null, []);

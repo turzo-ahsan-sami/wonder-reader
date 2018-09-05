@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import DragScroll from 'react-dragscroll';
 import PropTypes from 'prop-types';
 
-import Page from './Page';
+import Page from '../components/Page';
 
 const getWidth = page => page.width;
 const increaseTotalSize = (accumulator, page) => accumulator + page;

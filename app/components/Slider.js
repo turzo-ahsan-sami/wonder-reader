@@ -10,8 +10,7 @@ class Slider extends Component {
 
   onChange = e => {
     const { onChange } = this.props;
-    const { value } = e.target;
-    onChange(value);
+    onChange(e.target.value);
   };
 
   blurSliderInput = () => {

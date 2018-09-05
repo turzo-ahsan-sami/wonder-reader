@@ -80,7 +80,6 @@ class LibraryLayout extends Component {
 
   renderLibary = () => {
     const { contents } = this.state;
-
     return <LibraryTable contents={contents} onContentClick={this.onClick} />;
   };
   render() {

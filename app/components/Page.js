@@ -15,9 +15,8 @@ const Page = ({ alt, id, src, width }) => (
 
 Page.propTypes = {
   alt: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired, // eslint-disable-line
-  key: PropTypes.string.isRequired, // eslint-disable-line
-  src: PropTypes.string.isRequired, // eslint-disable-line
+  id: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired
 };
 

@@ -1,38 +1,45 @@
 import React, { Component } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
-import Header from './Header';
-import Library from './Library';
-import Loading from './Loading';
-import PageViewer from './PageViewer';
-import theme from './theme';
+import Header from './scenes/Header';
+import Library from './scenes/Library';
+import Loading from './scenes/Loading';
+import PageViewer from './scenes/PageViewer';
+import theme from './styles/theme';
 
-import encodepath from '../modules/encodepath';
-import File from '../modules/File';
-import { generateCenterfolds } from '../modules/generate';
-import { strainOnlyComics } from '../modules/strain';
-import turnPage from '../modules/turnPage';
+import encodepath from './modules/encodepath';
+import File from './modules/File';
+import { generateCenterfolds } from './modules/generate';
+import { strainOnlyComics } from './modules/strain';
+import turnPage from './modules/turnPage';
 
-import initState from '../store/initState';
+import store from './store/fluxStore';
+import PageStore from './store/PageStore';
+import TopStore from './store/TopStore';
 
 const fs = require('fs');
 const path = require('path');
-const sizeOf = require('image-size');
 
 const includes = (ARRAY, index) =>
   ARRAY.includes(index) || ARRAY.includes(index + 1);
 
 export default class App extends Component {
-  state = initState;
+  state = store.getAll();
 
   componentDidMount() {
-    window.addEventListener('keydown', e => {
-      const isActiveElemInput = document.activeElement.tagName === 'input';
-      const shouldTurn = this.isComicActive && !isActiveElemInput;
-      if (shouldTurn) {
-        this.arrowKeyTurnPage(e.code, shouldTurn);
-      }
+    window.addEventListener('keydown', this.windowListenerTurnPage);
+
+    store.on('change', () => {
+      this.setState(store.getAll());
     });
+  }
+
+  windowListenerTurnPage = (e) => {
+    const isActiveElemInput = document.activeElement.tagName === 'input';
+    const shouldTurn = this.isComicActive && !isActiveElemInput;
+    if (shouldTurn) {
+      this.arrowKeyTurnPage(e.code, shouldTurn);
+    }
   }
 
   arrowKeyTurnPage = code => {
@@ -49,10 +56,6 @@ export default class App extends Component {
     this.setState({ pageCount: newPageCount }, () => {
       this.postChangePageCount();
     });
-  };
-
-  closeLibrary = () => {
-    this.toggleDrawer('top', false);
   };
 
   determineAvailableAdjComic = (err, files, polarity) => {
@@ -79,24 +82,6 @@ export default class App extends Component {
     });
   };
 
-  generateEncodedPage = (key, bool, encodedPages) => {
-    const { openedComic } = this.state;
-    const { pages, tempdir } = openedComic;
-
-    const pagePath = path.join(tempdir, pages[key]);
-    const page = encodepath(pagePath);
-    const { width, height } = sizeOf(pagePath);
-    const ratio = bool ? 1 : encodedPages[0].height / height;
-    const applyRatio = item => item * ratio;
-    const [WIDTH, HEIGHT] = [width, height].map(applyRatio);
-    return {
-      page,
-      key,
-      width: WIDTH,
-      height: HEIGHT
-    };
-  };
-
   generateEncodedPages = (newPageIndex, pagesToDisplay) => {
     const { pageCount, pages } = this.state;
 
@@ -106,7 +91,7 @@ export default class App extends Component {
       const key = newPageIndex + i;
       if (key < pages.length) {
         const bool = key === newPageIndex;
-        encodedPages[i] = this.generateEncodedPage(key, bool, encodedPages);
+        encodedPages[i] = PageStore.generateEncodedPage(key, bool, encodedPages);
       }
     }
     return encodedPages;
@@ -181,7 +166,7 @@ export default class App extends Component {
   };
 
   openLibrary = () => {
-    this.toggleDrawer('top', true);
+    TopStore.openTopDrawer();
   };
 
   openNextComic = () => {
@@ -230,7 +215,6 @@ export default class App extends Component {
       encodedPages,
       images: pages.map(this.generatePageImages),
       isLoading: false,
-      top: false
     };
   };
 
@@ -241,7 +225,6 @@ export default class App extends Component {
       encodedPages,
       images,
       isLoading,
-      top
     } = this.generateInitialLoadState(pages);
 
     this.setState({
@@ -252,7 +235,8 @@ export default class App extends Component {
       images,
       isLoading,
       pages,
-      top
+    }, () => {
+      TopStore.closeTopDrawer();
     });
   };
 
@@ -314,7 +298,7 @@ export default class App extends Component {
 
   throwError = (error, errorMessage) => {
     if (error) {
-      this.setState({ errorMessage }, () => {
+      this.setState({ error: true, errorMessage }, () => {
         console.log(this.state.errorMessage);
         // TODO Spawn error module;
       });
@@ -366,22 +350,25 @@ export default class App extends Component {
   };
 
   renderLibrary = () => {
-    const { content, top } = this.state;
+    const { content } = this.state;
 
     return (
       <Library
-        closeDrawer={this.closeLibrary}
         loadedLibrary={content.fullpath}
         openComic={this.openComic}
         saveContentDataToMain={this.saveContentDataToMain}
-        top={top}
       />
     );
   };
 
   renderPageViewer = () => {
     const { encodedPages, zoomLevel } = this.state;
-    return <PageViewer encodedPages={encodedPages} zoomLevel={zoomLevel} />;
+    return (
+      <PageViewer
+        encodedPages={encodedPages}
+        zoomLevel={zoomLevel}
+      />
+    );
   };
 
   render() {

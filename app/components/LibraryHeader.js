@@ -5,8 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { buttonStyle, buttonTheme } from './buttonStyle';
-import headerStyle from './headerStyle';
+import { buttonStyle, buttonTheme } from '../styles/buttonStyle';
+import headerStyle from '../styles/headerStyle';
 
 const LibraryButtons = ({ buttons }) => (
   <MuiThemeProvider theme={buttonTheme}>

@@ -3,7 +3,9 @@ import Drawer from '@material-ui/core/Drawer';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import LibraryLayout from './LibraryLayout';
+import LibraryLayout from '../components/LibraryLayout';
+
+import TopStore from '../store/TopStore';
 
 const styles = {
   list: {
@@ -21,26 +23,39 @@ const styles = {
 
 class Library extends Component {
   state = {
-    loadedLibrary: this.props.loadedLibrary
+    loadedLibrary: this.props.loadedLibrary,
+    top: TopStore.getTopValue(),
   };
+
+  componentDidMount() {
+    TopStore.on('change', () => {
+      this.setState({
+        top: TopStore.getTopValue()
+      });
+    });
+  }
+
+  closeDrawer = () => {
+    TopStore.closeTopDrawer();
+  }
 
   updateLoadedLibrary = loadedLibrary => {
     this.setState({ loadedLibrary });
   };
 
   renderDrawer = () => {
-    const { closeDrawer, top } = this.props;
+    const { top } = this.state;
 
     return (
       <Drawer
         anchor="top"
         open={top}
-        onClose={closeDrawer}
+        onClose={this.closeDrawer}
         PaperProps={{ style: styles.PaperProps }}
         variant="temporary"
         transitionDuration={125}
       >
-        <div tabIndex={0} role="button" onKeyDown={closeDrawer}>
+        <div tabIndex={0} role="button" onKeyDown={this.closeDrawer}>
           {this.renderLibraryLayout()}
         </div>
       </Drawer>
@@ -50,7 +65,6 @@ class Library extends Component {
   renderLibraryLayout = () => {
     const {
       classes,
-      closeDrawer,
       openComic,
       saveContentDataToMain
     } = this.props;
@@ -59,7 +73,7 @@ class Library extends Component {
     return (
       <LibraryLayout
         className={classes.list}
-        closeLibrary={closeDrawer}
+        closeLibrary={this.closeDrawer}
         openComic={openComic}
         loadedLibrary={loadedLibrary}
         saveContentDataToParent={saveContentDataToMain}
@@ -86,12 +100,10 @@ Library.defaultProps = {
 
 Library.propTypes = {
   classes: PropTypes.object.isRequired,
-  closeDrawer: PropTypes.func.isRequired,
   loadedLibrary: PropTypes.string,
   openComic: PropTypes.func.isRequired,
   saveContentDataToMain: PropTypes.func.isRequired,
   style: PropTypes.objectOf(PropTypes.object.isRequired),
-  top: PropTypes.bool.isRequired
 };
 
 export default withStyles(styles)(Library);
