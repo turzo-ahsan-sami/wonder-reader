@@ -28,12 +28,14 @@ const styles = theme => ({
   })
 });
 
-const Loading = ({ classes, isLoading }) =>
-  isLoading ? <LoaderElement classes={classes} /> : null;
+const Loading = ({
+  classes,
+  loading
+}) => (loading ? <LoaderElement classes={classes} /> : null);
 
 Loading.propTypes = {
   classes: PropTypes.object.isRequired,
-  isLoading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired
 };
 
 const LoaderElement = ({ classes }) => (

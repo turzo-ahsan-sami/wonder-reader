@@ -1,117 +1,113 @@
 import { remote } from 'electron';
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import { ButtonClose, ButtonLevelUp, ButtonOpenFolder } from './Buttons';
+import {
+  ButtonClose,
+  ButtonLevelUp,
+  ButtonOpenFolder
+} from './Buttons';
 import LibraryHeader from './LibraryHeader';
 import LibraryTable from './LibraryTable';
 
+import * as ComicActions from '../actions/comicActions';
+import * as ContentActions from '../actions/contentActions';
+import * as TopActions from '../actions/topActions';
+import ContentStore from '../store/ContentStore';
+
 const { dialog } = remote;
-const { generateNestedContentFromFilepath } = require('../modules/generate.js');
 
 class LibraryLayout extends Component {
-  state = {
-    id: 'libraryRoot',
-    basename: '',
-    bookmark: '',
-    dirname: '',
-    fullpath: null,
-    isDirectory: true,
-    loadedLibrary: '',
-    contents: []
-  };
+  state = ContentStore.getAll();
 
   componentDidMount() {
-    const { loadedLibrary } = this.props;
-    if (loadedLibrary) {
-      this.updateContent(loadedLibrary);
-    }
+    ContentStore.on('change', this.setContentState);
   }
 
   componentWillUnmount() {
-    this.props.saveContentDataToParent(this.state);
+    ContentStore.saveContent(this.state);
+    ContentStore.removeListener('change', this.setContentState);
   }
 
   onClick = content => {
-    const { openComic } = this.props;
-    if (content.isDirectory) {
-      this.onDirectoryClick(content);
-    } else {
-      openComic(content.fullpath);
-    }
-  };
-
-  onDirectoryClick = content => {
-    this.updateContent(content.fullpath);
-  };
-
-  setParentAsLibrary = () => {
-    const { dirname } = this.state;
-    this.updateContent(dirname);
+    content.isDirectory
+      ? ContentActions.setContent(content)
+      : ComicActions.openComic(content.fullpath);
   };
 
   openDirectory = () => {
-    const { updateLoadedLibrary } = this.props;
-    dialog.showOpenDialog({ properties: ['openDirectory'] }, filepaths => {
+    dialog.showOpenDialog({
+      properties: ['openDirectory']
+    }, (filepaths) => {
       if (Array.isArray(filepaths)) {
-        const filepath = filepaths[0];
-        updateLoadedLibrary(filepath);
-        this.updateContent(filepath);
+        ContentActions.setContent(filepaths[0]);
       }
     });
   };
 
-  updateContent = path => {
-    generateNestedContentFromFilepath(path, content => {
-      this.setState(content);
+  setContentState = () => {
+    const {
+      basename,
+      bookmark,
+      contents,
+      dirname,
+      fullpath,
+      id,
+      isDirectory,
+      loadedLibrary
+    } = ContentStore.getAll();
+    this.setState({
+      basename,
+      bookmark,
+      contents,
+      dirname,
+      fullpath,
+      id,
+      isDirectory,
+      loadedLibrary
     });
+  }
+
+  setParentAsLibrary = () => {
+    const { dirname } = this.state;
+    ContentActions.setContent(dirname);
   };
 
-  renderButtons = () => {
-    const { closeLibrary } = this.props;
-    return (
-      <div>
-        <ButtonOpenFolder onClick={this.openDirectory} />
-        <ButtonLevelUp onClick={this.setParentAsLibrary} />
-        <ButtonClose onClick={closeLibrary} />
-      </div>
-    );
-  };
+  renderButtons = () =>  (
+    <div>
+      <ButtonOpenFolder onClick={this.openDirectory} />
+      <ButtonLevelUp onClick={this.setParentAsLibrary} />
+      <ButtonClose onClick={TopActions.closeLibrary} />
+    </div>
+  );
 
-  renderLibary = () => {
-    const { contents } = this.state;
-    return <LibraryTable contents={contents} onContentClick={this.onClick} />;
-  };
+
+  renderHeader = () => (
+    <LibraryHeader
+      position="fixed"
+      title="Library"
+      buttons={this.renderButtons()}
+      onContentClick={this.onClick}
+    />
+  )
+
+  renderLibary = () => (
+    this.state.fullpath ? (
+      <LibraryTable
+        contents={this.state.contents}
+        onContentClick={this.onClick}
+      />
+    ) : null
+  );
+
   render() {
-    const { fullpath } = this.state;
-
-    const libraryTable = fullpath ? this.renderLibary() : null;
-
     return (
       <div className="library" style={styles}>
-        <LibraryHeader
-          position="fixed"
-          title="Library"
-          buttons={this.renderButtons()}
-          onContentClick={this.onClick}
-        />
-        {libraryTable}
+        {this.renderHeader()}
+        {this.renderLibary()}
       </div>
     );
   }
 }
-
-LibraryLayout.defaultProps = {
-  loadedLibrary: null
-};
-
-LibraryLayout.propTypes = {
-  closeLibrary: PropTypes.func.isRequired,
-  loadedLibrary: PropTypes.string,
-  openComic: PropTypes.func.isRequired,
-  saveContentDataToParent: PropTypes.func.isRequired,
-  updateLoadedLibrary: PropTypes.func.isRequired
-};
 
 const styles = {
   marginTop: '64px',

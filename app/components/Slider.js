@@ -1,90 +1,74 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import ZoomDisplay from './ZoomDisplay';
+import ZoomInput from './ZoomInput';
+
+import * as ZoomActions from '../actions/zoomActions';
+import ZoomStore from '../store/ZoomStore';
+
+const sliderComponent = document.getElementById('sliderComponent');
+const sliderInput = document.getElementById('sliderInput');
 
 class Slider extends Component {
-  componentDidMount() {
-    document
-      .getElementById('sliderComponent')
-      .addEventListener('mouseleave', this.blurSliderInput);
+  state = {
+    zoomLevel: ZoomStore.getZoomLevel()
   }
 
-  onChange = e => {
-    const { onChange } = this.props;
-    onChange(e.target.value);
-  };
+  componentDidMount() {
+    sliderComponent
+      .addEventListener('mouseleave', this.blurSliderInput);
+    ZoomStore.on('change', this.setZoomLevelState);
+  }
+
+  componentWillUnmount() {
+    ZoomStore.removeListener('change', this.setZoomLevelState);
+  }
 
   blurSliderInput = () => {
-    document.getElementById('SliderInput').blur();
+    sliderInput.blur();
   };
 
+  onChange = e => {
+    const zoomLevel = Number(e.target.value);
+    ZoomActions.setZoomLevel(zoomLevel);
+  };
+
+  setZoomLevelState = () => {
+    this.setState({
+      zoomLevel: ZoomStore.getZoomLevel()
+    });
+  }
+
   render() {
-    const { value } = this.props;
+    const { zoomLevel } = this.state;
     return (
-      <div className="slider" id="sliderComponent" style={styles.Slider}>
-        <Input onChange={this.onChange} value={value} />
-        <ZoomLevel value={value} />
+      <div
+        className="slider"
+        id="sliderComponent"
+        style={styles}
+      >
+        <ZoomInput
+          onChange={this.onChange}
+          value={zoomLevel}
+        />
+        <ZoomDisplay value={zoomLevel} />
       </div>
     );
   }
 }
 
-Slider.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired
-};
-
-const Input = ({ onChange, value }) => (
-  <input
-    id="SliderInput"
-    min="25"
-    max="200"
-    name="slider"
-    onChange={onChange}
-    type="range"
-    value={value}
-    style={styles.wide}
-  />
-);
-
-Input.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired
-};
-
-const ZoomLevel = ({ value }) => (
-  <div className="zoomLevel" style={styles.zoomLevel}>
-    {value}
-  </div>
-);
-
-ZoomLevel.propTypes = {
-  value: PropTypes.number.isRequired
-};
-
 const boxShadow =
   'inset rgb(135, 169, 214) 0px 3px 0px, inset rgba(0, 0, 0, 0.15) 0px 10px 10px';
 
 const styles = {
-  Slider: {
-    alignItems: 'center',
-    border: '1px solid rgba(255,255,255,0.3)',
-    borderRadius: '5px',
-    borderTop: '2px solid rgba(255,255,255,0.8)',
-    boxShadow,
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '7px',
-    padding: '3px'
-  },
-  wide: {
-    width: '100px'
-  },
-  zoomLevel: {
-    fontFamily: 'Carter One',
-    fontSize: '20px',
-    width: '45px',
-    cursor: 'default'
-  }
+  alignItems: 'center',
+  border: '1px solid rgba(255,255,255,0.3)',
+  borderRadius: '5px',
+  borderTop: '2px solid rgba(255,255,255,0.8)',
+  boxShadow,
+  display: 'flex',
+  justifyContent: 'center',
+  marginTop: '7px',
+  padding: '3px'
 };
 
 export default Slider;

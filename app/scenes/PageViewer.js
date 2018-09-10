@@ -1,19 +1,29 @@
 import React, { Component } from 'react';
 import DragScroll from 'react-dragscroll';
-import PropTypes from 'prop-types';
 
 import Page from '../components/Page';
+import zoomStore from '../store/ZoomStore';
+import pageStore from '../store/PageStore';
 
 const getWidth = page => page.width;
 const increaseTotalSize = (accumulator, page) => accumulator + page;
 
 class PageViewer extends Component {
   state = {
-    marginLeft: 0,
-    marginTop: 0,
-    scrollLeft: 0,
-    scrollTop: 0
+    marginLeft: null,
+    marginTop: null,
+    ratioX: null,
+    ratioY: null,
+    scrollLeft: null,
+    scrollTop: null,
+    zoomLevel: 100,
+
+    encodedPages: [],
   };
+
+  componentDidMount() {
+
+  }
 
   componentDidUpdate() {
     const pageViewer = document.querySelector('.PageViewer');
@@ -24,57 +34,34 @@ class PageViewer extends Component {
     }
   }
 
-  getPageViewer = () => document.querySelector('.PageViewer');
-  getPageWrapper = () => document.getElementById('pageWrapper');
-
-  getMargins = () => {
-    const pageViewer = this.getPageViewer();
-    const pageWrapper = this.getPageWrapper();
-    const { zoomLevel } = this.props;
-
-    // Center Points X || Y
-    const cPX = pageViewer.scrollLeft + pageViewer.clientWidth / 2;
-    const cPY = pageViewer.scrollTop + pageViewer.clientHeight / 2;
-
-    // Position Ratios to whole
-    const ratioX = cPX / pageWrapper.clientWidth;
-    const ratioY = cPY / pageWrapper.clientHeight;
-
-    const marginLeft = zoomLevel < 100 ? `${(100 - zoomLevel) / 2}%` : 0;
-    const marginTop =
-      pageViewer.clientHeight > pageWrapper.clientHeight
-        ? `${(pageViewer.clientHeight - pageWrapper.clientHeight) / 2}px`
-        : 0;
-
-    const scrollLeft =
-      pageWrapper.clientWidth * ratioY - pageViewer.clientWidth / 2;
-    const scrollTop =
-      pageWrapper.clientHeight * ratioX - pageViewer.clientHeight / 2;
-
-    return {
+  setStates = () => {
+    const {
       marginLeft,
       marginTop,
       ratioX,
       ratioY,
       scrollLeft,
-      scrollTop
-    };
-  };
+      scrollTop,
+      zoomLevel,
+    } = zoomStore.getAll();
 
-  setRatio = () => {
-    const { marginLeft, marginTop, scrollLeft, scrollTop } = this.getMargins();
+    const {encodedPages} = pageStore.getAll();
 
     this.setState({
       marginLeft,
       marginTop,
+      ratioX,
+      ratioY,
       scrollLeft,
-      scrollTop
+      scrollTop,
+      zoomLevel,
+
+      encodedPages
     });
   };
 
-  getPageViewerStyle = () => {
-    const { marginLeft, marginTop } = this.state;
-    const { zoomLevel } = this.props;
+  getStyles = () => {
+    const { marginLeft, marginTop, zoomLevel } = this.state;
     const zoom = `${zoomLevel}%`;
 
     return {
@@ -85,7 +72,7 @@ class PageViewer extends Component {
     };
   };
   areTherePageProps = () => {
-    const { encodedPages } = this.props;
+    const { encodedPages } = this.state;
     return Array.isArray(encodedPages) && encodedPages.length > 0;
   };
 
@@ -96,54 +83,41 @@ class PageViewer extends Component {
     pageViewer.scrollTop = scrollTop;
   };
 
-  renderPage = (item, totalSize) => (
-    <Page
-      alt="comic page"
-      id={item.key}
-      key={item.key}
-      width={(item.width / totalSize) * 100}
-      src={item.page}
-    />
+  renderPage = (totalSize) => (
+    (item) => (
+      <Page
+        alt="comic page"
+        id={item.key}
+        key={item.key}
+        width={(item.width / totalSize) * 100}
+        src={item.page}
+      />
+    )
   );
 
   renderPages = () => {
-    const { encodedPages } = this.props;
+    const { encodedPages } = this.state;
 
-    const totalSize = encodedPages.map(getWidth).reduce(increaseTotalSize, 0);
+    const totalSize = encodedPages
+      .map(getWidth)
+      .reduce(increaseTotalSize, 0);
+    const renderPage = this.renderPage(totalSize);
 
     return this.areTherePageProps()
-      ? encodedPages.map(item => this.renderPage(item, totalSize))
+      ? encodedPages.map(renderPage)
       : null;
   };
 
-  renderPageViewer = () => {
-    const newPages = this.renderPages();
-    const style = this.getPageViewerStyle();
-
-    return (
-      <div className="pages" style={style}>
-        {newPages}
-      </div>
-    );
-  };
-
   render() {
-    console.log('PageViewer:', this.props);
+    console.log('PageViewer:', this.state);
     return (
       <DragScroll className="PageViewer dragscroll">
-        {this.renderPageViewer()}
+        <div className="pages" style={this.getStyles()}>
+          {this.renderPages()}
+        </div>
       </DragScroll>
     );
   }
 }
-
-PageViewer.propTypes = {
-  encodedPages: PropTypes.array,
-  zoomLevel: PropTypes.number.isRequired
-};
-
-PageViewer.defaultProps = {
-  encodedPages: []
-};
 
 export default PageViewer;

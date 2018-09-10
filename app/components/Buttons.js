@@ -26,7 +26,12 @@ const closeButtonStyle = {
   textShadow: '0 0 5px rgba(0,0,0,0.5)'
 };
 
-const ButtonPrototype = ({ disabled, icon, onClick, style }) => (
+const ButtonPrototype = ({
+  disabled,
+  icon,
+  onClick,
+  style
+}) => (
   <IconButton
     color="primary"
     disabled={disabled}
@@ -65,7 +70,10 @@ ButtonChangePageCountDouble.propTypes = {
 };
 
 const ButtonChangePageCountSingle = ({ onClick }) => (
-  <ButtonPrototype icon={<FaSquareO />} onClick={onClick} />
+  <ButtonPrototype
+    icon={<FaSquareO />}
+    onClick={onClick}
+  />
 );
 
 ButtonChangePageCountSingle.propTypes = {
@@ -85,7 +93,10 @@ ButtonClose.propTypes = {
 };
 
 const ButtonLevelUp = ({ onClick }) => (
-  <ButtonPrototype icon={<FaLevelUp />} onClick={onClick} />
+  <ButtonPrototype
+    icon={<FaLevelUp />}
+    onClick={onClick}
+  />
 );
 
 ButtonLevelUp.propTypes = {
@@ -93,7 +104,10 @@ ButtonLevelUp.propTypes = {
 };
 
 const ButtonNextComic = ({ onClick }) => (
-  <ButtonPrototype icon={<FaAngleDoubleRight />} onClick={onClick} />
+  <ButtonPrototype
+    icon={<FaAngleDoubleRight />}
+    onClick={onClick}
+  />
 );
 
 ButtonNextComic.propTypes = {
@@ -101,7 +115,10 @@ ButtonNextComic.propTypes = {
 };
 
 const ButtonOpenFolder = ({ onClick }) => (
-  <ButtonPrototype icon={<FaFolderOpen />} onClick={onClick} />
+  <ButtonPrototype
+    icon={<FaFolderOpen />}
+    onClick={onClick}
+  />
 );
 
 ButtonOpenFolder.propTypes = {
@@ -109,7 +126,10 @@ ButtonOpenFolder.propTypes = {
 };
 
 const ButtonOpenLibrary = ({ onClick }) => (
-  <ButtonPrototype icon={<FaBook />} onClick={onClick} />
+  <ButtonPrototype
+    icon={<FaBook />}
+    onClick={onClick}
+  />
 );
 
 ButtonOpenLibrary.propTypes = {
@@ -117,7 +137,10 @@ ButtonOpenLibrary.propTypes = {
 };
 
 const ButtonPageLeft = ({ onClick }) => (
-  <ButtonPrototype icon={<FaAngleLeft />} onClick={onClick} />
+  <ButtonPrototype
+    icon={<FaAngleLeft />}
+    onClick={onClick}
+  />
 );
 
 ButtonPageLeft.propTypes = {
@@ -125,7 +148,10 @@ ButtonPageLeft.propTypes = {
 };
 
 const ButtonPageRight = ({ onClick }) => (
-  <ButtonPrototype icon={<FaAngleRight />} onClick={onClick} />
+  <ButtonPrototype
+    icon={<FaAngleRight />}
+    onClick={onClick}
+  />
 );
 
 ButtonPageRight.propTypes = {
@@ -133,7 +159,10 @@ ButtonPageRight.propTypes = {
 };
 
 const ButtonPrevComic = ({ onClick }) => (
-  <ButtonPrototype icon={<FaAngleDoubleLeft />} key={2} onClick={onClick} />
+  <ButtonPrototype
+    icon={<FaAngleDoubleLeft />}
+    onClick={onClick}
+  />
 );
 
 ButtonPrevComic.propTypes = {

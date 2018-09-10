@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Page = ({ alt, id, src, width }) => (
+const Page = ({
+  alt,
+  id,
+  src,
+  width
+}) => (
   <img
     alt={alt}
     className="image"

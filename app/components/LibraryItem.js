@@ -1,91 +1,43 @@
-import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { FaFileArchiveO, FaFolderO, FaPercent } from 'react-icons/lib/fa';
+import { FaFileArchiveO, FaFolderO } from 'react-icons/lib/fa';
 // import Bookmark from './Bookmark.js';
 
-const iconSize = 20;
+import {
+  CellBasename,
+  CellDirname,
+  CellIcon,
+  CellPercent,
+} from './Cells';
 
-const styles = {
-  bbb: {
-    color: '#bbb'
-  },
-  percent: {
-    color: '#999',
-    fontSize: '14px'
-  },
-  TableRow: {
-    cursor: 'pointer',
-    fontFamily: 'Montserrat',
-    fontSize: '20px'
-  },
-  three33: {
-    color: '#333'
-  },
-  wide: {
-    width: '10px'
-  }
-};
-
-const CellBaseName = ({ basename }) => (
-  <TableCell style={styles.three33}>
-    {basename}
-  </TableCell>
+const determineIcon = (bool) => (
+  bool
+    ? <FaFolderO size={iconSize} />
+    : <FaFileArchiveO size={iconSize} />
 );
 
-CellBaseName.propTypes = {
-  basename: PropTypes.string.isRequired
-};
-
-const CellDirname = ({ dirname }) => (
-  <TableCell numeric style={styles.bbb}>
-    {dirname}
-  </TableCell>
+const LibraryItem = ({
+  basename,
+  dirname,
+  id,
+  isDirectory,
+  onRowClick
+}) => (
+  <TableRow
+    className="library-item"
+    key={id}
+    onClick={onRowClick}
+    style={styles}
+  >
+    <CellIcon icon={determineIcon(isDirectory)} />
+    <CellBasename basename={basename} />
+    <CellDirname dirname={dirname} />
+    <CellPercent />
+  </TableRow>
 );
 
-CellDirname.propTypes = {
-  dirname: PropTypes.string.isRequired
-};
-
-const CellIcon = ({ icon }) => (
-  <TableCell numeric padding="checkbox" style={styles.wide}>
-    {icon}
-  </TableCell>
-);
-
-CellIcon.propTypes = {
-  icon: PropTypes.element.isRequired
-};
-
-const CellPercent = () => (
-  <TableCell padding="checkbox" style={styles.wide}>
-    <FaPercent style={styles.percent} />
-  </TableCell>
-);
-
-const LibraryItem = ({ basename, dirname, id, isDirectory, onRowClick }) => {
-  const icon = isDirectory ? (
-    <FaFolderO size={iconSize} />
-  ) : (
-    <FaFileArchiveO size={iconSize} />
-  );
-
-  return (
-    <TableRow
-      className="library-item"
-      key={id}
-      onClick={onRowClick}
-      style={styles.TableRow}
-    >
-      <CellIcon icon={icon} />
-      <CellBaseName basename={basename} />
-      <CellDirname dirname={dirname} />
-      <CellPercent />
-    </TableRow>
-  );
-};
 
 LibraryItem.propTypes = {
   basename: PropTypes.string.isRequired,
@@ -93,6 +45,14 @@ LibraryItem.propTypes = {
   id: PropTypes.string.isRequired,
   isDirectory: PropTypes.bool.isRequired,
   onRowClick: PropTypes.func.isRequired
+};
+
+const iconSize = 20;
+
+const styles = {
+  cursor: 'pointer',
+  fontFamily: 'Montserrat',
+  fontSize: '20px'
 };
 
 export default LibraryItem;
