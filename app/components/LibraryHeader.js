@@ -20,8 +20,8 @@ LibraryButtons.propTypes = {
 
 const LibraryTitle = ({ title }) => (
   <Typography
-    variant="title"
     style={headerStyle}
+    variant="title"
   >
     {title}
   </Typography>

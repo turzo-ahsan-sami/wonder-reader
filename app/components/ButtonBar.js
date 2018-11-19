@@ -47,11 +47,12 @@ class ButtonBar extends Component {
     openAdjacentComic(polarity);
   };
 
-  renderChangePageCount = func => (
-    this.state.pageCount === 1
+  renderChangePageCount = func => {
+    const {pageCount} = this.state;
+    return pageCount === 1
       ? <ButtonChangePageCountSingle onClick={func} />
-      : <ButtonChangePageCountDouble onClick={func} />
-  )
+      : <ButtonChangePageCountDouble onClick={func} />;
+  }
 
   render() {
     return (

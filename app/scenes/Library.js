@@ -32,16 +32,16 @@ class Library extends Component {
     return (
       <Drawer
         anchor="top"
-        open={top}
         onClose={TopActions.closeLibrary}
+        open={top}
         PaperProps={{ style: styles.PaperProps }}
-        variant="temporary"
         transitionDuration={125}
+        variant="temporary"
       >
         <div
-          tabIndex={0}
-          role="button"
           onKeyDown={TopActions.closeLibrary}
+          role="button"
+          tabIndex={0}
         >
           {this.renderLibraryLayout()}
         </div>
@@ -49,9 +49,10 @@ class Library extends Component {
     );
   };
 
-  renderLibraryLayout = () => (
-    <LibraryLayout className={this.props.classes.list} />
-  )
+  renderLibraryLayout = () => {
+    const {classes} = this.props;
+    return <LibraryLayout className={classes.list} />;
+  }
 
   render() {
     const { style } = this.props;

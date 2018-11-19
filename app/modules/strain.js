@@ -2,7 +2,7 @@
 const isDirectory = require('is-directory');
 const path = require('path');
 
-const polaritySort = require('../modules/polaritySort.js');
+const polaritySort = require('./polaritySort.js');
 const { copyArray } = require('./copyData');
 
 const comicTypes = ['.cbr', '.cbz'];

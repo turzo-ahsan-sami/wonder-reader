@@ -4,10 +4,15 @@ import { Switch, Route } from 'react-router';
 import App from './containers/App';
 import HomePage from './containers/HomePage';
 
-export default () => (
+const routes = () => (
   <App>
     <Switch>
-      <Route path="/" component={HomePage} />
+      <Route
+        component={HomePage}
+        path="/"
+      />
     </Switch>
   </App>
 );
+
+export default routes;

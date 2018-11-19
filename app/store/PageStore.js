@@ -197,6 +197,14 @@ class PageStore extends EventEmitter {
     }
   };
 
+  turnPageLeft = () => {
+    this.turnPage(-1);
+  }
+
+  turnPageRight = () => {
+    this.turnPage(1);
+  }
+
   updateStore(obj) {
     this.state = obj;
     this.emit('change');
@@ -205,6 +213,22 @@ class PageStore extends EventEmitter {
   updateProp(prop, value) {
     this.state[prop] = value;
     this.emit('change');
+  }
+
+  handleActions(action) {
+    switch(action.type) {
+      case 'TOGGLE_PAGE_COUNT':
+        this.togglePageCount();
+        break;
+      case 'TURN_PAGE_LEFT':
+        this.turnPageLeft();
+        break;
+      case 'TURN_PAGE_RIGHT':
+        this.turnPageRight();
+        break;
+      default:
+        return;
+    }
   }
 }
 

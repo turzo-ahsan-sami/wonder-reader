@@ -86,11 +86,11 @@ class PageViewer extends Component {
   renderPage = (totalSize) => (
     (item) => (
       <Page
+        key={item.key}
         alt="comic page"
         id={item.key}
-        key={item.key}
-        width={(item.width / totalSize) * 100}
         src={item.page}
+        width={(item.width / totalSize) * 100}
       />
     )
   );

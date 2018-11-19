@@ -1,28 +1,19 @@
 import dispatcher from '../dispatcher';
 
-export function turnPage(polarity) {
+export function togglePageCount() {
   dispatcher.dispatch({
-    type: 'TURN_PAGE',
-    polarity
+    type: 'TOGGLE_PAGE_COUNT'
   });
 }
 
 export function turnPageLeft() {
   dispatcher.dispatch({
-    type: 'TURN_PAGE_LEFT',
-    polarity: -1
+    type: 'TURN_PAGE_LEFT'
   });
 }
 
 export function turnPageRight() {
   dispatcher.dispatch({
-    type: 'TURN_PAGE_RIGHT',
-    polarity: 1
-  });
-}
-
-export function togglePageCount() {
-  dispatcher.dispatch({
-    type: 'TOGGLE_PAGE_COUNT'
+    type: 'TURN_PAGE_RIGHT'
   });
 }

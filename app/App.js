@@ -51,7 +51,7 @@ export default class App extends Component {
   throwError = (error, errorMessage) => {
     if (error) {
       this.setState({ error: true, errorMessage }, () => {
-        console.log(this.state.errorMessage);
+        console.log(errorMessage);
         // TODO Spawn error module;
       });
     }

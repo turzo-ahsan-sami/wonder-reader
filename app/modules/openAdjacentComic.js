@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import * as comicActions from '../actions/comicActions';
-import { strainOnlyComics } from '../modules/strain';
+import { strainOnlyComics } from './strain';
 import ComicStore from '../store/ComicStore';
 
 const determineAvailableAdjComic = (err, files, polarity) => {
