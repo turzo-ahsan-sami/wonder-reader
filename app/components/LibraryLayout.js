@@ -80,7 +80,6 @@ class LibraryLayout extends Component {
     </div>
   );
 
-
   renderHeader = () => (
     <LibraryHeader
       buttons={this.renderButtons()}
@@ -90,21 +89,28 @@ class LibraryLayout extends Component {
     />
   )
 
-  renderLibary = () => {
-    const {contents, fullpath} = this.state;
-    return fullpath ? (
+  renderLibrary = () => {
+    const {fullpath} = this.state;
+    return fullpath 
+      ? this.renderLibraryTable()
+      : null;
+  };
+
+  renderLibraryTable = () => {
+    const {contents} = this.state;
+    return (
       <LibraryTable
         contents={contents}
         onContentClick={this.onClick}
       />
-    ) : null;
-  };
+    );
+  }
 
   render() {
     return (
       <div className="library" style={styles}>
         {this.renderHeader()}
-        {this.renderLibary()}
+        {this.renderLibrary()}
       </div>
     );
   }

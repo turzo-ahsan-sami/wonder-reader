@@ -31,7 +31,11 @@ const styles = theme => ({
 const Loading = ({
   classes,
   loading
-}) => (loading ? <LoaderElement classes={classes} /> : null);
+}) => (
+  loading
+    ? <LoaderElement classes={classes} />
+    : null
+);
 
 Loading.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -49,7 +53,11 @@ LoaderElement.propTypes = {
 };
 
 const PaperElement = ({ classes }) => (
-  <Paper className={classes.root} elevation={4} style={styles.Paper}>
+  <Paper
+    className={classes.root}
+    elevation={4}
+    style={styles.Paper}
+  >
     <CircularProgress
       className={classes.progress}
       color="secondary"

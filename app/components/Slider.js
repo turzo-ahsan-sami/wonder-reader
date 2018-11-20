@@ -52,6 +52,16 @@ class Slider extends Component {
     });
   }
 
+  renderZoomInput = () => {
+    const {zoomLevel} = this.state;
+    return (
+      <ZoomInput
+        onChange={this.onChange}
+        value={zoomLevel}
+      />
+    );
+  }
+
   render() {
     const { zoomLevel } = this.state;
     return (
@@ -61,10 +71,7 @@ class Slider extends Component {
         onBlur={this.blurSliderInput}
         style={styles}
       >
-        <ZoomInput
-          onChange={this.onChange}
-          value={zoomLevel}
-        />
+        {this.renderZoomInput()}
         <ZoomDisplay value={zoomLevel} />
       </div>
     );
