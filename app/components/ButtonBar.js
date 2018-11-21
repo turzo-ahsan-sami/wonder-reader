@@ -57,7 +57,7 @@ class ButtonBar extends Component {
   render() {
     return (
       <div>
-        <ButtonOpenLibrary onClick={TopActions.openLibrary} />
+        <ButtonOpenLibrary onClick={TopActions.toggleLibrary} />
         {this.renderChangePageCount(PageStore.togglePageCount)}
         <ButtonPrevComic onClick={openPrevComic} />
         <ButtonPageLeft onClick={PageActions.turnPageLeft} />

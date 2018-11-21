@@ -11,3 +11,9 @@ export function openLibrary() {
     type: 'OPEN_LIBRARY',
   });
 }
+
+export function toggleLibrary() {
+  dispatcher.dispatch({
+    type: 'TOGGLE_LIBRARY'
+  });
+}
