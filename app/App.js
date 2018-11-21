@@ -58,7 +58,6 @@ export default class App extends Component {
   };
 
   render() {
-    console.log('Main (state):', this.state);
     const { loading } = this.state;
 
     return (

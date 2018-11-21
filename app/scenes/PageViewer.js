@@ -71,6 +71,7 @@ class PageViewer extends Component {
       width: zoom
     };
   };
+
   areTherePageProps = () => {
     const { encodedPages } = this.state;
     return Array.isArray(encodedPages) && encodedPages.length > 0;
@@ -109,7 +110,6 @@ class PageViewer extends Component {
   };
 
   render() {
-    console.log('PageViewer:', this.state);
     return (
       <DragScroll className="PageViewer dragscroll">
         <div className="pages" style={this.getStyles()}>
