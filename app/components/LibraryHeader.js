@@ -31,19 +31,23 @@ LibraryTitle.propTypes = {
   title: PropTypes.string.isRequired
 };
 
-const LibraryHeader = ({ children, position, title }) => (
+const LibraryHeader = ({
+  buttons,
+  position,
+  title
+}) => (
   <AppBar style={{ position }}>
     <Toolbar>
       <LibraryTitle title={title} />
       <LibraryButtons>
-        {children}
+        {buttons}
       </LibraryButtons>
     </Toolbar>
   </AppBar>
 );
 
 LibraryHeader.propTypes = {
-  children: PropTypes.element.isRequired,
+  buttons: PropTypes.element.isRequired,
   position: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired
 };
