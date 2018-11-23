@@ -83,6 +83,7 @@ class PageStore extends EventEmitter {
   };
 
   getAll = () => (this.state);
+  getEncodedPages = () => (this.state.encodedPages)
   getPageCount = () => (this.state.pageCount)
 
   isCenterfold = index => {

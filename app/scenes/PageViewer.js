@@ -60,6 +60,11 @@ class PageViewer extends Component {
     });
   };
 
+  setEncodedPageState = () => {
+    const encodedPages = pageStore.getEncodedPages();
+    this.setState({encodedPages});
+  }
+
   getStyles = () => {
     const { marginLeft, marginTop, zoomLevel } = this.state;
     const zoom = `${zoomLevel}%`;
