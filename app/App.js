@@ -32,7 +32,7 @@ export default class App extends Component {
     if (shouldTurn) {
       this.arrowKeyTurnPage(e.code);
     }
-  }
+  };
 
   arrowKeyTurnPage = code => {
     if (code === 'ArrowRight') {
@@ -46,7 +46,7 @@ export default class App extends Component {
     this.setState({
       loading: LoadingStore.getLoadingState()
     });
-  }
+  };
 
   throwError = (error, errorMessage) => {
     if (error) {
