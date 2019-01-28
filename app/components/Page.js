@@ -8,11 +8,11 @@ const Page = ({
   width
 }) => (
   <img
+    key={id}
     alt={alt}
     className="image"
     draggable="false"
     id={id}
-    key={id}
     src={`file:///${src}`}
     style={{ width: `${width}%` }}
   />

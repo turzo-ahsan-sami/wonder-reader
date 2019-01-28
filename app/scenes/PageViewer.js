@@ -60,6 +60,11 @@ class PageViewer extends Component {
     });
   };
 
+  setEncodedPageState = () => {
+    const encodedPages = pageStore.getEncodedPages();
+    this.setState({encodedPages});
+  }
+
   getStyles = () => {
     const { marginLeft, marginTop, zoomLevel } = this.state;
     const zoom = `${zoomLevel}%`;
@@ -71,6 +76,7 @@ class PageViewer extends Component {
       width: zoom
     };
   };
+
   areTherePageProps = () => {
     const { encodedPages } = this.state;
     return Array.isArray(encodedPages) && encodedPages.length > 0;
@@ -86,11 +92,11 @@ class PageViewer extends Component {
   renderPage = (totalSize) => (
     (item) => (
       <Page
+        key={item.key}
         alt="comic page"
         id={item.key}
-        key={item.key}
-        width={(item.width / totalSize) * 100}
         src={item.page}
+        width={(item.width / totalSize) * 100}
       />
     )
   );
@@ -109,7 +115,6 @@ class PageViewer extends Component {
   };
 
   render() {
-    console.log('PageViewer:', this.state);
     return (
       <DragScroll className="PageViewer dragscroll">
         <div className="pages" style={this.getStyles()}>

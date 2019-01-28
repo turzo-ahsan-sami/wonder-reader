@@ -3,6 +3,22 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { FaPercent } from 'react-icons/lib/fa';
 
+const styles = {
+  bbb: {
+    color: '#bbb'
+  },
+  percent: {
+    color: '#999',
+    fontSize: '14px'
+  },
+  three33: {
+    color: '#333'
+  },
+  wide: {
+    width: '10px'
+  }
+};
+
 const CellBasename = ({ basename }) => (
   <TableCell style={styles.three33}>
     {basename}
@@ -48,22 +64,6 @@ const CellPercent = () => (
     <FaPercent style={styles.percent} />
   </TableCell>
 );
-
-const styles = {
-  bbb: {
-    color: '#bbb'
-  },
-  percent: {
-    color: '#999',
-    fontSize: '14px'
-  },
-  three33: {
-    color: '#333'
-  },
-  wide: {
-    width: '10px'
-  }
-};
 
 export {
   CellBasename,

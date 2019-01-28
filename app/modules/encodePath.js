@@ -6,9 +6,8 @@ const encodeUnix = tempPath => {
   for (let j = 0; j < tempPath.length; j += 1) {
     newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
   }
-  newPath = `/${newPath}`; // To set root folder
-  newPath = newPath.replace(/'/g, '\\\''); // Fixes err with the character \'
-  return newPath;
+  return `/${newPath}` // To set root folder
+    .replace(/'/g, '\\\''); // Fixes err with the character \'
 };
 
 const encodeWin = tempPath => {
@@ -17,13 +16,14 @@ const encodeWin = tempPath => {
   for (let j = 1; j < tempPath.length; j += 1) {
     newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
   }
-  newPath = path.join(c, newPath);
-  return newPath;
+  return path.join(c, newPath);
 };
 
-const encodepath = filepath => {
+const encodePath = filepath => {
   const tempPath = filepath.split(path.sep);
-  return os.platform === 'win32' ? encodeWin(tempPath) : encodeUnix(tempPath);
+  return os.platform === 'win32'
+    ? encodeWin(tempPath)
+    : encodeUnix(tempPath);
 };
 
-export default encodepath;
+export default encodePath;

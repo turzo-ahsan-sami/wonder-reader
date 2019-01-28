@@ -1,7 +1,7 @@
 import path from 'path';
 import sizeOf from 'image-size';
 
-import encodepath from './encodepath';
+import encodePath from './encodePath';
 import { strainImages } from './strain';
 
 import ComicStore from '../store/ComicStore';
@@ -22,7 +22,7 @@ const generateEncodedPage = (key, bool, encodedPages) => {
   const { pages, tempdir } = openedComic;
 
   const pagePath = path.join(tempdir, pages[key]);
-  const page = encodepath(pagePath);
+  const page = encodePath(pagePath);
   const { width, height } = sizeOf(pagePath);
   const ratio = bool ? 1 : encodedPages[0].height / height;
   const applyRatio = item => item * ratio;
@@ -47,7 +47,7 @@ const mapPages = (files, tempdir) => {
 const pageMap = (tempdir) => (
   (file, key) => {
     const pagePath = path.join(tempdir, file);
-    const encodedPagePath = encodepath(pagePath);
+    const encodedPagePath = encodePath(pagePath);
     return {
       key,
       encodedPagePath,

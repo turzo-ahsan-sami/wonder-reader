@@ -12,6 +12,14 @@ import {
   CellPercent,
 } from './Cells';
 
+const iconSize = 20;
+
+const styles = {
+  cursor: 'pointer',
+  fontFamily: 'Montserrat',
+  fontSize: '20px'
+};
+
 const determineIcon = (bool) => (
   bool
     ? <FaFolderO size={iconSize} />
@@ -26,8 +34,8 @@ const LibraryItem = ({
   onRowClick
 }) => (
   <TableRow
-    className="library-item"
     key={id}
+    className="library-item"
     onClick={onRowClick}
     style={styles}
   >
@@ -45,14 +53,6 @@ LibraryItem.propTypes = {
   id: PropTypes.string.isRequired,
   isDirectory: PropTypes.bool.isRequired,
   onRowClick: PropTypes.func.isRequired
-};
-
-const iconSize = 20;
-
-const styles = {
-  cursor: 'pointer',
-  fontFamily: 'Montserrat',
-  fontSize: '20px'
 };
 
 export default LibraryItem;

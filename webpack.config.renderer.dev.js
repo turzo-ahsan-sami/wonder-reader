@@ -209,10 +209,10 @@ export default merge.smart(baseConfig, {
     requiredByDLLConfig
       ? null
       : new webpack.DllReferencePlugin({
-          context: process.cwd(),
-          manifest: require(manifest),
-          sourceType: 'var'
-        }),
+        context: process.cwd(),
+        manifest: require(manifest),
+        sourceType: 'var'
+      }),
 
     new webpack.HotModuleReplacementPlugin({
       multiStep: true

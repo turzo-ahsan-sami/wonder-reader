@@ -89,6 +89,7 @@ class PageStore extends EventEmitter {
   };
 
   getAll = () => (this.state);
+  getEncodedPages = () => (this.state.encodedPages)
   getPageCount = () => (this.state.pageCount)
 
   isCenterfold = index => (
@@ -196,6 +197,14 @@ class PageStore extends EventEmitter {
     }
   };
 
+  turnPageLeft = () => {
+    this.turnPage(-1);
+  }
+
+  turnPageRight = () => {
+    this.turnPage(1);
+  }
+
   updateStore(obj) {
     this.state = obj;
     this.emit('change');
@@ -206,19 +215,16 @@ class PageStore extends EventEmitter {
     this.emit('change');
   }
 
-  handleActions = (action) => {
-    switch (action.type) {
-      case TOGGLE_PAGE_COUNT:
+  handleActions(action) {
+    switch(action.type) {
+      case 'TOGGLE_PAGE_COUNT':
         this.togglePageCount();
         break;
-      case TURN_PAGE:
-        this.turnPage(action.polarity);
+      case 'TURN_PAGE_LEFT':
+        this.turnPageLeft();
         break;
-      case TURN_PAGE_LEFT:
-        this.turnPage(-1);
-        break;
-      case TURN_PAGE_RIGHT:
-        this.turnPage(1);
+      case 'TURN_PAGE_RIGHT':
+        this.turnPageRight();
         break;
     }
   }

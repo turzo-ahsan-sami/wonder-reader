@@ -7,6 +7,20 @@ import * as TopActions from '../actions/topActions';
 import LibraryLayout from '../components/LibraryLayout';
 import TopStore from '../store/TopStore';
 
+const styles = {
+  list: {
+    width: 250
+  },
+  fullList: {
+    width: 'auto'
+  },
+  PaperProps: {
+    borderRadius: '0px 0px 0px 15px',
+    margin: 'auto',
+    maxWidth: '960px'
+  }
+};
+
 class Library extends Component {
   state = {
     top: TopStore.getTopValue(),
@@ -32,16 +46,16 @@ class Library extends Component {
     return (
       <Drawer
         anchor="top"
-        open={top}
         onClose={TopActions.closeLibrary}
+        open={top}
         PaperProps={{ style: styles.PaperProps }}
-        variant="temporary"
         transitionDuration={125}
+        variant="temporary"
       >
         <div
-          tabIndex={0}
-          role="button"
           onKeyDown={TopActions.closeLibrary}
+          role="button"
+          tabIndex={0}
         >
           {this.renderLibraryLayout()}
         </div>
@@ -49,9 +63,10 @@ class Library extends Component {
     );
   };
 
-  renderLibraryLayout = () => (
-    <LibraryLayout className={this.props.classes.list} />
-  )
+  renderLibraryLayout = () => {
+    const {classes} = this.props;
+    return <LibraryLayout className={classes.list} />;
+  }
 
   render() {
     const { style } = this.props;
@@ -73,20 +88,6 @@ Library.defaultProps = {
 Library.propTypes = {
   classes: PropTypes.object.isRequired,
   style: PropTypes.objectOf(PropTypes.object.isRequired),
-};
-
-const styles = {
-  list: {
-    width: 250
-  },
-  fullList: {
-    width: 'auto'
-  },
-  PaperProps: {
-    borderRadius: '0px 0px 0px 15px',
-    margin: 'auto',
-    maxWidth: '960px'
-  }
 };
 
 export default withStyles(styles)(Library);

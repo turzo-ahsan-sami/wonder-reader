@@ -9,10 +9,7 @@
     "email": "the.alice.maldonado@gmail.com",
     "url": "https://github.com/alice-em"
   },
-  "scripts": {
-    "electron-rebuild": "node -r babel-register ../internals/scripts/ElectronRebuild.js",
-    "postinstall": "npm run electron-rebuild"
-  },
+  "scripts": {},
   "license": "MIT",
   "dependencies": {
     "@fknop/node-unrar": "1.1.0",

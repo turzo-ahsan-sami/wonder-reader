@@ -20,8 +20,8 @@ LibraryButtons.propTypes = {
 
 const LibraryTitle = ({ title }) => (
   <Typography
-    variant="title"
     style={headerStyle}
+    variant="title"
   >
     {title}
   </Typography>
@@ -32,7 +32,7 @@ LibraryTitle.propTypes = {
 };
 
 const LibraryHeader = ({
-  children,
+  buttons,
   position,
   title
 }) => (
@@ -40,14 +40,14 @@ const LibraryHeader = ({
     <Toolbar>
       <LibraryTitle title={title} />
       <LibraryButtons>
-        {children}
+        {buttons}
       </LibraryButtons>
     </Toolbar>
   </AppBar>
 );
 
 LibraryHeader.propTypes = {
-  children: PropTypes.element.isRequired,
+  buttons: PropTypes.element.isRequired,
   position: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired
 };

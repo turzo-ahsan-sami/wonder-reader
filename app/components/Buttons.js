@@ -14,16 +14,19 @@ import {
   FaSquareO
 } from 'react-icons/lib/fa';
 
+const margin = '2px';
+const textShadow = '0 0 5px rgba(0,0,0,0.5)';
+
 const determineStyles = rotation => ({
-  margin: '2px',
-  textShadow: '0 0 5px rgba(0,0,0,0.5)',
+  margin,
+  textShadow,
   transform: `rotate(${rotation}deg)`
 });
 
 const closeButtonStyle = {
   background: '#ef5350',
-  margin: '2px',
-  textShadow: '0 0 5px rgba(0,0,0,0.5)'
+  margin,
+  textShadow
 };
 
 const ButtonPrototype = ({
@@ -52,8 +55,8 @@ ButtonPrototype.propTypes = {
 ButtonPrototype.defaultProps = {
   disabled: false,
   style: {
-    margin: '2px',
-    textShadow: '0 0 5px rgba(0,0,0,0.5)'
+    margin,
+    textShadow
   }
 };
 

@@ -28,8 +28,8 @@ class ComicStore extends EventEmitter {
   }
 
   isComicActive = () => {
-    const { openedComic } = this.state;
-    return openedComic.name !== null;
+    const { name } = this.state;
+    return name !== null;
   };
 
   openComic = fullpath => {

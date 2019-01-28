@@ -80,30 +80,37 @@ class LibraryLayout extends Component {
     </div>
   );
 
-
   renderHeader = () => (
     <LibraryHeader
-      position="fixed"
-      title="Library"
       buttons={this.renderButtons()}
       onContentClick={this.onClick}
+      position="fixed"
+      title="Library"
     />
   )
 
-  renderLibary = () => (
-    this.state.fullpath ? (
+  renderLibrary = () => {
+    const {fullpath} = this.state;
+    return fullpath 
+      ? this.renderLibraryTable()
+      : null;
+  };
+
+  renderLibraryTable = () => {
+    const {contents} = this.state;
+    return (
       <LibraryTable
-        contents={this.state.contents}
+        contents={contents}
         onContentClick={this.onClick}
       />
-    ) : null
-  );
+    );
+  }
 
   render() {
     return (
       <div className="library" style={styles}>
         {this.renderHeader()}
-        {this.renderLibary()}
+        {this.renderLibrary()}
       </div>
     );
   }

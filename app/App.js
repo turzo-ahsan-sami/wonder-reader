@@ -49,10 +49,18 @@ export default class App extends Component {
     this.setState({
       loading: LoadingStore.getLoadingState()
     });
-  }
+  };
+
+  throwError = (error, errorMessage) => {
+    if (error) {
+      this.setState({ error: true, errorMessage }, () => {
+        console.log(errorMessage);
+        // TODO Spawn error module;
+      });
+    }
+  };
 
   render() {
-    console.log('Main (state):', this.state);
     const { loading } = this.state;
 
     return (

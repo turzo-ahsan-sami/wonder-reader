@@ -8,8 +8,8 @@ import headerStyle from '../styles/headerStyle';
 
 const HeaderText = () => (
   <Typography
-    variant="title"
     style={headerStyle}
+    variant="title"
   >
     Wonder Reader
   </Typography>

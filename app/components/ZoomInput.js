@@ -7,13 +7,13 @@ const ZoomInput = ({
 }) => (
   <input
     id="sliderInput"
-    min="25"
     max="200"
+    min="25"
     name="slider"
     onChange={onChange}
+    style={{width: '100px'}}
     type="range"
     value={value}
-    style={{width: '100px'}}
   />
 );
 

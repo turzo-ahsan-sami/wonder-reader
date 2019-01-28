@@ -19,7 +19,10 @@ if (module.hot) {
     const NextRoot = require('./containers/Root'); // eslint-disable-line global-require
     render(
       <AppContainer>
-        <NextRoot store={store} history={history} />
+        <NextRoot
+          history={history}
+          store={store}
+        />
       </AppContainer>,
       document.getElementById('root')
     );

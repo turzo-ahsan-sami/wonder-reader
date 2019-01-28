@@ -15,6 +15,16 @@ import * as TopActions from '../actions/topActions';
 import openAdjacentComic from '../modules/openAdjacentComic';
 import PageStore from '../store/PageStore';
 
+const openNextComic = () => {
+  const polarity = 1;
+  openAdjacentComic(polarity);
+};
+
+const openPrevComic = () => {
+  const polarity = -1;
+  openAdjacentComic(polarity);
+};
+
 class ButtonBar extends Component {
   constructor() {
     super();
@@ -37,31 +47,22 @@ class ButtonBar extends Component {
     });
   }
 
-  openNextComic = () => {
-    const polarity = 1;
-    openAdjacentComic(polarity);
-  };
-
-  openPrevComic = () => {
-    const polarity = -1;
-    openAdjacentComic(polarity);
-  };
-
-  renderChangePageCount = func => (
-    this.state.pageCount === 1
+  renderChangePageCount = func => {
+    const {pageCount} = this.state;
+    return pageCount === 1
       ? <ButtonChangePageCountSingle onClick={func} />
-      : <ButtonChangePageCountDouble onClick={func} />
-  )
+      : <ButtonChangePageCountDouble onClick={func} />;
+  }
 
   render() {
     return (
       <div>
-        <ButtonOpenLibrary onClick={TopActions.openLibrary} />
+        <ButtonOpenLibrary onClick={TopActions.toggleLibrary} />
         {this.renderChangePageCount(PageStore.togglePageCount)}
-        <ButtonPrevComic onClick={this.openPrevComic} />
+        <ButtonPrevComic onClick={openPrevComic} />
         <ButtonPageLeft onClick={PageActions.turnPageLeft} />
         <ButtonPageRight onClick={PageActions.turnPageRight} />
-        <ButtonNextComic onClick={this.openNextComic} />
+        <ButtonNextComic onClick={openNextComic} />
       </div>
     );
   }
