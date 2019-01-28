@@ -48,9 +48,6 @@
     "react/jsx-filename-extension": [
       0
     ],
-    "react/jsx-max-props-per-line": [
-      0
-    ],
     "react/jsx-wrap-multilines": [
       1,
       {

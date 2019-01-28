@@ -1,5 +1,11 @@
 import { EventEmitter } from 'events';
 
+import {
+  CLOSE_LIBRARY,
+  OPEN_LIBRARY
+} from '../constants';
+import dispatcher from '../dispatcher';
+
 class TopStore extends EventEmitter {
   constructor() {
     super();
@@ -26,8 +32,19 @@ class TopStore extends EventEmitter {
     this.state.top = !this.state.top;
     this.emit('change');
   }
+
+  handleActions = (action) => {
+    switch(action.type) {
+      case CLOSE_LIBRARY:
+        this.closeTopDrawer();
+        break;
+      case OPEN_LIBRARY:
+        this.openTopDrawer();
+        break;
+    }
+  }
 }
 
 const topStore = new TopStore;
-
+dispatcher.register(topStore.handleActions.bind(topStore));
 export default topStore;

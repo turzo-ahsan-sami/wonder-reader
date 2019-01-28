@@ -16,7 +16,9 @@ import theme from './styles/theme';
 const activeTag = document.activeElement.tagName;
 
 export default class App extends Component {
-  state = {loading: LoadingStore.getLoadingState()}
+  state = {
+    loading: LoadingStore.getLoadingState()
+  }
 
   componentDidMount() {
     LoadingStore.on('change', this.setLoadingState);
@@ -25,13 +27,7 @@ export default class App extends Component {
 
   componentWillUnmount() {
     LoadingStore.removeListener('change', this.setLoadingState);
-  }
-
-  windowListenerTurnPage = (e) => {
-    const shouldTurn = ComicStore.isComicActive() && activeTag !== 'input';
-    if (shouldTurn) {
-      this.arrowKeyTurnPage(e.code);
-    }
+    window.removeEventListener('keydown', this.windowListenerTurnPage);
   }
 
   arrowKeyTurnPage = code => {
@@ -42,20 +38,18 @@ export default class App extends Component {
     }
   };
 
+  windowListenerTurnPage = (e) => {
+    const shouldTurn = ComicStore.isComicActive() && activeTag !== 'input';
+    if (shouldTurn) {
+      this.arrowKeyTurnPage(e.code);
+    }
+  }
+
   setLoadingState = () => {
     this.setState({
       loading: LoadingStore.getLoadingState()
     });
   }
-
-  throwError = (error, errorMessage) => {
-    if (error) {
-      this.setState({ error: true, errorMessage }, () => {
-        console.log(this.state.errorMessage);
-        // TODO Spawn error module;
-      });
-    }
-  };
 
   render() {
     console.log('Main (state):', this.state);

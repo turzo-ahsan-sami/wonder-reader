@@ -24,7 +24,7 @@ class LibraryLayout extends Component {
   }
 
   componentWillUnmount() {
-    ContentStore.saveContent(this.state);
+    ContentActions.setContent(this.state);
     ContentStore.removeListener('change', this.setContentState);
   }
 

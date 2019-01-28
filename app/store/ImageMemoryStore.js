@@ -1,5 +1,8 @@
 import {EventEmitter} from 'events';
 
+import { SET_IMAGES } from '../constants';
+import dispatcher from '../dispatcher';
+
 const generateImageMemory = page => {
   const img = new Image();
   img.src = page.encodedPagePath;
@@ -14,22 +17,31 @@ class ImageMemoryStore extends EventEmitter {
     };
   }
 
-  getImages() {
-    return this.state;
-  }
-  generateImages(pages) {
+  generateImages = (pages) => {
     const images = this.renderImages(pages);
     this.setImages(images);
   }
-  renderImages(pages) {
-    return pages.map(generateImageMemory);
-  }
-  setImages(images) {
+
+  getImages = () => (this.state)
+
+  renderImages = (pages) => (
+    pages.map(generateImageMemory)
+  )
+
+  setImages = (images) => {
     this.state = {images};
     this.emit('change');
+  }
+
+  handleActions = (action) => {
+    switch(action.type) {
+      case SET_IMAGES:
+        this.setImages(action.images);
+        break;
+    }
   }
 }
 
 const imageMemoryStore = new ImageMemoryStore;
-
+dispatcher.register(imageMemoryStore.handleActions.bind(imageMemoryStore));
 export default imageMemoryStore;

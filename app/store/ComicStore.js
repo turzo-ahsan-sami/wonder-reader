@@ -1,5 +1,7 @@
 import { EventEmitter } from 'events';
 
+import { OPEN_COMIC } from '../constants';
+import dispatcher from '../dispatcher';
 import PageStore from './PageStore';
 import * as loadingActions from '../actions/loadingActions';
 import File from '../modules/File';
@@ -37,25 +39,23 @@ class ComicStore extends EventEmitter {
   };
 
   postComicExtract = comic => {
-    if (comic.error) {
-      this.throwError(true, comic.errorMessage);
-    } else {
+    if (!comic.error) {
       this.generatePages(comic.tempdir, page => {
-        this.updateComic(comic);
+        this.setComicState(comic);
         loadingActions.disableLoading();
         PageStore.postGeneratePages(page, comic);
       });
     }
   };
 
-  updateComic = (obj) => {
+  setComicState = (obj) => {
     this.state = obj;
     this.emit('change');
   }
 
   handleActions = (action) => {
     switch(action.type) {
-      case 'OPEN_COMIC':
+      case OPEN_COMIC:
         this.openComic(action.filepath);
         break;
     }
@@ -63,5 +63,5 @@ class ComicStore extends EventEmitter {
 }
 
 const comicStore = new ComicStore;
-
+dispatcher.register(comicStore.handleActions.bind(comicStore));
 export default comicStore;

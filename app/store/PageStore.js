@@ -1,7 +1,13 @@
 import { EventEmitter } from 'events';
 import fs from 'fs';
 
-import Dispatcher from '../dispatcher';
+import {
+  TOGGLE_PAGE_COUNT,
+  TURN_PAGE,
+  TURN_PAGE_LEFT,
+  TURN_PAGE_RIGHT
+} from '../constants';
+import dispatcher from '../dispatcher';
 import ComicStore from './ComicStore';
 import TopStore from './TopStore';
 
@@ -85,20 +91,20 @@ class PageStore extends EventEmitter {
   getAll = () => (this.state);
   getPageCount = () => (this.state.pageCount)
 
-  isCenterfold = index => {
-    const { centerfolds } = this.state;
-    return centerfolds.includes(index);
-  };
+  isCenterfold = index => (
+    this.state.centerfolds.includes(index)
+  );
 
-  isCenterfoldsComing = () => {
-    const { centerfolds, currentPageIndex } = this.state;
-    return includes(centerfolds, currentPageIndex);
-  };
+  isCenterfoldsComing = () => (
+    includes(
+      this.state.centerfolds,
+      this.state.currentPageIndex
+    )
+  );
 
-  isDoublePage = () => {
-    const { pageCount } = this.state;
-    return pageCount === 2;
-  }
+  isDoublePage = () => (
+    this.state.pageCount === 2
+  )
 
   postChangePageCount = () => {
     const { currentPageIndex, pageCount } = this.state;
@@ -176,19 +182,12 @@ class PageStore extends EventEmitter {
   };
 
   turnPage = polarity => {
-    const {
-      centerfolds,
-      currentPageIndex,
-      pageCount,
-      pages
-    } = this.state;
-
     if (ComicStore.isComicActive()) {
       turnPage(
-        currentPageIndex,
-        centerfolds,
-        pageCount,
-        pages.length,
+        this.state.currentPageIndex,
+        this.state.centerfolds,
+        this.state.pageCount,
+        this.state.pages.length,
         polarity,
         (newPageIndex, pagesToDisplay) => {
           this.setCurrentPages(newPageIndex, pagesToDisplay);
@@ -206,9 +205,25 @@ class PageStore extends EventEmitter {
     this.state[prop] = value;
     this.emit('change');
   }
+
+  handleActions = (action) => {
+    switch (action.type) {
+      case TOGGLE_PAGE_COUNT:
+        this.togglePageCount();
+        break;
+      case TURN_PAGE:
+        this.turnPage(action.polarity);
+        break;
+      case TURN_PAGE_LEFT:
+        this.turnPage(-1);
+        break;
+      case TURN_PAGE_RIGHT:
+        this.turnPage(1);
+        break;
+    }
+  }
 }
 
 const pageStore = new PageStore;
-Dispatcher.register(pageStore.handleActions.bind(pageStore));
-
+dispatcher.register(pageStore.handleActions.bind(pageStore));
 export default pageStore;

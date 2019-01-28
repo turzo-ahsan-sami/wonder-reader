@@ -1,5 +1,11 @@
 import { EventEmitter } from 'events';
 
+import {
+  DISABLE_LOADING,
+  ENABLE_LOADING
+} from '../constants';
+import dispatcher from '../dispatcher';
+
 class LoadingStore extends EventEmitter {
   constructor() {
     super();
@@ -22,15 +28,18 @@ class LoadingStore extends EventEmitter {
 
   handleActions = (action) => {
     switch (action.type) {
-      case 'DISABLE_LOADING':
+      case DISABLE_LOADING:
         this.disableLoading();
         break;
-      case 'ENABLE_LOADING':
+      case ENABLE_LOADING:
         this.enableLoading();
         break;
     }
   }
 }
 
-export default new LoadingStore;
+const loadingStore = new LoadingStore;
+dispatcher.register(loadingStore.handleActions.bind(loadingStore));
+export default loadingStore;
+
 

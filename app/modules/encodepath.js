@@ -7,7 +7,7 @@ const encodeUnix = tempPath => {
     newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
   }
   newPath = `/${newPath}`; // To set root folder
-  newPath = newPath.replace(/'/g, "\\'"); // Fixes err with the character \'
+  newPath = newPath.replace(/'/g, '\\\''); // Fixes err with the character \'
   return newPath;
 };
 

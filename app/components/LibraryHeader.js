@@ -31,7 +31,11 @@ LibraryTitle.propTypes = {
   title: PropTypes.string.isRequired
 };
 
-const LibraryHeader = ({ children, position, title }) => (
+const LibraryHeader = ({
+  children,
+  position,
+  title
+}) => (
   <AppBar style={{ position }}>
     <Toolbar>
       <LibraryTitle title={title} />
