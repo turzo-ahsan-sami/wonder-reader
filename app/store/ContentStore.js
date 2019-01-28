@@ -22,7 +22,7 @@ class ContentStore extends EventEmitter {
   }
 
   generateContent = fullpath =>
-    fullpath && fullpath === null ? null : this.generateContentObject(fullpath);
+    fullpath ? null : this.generateContentObject(fullpath);
 
   generateContentObject = fullpath => {
     const isDirectory = determineIfDirectory(fullpath);
@@ -57,9 +57,7 @@ class ContentStore extends EventEmitter {
     });
   };
 
-  getAll() {
-    return this.state;
-  }
+  getAll = () => (this.state);
 
   strainContents = (err, files, fullpath, cb) => {
     const renderContent = file => {
@@ -78,7 +76,7 @@ class ContentStore extends EventEmitter {
 
   saveContent = (content) => {
     this.state.content = content;
-  }
+  };
 
   setContent = (filepath) => {
     this.generateNestedContentFromFilepath(filepath, content => {

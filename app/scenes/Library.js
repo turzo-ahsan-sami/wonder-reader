@@ -38,7 +38,7 @@ class Library extends Component {
     this.setState({
       top: TopStore.getTopValue()
     });
-  }
+  };
 
   renderDrawer = () => {
     const { top } = this.state;
@@ -66,7 +66,7 @@ class Library extends Component {
   renderLibraryLayout = () => {
     const {classes} = this.props;
     return <LibraryLayout className={classes.list} />;
-  }
+  };
 
   render() {
     const { style } = this.props;

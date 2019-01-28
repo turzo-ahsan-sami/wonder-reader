@@ -17,13 +17,9 @@ class ZoomStore extends EventEmitter {
     };
   }
 
-  getAll = () => (
-    this.state
-  )
+  getAll = () => (this.state);
 
-  getZoomLevel = () => (
-    this.state.zoomLevel
-  )
+  getZoomLevel = () => (this.state.zoomLevel);
 
   getMargins = () => {
     const { zoomLevel } = this.state;
@@ -59,8 +55,7 @@ class ZoomStore extends EventEmitter {
   };
 
   setZoomLevel = value => {
-    const zoomLevel = Number(value);
-    this.state.zoomLevel = zoomLevel;
+    this.state.zoomLevel = Number(value);
     this.setMargins();
     this.emit('change');
   };

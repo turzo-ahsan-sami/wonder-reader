@@ -6,6 +6,8 @@ const generateImageMemory = page => {
   return img;
 };
 
+const renderImages = pages => pages.map(generateImageMemory);
+
 class ImageMemoryStore extends EventEmitter {
   constructor() {
     super();
@@ -14,20 +16,17 @@ class ImageMemoryStore extends EventEmitter {
     };
   }
 
-  getImages() {
-    return this.state;
-  }
-  generateImages(pages) {
-    const images = this.renderImages(pages);
+  getImages = () => (this.state);
+
+  generateImages = (pages) => {
+    const images = renderImages(pages);
     this.setImages(images);
-  }
-  renderImages(pages) {
-    return pages.map(generateImageMemory);
-  }
-  setImages(images) {
+  };
+
+  setImages = (images) => {
     this.state = {images};
     this.emit('change');
-  }
+  };
 }
 
 const imageMemoryStore = new ImageMemoryStore;

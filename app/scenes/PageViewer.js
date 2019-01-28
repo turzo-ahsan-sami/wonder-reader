@@ -45,7 +45,7 @@ class PageViewer extends Component {
       zoomLevel,
     } = zoomStore.getAll();
 
-    const {encodedPages} = pageStore.getAll();
+    const { encodedPages } = pageStore.getAll();
 
     this.setState({
       marginLeft,
@@ -63,7 +63,7 @@ class PageViewer extends Component {
   setEncodedPageState = () => {
     const encodedPages = pageStore.getEncodedPages();
     this.setState({encodedPages});
-  }
+  };
 
   getStyles = () => {
     const { marginLeft, marginTop, zoomLevel } = this.state;

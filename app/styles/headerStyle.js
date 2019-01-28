@@ -7,9 +7,9 @@ const textShadow = (
 
 const headerStyle = {
   color: '#fff',
+  cursor: 'default',
   fontFamily: 'Carter One',
   textShadow,
-  cursor: 'default'
 };
 
 export default headerStyle;

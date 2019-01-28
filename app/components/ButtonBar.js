@@ -41,18 +41,18 @@ class ButtonBar extends Component {
     PageStore.removeListener('change', this.setPageCount);
   }
 
-  setPageCount() {
+  setPageCount = () => {
     this.setState({
       pageCount: PageStore.getPageCount()
     });
-  }
+  };
 
   renderChangePageCount = func => {
     const {pageCount} = this.state;
     return pageCount === 1
       ? <ButtonChangePageCountSingle onClick={func} />
       : <ButtonChangePageCountDouble onClick={func} />;
-  }
+  };
 
   render() {
     return (

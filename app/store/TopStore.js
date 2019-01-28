@@ -10,24 +10,22 @@ class TopStore extends EventEmitter {
     };
   }
 
-  closeTopDrawer() {
+  closeTopDrawer = () => {
     this.state.top = false;
     this.emit('change');
-  }
+  };
 
-  getTopValue() {
-    return this.state.top;
-  }
+  getTopValue = () => (this.state.top);
 
-  openTopDrawer() {
+  openTopDrawer = () => {
     this.state.top = true;
     this.emit('change');
-  }
+  };
 
-  toggleTopDrawer() {
+  toggleTopDrawer = () => {
     this.state.top = !this.state.top;
     this.emit('change');
-  }
+  };
 
   handleActions(action) {
     switch(action.type) {
@@ -40,8 +38,6 @@ class TopStore extends EventEmitter {
       case 'TOGGLE_LIBRARY':
         this.toggleTopDrawer();
         break;
-      default:
-        return;
     }
   }
 }

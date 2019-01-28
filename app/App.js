@@ -16,7 +16,9 @@ import theme from './styles/theme';
 const activeTag = document.activeElement.tagName;
 
 export default class App extends Component {
-  state = {loading: LoadingStore.getLoadingState()}
+  state = {
+    loading: LoadingStore.getLoadingState()
+  };
 
   componentDidMount() {
     LoadingStore.on('change', this.setLoadingState);
@@ -35,10 +37,13 @@ export default class App extends Component {
   };
 
   arrowKeyTurnPage = code => {
-    if (code === 'ArrowRight') {
-      PageActions.turnPageRight();
-    } else if (code === 'ArrowLeft') {
-      PageActions.turnPageLeft();
+    switch (code) {
+      case 'ArrowRight':
+        PageActions.turnPageRight();
+        break;
+      case 'ArrowLeft':
+        PageActions.turnPageLeft();
+        break;
     }
   };
 

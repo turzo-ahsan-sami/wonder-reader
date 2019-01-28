@@ -9,7 +9,8 @@ import ZoomStore from '../store/ZoomStore';
 const sliderInput = document.getElementById('sliderInput');
 
 const boxShadow = (
-  'inset rgb(135, 169, 214) 0px 3px 0px, inset rgba(0, 0, 0, 0.15) 0px 10px 10px'
+  'inset rgb(135, 169, 214) 0px 3px 0px,'
+  + 'inset rgba(0, 0, 0, 0.15) 0px 10px 10px'
 );
 
 const styles = {
@@ -27,7 +28,7 @@ const styles = {
 class Slider extends Component {
   state = {
     zoomLevel: ZoomStore.getZoomLevel()
-  }
+  };
 
   componentDidMount() {
     ZoomStore.on('change', this.setZoomLevelState);
@@ -50,7 +51,7 @@ class Slider extends Component {
     this.setState({
       zoomLevel: ZoomStore.getZoomLevel()
     });
-  }
+  };
 
   renderZoomInput = () => {
     const {zoomLevel} = this.state;
@@ -60,7 +61,7 @@ class Slider extends Component {
         value={zoomLevel}
       />
     );
-  }
+  };
 
   render() {
     const { zoomLevel } = this.state;

@@ -83,8 +83,8 @@ class PageStore extends EventEmitter {
   };
 
   getAll = () => (this.state);
-  getEncodedPages = () => (this.state.encodedPages)
-  getPageCount = () => (this.state.pageCount)
+  getEncodedPages = () => (this.state.encodedPages);
+  getPageCount = () => (this.state.pageCount);
 
   isCenterfold = index => {
     const { centerfolds } = this.state;
@@ -99,17 +99,16 @@ class PageStore extends EventEmitter {
   isDoublePage = () => {
     const { pageCount } = this.state;
     return pageCount === 2;
-  }
+  };
 
   postChangePageCount = () => {
     const { currentPageIndex, pageCount } = this.state;
 
     if (ComicStore.isComicActive()) {
-      if (pageCount === 2 && this.isCenterfoldsComing()) {
-        this.setCurrentPages(currentPageIndex, 1);
-      } else {
-        this.setCurrentPages(currentPageIndex, pageCount);
-      }
+      const pagesToDisplay = (pageCount === 2 && this.isCenterfoldsComing())
+        ? 1
+        : pageCount;
+      this.setCurrentPages(currentPageIndex, pagesToDisplay);
     }
   };
 
@@ -128,19 +127,16 @@ class PageStore extends EventEmitter {
       openedComic,
       isLoading,
       pages,
-    }, () => {
-      TopStore.closeTopDrawer();
-    });
+    }, TopStore.closeTopDrawer);
   };
 
   setCurrentPages = (newPageIndex, pagesToDisplay) => {
-    const encodedPages = this.generateEncodedPages(
-      newPageIndex,
-      pagesToDisplay
-    );
     this.state = {
       currentPageIndex: newPageIndex,
-      encodedPages
+      encodedPages: this.generateEncodedPages(
+        newPageIndex,
+        pagesToDisplay
+      )
     };
     this.emit('change');
   };
@@ -169,8 +165,9 @@ class PageStore extends EventEmitter {
 
   togglePageCount = () => {
     const { pageCount } = this.state;
+    const newPageCount = pageCount === 2 ? 1 : 2;
     this.state = {
-      pageCount: pageCount === 2 ? 1 : 2
+      pageCount: newPageCount
     };
     this.postChangePageCount();
     // this.emit('change');
@@ -200,11 +197,11 @@ class PageStore extends EventEmitter {
 
   turnPageLeft = () => {
     this.turnPage(-1);
-  }
+  };
 
   turnPageRight = () => {
     this.turnPage(1);
-  }
+  };
 
   updateStore(obj) {
     this.state = obj;
@@ -227,8 +224,6 @@ class PageStore extends EventEmitter {
       case 'TURN_PAGE_RIGHT':
         this.turnPageRight();
         break;
-      default:
-        return;
     }
   }
 }

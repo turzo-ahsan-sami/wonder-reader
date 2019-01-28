@@ -31,20 +31,20 @@ class LibraryTable extends Component {
         }}
       />
     );
-  }
+  };
 
-  renderLibraryItems = () => {
-    const { contents } = this.props;
-    return contents.map(this.renderLibraryItem);
-  }
+  renderLibraryItems = (contents) => (
+    contents.map(this.renderLibraryItem)
+  );
 
-  renderTableBody = () => (
+  renderTableBody = (contents) => (
     <TableBody>
-      {this.renderLibraryItems()}
+      {this.renderLibraryItems(contents)}
     </TableBody>
   );
 
   render() {
+    const { contents } = this.props;
     return (
       <Table
         className="library-menu"
@@ -53,7 +53,7 @@ class LibraryTable extends Component {
         <TableHead>
           <LibraryTableHead />
         </TableHead>
-        {this.renderTableBody()}
+        {this.renderTableBody(contents)}
       </Table>
     );
   }

@@ -1,3 +1,14 @@
 {
-  "extends": "stylelint-config-standard"
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "color-hex-length": "long",
+    "declaration-colon-newline-after": null,
+    "font-family-name-quotes": null,
+    "function-url-quotes": "single",
+    "max-empty-lines": 1,
+    "max-nesting-depth": 2,
+    "number-leading-zero": "never",
+    "string-quotes": "single",
+    "value-list-comma-newline-after": null
+  }
 }
