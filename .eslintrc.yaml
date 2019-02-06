@@ -22,6 +22,7 @@ rules:
   babel/semi: 0
   import/no-extraneous-dependencies: 0
   import/no-useless-path-segments: 2
+  import/prefer-default-export: 0
   indent:
   - error
   - 2
