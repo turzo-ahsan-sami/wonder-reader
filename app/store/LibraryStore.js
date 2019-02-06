@@ -1,5 +1,5 @@
-import {EventEmitter} from 'events';
 import fs from 'fs';
+import { EventEmitter } from 'events';
 
 class LibraryStore extends EventEmitter {
   constructor() {

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+
 import ZoomDisplay from './ZoomDisplay';
 import ZoomInput from './ZoomInput';
 
-import * as ZoomActions from '../actions/zoomActions';
-import ZoomStore from '../store/ZoomStore';
+import * as actions from '../actions';
+import * as store from '../store';
 
 // const sliderComponent = document.getElementById('sliderComponent');
 const sliderInput = document.getElementById('sliderInput');
@@ -27,15 +28,15 @@ const styles = {
 
 class Slider extends Component {
   state = {
-    zoomLevel: ZoomStore.getZoomLevel()
+    zoomLevel: store.zoom.getZoomLevel()
   };
 
   componentDidMount() {
-    ZoomStore.on('change', this.setZoomLevelState);
+    store.zoom.on('change', this.setZoomLevelState);
   }
 
   componentWillUnmount() {
-    ZoomStore.removeListener('change', this.setZoomLevelState);
+    store.zoom.removeListener('change', this.setZoomLevelState);
   }
 
   blurSliderInput = () => {
@@ -44,23 +45,13 @@ class Slider extends Component {
 
   onChange = e => {
     const zoomLevel = Number(e.target.value);
-    ZoomActions.setZoomLevel(zoomLevel);
+    actions.zoom.setZoomLevel(zoomLevel);
   };
 
   setZoomLevelState = () => {
     this.setState({
-      zoomLevel: ZoomStore.getZoomLevel()
+      zoomLevel: store.zoom.getZoomLevel()
     });
-  };
-
-  renderZoomInput = () => {
-    const {zoomLevel} = this.state;
-    return (
-      <ZoomInput
-        onChange={this.onChange}
-        value={zoomLevel}
-      />
-    );
   };
 
   render() {
@@ -72,7 +63,10 @@ class Slider extends Component {
         onBlur={this.blurSliderInput}
         style={styles}
       >
-        {this.renderZoomInput()}
+        <ZoomInput
+          onChange={this.onChange}
+          value={zoomLevel}
+        />
         <ZoomDisplay value={zoomLevel} />
       </div>
     );

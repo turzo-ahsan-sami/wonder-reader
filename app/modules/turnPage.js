@@ -2,8 +2,9 @@
 
 const includes = ARRAY => index => ARRAY.includes(index);
 
-const areThereUpcomingIncludes = ARRAY => index =>
-  includes(ARRAY)(index) || includes(ARRAY)(index + 1);
+const areThereUpcomingIncludes = ARRAY => index => (
+  includes(ARRAY)(index) || includes(ARRAY)(index + 1)
+);
 
 const determineProperBool = ({
   currentPageIndex,

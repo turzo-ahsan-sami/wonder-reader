@@ -1,5 +1,5 @@
-import { remote } from 'electron';
 import React, { Component } from 'react';
+import { remote } from 'electron';
 
 import {
   ButtonClose,
@@ -9,29 +9,27 @@ import {
 import LibraryHeader from './LibraryHeader';
 import LibraryTable from './LibraryTable';
 
-import * as ComicActions from '../actions/comicActions';
-import * as ContentActions from '../actions/contentActions';
-import * as TopActions from '../actions/topActions';
-import ContentStore from '../store/ContentStore';
+import * as actions from '../actions';
+import * as store from '../store';
 
 const { dialog } = remote;
 
 class LibraryLayout extends Component {
-  state = ContentStore.getAll();
+  state = store.content.getAll();
 
   componentDidMount() {
-    ContentStore.on('change', this.setContentState);
+    store.content.on('change', this.setContentState);
   }
 
   componentWillUnmount() {
-    ContentActions.setContent(this.state);
-    ContentStore.removeListener('change', this.setContentState);
+    actions.content.setContent(this.state);
+    store.content.removeListener('change', this.setContentState);
   }
 
   onClick = content => {
     content.isDirectory
-      ? ContentActions.setContent(content)
-      : ComicActions.openComic(content.fullPath);
+      ? actions.content.setContent(content)
+      : actions.comic.openComic(content.fullPath);
   };
 
   openDirectory = () => {
@@ -39,7 +37,7 @@ class LibraryLayout extends Component {
       properties: ['openDirectory']
     }, (filePaths) => {
       if (Array.isArray(filePaths)) {
-        ContentActions.setContent(filePaths[0]);
+        actions.content.setContent(filePaths[0]);
       }
     });
   };
@@ -54,7 +52,7 @@ class LibraryLayout extends Component {
       id,
       isDirectory,
       loadedLibrary
-    } = ContentStore.getAll();
+    } = store.content.getAll();
     this.setState({
       basename,
       bookmark,
@@ -69,14 +67,14 @@ class LibraryLayout extends Component {
 
   setParentAsLibrary = () => {
     const { dirname } = this.state;
-    ContentActions.setContent(dirname);
+    actions.content.setContent(dirname);
   };
 
   renderButtons = () =>  (
     <div>
       <ButtonOpenFolder onClick={this.openDirectory} />
       <ButtonLevelUp onClick={this.setParentAsLibrary} />
-      <ButtonClose onClick={TopActions.closeLibrary} />
+      <ButtonClose onClick={actions.top.closeLibrary} />
     </div>
   );
 

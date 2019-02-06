@@ -1,7 +1,7 @@
-import {TableCell} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FaPercent } from 'react-icons/lib/fa';
+import { TableCell } from '@material-ui/core';
 
 const styles = {
   bbb: {

@@ -1,11 +1,11 @@
-import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 
-import * as TopActions from '../actions/topActions';
+import * as actions from '../actions';
+import * as store from '../store';
 import LibraryLayout from '../components/LibraryLayout';
-import TopStore from '../store/TopStore';
 
 const styles = {
   list: {
@@ -23,20 +23,20 @@ const styles = {
 
 class Library extends Component {
   state = {
-    top: TopStore.getTopValue(),
+    top: store.top.getTopValue(),
   };
 
   componentDidMount() {
-    TopStore.on('change', this.setTopState);
+    store.top.on('change', this.setTopState);
   }
 
   componentWillUnmount() {
-    TopStore.removeListener('change', this.setTopState);
+    store.top.removeListener('change', this.setTopState);
   }
 
   setTopState = () => {
     this.setState({
-      top: TopStore.getTopValue()
+      top: store.top.getTopValue()
     });
   };
 
@@ -46,14 +46,14 @@ class Library extends Component {
     return (
       <Drawer
         anchor="top"
-        onClose={TopActions.closeLibrary}
+        onClose={actions.top.closeLibrary}
         open={top}
         PaperProps={{ style: styles.PaperProps }}
         transitionDuration={125}
         variant="temporary"
       >
         <div
-          onKeyDown={TopActions.closeLibrary}
+          onKeyDown={actions.top.closeLibrary}
           role="button"
           tabIndex={0}
         >
@@ -64,7 +64,7 @@ class Library extends Component {
   };
 
   renderLibraryLayout = () => {
-    const {classes} = this.props;
+    const { classes } = this.props;
     return <LibraryLayout className={classes.list} />;
   };
 

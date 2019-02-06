@@ -1,8 +1,8 @@
-import dispatcher from '../dispatcher';
 import {
   CLOSE_LIBRARY,
   OPEN_LIBRARY
 } from '../constants';
+import dispatcher from '../dispatcher';
 
 export function closeLibrary() {
   dispatcher.dispatch({

@@ -1,6 +1,3 @@
-import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import PropTypes from 'prop-types';
 import {
   FaAngleDoubleLeft,
   FaAngleDoubleRight,
@@ -13,6 +10,9 @@ import {
   FaMinusSquareO,
   FaSquareO
 } from 'react-icons/lib/fa';
+import IconButton from '@material-ui/core/IconButton';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const margin = '2px';
 const textShadow = '0 0 5px rgba(0,0,0,0.5)';

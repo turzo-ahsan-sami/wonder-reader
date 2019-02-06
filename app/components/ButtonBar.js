@@ -10,10 +10,9 @@ import {
   ButtonPrevComic
 } from './Buttons';
 
-import * as PageActions from '../actions/pageActions';
-import * as TopActions from '../actions/topActions';
+import * as actions from '../actions';
+import * as store from '../store';
 import openAdjacentComic from '../modules/openAdjacentComic';
-import PageStore from '../store/PageStore';
 
 const openNextComic = () => {
   const polarity = 1;
@@ -29,26 +28,26 @@ class ButtonBar extends Component {
   constructor() {
     super();
     this.state = {
-      pageCount: PageStore.getPageCount()
+      pageCount: store.page.getPageCount()
     };
   }
 
   componentDidMount() {
-    PageStore.on('change', this.setPageCount);
+    store.page.on('change', this.setPageCount);
   }
 
   componentWillUnmount() {
-    PageStore.removeListener('change', this.setPageCount);
+    store.page.removeListener('change', this.setPageCount);
   }
 
   setPageCount = () => {
     this.setState({
-      pageCount: PageStore.getPageCount()
+      pageCount: store.page.getPageCount()
     });
   };
 
   renderChangePageCount = func => {
-    const {pageCount} = this.state;
+    const { pageCount } = this.state;
     return pageCount === 1
       ? <ButtonChangePageCountSingle onClick={func} />
       : <ButtonChangePageCountDouble onClick={func} />;
@@ -57,11 +56,11 @@ class ButtonBar extends Component {
   render() {
     return (
       <div>
-        <ButtonOpenLibrary onClick={TopActions.toggleLibrary} />
-        {this.renderChangePageCount(PageStore.togglePageCount)}
+        <ButtonOpenLibrary onClick={actions.top.toggleLibrary} />
+        {this.renderChangePageCount(store.page.togglePageCount)}
         <ButtonPrevComic onClick={openPrevComic} />
-        <ButtonPageLeft onClick={PageActions.turnPageLeft} />
-        <ButtonPageRight onClick={PageActions.turnPageRight} />
+        <ButtonPageLeft onClick={actions.page.turnPageLeft} />
+        <ButtonPageRight onClick={actions.page.turnPageRight} />
         <ButtonNextComic onClick={openNextComic} />
       </div>
     );

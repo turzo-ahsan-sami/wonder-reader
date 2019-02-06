@@ -1,15 +1,13 @@
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 
-import * as PageActions from './actions/pageActions';
+import * as actions from './actions';
+import * as store from './store';
 
 import Header from './scenes/Header';
 import Library from './scenes/Library';
 import Loading from './scenes/Loading';
 import PageViewer from './scenes/PageViewer';
-
-import ComicStore from './store/ComicStore';
-import LoadingStore from './store/LoadingStore';
 
 import theme from './styles/theme';
 
@@ -17,32 +15,32 @@ const activeTag = document.activeElement.tagName;
 
 export default class App extends Component {
   state = {
-    loading: LoadingStore.getLoadingState()
+    loading: store.loading.getLoadingState()
   };
 
   componentDidMount() {
-    LoadingStore.on('change', this.setLoadingState);
+    store.loading.on('change', this.setLoadingState);
     window.addEventListener('keydown', this.handleKeyDown);
   }
 
   componentWillUnmount() {
-    LoadingStore.removeListener('change', this.setLoadingState);
+    store.loading.removeListener('change', this.setLoadingState);
     window.removeEventListener('keydown', this.handleKeyDown);
   }
 
   handleKeyCode = code => {
     switch (code) {
       case 'ArrowRight':
-        PageActions.turnPageRight();
+        actions.page.turnPageRight();
         break;
       case 'ArrowLeft':
-        PageActions.turnPageLeft();
+        actions.page.turnPageLeft();
         break;
     }
   };
 
   handleKeyDown = (e) => {
-    const shouldTurn = ComicStore.isComicActive() && activeTag !== 'input';
+    const shouldTurn = store.comic.isComicActive() && activeTag !== 'input';
     if (shouldTurn) {
       this.handleKeyCode(e.code);
     }
@@ -50,7 +48,7 @@ export default class App extends Component {
 
   setLoadingState = () => {
     this.setState({
-      loading: LoadingStore.getLoadingState()
+      loading: store.loading.getLoadingState()
     });
   };
 

@@ -1,10 +1,10 @@
 import { EventEmitter } from 'events';
 
-import { OPEN_COMIC } from '../constants';
+import * as actions from '../actions';
 import dispatcher from '../dispatcher';
-import PageStore from './PageStore';
-import * as loadingActions from '../actions/loadingActions';
 import File from '../modules/File';
+import PageStore from './PageStore';
+import { OPEN_COMIC } from '../constants';
 
 class ComicStore extends EventEmitter {
   constructor() {
@@ -31,7 +31,7 @@ class ComicStore extends EventEmitter {
   };
 
   openComic = fullPath => {
-    loadingActions.enableLoading();
+    actions.loading.enableLoading();
     const Comic = new File(fullPath);
     Comic.extract(this.handleExtractedComic);
   };
@@ -47,7 +47,7 @@ class ComicStore extends EventEmitter {
   handleGeneratedComic = comic => (
     (pages) => {
       this.setComicState(comic);
-      loadingActions.disableLoading();
+      actions.loading.disableLoading();
       PageStore.handleGeneratedPages(pages, comic);
     }
   );

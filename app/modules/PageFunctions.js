@@ -4,7 +4,7 @@ import sizeOf from 'image-size';
 import encodePath from './encodePath';
 import { strainImages } from './strain';
 
-import ComicStore from '../store/ComicStore';
+import * as store from '../store';
 
 const determineDimensions = image => {
   const { width, height } = sizeOf(image);
@@ -19,7 +19,7 @@ const generateCenterfolds = pages => {
 };
 
 const generateEncodedPage = (key, bool, encodedPages) => {
-  const { pages, tempDirectory } = ComicStore.getAll();
+  const { pages, tempDirectory } = store.comic.getAll();
 
   const pagePath = path.join(tempDirectory, pages[key]);
   const page = encodePath(pagePath);

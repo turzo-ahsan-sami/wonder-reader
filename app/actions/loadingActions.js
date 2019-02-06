@@ -1,8 +1,8 @@
-import dispatcher from '../dispatcher';
 import {
   DISABLE_LOADING,
   ENABLE_LOADING
 } from '../constants';
+import dispatcher from '../dispatcher';
 
 export function disableLoading() {
   dispatcher.dispatch({

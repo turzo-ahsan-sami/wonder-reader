@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
 import DragScroll from 'react-dragscroll';
+import React, { Component } from 'react';
 
 import Page from '../components/Page';
-import zoomStore from '../store/ZoomStore';
-import pageStore from '../store/PageStore';
+import * as store from '../store';
 
 const getWidth = page => page.width;
 const increaseTotalSize = (accumulator, page) => accumulator + page;
@@ -21,9 +20,7 @@ class PageViewer extends Component {
     encodedPages: [],
   };
 
-  componentDidMount() {
-
-  }
+  componentDidMount() {}
 
   componentDidUpdate() {
     const pageViewer = document.querySelector('.PageViewer');
@@ -43,9 +40,9 @@ class PageViewer extends Component {
       scrollLeft,
       scrollTop,
       zoomLevel,
-    } = zoomStore.getAll();
+    } = store.zoom.getAll();
 
-    const { encodedPages } = pageStore.getAll();
+    const { encodedPages } = store.page.getAll();
 
     this.setState({
       marginLeft,
@@ -61,7 +58,7 @@ class PageViewer extends Component {
   };
 
   setEncodedPageState = () => {
-    const encodedPages = pageStore.getEncodedPages();
+    const encodedPages = store.page.getEncodedPages();
     this.setState({encodedPages});
   };
 

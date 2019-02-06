@@ -1,10 +1,10 @@
-import dispatcher from '../dispatcher';
 import {
   TOGGLE_PAGE_COUNT,
   TURN_PAGE,
   TURN_PAGE_LEFT,
   TURN_PAGE_RIGHT,
 } from '../constants';
+import dispatcher from '../dispatcher';
 
 export function togglePageCount() {
   dispatcher.dispatch({

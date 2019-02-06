@@ -1,4 +1,4 @@
-import {EventEmitter} from 'events';
+import { EventEmitter } from 'events';
 
 import { SET_IMAGES } from '../constants';
 import dispatcher from '../dispatcher';

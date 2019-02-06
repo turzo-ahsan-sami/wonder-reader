@@ -1,5 +1,5 @@
+import { SET_ZOOM_LEVEL } from '../constants';
 import dispatcher from '../dispatcher';
-import {SET_ZOOM_LEVEL} from '../constants';
 
 export function setZoomLevel(value) {
   dispatcher.dispatch({

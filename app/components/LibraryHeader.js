@@ -1,7 +1,7 @@
-import {AppBar, Toolbar, Typography} from '@material-ui/core';
-import { MuiThemeProvider } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import { buttonStyle, buttonTheme } from '../styles/buttonStyle';
 import headerStyle from '../styles/headerStyle';

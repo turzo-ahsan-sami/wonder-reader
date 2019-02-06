@@ -1,9 +1,9 @@
-import { EventEmitter } from 'events';
 import fs from 'fs';
 import path from 'path';
+import { EventEmitter } from 'events';
 
-import { SET_CONTENT } from '../constants';
 import dispatcher from '../dispatcher';
+import { SET_CONTENT } from '../constants';
 import { strainComics } from '../modules/strain';
 
 const determineIfDirectory = fullPath => fs.statSync(fullPath).isDirectory();

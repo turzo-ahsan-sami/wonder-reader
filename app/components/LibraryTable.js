@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
@@ -33,9 +33,7 @@ class LibraryTable extends Component {
     );
   };
 
-  renderLibraryItems = (contents) => (
-    contents.map(this.renderLibraryItem)
-  );
+  renderLibraryItems = (contents) => contents.map(this.renderLibraryItem);
 
   renderTableBody = (contents) => (
     <TableBody>
