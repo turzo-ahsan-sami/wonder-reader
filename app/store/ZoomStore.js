@@ -1,5 +1,8 @@
 import { EventEmitter } from 'events';
 
+import dispatcher from '../dispatcher';
+import {SET_ZOOM_LEVEL} from '../constants';
+
 const pageViewer = document.querySelector('.PageViewer');
 const pageWrapper = document.getElementById('pageWrapper');
 
@@ -21,7 +24,7 @@ class ZoomStore extends EventEmitter {
 
   getZoomLevel = () => (this.state.zoomLevel);
 
-  getMargins = () => {
+  setMargins = () => {
     const { zoomLevel } = this.state;
 
     // Center Points X || Y
@@ -52,15 +55,23 @@ class ZoomStore extends EventEmitter {
       scrollTop,
       zoomLevel,
     };
+    this.emit('change');
   };
 
   setZoomLevel = value => {
     this.state.zoomLevel = Number(value);
     this.setMargins();
-    this.emit('change');
   };
+
+  handleActions = (action) => {
+    switch (action.type) {
+      case SET_ZOOM_LEVEL:
+        this.setZoomLevel(action.value);
+        break;
+    }
+  }
 }
 
 const zoomStore = new ZoomStore;
-
+dispatcher.register(zoomStore.handleActions.bind(zoomStore));
 export default zoomStore;

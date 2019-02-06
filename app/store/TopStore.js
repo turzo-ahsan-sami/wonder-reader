@@ -1,6 +1,11 @@
 import { EventEmitter } from 'events';
 
-import Dispatcher from '../dispatcher';
+import {
+  CLOSE_LIBRARY,
+  OPEN_LIBRARY,
+  TOGGLE_LIBRARY,
+} from '../constants';
+import dispatcher from '../dispatcher';
 
 class TopStore extends EventEmitter {
   constructor() {
@@ -27,15 +32,15 @@ class TopStore extends EventEmitter {
     this.emit('change');
   };
 
-  handleActions(action) {
+  handleActions = (action) => {
     switch(action.type) {
-      case 'CLOSE_LIBRARY':
+      case CLOSE_LIBRARY:
         this.closeTopDrawer();
         break;
-      case 'OPEN_LIBRARY':
+      case OPEN_LIBRARY:
         this.openTopDrawer();
         break;
-      case 'TOGGLE_LIBRARY':
+      case TOGGLE_LIBRARY:
         this.toggleTopDrawer();
         break;
     }
@@ -43,6 +48,5 @@ class TopStore extends EventEmitter {
 }
 
 const topStore = new TopStore;
-Dispatcher.register(topStore.handleActions.bind(topStore));
-
+dispatcher.register(topStore.handleActions.bind(topStore));
 export default topStore;

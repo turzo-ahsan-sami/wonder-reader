@@ -27,14 +27,8 @@ export default class App extends Component {
 
   componentWillUnmount() {
     LoadingStore.removeListener('change', this.setLoadingState);
+    window.removeEventListener('keydown', this.windowListenerTurnPage);
   }
-
-  windowListenerTurnPage = (e) => {
-    const shouldTurn = ComicStore.isComicActive() && activeTag !== 'input';
-    if (shouldTurn) {
-      this.arrowKeyTurnPage(e.code);
-    }
-  };
 
   arrowKeyTurnPage = code => {
     switch (code) {
@@ -44,6 +38,13 @@ export default class App extends Component {
       case 'ArrowLeft':
         PageActions.turnPageLeft();
         break;
+    }
+  };
+
+  windowListenerTurnPage = (e) => {
+    const shouldTurn = ComicStore.isComicActive() && activeTag !== 'input';
+    if (shouldTurn) {
+      this.arrowKeyTurnPage(e.code);
     }
   };
 

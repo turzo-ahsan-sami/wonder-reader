@@ -10,10 +10,12 @@ const imageTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
 
 const isSomething = (types) => (
   (filename) => (
-    types.includes(
-      path.extname(filename)
-        .toLowerCase()
-    )
+    types
+      .includes(
+        path
+          .extname(filename)
+          .toLowerCase()
+      )
   )
 );
 
@@ -42,10 +44,10 @@ const isThisProperThing = (fileTypes) => (
   )
 );
 
-const sortArrayByAlpha = ARRAY => {
-  const newARRAY = copyArray(ARRAY);
-  return newARRAY.sort((a, b) => polaritySort(a, b));
-};
+const sortArrayByAlpha = ARRAY => (
+  copyArray(ARRAY)
+    .sort((a, b) => polaritySort(a, b))
+);
 
 // Cleans out non image files from ARRAY
 const strainer = (fileTypes) => (

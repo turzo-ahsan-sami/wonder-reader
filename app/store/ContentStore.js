@@ -2,6 +2,8 @@ import { EventEmitter } from 'events';
 import fs from 'fs';
 import path from 'path';
 
+import { SET_CONTENT } from '../constants';
+import dispatcher from '../dispatcher';
 import { strainComics } from '../modules/strain';
 
 const determineIfDirectory = fullpath => fs.statSync(fullpath).isDirectory();
@@ -84,8 +86,16 @@ class ContentStore extends EventEmitter {
       this.emit('change');
     });
   }
+
+  handleActions = (action) => {
+    switch (action.type) {
+      case SET_CONTENT:
+        this.setContent(action.content);
+        break;
+    }
+  }
 }
 
 const contentStore = new ContentStore;
-
+dispatcher.register(contentStore.handleActions.bind(contentStore));
 export default contentStore;
