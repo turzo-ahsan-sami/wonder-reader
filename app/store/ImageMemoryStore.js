@@ -24,7 +24,7 @@ class ImageMemoryStore extends EventEmitter {
     this.setImages(images);
   };
 
-  getImages = () => (this.state);
+  getImages = () => this.state;
 
   setImages = (images) => {
     this.state = {images};

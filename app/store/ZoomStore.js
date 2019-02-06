@@ -20,9 +20,9 @@ class ZoomStore extends EventEmitter {
     };
   }
 
-  getAll = () => (this.state);
+  getAll = () => this.state;
 
-  getZoomLevel = () => (this.state.zoomLevel);
+  getZoomLevel = () => this.state.zoomLevel;
 
   setMargins = () => {
     const { zoomLevel } = this.state;
@@ -35,16 +35,20 @@ class ZoomStore extends EventEmitter {
     const ratioX = cPX / pageWrapper.clientWidth;
     const ratioY = cPY / pageWrapper.clientHeight;
 
-    const marginLeft = zoomLevel < 100 ? `${(100 - zoomLevel) / 2}%` : 0;
-    const marginTop =
+    const marginLeft = (zoomLevel < 100) ? `${(100 - zoomLevel) / 2}%` : 0;
+    const marginTop =(
       pageViewer.clientHeight > pageWrapper.clientHeight
         ? `${(pageViewer.clientHeight - pageWrapper.clientHeight) / 2}px`
-        : 0;
+        : 0
+    );
 
-    const scrollLeft =
-      pageWrapper.clientWidth * ratioY - pageViewer.clientWidth / 2;
-    const scrollTop =
-      pageWrapper.clientHeight * ratioX - pageViewer.clientHeight / 2;
+    const scrollLeft = (
+      pageWrapper.clientWidth * ratioY - pageViewer.clientWidth / 2
+    );
+
+    const scrollTop = (
+      pageWrapper.clientHeight * ratioX - pageViewer.clientHeight / 2
+    );
 
     this.state = {
       marginLeft,

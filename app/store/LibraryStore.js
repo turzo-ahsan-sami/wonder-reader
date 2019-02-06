@@ -9,12 +9,10 @@ class LibraryStore extends EventEmitter {
     };
   }
 
-  getAll = () => (this.state);
+  getAll = () => this.state;
 
   loadLibrary = (directory) => {
-    fs.readdir(directory, (files) => {
-      this.setLibrary(files);
-    });
+    fs.readdir(directory, this.setLibrary);
   };
 
   setLibrary = (library) => {

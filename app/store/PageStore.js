@@ -3,7 +3,6 @@ import fs from 'fs';
 
 import {
   TOGGLE_PAGE_COUNT,
-  TURN_PAGE,
   TURN_PAGE_LEFT,
   TURN_PAGE_RIGHT
 } from '../constants';
@@ -18,6 +17,8 @@ import {
   mapPages,
 } from '../modules/PageFunctions';
 import turnPage from '../modules/turnPage';
+
+const getPagePath = page => page.pagePath;
 
 class PageStore extends EventEmitter {
   constructor() {
@@ -67,9 +68,7 @@ class PageStore extends EventEmitter {
 
   generateInitialPageState = pages => {
     const { pageCount } = this.state;
-    const getPagePath = page => page.pagePath;
-    const pagePaths = pages.map(getPagePath);
-    const centerfolds = generateCenterfolds(pagePaths);
+    const centerfolds = generateCenterfolds(pages.map(getPagePath));
     const pagesToDisplay = includes(centerfolds, 0) || pageCount === 1 ? 1 : 2;
     const encodedPages = this.generateEncodedPages(0, pagesToDisplay);
 
@@ -81,33 +80,29 @@ class PageStore extends EventEmitter {
     };
   };
 
-  generatePages = (tempdir, cb) => {
-    fs.readdir(tempdir, (err, files) => {
-      const pages = mapPages(files, tempdir);
+  generatePages = (tempDirectory, cb) => {
+    const handleReadDirectoryFiles = (err, files) => {
+      const pages = mapPages(files, tempDirectory);
       cb(pages);
-    });
+    };
+
+    fs.readdir(tempDirectory, handleReadDirectoryFiles);
   };
 
   getAll = () => (this.state);
   getEncodedPages = () => (this.state.encodedPages);
   getPageCount = () => (this.state.pageCount);
 
-  isCenterfold = index => (
-    this.state.centerfolds.includes(index)
-  );
+  isCenterfold = index => this.state.centerfolds.includes(index);
 
-  isCenterfoldsComing = () => (
-    includes(
-      this.state.centerfolds,
-      this.state.currentPageIndex
-    )
-  );
+  isCenterfoldsComing = () => {
+    const { centerfold, currentPageIndex } = this.state;
+    return includes(centerfold, currentPageIndex);
+  };
 
-  isDoublePage = () => (
-    this.state.pageCount === 2
-  );
+  isDoublePage = () => (this.state.pageCount === 2);
 
-  postChangePageCount = () => {
+  handleChangedPageCount = () => {
     const { currentPageIndex, pageCount } = this.state;
 
     if (ComicStore.isComicActive()) {
@@ -118,7 +113,7 @@ class PageStore extends EventEmitter {
     }
   };
 
-  postGeneratePages = (pages, openedComic) => {
+  handleGeneratedPages = (pages, openedComic) => {
     const {
       centerfolds,
       currentPageIndex,
@@ -137,12 +132,14 @@ class PageStore extends EventEmitter {
   };
 
   setCurrentPages = (newPageIndex, pagesToDisplay) => {
+    const encodedPages = this.generateEncodedPages(
+      newPageIndex,
+      pagesToDisplay
+    );
+
     this.state = {
       currentPageIndex: newPageIndex,
-      encodedPages: this.generateEncodedPages(
-        newPageIndex,
-        pagesToDisplay
-      )
+      encodedPages,
     };
     this.emit('change');
   };
@@ -175,11 +172,15 @@ class PageStore extends EventEmitter {
     this.state = {
       pageCount: newPageCount
     };
-    this.postChangePageCount();
+    this.handleChangedPageCount();
     // this.emit('change');
   };
 
   turnPage = polarity => {
+    const setCurrentPages = (newPageIndex, pagesToDisplay) => {
+      this.setCurrentPages(newPageIndex, pagesToDisplay);
+    };
+
     if (ComicStore.isComicActive()) {
       turnPage(
         this.state.currentPageIndex,
@@ -187,9 +188,7 @@ class PageStore extends EventEmitter {
         this.state.pageCount,
         this.state.pages.length,
         polarity,
-        (newPageIndex, pagesToDisplay) => {
-          this.setCurrentPages(newPageIndex, pagesToDisplay);
-        }
+        setCurrentPages,
       );
     }
   };

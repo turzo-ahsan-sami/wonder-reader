@@ -16,20 +16,23 @@ class TopStore extends EventEmitter {
   }
 
   closeTopDrawer = () => {
-    this.state.top = false;
-    this.emit('change');
+    this.handleBoolean(false);
   };
 
   getTopValue = () => (this.state.top);
 
-  openTopDrawer = () => {
-    this.state.top = true;
+  handleBoolean = bool => {
+    this.state.top = bool;
     this.emit('change');
   };
 
+  openTopDrawer = () => {
+    this.handleBoolean(true);
+  };
+
   toggleTopDrawer = () => {
-    this.state.top = !this.state.top;
-    this.emit('change');
+    const { top } = this.state;
+    this.handleBoolean(!top);
   };
 
   handleActions = (action) => {

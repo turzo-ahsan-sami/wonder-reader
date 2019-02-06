@@ -15,16 +15,19 @@ class LoadingStore extends EventEmitter {
   }
 
   disableLoading = () => {
-    this.state.loading = false;
-    this.emit('change');
+    this.setLoadingState(false);
   };
 
   enableLoading = () => {
-    this.state.loading = true;
+    this.setLoadingState(true);
+  };
+
+  setLoadingState = bool => {
+    this.state.loading = bool;
     this.emit('change');
   };
 
-  getLoadingState = () => (this.state.loading);
+  getLoadingState = () => this.state.loading;
 
   handleActions = (action) => {
     switch (action.type) {

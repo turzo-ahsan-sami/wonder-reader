@@ -6,22 +6,22 @@ import { strainImages } from './strain';
 
 import ComicStore from '../store/ComicStore';
 
-const generateCenterfolds = pages => {
-  const determineDimensions = image => {
-    const { width, height } = sizeOf(image);
-    return width >= height;
-  };
+const determineDimensions = image => {
+  const { width, height } = sizeOf(image);
+  return width >= height;
+};
 
+const generateCenterfolds = pages => {
   const strainedPages = strainImages(pages);
+  const getStrainedPageIndex = item => strainedPages.indexOf(item);
   const determinedDimensions = strainedPages.filter(determineDimensions);
-  return determinedDimensions.map(item => strainedPages.indexOf(item));
+  return determinedDimensions.map(getStrainedPageIndex);
 };
 
 const generateEncodedPage = (key, bool, encodedPages) => {
-  const openedComic = ComicStore.getAll();
-  const { pages, tempdir } = openedComic;
+  const { pages, tempDirectory } = ComicStore.getAll();
 
-  const pagePath = path.join(tempdir, pages[key]);
+  const pagePath = path.join(tempDirectory, pages[key]);
   const page = encodePath(pagePath);
   const { width, height } = sizeOf(pagePath);
   const ratio = bool ? 1 : encodedPages[0].height / height;
@@ -39,14 +39,11 @@ const includes = (ARRAY, index) => (
   ARRAY.includes(index) || ARRAY.includes(index + 1)
 );
 
-const mapPages = (files, tempdir) => {
-  const mapper = pageMap(tempdir);
-  return files.map((file, key) => mapper(file, key));
-};
+const mapPages = (files, tempDirectory) => files.map(pageMap(tempDirectory));
 
-const pageMap = (tempdir) => (
+const pageMap = (tempDirectory) => (
   (file, key) => {
-    const pagePath = path.join(tempdir, file);
+    const pagePath = path.join(tempDirectory, file);
     const encodedPagePath = encodePath(pagePath);
     return {
       key,

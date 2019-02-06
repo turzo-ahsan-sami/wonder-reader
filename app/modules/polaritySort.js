@@ -6,7 +6,7 @@ const basenameSort = (a, b, prop) => {
   const selectProp = item => targetProperty(item, prop);
   const [A, B] = [a, b].map(selectProp);
   const polarity = A < B ? -1 : 1;
-  return A === B ? 0 : polarity;
+  return (A === B) ? 0 : polarity;
 };
 
 export default basenameSort;

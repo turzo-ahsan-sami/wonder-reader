@@ -16,7 +16,7 @@ const Unrar = require('node-unrar');
 const temp = path.join(os.tmpdir(), 'wonderReader');
 const regex = /`|~|!|@|#|\$|%|\^|&|\*|\(|\)|\+|=|\[|\{|\]|\}|\||\\|'|<|,|\.|>|\?|\/|""|;|:/gi;
 
-const failedTempDir = 'Error: Failed to create temp folder';
+const failedtempDirectory = 'Error: Failed to create temp folder';
 const failedFileType =
   'Error: File must be a CBR or CBZ. Compression method is incorrect;';
 
@@ -26,7 +26,7 @@ class File {
     this.basename = path
       .basename(this.name, path.extname(this.name))
       .replace(regex, '');
-    this.tempdir = path.join(temp, this.basename.toLowerCase());
+    this.tempDirectory = path.join(temp, this.basename.toLowerCase());
     this.extname = path.extname(this.name).toLowerCase();
     this.origin = filepath;
 
@@ -37,38 +37,42 @@ class File {
   }
 
   extract(cb) {
-    // CB returns a new comic object
-    fs.readFile(this.origin, (err, data) => {
+    const handleMadeDirectory = err => {
+      this.routeExtraction(err, cb);
+    };
+    const handleReadFile = (err, data) => {
       if (!err) {
         this.data = data;
-        if (isDirectory.sync(this.tempdir)) {
-          rimraf.sync(this.tempdir);
+        if (isDirectory.sync(this.tempDirectory)) {
+          rimraf.sync(this.tempDirectory);
         }
-        mkdirp(this.tempdir, errd => {
-          this.routeExtraction(errd, cb);
-        });
+        mkdirp(this.tempDirectory, handleMadeDirectory);
       }
-    });
+    };
+
+    fs.readFile(this.origin, handleReadFile);
   }
 
   extractRarLinux(cb) {
-    const urar = new Unrar(this.origin);
-    urar.extract(this.tempdir, null, err => {
+    const unrar = new Unrar(this.origin);
+    const handleExtractedUnrar = err => {
       if (err) {
         this.error = true;
       } else {
-        this.standardize(this.tempdir);
+        this.standardize(this.tempDirectory);
         this.updatePages(cb);
       }
-    });
+    };
+
+    unrar.extract(this.tempDirectory, null, handleExtractedUnrar);
   }
 
   extractRar(cb) {
     if (os.platform() === 'linux') {
       this.extractRarLinux(cb);
     } else {
-      rar.extract(this.origin, this.tempdir);
-      this.standardize(this.tempdir);
+      rar.extract(this.origin, this.tempDirectory);
+      this.standardize(this.tempDirectory);
       this.updatePages(cb);
     }
   }
@@ -78,24 +82,26 @@ class File {
       file: this.origin,
       storeEntries: true
     });
-    zip.on('ready', () => {
-      zip.extract(null, this.tempdir, () => {
-        this.standardize(this.tempdir);
-        this.updatePages(cb);
-      });
-    });
+    const handleExtractedZip = () => {
+      this.standardize(this.tempDirectory);
+      this.updatePages(cb);
+    };
+    const handledReadyZip = () => {
+      zip.extract(null, this.tempDirectory, handleExtractedZip);
+    };
+    zip.on('ready', handledReadyZip);
   }
 
   fileMover(filepath) {
     const stats = fs.statSync(filepath);
     if (stats.isDirectory()) {
       this.standardize(filepath);
-      if (filepath !== this.tempdir) {
+      if (filepath !== this.tempDirectory) {
         rimraf.sync(filepath);
       }
     } else if (stats.isFile() && isImage(filepath)) {
       const basename = path.basename(filepath);
-      const output = path.join(this.tempdir, basename);
+      const output = path.join(this.tempDirectory, basename);
       fs.renameSync(filepath, output);
     } else {
       rimraf.sync(filepath);
@@ -109,7 +115,7 @@ class File {
   routeExtraction = (err, cb) => {
     if (err) {
       this.error = true;
-      this.errorMessage = failedTempDir;
+      this.errorMessage = failedtempDirectory;
     } else if (this.isRar()) {
       this.extractRar(cb);
     } else if (this.isZip()) {
@@ -121,18 +127,19 @@ class File {
   };
 
   standardize(directory) {
-    // initialize with this.tempdir
+    // initialize with this.tempDirectory
     const files = fs.readdirSync(directory);
-    const filepaths = files.map(file => path.join(directory, file));
-    filepaths.forEach(filepath => {
-      this.fileMover(filepath);
-    });
+    const generateFilePath = file => path.join(directory, file);
+    const moveFile = filePath => {
+      this.fileMover(filePath);
+    };
+    const filePaths = files.map(generateFilePath);
+    filePaths.forEach(moveFile);
   }
 
   updatePages(cb) {
-    fs.readdir(this.tempdir, (err, files) => {
-      const strainedFiles = strainImages(files);
-      this.pages = strainedFiles;
+    fs.readdir(this.tempDirectory, (err, files) => {
+      this.pages = strainImages(files);
       cb(this);
     });
   }

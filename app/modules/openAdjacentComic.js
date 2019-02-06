@@ -5,15 +5,30 @@ import * as comicActions from '../actions/comicActions';
 import { strainOnlyComics } from './strain';
 import ComicStore from '../store/ComicStore';
 
-const determineAvailableAdjComic = (err, files, polarity) => {
-  const openedComic = ComicStore.getAll();
-  const { name, origin } = openedComic;
+const generateVariables = (files, polarity) => {
+  const { name } = ComicStore.getAll();
 
   const strainedComics = strainOnlyComics(files);
   const newIndex = strainedComics.indexOf(name) + polarity;
   const isNewIndexWithinPageLimits = (
     newIndex > -1 && newIndex < strainedComics.length
   );
+
+  return {
+    isNewIndexWithinPageLimits,
+    newIndex,
+    strainedComics,
+  };
+};
+
+const determineAvailableAdjComic = (err, files, polarity) => {
+  const { origin } = ComicStore.getAll();
+  const {
+    isNewIndexWithinPageLimits,
+    newIndex,
+    strainedComics,
+  } = generateVariables(files, polarity);
+
   if (isNewIndexWithinPageLimits) {
     const newComicFilepath = path.join(
       path.dirname(origin),
@@ -24,12 +39,13 @@ const determineAvailableAdjComic = (err, files, polarity) => {
 };
 
 const openAdjacentComic = (polarity) => {
-  const Comic = ComicStore.getAll();
+  const { origin } = ComicStore.getAll();
+  const parentDirname = path.dirname(origin);
+  const handleReadDirectoryFiles = (err, files) => {
+    determineAvailableAdjComic(err, files, polarity);
+  };
   if (ComicStore.isComicActive()) {
-    const parentDirname = path.dirname(Comic.origin);
-    fs.readdir(parentDirname, (err, files) => {
-      determineAvailableAdjComic(err, files, polarity);
-    });
+    fs.readdir(parentDirname, handleReadDirectoryFiles);
   }
 };
 

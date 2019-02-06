@@ -6,7 +6,7 @@ import { SET_CONTENT } from '../constants';
 import dispatcher from '../dispatcher';
 import { strainComics } from '../modules/strain';
 
-const determineIfDirectory = fullpath => fs.statSync(fullpath).isDirectory();
+const determineIfDirectory = fullPath => fs.statSync(fullPath).isDirectory();
 
 class ContentStore extends EventEmitter {
   constructor() {
@@ -16,25 +16,26 @@ class ContentStore extends EventEmitter {
       bookmark: '',
       contents: [],
       dirname: '',
-      fullpath: null,
+      fullPath: null,
       id: 'libraryRoot',
       isDirectory: true,
       loadedLibrary: '',
     };
   }
 
-  generateContent = fullpath =>
-    fullpath ? null : this.generateContentObject(fullpath);
+  generateContent = fullPath => (
+    fullPath ? null : this.generateContentObject(fullPath)
+  );
 
-  generateContentObject = fullpath => {
-    const isDirectory = determineIfDirectory(fullpath);
+  generateContentObject = fullPath => {
+    const isDirectory = determineIfDirectory(fullPath);
     return {
-      id: encodeURIComponent(fullpath),
-      basename: path.basename(fullpath),
+      id: encodeURIComponent(fullPath),
+      basename: path.basename(fullPath),
       bookmark: isDirectory ? NaN : 0,
-      dirname: path.dirname(fullpath),
-      extname: path.extname(fullpath),
-      fullpath,
+      dirname: path.dirname(fullPath),
+      extname: path.extname(fullPath),
+      fullPath,
       isDirectory,
       contents: []
     };
@@ -42,10 +43,12 @@ class ContentStore extends EventEmitter {
 
   generateContents = (content, cb) => {
     console.log(content);
+    const handleReadDirectoryFiles = (err, files) => {
+      this.strainContents(err, files, content.fullPath, cb);
+    };
+
     if (content.isDirectory) {
-      fs.readdir(content.fullpath, (err, files) => {
-        this.strainContents(err, files, content.fullpath, cb);
-      });
+      fs.readdir(content.fullPath, handleReadDirectoryFiles);
     } else {
       cb(null, []);
     }
@@ -53,22 +56,29 @@ class ContentStore extends EventEmitter {
 
   generateNestedContentFromFilepath = (filepath, cb) => {
     const content = this.generateContent(filepath);
-    this.generateContents(content, (err, contents) => {
+    const handleGeneratedContents = (err, contents) => {
       content.contents = contents;
       cb(content);
-    });
+    };
+
+    this.generateContents(content, handleGeneratedContents);
   };
 
   getAll = () => (this.state);
 
-  strainContents = (err, files, fullpath, cb) => {
+  handleGeneratedNestedContent = content => {
+    this.saveContent(content);
+    this.emit('change');
+  };
+
+  strainContents = (err, files, fullPath, cb) => {
     const renderContent = file => {
-      const filepath = path.join(fullpath, file);
+      const filepath = path.join(fullPath, file);
       return this.generateContent(filepath);
     };
 
     if (!err) {
-      const strainedComics = strainComics(files, fullpath);
+      const strainedComics = strainComics(files, fullPath);
       const contents = strainedComics.map(renderContent);
       cb(err, contents);
     } else {
@@ -81,11 +91,8 @@ class ContentStore extends EventEmitter {
   };
 
   setContent = (filepath) => {
-    this.generateNestedContentFromFilepath(filepath, content => {
-      this.saveContent(content);
-      this.emit('change');
-    });
-  }
+    this.generateNestedContentFromFilepath(filepath, this.handleGeneratedNestedContent);
+  };
 
   handleActions = (action) => {
     switch (action.type) {

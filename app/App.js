@@ -22,15 +22,15 @@ export default class App extends Component {
 
   componentDidMount() {
     LoadingStore.on('change', this.setLoadingState);
-    window.addEventListener('keydown', this.windowListenerTurnPage);
+    window.addEventListener('keydown', this.handleKeyDown);
   }
 
   componentWillUnmount() {
     LoadingStore.removeListener('change', this.setLoadingState);
-    window.removeEventListener('keydown', this.windowListenerTurnPage);
+    window.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  arrowKeyTurnPage = code => {
+  handleKeyCode = code => {
     switch (code) {
       case 'ArrowRight':
         PageActions.turnPageRight();
@@ -41,10 +41,10 @@ export default class App extends Component {
     }
   };
 
-  windowListenerTurnPage = (e) => {
+  handleKeyDown = (e) => {
     const shouldTurn = ComicStore.isComicActive() && activeTag !== 'input';
     if (shouldTurn) {
-      this.arrowKeyTurnPage(e.code);
+      this.handleKeyCode(e.code);
     }
   };
 

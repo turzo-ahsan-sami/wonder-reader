@@ -31,15 +31,15 @@ class LibraryLayout extends Component {
   onClick = content => {
     content.isDirectory
       ? ContentActions.setContent(content)
-      : ComicActions.openComic(content.fullpath);
+      : ComicActions.openComic(content.fullPath);
   };
 
   openDirectory = () => {
     dialog.showOpenDialog({
       properties: ['openDirectory']
-    }, (filepaths) => {
-      if (Array.isArray(filepaths)) {
-        ContentActions.setContent(filepaths[0]);
+    }, (filePaths) => {
+      if (Array.isArray(filePaths)) {
+        ContentActions.setContent(filePaths[0]);
       }
     });
   };
@@ -50,7 +50,7 @@ class LibraryLayout extends Component {
       bookmark,
       contents,
       dirname,
-      fullpath,
+      fullPath,
       id,
       isDirectory,
       loadedLibrary
@@ -60,12 +60,12 @@ class LibraryLayout extends Component {
       bookmark,
       contents,
       dirname,
-      fullpath,
+      fullPath,
       id,
       isDirectory,
       loadedLibrary
     });
-  }
+  };
 
   setParentAsLibrary = () => {
     const { dirname } = this.state;
@@ -87,11 +87,11 @@ class LibraryLayout extends Component {
       position="fixed"
       title="Library"
     />
-  )
+  );
 
   renderLibrary = () => {
-    const {fullpath} = this.state;
-    return fullpath 
+    const {fullPath} = this.state;
+    return fullPath
       ? this.renderLibraryTable()
       : null;
   };
@@ -104,7 +104,7 @@ class LibraryLayout extends Component {
         onContentClick={this.onClick}
       />
     );
-  }
+  };
 
   render() {
     return (

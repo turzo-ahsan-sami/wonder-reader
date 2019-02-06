@@ -10,11 +10,11 @@ class ComicStore extends EventEmitter {
   constructor() {
     super();
     this.state = {
-      name: null,
       basename: '',
-      tempdir: '',
       extname: '',
+      name: null,
       origin: '',
+      tempDirectory: '',
 
       pending: 0,
       error: false,
@@ -23,35 +23,39 @@ class ComicStore extends EventEmitter {
     };
   }
 
-  getAll() {
-    return this.state;
-  }
+  getAll = () => this.state;
 
   isComicActive = () => {
     const { name } = this.state;
     return name !== null;
   };
 
-  openComic = fullpath => {
+  openComic = fullPath => {
     loadingActions.enableLoading();
-    const Comic = new File(fullpath);
-    Comic.extract(this.postComicExtract);
+    const Comic = new File(fullPath);
+    Comic.extract(this.handleExtractedComic);
   };
 
-  postComicExtract = comic => {
+  handleExtractedComic = comic => {
+    const handleGeneratedPage = this.handleGeneratedComic(comic);
+
     if (!comic.error) {
-      this.generatePages(comic.tempdir, page => {
-        this.setComicState(comic);
-        loadingActions.disableLoading();
-        PageStore.postGeneratePages(page, comic);
-      });
+      PageStore.generatePages(comic.tempDirectory, handleGeneratedPage);
     }
   };
+
+  handleGeneratedComic = comic => (
+    (pages) => {
+      this.setComicState(comic);
+      loadingActions.disableLoading();
+      PageStore.handleGeneratedPages(pages, comic);
+    }
+  );
 
   setComicState = (obj) => {
     this.state = obj;
     this.emit('change');
-  }
+  };
 
   handleActions = (action) => {
     switch(action.type) {
@@ -59,7 +63,7 @@ class ComicStore extends EventEmitter {
         this.openComic(action.filepath);
         break;
     }
-  }
+  };
 }
 
 const comicStore = new ComicStore;
