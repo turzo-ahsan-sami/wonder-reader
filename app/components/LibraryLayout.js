@@ -15,14 +15,20 @@ import * as store from '../store';
 const { dialog } = remote;
 
 class LibraryLayout extends Component {
-  state = store.content.getAll();
+  constructor(props) {
+    super(props);
+    this.state = store.content.getAll();
+  }
 
   componentDidMount() {
     store.content.on('change', this.setContentState);
   }
 
   componentWillUnmount() {
-    actions.content.setContent(this.state);
+    const { fullPath } = this.state;
+    if (fullPath !== null) {
+      actions.content.setContent(this.state);
+    }
     store.content.removeListener('change', this.setContentState);
   }
 
@@ -33,10 +39,13 @@ class LibraryLayout extends Component {
   };
 
   openDirectory = () => {
+    console.log('openDirectory');
     dialog.showOpenDialog({
       properties: ['openDirectory']
     }, (filePaths) => {
+      console.log(filePaths);
       if (Array.isArray(filePaths)) {
+        console.log(filePaths);
         actions.content.setContent(filePaths[0]);
       }
     });
@@ -78,37 +87,22 @@ class LibraryLayout extends Component {
     </div>
   );
 
-  renderHeader = () => (
-    <LibraryHeader
-      buttons={this.renderButtons()}
-      onContentClick={this.onClick}
-      position="fixed"
-      title="Library"
-    />
-  );
-
-  renderLibrary = () => {
-    const {fullPath} = this.state;
-    return fullPath
-      ? this.renderLibraryTable()
-      : null;
-  };
-
-  renderLibraryTable = () => {
-    const {contents} = this.state;
-    return (
-      <LibraryTable
-        contents={contents}
-        onContentClick={this.onClick}
-      />
-    );
-  };
-
   render() {
+    const { contents, fullPath } = this.state;
+
     return (
       <div className="library" style={styles}>
-        {this.renderHeader()}
-        {this.renderLibrary()}
+        <LibraryHeader
+          buttons={<this.renderButtons />}
+          position="fixed"
+          title="Library"
+        />
+        {fullPath && (
+          <LibraryTable
+            contents={contents}
+            onContentClick={this.onClick}
+          />
+        )}
       </div>
     );
   }

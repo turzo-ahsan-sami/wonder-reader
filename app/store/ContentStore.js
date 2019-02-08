@@ -23,9 +23,7 @@ class ContentStore extends EventEmitter {
     };
   }
 
-  generateContent = fullPath => (
-    fullPath ? null : this.generateContentObject(fullPath)
-  );
+  generateContent = fullPath => fullPath ? this.generateContentObject(fullPath) : null;
 
   generateContentObject = fullPath => {
     const isDirectory = determineIfDirectory(fullPath);
@@ -55,8 +53,12 @@ class ContentStore extends EventEmitter {
   };
 
   generateNestedContentFromFilepath = (filepath, cb) => {
+    console.log(filepath);
     const content = this.generateContent(filepath);
+    console.log(content);
     const handleGeneratedContents = (err, contents) => {
+      console.log(err);
+      console.log(contents);
       content.contents = contents;
       cb(content);
     };
@@ -91,6 +93,7 @@ class ContentStore extends EventEmitter {
   };
 
   setContent = (filepath) => {
+    console.log(filepath);
     this.generateNestedContentFromFilepath(filepath, this.handleGeneratedNestedContent);
   };
 

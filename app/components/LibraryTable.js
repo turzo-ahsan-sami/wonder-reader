@@ -9,6 +9,7 @@ import LibraryTableHead from './LibraryTableHead';
 
 class LibraryTable extends Component {
   renderLibraryItem = content => {
+    console.log(content);
     const {
       basename,
       dirname,
@@ -43,6 +44,7 @@ class LibraryTable extends Component {
 
   render() {
     const { contents } = this.props;
+    console.log(contents);
     return (
       <Table
         className="library-menu"

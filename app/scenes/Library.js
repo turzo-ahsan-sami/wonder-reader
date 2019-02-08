@@ -22,9 +22,10 @@ const styles = {
 };
 
 class Library extends Component {
-  state = {
-    top: store.top.getTopValue(),
-  };
+  constructor(props) {
+    super(props);
+    this.state = store.top.getAll();
+  }
 
   componentDidMount() {
     store.top.on('change', this.setTopState);
@@ -35,12 +36,11 @@ class Library extends Component {
   }
 
   setTopState = () => {
-    this.setState({
-      top: store.top.getTopValue()
-    });
+    this.setState(store.top.getAll());
   };
 
   renderDrawer = () => {
+    const { classes } = this.props;
     const { top } = this.state;
 
     return (
@@ -57,15 +57,10 @@ class Library extends Component {
           role="button"
           tabIndex={0}
         >
-          {this.renderLibraryLayout()}
+          <LibraryLayout className={classes.list} />
         </div>
       </Drawer>
     );
-  };
-
-  renderLibraryLayout = () => {
-    const { classes } = this.props;
-    return <LibraryLayout className={classes.list} />;
   };
 
   render() {

@@ -5,6 +5,7 @@ import {
 import dispatcher from '../dispatcher';
 
 export function closeLibrary() {
+  console.log('closeLibrary');
   dispatcher.dispatch({
     type: CLOSE_LIBRARY,
   });

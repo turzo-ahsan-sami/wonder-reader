@@ -19,7 +19,7 @@ class TopStore extends EventEmitter {
     this.handleBoolean(false);
   };
 
-  getTopValue = () => (this.state.top);
+  getAll = () => this.state;
 
   handleBoolean = bool => {
     this.state.top = bool;
@@ -36,6 +36,7 @@ class TopStore extends EventEmitter {
   };
 
   handleActions = (action) => {
+    console.log(action);
     switch(action.type) {
       case CLOSE_LIBRARY:
         this.closeTopDrawer();

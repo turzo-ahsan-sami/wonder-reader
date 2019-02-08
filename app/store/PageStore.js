@@ -7,8 +7,7 @@ import {
   TURN_PAGE_RIGHT
 } from '../constants';
 import dispatcher from '../dispatcher';
-import ComicStore from './ComicStore';
-import TopStore from './TopStore';
+import * as store from '.';
 
 import {
   generateCenterfolds,
@@ -18,7 +17,7 @@ import {
 } from '../modules/PageFunctions';
 import turnPage from '../modules/turnPage';
 
-const getPagePath = page => page.pagePath;
+const getPagePath = ({ pagePath }) => pagePath;
 
 class PageStore extends EventEmitter {
   constructor() {
@@ -105,7 +104,7 @@ class PageStore extends EventEmitter {
   handleChangedPageCount = () => {
     const { currentPageIndex, pageCount } = this.state;
 
-    if (ComicStore.isComicActive()) {
+    if (store.comic.isComicActive()) {
       const pagesToDisplay = (pageCount === 2 && this.isCenterfoldsComing())
         ? 1
         : pageCount;
@@ -128,7 +127,7 @@ class PageStore extends EventEmitter {
       openedComic,
       isLoading,
       pages,
-    }, TopStore.closeTopDrawer);
+    }, store.top.closeTopDrawer);
   };
 
   setCurrentPages = (newPageIndex, pagesToDisplay) => {
@@ -181,7 +180,7 @@ class PageStore extends EventEmitter {
       this.setCurrentPages(newPageIndex, pagesToDisplay);
     };
 
-    if (ComicStore.isComicActive()) {
+    if (store.comic.isComicActive()) {
       turnPage(
         this.state.currentPageIndex,
         this.state.centerfolds,
