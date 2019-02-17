@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 import {
   DISABLE_LOADING,
   ENABLE_LOADING
-} from '../constants';
+} from '../constants/actions';
 import dispatcher from '../dispatcher';
 
 class LoadingStore extends EventEmitter {

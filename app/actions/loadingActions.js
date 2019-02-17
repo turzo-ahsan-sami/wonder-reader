@@ -1,7 +1,7 @@
 import {
   DISABLE_LOADING,
   ENABLE_LOADING
-} from '../constants';
+} from '../constants/actions';
 import dispatcher from '../dispatcher';
 
 export function disableLoading() {

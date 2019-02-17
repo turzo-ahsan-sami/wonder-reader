@@ -5,7 +5,7 @@ import {
   TOGGLE_PAGE_COUNT,
   TURN_PAGE_LEFT,
   TURN_PAGE_RIGHT
-} from '../constants';
+} from '../constants/actions';
 import dispatcher from '../dispatcher';
 import * as store from '.';
 

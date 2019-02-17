@@ -11,8 +11,6 @@ import PageViewer from './scenes/PageViewer';
 
 import theme from './styles/theme';
 
-const activeTag = document.activeElement.tagName;
-
 export default class App extends Component {
   state = {
     loading: store.loading.getLoadingState()
@@ -40,6 +38,7 @@ export default class App extends Component {
   };
 
   handleKeyDown = (e) => {
+    const activeTag = document.activeElement.tagName;
     const shouldTurn = store.comic.isComicActive() && activeTag !== 'input';
     if (shouldTurn) {
       this.handleKeyCode(e.code);
@@ -52,14 +51,14 @@ export default class App extends Component {
     });
   };
 
-  throwError = (error, errorMessage) => {
-    if (error) {
-      this.setState({ error: true, errorMessage }, () => {
-        console.log(errorMessage);
-        // TODO Spawn error module;
-      });
-    }
-  };
+  // throwError = (error, errorMessage) => {
+  //   if (error) {
+  //     this.setState({ error: true, errorMessage }, () => {
+  //       console.log(errorMessage);
+  //       // TODO Spawn error module;
+  //     });
+  //   }
+  // };
 
   render() {
     const { loading } = this.state;

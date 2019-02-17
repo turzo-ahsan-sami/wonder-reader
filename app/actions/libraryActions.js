@@ -1,4 +1,4 @@
-import { LOAD_LIBRARY } from '../constants';
+import { LOAD_LIBRARY } from '../constants/actions';
 import dispatcher from '../dispatcher';
 
 export function loadLibrary(directory) {

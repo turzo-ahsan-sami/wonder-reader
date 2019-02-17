@@ -4,7 +4,7 @@ import {
   CLOSE_LIBRARY,
   OPEN_LIBRARY,
   TOGGLE_LIBRARY,
-} from '../constants';
+} from '../constants/actions';
 import dispatcher from '../dispatcher';
 
 class TopStore extends EventEmitter {

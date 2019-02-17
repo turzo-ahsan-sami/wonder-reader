@@ -1,4 +1,4 @@
-import { OPEN_COMIC } from '../constants';
+import { OPEN_COMIC } from '../constants/actions';
 import dispatcher from '../dispatcher';
 
 export function openComic(filepath) {

@@ -8,17 +8,13 @@ const { copyArray } = require('./copyData');
 const comicTypes = ['.cbr', '.cbz'];
 const imageTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
 
+const sortArrayByAlpha = ARRAY => copyArray(ARRAY).sort(polaritySort);
+
 const isSomething = types => (
   filename => (
     types.includes(path.extname(filename).toLowerCase())
   )
 );
-
-const isComic = isSomething(comicTypes);
-const isImage = isSomething(imageTypes);
-const strainComics = (ARRAY, dirname) => strainer(comicTypes, ARRAY, dirname);
-const strainOnlyComics = ARRAY => strainer(comicTypes, ARRAY);
-const strainImages = ARRAY => strainer(imageTypes, ARRAY);
 
 const isDir = (dirname, file) => (
   typeof dirname === 'undefined'
@@ -36,19 +32,36 @@ const isThisProperThing = (fileTypes) => (
   )
 );
 
-const sortArrayByAlpha = ARRAY => copyArray(ARRAY).sort(polaritySort);
-
 // Cleans out non image files from ARRAY
 const strainer = (fileTypes) => (
-  (ARRAY, dirname) => sortArrayByAlpha(ARRAY.filter(isThisProperThing(fileTypes)(dirname)))
+  (ARRAY, dirname) => {
+    const isProperType = isThisProperThing(fileTypes);
+    console.log(isProperType);
+    const isProperDirname = isProperType(dirname);
+    console.log(isProperDirname);
+    const filtered = ARRAY.filter(isProperDirname);
+    console.log(filtered);
+    const strained = sortArrayByAlpha(ARRAY.filter(isProperType(dirname)));
+    console.log(strained);
+  }
 );
 
+const isComic = isSomething(comicTypes);
+const isImage = isSomething(imageTypes);
+const strainComics = strainer(comicTypes);
+const strainOnlyComics = strainer(comicTypes);
+const strainImages = strainer(imageTypes);
+
+const strain = {
+  comics: strainComics,
+  images: strainImages,
+}
+
 export {
-  comicTypes,
-  imageTypes,
   isComic,
   isImage,
-  sortArrayByAlpha,
+  strain,
+}
   strainComics,
   strainOnlyComics,
   strainImages

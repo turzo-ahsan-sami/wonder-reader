@@ -3,8 +3,8 @@ import path from 'path';
 import { EventEmitter } from 'events';
 
 import dispatcher from '../dispatcher';
-import { SET_CONTENT } from '../constants';
-import { strainComics } from '../modules/strain';
+import {SET_CONTENT} from '../constants/actions';
+import {strain} from '../modules/strain';
 
 const determineIfDirectory = fullPath => fs.statSync(fullPath).isDirectory();
 
@@ -78,9 +78,11 @@ class ContentStore extends EventEmitter {
       const filepath = path.join(fullPath, file);
       return this.generateContent(filepath);
     };
+    console.log(files, fullPath, cb);
 
     if (!err) {
-      const strainedComics = strainComics(files, fullPath);
+      const strainedComics = strain.comics(files, fullPath);
+      console.log(strainedComics);
       const contents = strainedComics.map(renderContent);
       cb(err, contents);
     } else {

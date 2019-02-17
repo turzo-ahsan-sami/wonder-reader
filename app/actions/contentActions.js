@@ -1,4 +1,4 @@
-import { SET_CONTENT } from '../constants';
+import { SET_CONTENT } from '../constants/actions';
 import dispatcher from '../dispatcher';
 
 export function setContent(content) {

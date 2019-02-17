@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 
 import dispatcher from '../dispatcher';
-import { SET_ZOOM_LEVEL } from '../constants';
+import { SET_ZOOM_LEVEL } from '../constants/actions';
 
 const pageViewer = document.querySelector('.PageViewer');
 const pageWrapper = document.getElementById('pageWrapper');

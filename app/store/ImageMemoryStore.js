@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 
-import { SET_IMAGES } from '../constants';
+import { SET_IMAGES } from '../constants/actions';
 import dispatcher from '../dispatcher';
 
 const generateImageMemory = page => {

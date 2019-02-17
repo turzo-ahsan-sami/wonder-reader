@@ -1,7 +1,7 @@
 import {
   CLOSE_LIBRARY,
   OPEN_LIBRARY
-} from '../constants';
+} from '../constants/actions';
 import dispatcher from '../dispatcher';
 
 export function closeLibrary() {

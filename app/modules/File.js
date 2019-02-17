@@ -1,5 +1,5 @@
 // To handle file extraction, error checking, and for setting temp directories
-import { isImage, strainImages } from './strain';
+import { isImage, strain } from './strain';
 
 const fs = require('fs');
 const isDirectory = require('is-directory');
@@ -16,9 +16,12 @@ const Unrar = require('node-unrar');
 const temp = path.join(os.tmpdir(), 'wonderReader');
 const regex = /`|~|!|@|#|\$|%|\^|&|\*|\(|\)|\+|=|\[|\{|\]|\}|\||\\|'|<|,|\.|>|\?|\/|""|;|:/gi;
 
-const failedtempDirectory = 'Error: Failed to create temp folder';
-const failedFileType =
-  'Error: File must be a CBR or CBZ. Compression method is incorrect;';
+const text = {
+  error: {
+    fileType: 'Error: File must be a CBR or CBZ. Compression method is incorrect;',
+    tempDirectory: 'Error: Failed to create temp folder;'
+  }
+};
 
 class File {
   constructor(filepath) {
@@ -115,14 +118,14 @@ class File {
   routeExtraction = (err, cb) => {
     if (err) {
       this.error = true;
-      this.errorMessage = failedtempDirectory;
+      this.errorMessage = text.error.tempDirectory;
     } else if (this.isRar()) {
       this.extractRar(cb);
     } else if (this.isZip()) {
       this.extractZip(cb);
     } else {
       this.error = true;
-      this.errorMessage = failedFileType;
+      this.errorMessage = text.error.fileType;
     }
   };
 
@@ -139,7 +142,7 @@ class File {
 
   updatePages(cb) {
     fs.readdir(this.tempDirectory, (err, files) => {
-      this.pages = strainImages(files);
+      this.pages = strain.images(files);
       cb(this);
     });
   }

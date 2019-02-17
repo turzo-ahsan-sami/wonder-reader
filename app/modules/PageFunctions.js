@@ -2,7 +2,7 @@ import path from 'path';
 import sizeOf from 'image-size';
 
 import encodePath from './encodePath';
-import { strainImages } from './strain';
+import { strain } from './strain';
 
 import * as store from '../store';
 
@@ -12,7 +12,7 @@ const determineDimensions = image => {
 };
 
 const generateCenterfolds = pages => {
-  const strainedPages = strainImages(pages);
+  const strainedPages = strain.images(pages);
   const getStrainedPageIndex = item => strainedPages.indexOf(item);
   const determinedDimensions = strainedPages.filter(determineDimensions);
   return determinedDimensions.map(getStrainedPageIndex);

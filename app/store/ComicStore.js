@@ -4,7 +4,7 @@ import * as actions from '../actions';
 import dispatcher from '../dispatcher';
 import File from '../modules/File';
 import PageStore from './PageStore';
-import { OPEN_COMIC } from '../constants';
+import { OPEN_COMIC } from '../constants/actions';
 
 class ComicStore extends EventEmitter {
   constructor() {
