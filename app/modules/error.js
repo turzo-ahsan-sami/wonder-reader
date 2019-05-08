@@ -1,5 +1,1 @@
-const throwError = (error, errorMessage) => {
-  return new Error(errorMessage);
-};
-
-export default throwError;
+export default (error, errorMessage) => new Error(errorMessage);

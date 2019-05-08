@@ -1,6 +1,6 @@
 import Drawer from '@material-ui/core/Drawer';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
 import * as actions from '../actions';
@@ -21,33 +21,27 @@ const styles = {
   }
 };
 
-class Library extends Component {
-  constructor(props) {
-    super(props);
-    this.state = store.top.getAll();
-  }
+const Library = ({ classes, style }) => {
+  const [active, setActiveState] = useState(store.top.getAll());
 
-  componentDidMount() {
-    store.top.on('change', this.setTopState);
-  }
-
-  componentWillUnmount() {
-    store.top.removeListener('change', this.setTopState);
-  }
-
-  setTopState = () => {
-    this.setState(store.top.getAll());
+  const updateActiveState = () => {
+    setActiveState(store.top.getAll());
   };
 
-  renderDrawer = () => {
-    const { classes } = this.props;
-    const { top } = this.state;
+  useEffect(() => {
+    store.top.on('change', updateActiveState);
+    return store.top.removeListener('change', updateActiveState);
+  });
 
-    return (
+  return (
+    <div
+      className="Library"
+      style={style}
+    >
       <Drawer
         anchor="top"
         onClose={actions.top.closeLibrary}
-        open={top}
+        open={active}
         PaperProps={{ style: styles.PaperProps }}
         transitionDuration={125}
         variant="temporary"
@@ -60,29 +54,17 @@ class Library extends Component {
           <LibraryLayout className={classes.list} />
         </div>
       </Drawer>
-    );
-  };
-
-  render() {
-    const { style } = this.props;
-    return (
-      <div
-        className="Library"
-        style={style}
-      >
-        {this.renderDrawer()}
-      </div>
-    );
-  }
-}
-
-Library.defaultProps = {
-  style: {}
+    </div>
+  );
 };
 
 Library.propTypes = {
   classes: PropTypes.object.isRequired,
   style: PropTypes.objectOf(PropTypes.object.isRequired),
+};
+
+Library.defaultProps = {
+  style: {}
 };
 
 export default withStyles(styles)(Library);

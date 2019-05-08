@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import React, { Component } from 'react';
 
 import * as actions from './actions';
 import * as store from './store';
@@ -11,67 +11,52 @@ import PageViewer from './scenes/PageViewer';
 
 import theme from './styles/theme';
 
-export default class App extends Component {
-  state = {
-    loading: store.loading.getLoadingState()
-  };
-
-  componentDidMount() {
-    store.loading.on('change', this.setLoadingState);
-    window.addEventListener('keydown', this.handleKeyDown);
+const handleKeyCode = code => {
+  switch (code) {
+    case 'ArrowRight':
+      actions.page.turnPageRight();
+      break;
+    case 'ArrowLeft':
+      actions.page.turnPageLeft();
+      break;
   }
+};
 
-  componentWillUnmount() {
-    store.loading.removeListener('change', this.setLoadingState);
-    window.removeEventListener('keydown', this.handleKeyDown);
+const handleKeyDown = (e) => {
+  const activeTag = document.activeElement.tagName;
+  const shouldTurn = store.comic.isComicActive() && activeTag !== 'input';
+  if (shouldTurn) {
+    handleKeyCode(e.code);
   }
+};
 
-  handleKeyCode = code => {
-    switch (code) {
-      case 'ArrowRight':
-        actions.page.turnPageRight();
-        break;
-      case 'ArrowLeft':
-        actions.page.turnPageLeft();
-        break;
-    }
+const App = () => {
+  const [loading, setLoadingState] = useState(store.loading.getLoadingState());
+
+  const updateLoadingState = () => {
+    setLoadingState(store.loading.getLoadingState());
   };
 
-  handleKeyDown = (e) => {
-    const activeTag = document.activeElement.tagName;
-    const shouldTurn = store.comic.isComicActive() && activeTag !== 'input';
-    if (shouldTurn) {
-      this.handleKeyCode(e.code);
-    }
-  };
+  useEffect(() => {
+    store.loading.on('change', updateLoadingState);
+    window.addEventListener('keydown', handleKeyDown);
 
-  setLoadingState = () => {
-    this.setState({
-      loading: store.loading.getLoadingState()
-    });
-  };
+    return () => {
+      store.loading.removeListener('change', updateLoadingState);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  });
 
-  // throwError = (error, errorMessage) => {
-  //   if (error) {
-  //     this.setState({ error: true, errorMessage }, () => {
-  //       console.log(errorMessage);
-  //       // TODO Spawn error module;
-  //     });
-  //   }
-  // };
+  return (
+    <MuiThemeProvider theme={theme}>
+      <div className="main">
+        <Header />
+        <Library />
+        <PageViewer />
+        <Loading loading={loading} />
+      </div>
+    </MuiThemeProvider>
+  );
+};
 
-  render() {
-    const { loading } = this.state;
-
-    return (
-      <MuiThemeProvider theme={theme}>
-        <div className="main">
-          <Header />
-          <Library />
-          <PageViewer />
-          <Loading loading={loading} />
-        </div>
-      </MuiThemeProvider>
-    );
-  }
-}
+export default App;

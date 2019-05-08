@@ -1,9 +1,7 @@
 // Page turning engine 2.0
 
-const includes = ARRAY => index => ARRAY.includes(index);
-
 const areThereUpcomingIncludes = ARRAY => index => (
-  includes(ARRAY)(index) || includes(ARRAY)(index + 1)
+  ARRAY.includes(index) || ARRAY.includes(index + 1)
 );
 
 const determineProperBool = ({
@@ -13,32 +11,18 @@ const determineProperBool = ({
   pagesLength,
   polarity
 }) => {
-  const isCenterfold = includes(centerfolds);
   const areThereUpcomingCenterfolds = areThereUpcomingIncludes(centerfolds);
-  const wouldLoadFirstPage = currentPageIndex + pageCount * polarity < 0;
-  const wouldLoadLastPage =
-    currentPageIndex + pageCount * polarity >= pagesLength - 1;
-  const singlePageView = pageCount === 1;
-  const positivePolarity = polarity > 0;
-  const isCurrentPageACenterfold = isCenterfold(currentPageIndex);
-  const isNextPageACenterfold = isCenterfold(currentPageIndex + 1);
-  const areThereUpcomingCenterfoldsInAFewPages = areThereUpcomingCenterfolds(
-    currentPageIndex + 2
-  );
-  const areTherePrecedingCenterfoldsInAFewPages = areThereUpcomingCenterfolds(
-    currentPageIndex - 2
-  );
 
   return {
-    areTherePrecedingCenterfoldsInAFewPages,
+    areTherePrecedingCenterfoldsInAFewPages: areThereUpcomingCenterfolds(currentPageIndex - 2),
     areThereUpcomingCenterfolds,
-    areThereUpcomingCenterfoldsInAFewPages,
-    isCurrentPageACenterfold,
-    isNextPageACenterfold,
-    positivePolarity,
-    singlePageView,
-    wouldLoadFirstPage,
-    wouldLoadLastPage
+    areThereUpcomingCenterfoldsInAFewPages: areThereUpcomingCenterfolds(currentPageIndex + 2),
+    isCurrentPageACenterfold: centerfolds.includes(currentPageIndex),
+    isNextPageACenterfold: centerfolds.includes(currentPageIndex + 1),
+    positivePolarity: polarity > 0,
+    singlePageView: pageCount === 1,
+    wouldLoadFirstPage: currentPageIndex + pageCount * polarity < 0,
+    wouldLoadLastPage: currentPageIndex + pageCount * polarity >= pagesLength - 1,
   };
 };
 
