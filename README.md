@@ -1,3 +1,5 @@
+<img src="https://electronjs.org/app-img/wonder-reader/wonder-reader-icon-128.png">
+
 [![devDependencies Status](https://david-dm.org/alice-em/wonder-reader/dev-status.svg?style=flat-square)](https://david-dm.org/alice-em/wonder-reader?type=dev)
 
 ## Wonder Reader :: A modern comic book reader for Windows, OSX, and Linux
