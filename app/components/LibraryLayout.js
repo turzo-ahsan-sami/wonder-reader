@@ -1,11 +1,7 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { remote } from 'electron';
 
-import {
-  ButtonClose,
-  ButtonLevelUp,
-  ButtonOpenFolder
-} from './Buttons';
+import * as Button from './Buttons';
 import LibraryHeader from './LibraryHeader';
 import LibraryTable from './LibraryTable';
 
@@ -14,99 +10,63 @@ import * as store from '../store';
 
 const { dialog } = remote;
 
-class LibraryLayout extends Component {
-  constructor(props) {
-    super(props);
-    this.state = store.content.getAll();
-  }
+const LibraryLayout = () => {
+  const [state, setState] = useState(store.content.getAll());
 
-  componentDidMount() {
-    store.content.on('change', this.setContentState);
-  }
+  const updateState = () => {
+    setState(store.content.getAll());
+  };
 
-  componentWillUnmount() {
-    const { fullPath } = this.state;
-    if (fullPath !== null) {
-      actions.content.setContent(this.state);
+  useEffect(() => {
+    store.content.on('change', updateState);
+    return () => {
+      if (state.fullPath !== null) {
+        actions.content.setContent(this.state);
+      }
+      store.content.removeListener('change', updateState);
+    };
+  });
+
+  const handleFilePaths = filePaths => {
+    if (Array.isArray(filePaths)) {
+      actions.content.setContent(filePaths[0]);
     }
-    store.content.removeListener('change', this.setContentState);
-  }
+  };
 
-  onClick = content => {
+  const onContentClick = content => {
     content.isDirectory
       ? actions.content.setContent(content)
       : actions.comic.openComic(content.fullPath);
   };
 
-  openDirectory = () => {
-    console.log('openDirectory');
+  const openDirectory = () => {
     dialog.showOpenDialog({
       properties: ['openDirectory']
-    }, (filePaths) => {
-      console.log(filePaths);
-      if (Array.isArray(filePaths)) {
-        console.log(filePaths);
-        actions.content.setContent(filePaths[0]);
-      }
-    });
+    }, handleFilePaths);
   };
 
-  setContentState = () => {
-    const {
-      basename,
-      bookmark,
-      contents,
-      dirname,
-      fullPath,
-      id,
-      isDirectory,
-      loadedLibrary
-    } = store.content.getAll();
-    this.setState({
-      basename,
-      bookmark,
-      contents,
-      dirname,
-      fullPath,
-      id,
-      isDirectory,
-      loadedLibrary
-    });
-  };
-
-  setParentAsLibrary = () => {
-    const { dirname } = this.state;
-    actions.content.setContent(dirname);
-  };
-
-  renderButtons = () =>  (
-    <div>
-      <ButtonOpenFolder onClick={this.openDirectory} />
-      <ButtonLevelUp onClick={this.setParentAsLibrary} />
-      <ButtonClose onClick={actions.top.closeLibrary} />
+  return (
+    <div className="library" style={styles}>
+      <LibraryHeader
+        buttons={(
+          <div>
+            <Button.OpenFolder onClick={openDirectory} />
+            <Button.LevelUp onClick={() => actions.content.setContent(state.dirname)} />
+            <Button.Close onClick={actions.top.closeLibrary} />
+          </div>
+        )}
+        position="fixed"
+        title="Library"
+      />
+      {state.fullPath && (
+        <LibraryTable
+          contents={state.contents}
+          onContentClick={onContentClick}
+        />
+      )}
     </div>
   );
-
-  render() {
-    const { contents, fullPath } = this.state;
-
-    return (
-      <div className="library" style={styles}>
-        <LibraryHeader
-          buttons={<this.renderButtons />}
-          position="fixed"
-          title="Library"
-        />
-        {fullPath && (
-          <LibraryTable
-            contents={contents}
-            onContentClick={this.onClick}
-          />
-        )}
-      </div>
-    );
-  }
-}
+};
 
 const styles = {
   marginTop: '64px',

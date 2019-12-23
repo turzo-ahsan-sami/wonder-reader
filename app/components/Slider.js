@@ -1,13 +1,10 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import ZoomDisplay from './ZoomDisplay';
 import ZoomInput from './ZoomInput';
 
 import * as actions from '../actions';
 import * as store from '../store';
-
-// const sliderComponent = document.getElementById('sliderComponent');
-const sliderInput = document.getElementById('sliderInput');
 
 const boxShadow = (
   'inset rgb(135, 169, 214) 0px 3px 0px,'
@@ -26,51 +23,35 @@ const styles = {
   padding: '3px'
 };
 
-class Slider extends Component {
-  state = {
-    zoomLevel: store.zoom.getZoomLevel()
+const Slider = () => {
+  const [zoomLevel, setZoomLevel] = useState(store.zoom.getZoomLevel());
+
+  const updateZoomLevel = () => {
+    setZoomLevel(store.zoom.getZoomLevel());
   };
 
-  componentDidMount() {
-    store.zoom.on('change', this.setZoomLevelState);
-  }
+  useEffect(() => {
+    store.zoom.on('change', updateZoomLevel);
+    return store.zoom.removeListener('change', updateZoomLevel);
+  });
 
-  componentWillUnmount() {
-    store.zoom.removeListener('change', this.setZoomLevelState);
-  }
-
-  blurSliderInput = () => {
-    sliderInput.blur();
-  };
-
-  onChange = e => {
-    const zoomLevel = Number(e.target.value);
-    actions.zoom.setZoomLevel(zoomLevel);
-  };
-
-  setZoomLevelState = () => {
-    this.setState({
-      zoomLevel: store.zoom.getZoomLevel()
-    });
-  };
-
-  render() {
-    const { zoomLevel } = this.state;
-    return (
-      <div
-        className="slider"
-        id="sliderComponent"
-        onBlur={this.blurSliderInput}
-        style={styles}
-      >
-        <ZoomInput
-          onChange={this.onChange}
-          value={zoomLevel}
-        />
-        <ZoomDisplay value={zoomLevel} />
-      </div>
-    );
-  }
-}
+  return (
+    <div
+      className="slider"
+      id="sliderComponent"
+      onBlur={() => document.getElementById('sliderInput').blur()}
+      style={styles}
+    >
+      <ZoomInput
+        onChange={e => {
+          const zoomLevel = Number(e.target.value);
+          actions.zoom.setZoomLevel(zoomLevel);
+        }}
+        value={zoomLevel}
+      />
+      <ZoomDisplay value={zoomLevel} />
+    </div>
+  );
+};
 
 export default Slider;

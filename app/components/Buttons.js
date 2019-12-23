@@ -60,7 +60,7 @@ ButtonPrototype.defaultProps = {
   }
 };
 
-const ButtonChangePageCountDouble = ({ onClick }) => (
+const ChangePageCountDouble = ({ onClick }) => (
   <ButtonPrototype
     icon={<FaMinusSquareO />}
     onClick={onClick}
@@ -68,22 +68,22 @@ const ButtonChangePageCountDouble = ({ onClick }) => (
   />
 );
 
-ButtonChangePageCountDouble.propTypes = {
+ChangePageCountDouble.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-const ButtonChangePageCountSingle = ({ onClick }) => (
+const ChangePageCountSingle = ({ onClick }) => (
   <ButtonPrototype
     icon={<FaSquareO />}
     onClick={onClick}
   />
 );
 
-ButtonChangePageCountSingle.propTypes = {
+ChangePageCountSingle.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-const ButtonClose = ({ onClick }) => (
+const Close = ({ onClick }) => (
   <ButtonPrototype
     icon={<FaClose />}
     onClick={onClick}
@@ -91,96 +91,117 @@ const ButtonClose = ({ onClick }) => (
   />
 );
 
-ButtonClose.propTypes = {
+Close.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-const ButtonLevelUp = ({ onClick }) => (
+const LevelUp = ({ onClick }) => (
   <ButtonPrototype
     icon={<FaLevelUp />}
     onClick={onClick}
   />
 );
 
-ButtonLevelUp.propTypes = {
+LevelUp.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-const ButtonNextComic = ({ onClick }) => (
+const NextComic = ({ onClick }) => (
   <ButtonPrototype
     icon={<FaAngleDoubleRight />}
     onClick={onClick}
   />
 );
 
-ButtonNextComic.propTypes = {
+NextComic.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-const ButtonOpenFolder = ({ onClick }) => (
+const OpenFolder = ({ onClick }) => (
   <ButtonPrototype
     icon={<FaFolderOpen />}
     onClick={onClick}
   />
 );
 
-ButtonOpenFolder.propTypes = {
+OpenFolder.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-const ButtonOpenLibrary = ({ onClick }) => (
+const OpenLibrary = ({ onClick }) => (
   <ButtonPrototype
     icon={<FaBook />}
     onClick={onClick}
   />
 );
 
-ButtonOpenLibrary.propTypes = {
+OpenLibrary.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-const ButtonPageLeft = ({ onClick }) => (
+const PageLeft = ({ onClick }) => (
   <ButtonPrototype
     icon={<FaAngleLeft />}
     onClick={onClick}
   />
 );
 
-ButtonPageLeft.propTypes = {
+PageLeft.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-const ButtonPageRight = ({ onClick }) => (
+const PageRight = ({ onClick }) => (
   <ButtonPrototype
     icon={<FaAngleRight />}
     onClick={onClick}
   />
 );
 
-ButtonPageRight.propTypes = {
+PageRight.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-const ButtonPrevComic = ({ onClick }) => (
+const PrevComic = ({ onClick }) => (
   <ButtonPrototype
     icon={<FaAngleDoubleLeft />}
     onClick={onClick}
   />
 );
 
-ButtonPrevComic.propTypes = {
+PrevComic.propTypes = {
+  onClick: PropTypes.func.isRequired
+};
+
+const Toggle = ({bool, onClick}) => (
+  bool ? (
+    <ButtonPrototype
+      icon={<FaSquareO />}
+      onClick={onClick}
+    />
+  ) : (
+    <ButtonPrototype
+      icon={<FaMinusSquareO />}
+      onClick={onClick}
+      style={determineStyles(90)}
+    />
+  )
+);
+
+Toggle.propTypes = {
+  bool: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired
 };
 
 export {
-  ButtonChangePageCountDouble,
-  ButtonChangePageCountSingle,
-  ButtonNextComic,
-  ButtonOpenLibrary,
-  ButtonPageLeft,
-  ButtonPageRight,
-  ButtonPrevComic,
-  ButtonClose,
-  ButtonLevelUp,
-  ButtonOpenFolder
+  ChangePageCountDouble,
+  ChangePageCountSingle,
+  Close,
+  LevelUp,
+  NextComic,
+  OpenFolder,
+  OpenLibrary,
+  PageLeft,
+  PageRight,
+  PrevComic,
+  Toggle,
 };

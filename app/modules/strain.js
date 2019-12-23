@@ -61,4 +61,5 @@ export {
   isComic,
   isImage,
   strain,
+  strainOnlyComics,
 };
