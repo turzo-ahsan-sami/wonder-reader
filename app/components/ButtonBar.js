@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
 import IconButton from '@material-ui/core/IconButton';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import {
   FaAngleDoubleLeft,
   FaAngleDoubleRight,
@@ -9,11 +11,9 @@ import {
   FaMinusSquareO,
   FaSquareO
 } from 'react-icons/lib/fa';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
 
-import { buttonStyle, buttonTheme } from './buttonStyle';
 import Slider from './Slider';
+import { buttonStyle, buttonTheme } from './buttonStyle';
 
 const initButtons = [
   {
@@ -64,8 +64,9 @@ class ButtonBar extends Component {
 
   determineButtonFunction = button => (button.func ? button.func : () => {});
 
-  determineButtonStyle = item => {
-    const rotation = typeof item.rotation === 'undefined' ? 0 : item.rotation;
+  determineButtonStyle = button => {
+    const rotation =
+      typeof button.rotation === 'undefined' ? 0 : button.rotation;
     return {
       margin: '2px',
       textShadow: '0 0 5px rgba(0,0,0,0.5)',
@@ -78,24 +79,23 @@ class ButtonBar extends Component {
     return pageCount === 2 ? <FaMinusSquareO /> : <FaSquareO />;
   };
 
-  determineIfChangePageCount = (icons, item) =>
-    item.name === 'changePageCount' ? icons : item.icon;
+  determineIfChangePageCount = (icon, button) =>
+    button.name === 'changePageCount' ? icon : button.icon;
 
-  renderButton = item => {
+  renderButton = button => {
     const { buttons } = this.props;
-    const button = buttons[item.name];
-    const icon = this.determineIfChangePageCount(this.determineIcon(), item);
-    const buttonFunction = this.determineButtonFunction(button);
-    const style = this.determineButtonStyle(item);
+    const buttonFunction = this.determineButtonFunction(buttons[button.name]);
+    const icon = this.determineIfChangePageCount(this.determineIcon(), button);
+    const style = this.determineButtonStyle(button);
 
-    if (item.color) {
+    if (button.color) {
       style.background = '#ef5350';
     }
     return (
       <IconButton
-        key={item.key}
+        key={button.key}
         color="primary"
-        disabled={button.disabled}
+        disabled={buttons[button.name].disabled}
         onClick={buttonFunction}
         style={style}
       >

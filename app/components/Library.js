@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 import LibraryLayout from './LibraryLayout';
 

@@ -1,12 +1,12 @@
 import AppBar from '@material-ui/core/AppBar';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
-import { buttonStyle, buttonTheme } from './buttonStyle';
 import headerStyle from './headerStyle';
+import { buttonStyle, buttonTheme } from './buttonStyle';
 
 const LibraryHeader = ({ buttons, position, title }) => (
   <AppBar style={{ position }}>

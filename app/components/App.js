@@ -239,11 +239,10 @@ export default class App extends Component {
   mapPages = (files, tempdir) =>
     files.map((file, key) => {
       const pagePath = path.join(tempdir, file);
-      const encodedPagePath = encodepath(pagePath);
       return {
-        pagePath,
-        encodedPagePath,
-        key
+        encodedPagePath: encodepath(pagePath),
+        key,
+        pagePath
       };
     });
 

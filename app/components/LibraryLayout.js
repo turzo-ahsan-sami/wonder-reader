@@ -1,26 +1,37 @@
-import React, { Component } from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import { FaClose, FaFolderOpen, FaLevelUp } from 'react-icons/lib/fa';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { FaClose, FaFolderOpen, FaLevelUp } from 'react-icons/lib/fa';
 
 import LibraryHeader from './LibraryHeader';
 import LibraryTable from './LibraryTable';
 
+const polaritySort = require('../modules/polaritySort');
 const { copyArray, copyDeepObject } = require('../modules/copyData.js');
 const { dialog } = require('electron').remote;
 const { generateNestedContentFromFilepath } = require('../modules/generate.js');
-const polaritySort = require('../modules/polaritySort');
+
+const styles = {
+  closeButton: {
+    background: '#ef5350'
+  },
+  libraryStyles: {
+    marginTop: '64px',
+    maxHeight: 'calc(90vh - 64px)',
+    overflowY: 'auto'
+  }
+};
 
 class LibraryLayout extends Component {
   state = {
-    id: 'libraryRoot',
     basename: '',
     bookmark: '',
+    contents: [],
     dirname: '',
     fullpath: null,
+    id: 'libraryRoot',
     isDirectory: true,
-    root: '',
-    contents: []
+    root: ''
   };
 
   componentDidMount() {
@@ -64,18 +75,18 @@ class LibraryLayout extends Component {
     </IconButton>
   );
 
-  renderLibary = () => {
+  renderLibrary = () => {
     const { basename, bookmark, contents, dirname, fullpath, id } = this.state;
 
     return (
       <LibraryTable
-        key={id}
         basename={basename}
         bookmark={bookmark}
+        contents={contents}
         dirname={dirname}
         fullpath={fullpath}
         isDirectory
-        contents={contents}
+        key={id}
         onContentClick={this.onClick}
         saveContentDataToParent={this.saveContentDataToParent}
         saveContentsDataToParent={this.saveContentsDataToParent}
@@ -152,7 +163,7 @@ class LibraryLayout extends Component {
   render() {
     const { fullpath } = this.state;
 
-    const libraryTable = fullpath ? this.renderLibary() : null;
+    const libraryTable = fullpath ? this.renderLibrary() : null;
     return (
       <div className="library" style={styles.libraryStyles}>
         <LibraryHeader
@@ -177,17 +188,6 @@ LibraryLayout.propTypes = {
   root: PropTypes.string,
   saveContentDataToParent: PropTypes.func.isRequired,
   updateRoot: PropTypes.func.isRequired
-};
-
-const styles = {
-  closeButton: {
-    background: '#ef5350'
-  },
-  libraryStyles: {
-    marginTop: '64px',
-    maxHeight: 'calc(90vh - 64px)',
-    overflowY: 'auto'
-  }
 };
 
 export default LibraryLayout;

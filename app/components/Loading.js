@@ -1,8 +1,8 @@
-import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import PropTypes from 'prop-types';
+import React from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
   LoaderElement: {
@@ -28,15 +28,6 @@ const styles = theme => ({
   })
 });
 
-const Loading = ({ classes, isLoading }) =>
-  isLoading ? <LoaderElement classes={classes} /> : null;
-
-const LoaderElement = ({ classes }) => (
-  <div style={styles.LoaderElement}>
-    <PaperElement classes={classes} />
-  </div>
-);
-
 const PaperElement = ({ classes }) => (
   <Paper className={classes.root} elevation={4} style={styles.Paper}>
     <CircularProgress
@@ -46,6 +37,15 @@ const PaperElement = ({ classes }) => (
     />
   </Paper>
 );
+
+const LoaderElement = ({ classes }) => (
+  <div style={styles.LoaderElement}>
+    <PaperElement classes={classes} />
+  </div>
+);
+
+const Loading = ({ classes, isLoading }) =>
+  isLoading ? <LoaderElement classes={classes} /> : null;
 
 Loading.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line

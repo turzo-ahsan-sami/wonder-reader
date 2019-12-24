@@ -1,7 +1,7 @@
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import React from 'react';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 
 import { FaFolderO, FaFileArchiveO, FaPercent } from 'react-icons/lib/fa';
 // import Bookmark from './Bookmark.js';
