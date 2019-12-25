@@ -44,7 +44,9 @@ const generateContents = (content, cb) => {
 
     fs.readdir(content.fullpath, (err, files) => {
       if (!err) {
-        const strainedFiles = strainComics(files, content.fullpath);
+        const strainedFiles = strainComics(files).map(file =>
+          path.join(content.fullpath, file)
+        );
         const contents = strainedFiles.map(renderContent);
         cb(err, contents);
       } else {

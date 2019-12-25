@@ -42,4 +42,20 @@ describe('strain.js', () => {
 
     expect(sortArrayByAlpha(testArray)).toEqual(expected);
   });
+
+  it('strainComics', () => {
+    const { strainComics } = strain;
+    const testFiles = ['abc.cbz', 'sample.cbr', 'document.pdf', 'other.cbz'];
+    const expected = ['abc.cbz', 'other.cbz', 'sample.cbr'];
+
+    expect(strainComics(testFiles)).toEqual(expected);
+  });
+
+  it('strainImages', () => {
+    const { strainImages } = strain;
+    const testFiles = ['abc.bmp', 'sample.png', 'document.jpg', 'other.cbz'];
+    const expected = ['abc.bmp', 'document.jpg', 'sample.png'];
+
+    expect(strainImages(testFiles)).toEqual(expected);
+  });
 });

@@ -1,6 +1,5 @@
 // strain.js cleans out the dirty files, like .DS_Store
 const { copyArray } = require('./copyData');
-const isDirectory = require('is-directory');
 const path = require('path');
 
 const polaritySort = require('../modules/polaritySort.js');
@@ -8,37 +7,25 @@ const polaritySort = require('../modules/polaritySort.js');
 const comicTypes = ['.cbr', '.cbz'];
 const imageTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
 
-const isComic = filename => isSomething(filename, comicTypes);
-const isImage = filename => isSomething(filename, imageTypes);
-
-// const isProperFileType = (x, i)
-
+// Determiner Functions
 const isSomething = (filename, types) =>
   types.includes(path.extname(filename).toLowerCase());
 
+const isComic = filename => isSomething(filename, comicTypes);
+const isImage = filename => isSomething(filename, imageTypes);
+
+// Array Functions
 const sortArrayByAlpha = ARRAY =>
   copyArray(ARRAY).sort((a, b) => polaritySort(a, b));
 
 // Cleans out non image files from ARRAY
-const strainer = (fileTypes, ARRAY, dirname) => {
-  function isProperFileType(x, i) {
-    // console.log(x, i);
-    const extname = path.extname(ARRAY[i]);
-    let isThisAProperFileType = fileTypes.includes(extname.toLowerCase());
-    if (dirname) {
-      const filepath = path.join(dirname, ARRAY[i]);
-      isThisAProperFileType =
-        isThisAProperFileType || isDirectory.sync(filepath);
-    }
-    return isThisAProperFileType;
-  }
-  const newARRAY = ARRAY.filter(isProperFileType);
-  return sortArrayByAlpha(newARRAY);
-};
+const strainer = fileTypes => files =>
+  sortArrayByAlpha(
+    files.filter(file => fileTypes.includes(path.extname(file)))
+  );
 
-const strainComics = (ARRAY, dirname) => strainer(comicTypes, ARRAY, dirname);
-const strainOnlyComics = ARRAY => strainer(comicTypes, ARRAY);
-const strainImages = ARRAY => strainer(imageTypes, ARRAY);
+const strainComics = strainer(comicTypes);
+const strainImages = strainer(imageTypes);
 
 export {
   comicTypes,
@@ -47,6 +34,5 @@ export {
   isImage,
   sortArrayByAlpha,
   strainComics,
-  strainOnlyComics,
   strainImages
 };
