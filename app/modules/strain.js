@@ -13,16 +13,11 @@ const isImage = filename => isSomething(filename, imageTypes);
 
 // const isProperFileType = (x, i)
 
-const isSomething = (filename, types) => {
-  const extname = path.extname(filename).toLowerCase();
-  return types.includes(extname);
-};
+const isSomething = (filename, types) =>
+  types.includes(path.extname(filename).toLowerCase());
 
-const sortArrayByAlpha = ARRAY => {
-  const newARRAY = copyArray(ARRAY);
-  newARRAY.sort((a, b) => polaritySort(a, b));
-  return newARRAY;
-};
+const sortArrayByAlpha = ARRAY =>
+  copyArray(ARRAY).sort((a, b) => polaritySort(a, b));
 
 // Cleans out non image files from ARRAY
 const strainer = (fileTypes, ARRAY, dirname) => {
@@ -37,7 +32,7 @@ const strainer = (fileTypes, ARRAY, dirname) => {
     }
     return isThisAProperFileType;
   }
-  const newARRAY = ARRAY.filter((x, i) => isProperFileType(x, i));
+  const newARRAY = ARRAY.filter(isProperFileType);
   return sortArrayByAlpha(newARRAY);
 };
 

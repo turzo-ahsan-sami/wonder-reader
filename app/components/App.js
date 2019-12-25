@@ -7,7 +7,7 @@ import Loading from './Loading';
 import PageViewer from './PageViewer';
 import theme from './theme';
 
-import encodepath from '../modules/encodepath';
+import encodePath from '../modules/encodePath';
 import File from '../modules/File';
 import { generateCenterfolds } from '../modules/generate';
 import { strainOnlyComics } from '../modules/strain';
@@ -198,7 +198,7 @@ export default class App extends Component {
         const temp = openedComic.tempdir;
         const pageKey = openedComic.pages[key];
         const pagePath = path.join(temp, pageKey);
-        const page = encodepath(pagePath);
+        const page = encodePath(pagePath);
         const { width, height } = sizeOf(pagePath);
         const ratio =
           key === newPageIndex ? 1 : encodedPages[0].height / height;
@@ -240,7 +240,7 @@ export default class App extends Component {
     files.map((file, key) => {
       const pagePath = path.join(tempdir, file);
       return {
-        encodedPagePath: encodepath(pagePath),
+        encodedPagePath: encodePath(pagePath),
         key,
         pagePath
       };
