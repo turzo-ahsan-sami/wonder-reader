@@ -10,6 +10,7 @@ const generatePages = ({ pages }) => {
   return pages.map(({ key, page, width }) => (
     <Page
       key={key}
+      id={`page${key}`}
       width={(width / totalSize) * 100}
       alt="comic page"
       src={page}

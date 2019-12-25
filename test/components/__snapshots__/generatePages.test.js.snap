@@ -30,11 +30,13 @@ ShallowWrapper {
   Symbol(enzyme.__node__): Array [
     <Page
       alt="comic page"
+      id="page0"
       src="abc.png"
       width={25}
     />,
     <Page
       alt="comic page"
+      id="page1"
       src="deb.png"
       width={75}
     />,
@@ -43,11 +45,13 @@ ShallowWrapper {
     Array [
       <Page
         alt="comic page"
+        id="page0"
         src="abc.png"
         width={25}
       />,
       <Page
         alt="comic page"
+        id="page1"
         src="deb.png"
         width={75}
       />,
