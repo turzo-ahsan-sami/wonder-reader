@@ -3,14 +3,11 @@ import Enzyme, { shallow } from 'enzyme';
 import React from 'react';
 
 import GeneratePages, {
-  generatePage,
-  generateTotalSize,
-  generateTotalSizeBeta
+  generateTotalSize
 } from '../../app/components/generatePages';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const GeneratePage = generatePage(1000);
 const props = {
   pages: [
     {
@@ -33,16 +30,7 @@ describe('generatePages', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('generatePage', () => {
-    const wrapper = shallow(<GeneratePage {...props[0]} />);
-    expect(wrapper).toMatchSnapshot();
-  });
-
   it('generateTotalSize', () => {
     expect(generateTotalSize(sampleData)).toBe(15);
-  });
-
-  it('generateTotalSizeBeta', () => {
-    expect(generateTotalSizeBeta(sampleData)).toBe(15);
   });
 });
