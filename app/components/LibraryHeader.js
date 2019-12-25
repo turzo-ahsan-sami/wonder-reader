@@ -22,7 +22,7 @@ const LibraryHeader = ({ buttons, position, title }) => (
 );
 
 LibraryHeader.propTypes = {
-  buttons: PropTypes.object.isRequired, // eslint-disable-line
+  buttons: PropTypes.node.isRequired,
   position: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired
 };

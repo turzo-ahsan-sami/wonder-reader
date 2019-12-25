@@ -19,6 +19,35 @@ const styles = {
   }
 };
 
+const LibraryDrawer = ({
+  classes,
+  closeDrawer,
+  open,
+  openComic,
+  root,
+  saveContentDataToMain
+}) => (
+  <Drawer
+    anchor="top"
+    open={open}
+    onClose={closeDrawer}
+    PaperProps={{ style: styles.PaperProps }}
+    variant="temporary"
+    transitionDuration={125}
+  >
+    <div tabIndex={0} role="button" onKeyDown={closeDrawer}>
+      <LibraryLayout
+        className={classes.list}
+        closeLibrary={closeDrawer}
+        openComic={openComic}
+        root={root}
+        saveContentDataToParent={saveContentDataToMain}
+        updateRoot={this.updateRoot}
+      />
+    </div>
+  </Drawer>
+);
+
 class Library extends Component {
   state = {
     root: this.props.loadedLibrary
@@ -28,52 +57,29 @@ class Library extends Component {
     this.setState({ root: filepath });
   };
 
-  renderDrawer = () => {
-    const { closeDrawer, open } = this.props;
-
-    return (
-      <Drawer
-        anchor="top"
-        open={open}
-        onClose={closeDrawer}
-        PaperProps={{ style: styles.PaperProps }}
-        variant="temporary"
-        transitionDuration={125}
-      >
-        <div tabIndex={0} role="button" onKeyDown={closeDrawer}>
-          {this.renderLibraryLayout()}
-        </div>
-      </Drawer>
-    );
-  };
-
-  renderLibraryLayout = () => {
+  render() {
     const {
+      style,
       classes,
       closeDrawer,
+      open,
       openComic,
       saveContentDataToMain
     } = this.props;
     const { root } = this.state;
 
     return (
-      <LibraryLayout
-        className={classes.list}
-        closeLibrary={closeDrawer}
-        openComic={openComic}
-        root={root}
-        saveContentDataToParent={saveContentDataToMain}
-        updateRoot={this.updateRoot}
-      />
-    );
-  };
-
-  render() {
-    const { style } = this.props;
-
-    return (
       <div className="Library" style={style}>
-        {this.renderDrawer()}
+        <LibraryDrawer
+          {...{
+            classes,
+            closeDrawer,
+            open,
+            openComic,
+            root,
+            saveContentDataToMain
+          }}
+        />
       </div>
     );
   }
@@ -94,4 +100,5 @@ Library.propTypes = {
   style: PropTypes.objectOf(PropTypes.object.isRequired)
 };
 
+export { Library, LibraryDrawer };
 export default withStyles(styles)(Library);
