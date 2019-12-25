@@ -2,9 +2,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
 import React from 'react';
 
-import GeneratePages, {
-  generateTotalSize
-} from '../../app/components/generatePages';
+import GeneratePages, { generateTotalSize } from '../generatePages';
 
 Enzyme.configure({ adapter: new Adapter() });
 

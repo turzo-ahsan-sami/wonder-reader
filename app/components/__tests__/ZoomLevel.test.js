@@ -2,7 +2,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
 import React from 'react';
 
-import ZoomLevel from '../../app/components/ZoomLevel';
+import ZoomLevel from '../ZoomLevel';
 
 Enzyme.configure({ adapter: new Adapter() });
 

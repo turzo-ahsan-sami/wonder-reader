@@ -1,4 +1,4 @@
-import { encodeUnix } from '../../app/modules/encodePath';
+import { encodeUnix } from '../encodePath';
 
 describe('encodePath', () => {
   it('encodeUnix', () => {

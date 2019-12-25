@@ -1,4 +1,4 @@
-import * as strain from '../../app/modules/strain';
+import * as strain from '../strain';
 
 describe('strain.js', () => {
   it('isComic', () => {

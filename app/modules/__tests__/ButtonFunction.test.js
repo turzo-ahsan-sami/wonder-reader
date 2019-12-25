@@ -1,4 +1,4 @@
-import ButtonFunction from '../../app/modules/ButtonFunction';
+import ButtonFunction from '../ButtonFunction';
 
 describe('ButtonFunction', () => {
   it('starts with default values', () => {

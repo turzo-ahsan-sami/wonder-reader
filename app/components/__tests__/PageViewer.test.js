@@ -2,16 +2,13 @@ import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
 import React from 'react';
 
-import SliderInput from '../../app/components/SliderInput';
+import PageViewer from '../PageViewer';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('SliderInput', () => {
-  const onChangeFunc = jest.fn();
+describe('PageViewer', () => {
   it('should render', () => {
-    const wrapper = shallow(
-      <SliderInput onChange={onChangeFunc} value={100} />
-    );
+    const wrapper = shallow(<PageViewer zoomLevel={100} />);
     expect(wrapper).toMatchSnapshot();
   });
 });
