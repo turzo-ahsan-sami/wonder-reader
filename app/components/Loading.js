@@ -29,27 +29,24 @@ const styles = theme => ({
 });
 
 const PaperElement = ({ classes }) => (
-  <Paper className={classes.root} elevation={4} style={styles.Paper}>
-    <CircularProgress
-      className={classes.progress}
-      color="secondary"
-      size={50}
-    />
-  </Paper>
-);
-
-const LoaderElement = ({ classes }) => (
   <div style={styles.LoaderElement}>
-    <PaperElement classes={classes} />
+    <Paper className={classes.root} elevation={4} style={styles.Paper}>
+      <CircularProgress
+        className={classes.progress}
+        color="secondary"
+        size={50}
+      />
+    </Paper>
   </div>
 );
 
 const Loading = ({ classes, isLoading }) =>
-  isLoading ? <LoaderElement classes={classes} /> : null;
+  isLoading && <PaperElement classes={classes} />;
 
 Loading.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line
   isLoading: PropTypes.bool.isRequired
 };
 
+export { Loading };
 export default withStyles(styles)(Loading);

@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,55 +21,55 @@ const styles = {
 };
 
 const HeaderRow = () => (
-  <TableRow style={styles.font}>
-    <TableCell padding="checkbox" />
-    <TableCell>Name</TableCell>
-    <TableCell numeric>Directory</TableCell>
-    <TableCell padding="checkbox">
-      <FaPercent />
-    </TableCell>
-  </TableRow>
+  <TableHead>
+    <TableRow style={styles.font}>
+      <TableCell padding="checkbox" />
+      <TableCell>Name</TableCell>
+      <TableCell numeric>Directory</TableCell>
+      <TableCell padding="checkbox">
+        <FaPercent />
+      </TableCell>
+    </TableRow>
+  </TableHead>
 );
 
-class LibraryTable extends Component {
-  generateLibraryItem = content => {
-    const { basename, contents, dirname, fullpath, id, isDirectory } = content;
+const generateLibraryItem = onContentClick => content => (
+  <LibraryItem
+    {...content}
+    key={content.id}
+    onRowClick={() => {
+      onContentClick(content);
+    }}
+    style={styles.LibraryItem}
+  />
+);
 
-    const { onContentClick } = this.props;
+const LibraryTable = props => {
+  const { contents, onContentClick } = props;
 
-    return (
-      <LibraryItem
-        key={id}
-        id={id}
-        basename={basename}
-        dirname={dirname}
-        fullpath={fullpath}
-        isDirectory={isDirectory}
-        contents={contents}
-        onRowClick={() => {
-          onContentClick(content);
-        }}
-        style={styles.LibraryItem}
-      />
-    );
-  };
+  return (
+    <Table className="library-menu" selectable="false">
+      <HeaderRow />
+      <TableBody>{contents.map(generateLibraryItem(onContentClick))}</TableBody>
+    </Table>
+  );
+};
 
-  generateLibraryItems = () => {
-    const { contents } = this.props;
-    return contents.map(this.generateLibraryItem);
-  };
+LibraryTable.propTypes = {
+  contents: PropTypes.arrayOf(
+    PropTypes.shape({
+      basename: PropTypes.string.isRequired,
+      dirname: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+      isDirectory: PropTypes.bool.isRequired
+    })
+  ),
+  onContentClick: PropTypes.func.isRequired
+};
 
-  render() {
-    const libraryItems = this.generateLibraryItems();
-    return (
-      <Table className="library-menu" selectable="false">
-        <TableHead>
-          <HeaderRow />
-        </TableHead>
-        <TableBody>{libraryItems}</TableBody>
-      </Table>
-    );
-  }
-}
+LibraryTable.defaultProps = {
+  contents: []
+};
 
+export { generateLibraryItem, HeaderRow };
 export default LibraryTable;
