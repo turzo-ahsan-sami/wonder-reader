@@ -44,16 +44,12 @@ const generateLibraryItem = onContentClick => content => (
   />
 );
 
-const LibraryTable = props => {
-  const { contents, onContentClick } = props;
-
-  return (
-    <Table className="library-menu" selectable="false">
-      <HeaderRow />
-      <TableBody>{contents.map(generateLibraryItem(onContentClick))}</TableBody>
-    </Table>
-  );
-};
+const LibraryTable = ({ contents, onContentClick }) => (
+  <Table className="library-menu" selectable="false">
+    <HeaderRow />
+    <TableBody>{contents.map(generateLibraryItem(onContentClick))}</TableBody>
+  </Table>
+);
 
 LibraryTable.propTypes = {
   contents: PropTypes.arrayOf(

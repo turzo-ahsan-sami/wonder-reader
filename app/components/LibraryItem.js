@@ -29,49 +29,29 @@ const styles = {
   }
 };
 
-const CellBaseName = ({ basename }) => (
-  <TableCell style={styles.three33}>{basename}</TableCell>
+const LibraryItem = ({ basename, dirname, id, isDirectory, onRowClick }) => (
+  <TableRow
+    className="library-item"
+    key={id}
+    onClick={onRowClick}
+    style={styles.TableRow}
+  >
+    <TableCell numeric padding="checkbox" style={styles.wide}>
+      {isDirectory ? (
+        <FaFolderO size={iconSize} />
+      ) : (
+        <FaFileArchiveO size={iconSize} />
+      )}
+    </TableCell>
+    <TableCell style={styles.three33}>{basename}</TableCell>
+    <TableCell numeric style={styles.bbb}>
+      {dirname}
+    </TableCell>
+    <TableCell padding="checkbox" style={styles.wide}>
+      <FaPercent style={styles.percent} />
+    </TableCell>
+  </TableRow>
 );
-
-const CellDirname = ({ dirname }) => (
-  <TableCell numeric style={styles.bbb}>
-    {dirname}
-  </TableCell>
-);
-
-const CellIcon = ({ icon }) => (
-  <TableCell numeric padding="checkbox" style={styles.wide}>
-    {icon}
-  </TableCell>
-);
-
-const CellPercent = () => (
-  <TableCell padding="checkbox" style={styles.wide}>
-    <FaPercent style={styles.percent} />
-  </TableCell>
-);
-
-const LibraryItem = ({ basename, dirname, id, isDirectory, onRowClick }) => {
-  const icon = isDirectory ? (
-    <FaFolderO size={iconSize} />
-  ) : (
-    <FaFileArchiveO size={iconSize} />
-  );
-
-  return (
-    <TableRow
-      className="library-item"
-      key={id}
-      onClick={onRowClick}
-      style={styles.TableRow}
-    >
-      <CellIcon icon={icon} />
-      <CellBaseName basename={basename} />
-      <CellDirname dirname={dirname} />
-      <CellPercent />
-    </TableRow>
-  );
-};
 
 LibraryItem.propTypes = {
   basename: PropTypes.string.isRequired,
