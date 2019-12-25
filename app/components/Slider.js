@@ -8,23 +8,29 @@ const boxShadow =
   'inset rgb(135, 169, 214) 0px 3px 0px, inset rgba(0, 0, 0, 0.15) 0px 10px 10px';
 
 const styles = {
-  Slider: {
-    border: '1px solid rgba(255,255,255,0.3)',
-    borderRadius: '5px',
-    borderTop: '2px solid rgba(255,255,255,0.8)',
-    boxShadow,
-    display: 'flex',
-    float: 'left',
-    marginTop: '7px',
-    padding: '3px'
-  }
+  border: '1px solid rgba(255,255,255,0.3)',
+  borderRadius: '5px',
+  borderTop: '2px solid rgba(255,255,255,0.8)',
+  boxShadow,
+  display: 'flex',
+  float: 'left',
+  marginTop: '7px',
+  padding: '3px'
 };
+
+const sliderComponent = document.getElementById('sliderComponent');
 
 class Slider extends Component {
   componentDidMount() {
-    document
-      .getElementById('sliderComponent')
-      .addEventListener('mouseleave', this.blurSliderInput);
+    if (sliderComponent) {
+      sliderComponent.addEventListener('mouseleave', this.blurSliderInput);
+    }
+  }
+
+  componentWillUnmount() {
+    if (sliderComponent) {
+      sliderComponent.removeEventListener('mouseleave', this.blurSliderInput);
+    }
   }
 
   blurSliderInput = () => {
@@ -41,7 +47,7 @@ class Slider extends Component {
   render() {
     const { value } = this.props;
     return (
-      <div className="slider" id="sliderComponent" style={styles.Slider}>
+      <div className="slider" id="sliderComponent" style={styles}>
         <SliderInput onChange={this.onChange} value={value} />
         <ZoomLevel value={value} />
       </div>

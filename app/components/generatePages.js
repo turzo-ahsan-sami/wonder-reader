@@ -11,11 +11,20 @@ const generatePage = totalSize => ({ key, page, width }) => (
     src={page}
   />
 );
-const generatePages = ({ pages }) => {
+
+const generateTotalSize = pages => {
   let totalSize = 0;
   pages.forEach(({ width }) => {
     totalSize += width;
   });
+  return totalSize;
+};
+
+const generateTotalSizeBeta = pages =>
+  pages.reduce((a, { width }) => a + width, 0);
+
+const generatePages = ({ pages }) => {
+  const totalSize = generateTotalSize(pages);
   return pages.map(generatePage(totalSize));
 };
 
@@ -33,4 +42,5 @@ generatePages.defaultProps = {
   pages: []
 };
 
+export { generatePage, generateTotalSize, generateTotalSizeBeta };
 export default generatePages;

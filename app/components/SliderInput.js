@@ -1,15 +1,8 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 const styles = {
-  wide: {
-    width: '100px'
-  },
-  zoomLevel: {
-    fontFamily: 'Carter One',
-    fontSize: '20px',
-    width: '45px',
-    cursor: 'default'
-  }
+  width: '100px'
 };
 
 const SliderInput = ({ onChange, value }) => (
@@ -21,8 +14,13 @@ const SliderInput = ({ onChange, value }) => (
     onChange={onChange}
     type="range"
     value={value}
-    style={styles.wide}
+    style={styles}
   />
 );
+
+SliderInput.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
+};
 
 export default SliderInput;
