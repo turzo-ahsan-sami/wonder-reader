@@ -8,21 +8,21 @@ import Typography from '@material-ui/core/Typography';
 import headerStyle from './headerStyle';
 import { buttonStyle, buttonTheme } from './buttonStyle';
 
-const LibraryHeader = ({ buttons, position, title }) => (
+const LibraryHeader = ({ children, position, title }) => (
   <AppBar style={{ position }}>
     <Toolbar>
       <Typography variant="title" style={headerStyle}>
         {title}
       </Typography>
       <MuiThemeProvider theme={buttonTheme}>
-        <div style={buttonStyle}>{buttons}</div>
+        <div style={buttonStyle}>{children}</div>
       </MuiThemeProvider>
     </Toolbar>
   </AppBar>
 );
 
 LibraryHeader.propTypes = {
-  buttons: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
   position: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired
 };

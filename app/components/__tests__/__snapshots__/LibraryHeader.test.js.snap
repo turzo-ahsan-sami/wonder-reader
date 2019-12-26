@@ -5,14 +5,13 @@ ShallowWrapper {
   "length": 1,
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <LibraryHeader
-    buttons={
-      <div
-        id="buttons"
-      />
-    }
     position="fixed"
     title="title"
-  />,
+  >
+    <div
+      id="buttons"
+    />
+  </LibraryHeader>,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "getNode": [Function],

@@ -9,11 +9,14 @@ Enzyme.configure({ adapter: new Adapter() });
 describe('LibraryHeader', () => {
   it('should render', () => {
     const props = {
-      buttons: <div id="buttons" />,
       position: 'fixed',
       title: 'title'
     };
-    const wrapper = shallow(<LibraryHeader {...props} />);
+    const wrapper = shallow(
+      <LibraryHeader {...props}>
+        <div id="buttons" />
+      </LibraryHeader>
+    );
     expect(wrapper).toMatchSnapshot();
   });
 });

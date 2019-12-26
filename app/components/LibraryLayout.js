@@ -6,8 +6,7 @@ import { FaClose, FaFolderOpen, FaLevelUp } from 'react-icons/lib/fa';
 import LibraryHeader from './LibraryHeader';
 import LibraryTable from './LibraryTable';
 
-const polaritySort = require('../modules/polaritySort');
-const { copyArray, copyDeepObject } = require('../modules/copyData.js');
+const { copyDeepObject } = require('../modules/copyData.js');
 const { dialog } = require('electron').remote
   ? require('electron').remote
   : require('electron');
@@ -47,74 +46,25 @@ class LibraryLayout extends Component {
     this.props.saveContentDataToParent(this.state);
   }
 
-  renderButtons = () => (
-    <div>
-      <IconButton onClick={this.openDirectory} color="primary">
-        <FaFolderOpen />
-      </IconButton>
-      <IconButton onClick={this.setParentAsLibrary} color="primary">
-        <FaLevelUp />
-      </IconButton>
-      <IconButton
-        onClick={this.props.closeLibrary}
-        color="primary"
-        style={styles.closeButton}
-      >
-        <FaClose />
-      </IconButton>
-    </div>
-  );
-
-  renderLibrary = () => {
-    const { basename, bookmark, contents, dirname, fullpath, id } = this.state;
-
-    return (
-      <LibraryTable
-        basename={basename}
-        bookmark={bookmark}
-        contents={contents}
-        dirname={dirname}
-        fullpath={fullpath}
-        isDirectory
-        key={id}
-        onContentClick={this.onClick}
-        saveContentDataToParent={this.saveContentDataToParent}
-        saveContentsDataToParent={this.saveContentsDataToParent}
-      />
-    );
-  };
-
-  onClick = content => {
-    if (content.isDirectory) {
-      this.onDirectoryClick(content);
+  onClick = ({ fullpath, isDirectory }) => {
+    if (isDirectory) {
+      this.updateContent(fullpath);
     } else {
-      this.onFileClick(content);
+      this.props.openComic(fullpath);
     }
-  };
-
-  onDirectoryClick = content => {
-    this.updateContent(content.fullpath);
-  };
-
-  onFileClick = content => {
-    this.props.openComic(content.fullpath);
   };
 
   // Function to open `Load` window, and pass path to generateContent, then setstate
   openDirectory = () => {
     const { updateRoot } = this.props;
-    dialog.showOpenDialog(
-      {
-        properties: ['openDirectory']
-      },
-      filepaths => {
-        if (Array.isArray(filepaths)) {
-          const filepath = filepaths[0];
-          updateRoot(filepath);
-          this.updateContent(filepath);
-        }
+    const properties = ['openDirectory'];
+    dialog.showOpenDialog({ properties }, filepaths => {
+      if (Array.isArray(filepaths)) {
+        const filepath = filepaths[0];
+        updateRoot(filepath);
+        this.updateContent(filepath);
       }
-    );
+    });
   };
 
   saveContentDataToParent = content => {
@@ -133,14 +83,6 @@ class LibraryLayout extends Component {
     this.updateContent(dirname);
   };
 
-  sortContents = contents => {
-    if (!contents) {
-      return [];
-    }
-    const sortedContent = copyArray(contents);
-    return sortedContent.sort((a, b) => polaritySort(a, b, 'basename'));
-  };
-
   updateContent = fullpath => {
     generateNestedContentFromFilepath(fullpath, content => {
       const newContent = content;
@@ -150,17 +92,45 @@ class LibraryLayout extends Component {
   };
 
   render() {
-    const { fullpath } = this.state;
+    const { basename, bookmark, contents, dirname, fullpath, id } = this.state;
 
     return (
       <div className="library" style={styles.libraryStyles}>
         <LibraryHeader
           position="fixed"
           title="Library"
-          buttons={this.renderButtons()}
           onContentClick={this.onClick}
-        />
-        {fullpath && this.renderLibrary()}
+        >
+          <div>
+            <IconButton onClick={this.openDirectory} color="primary">
+              <FaFolderOpen />
+            </IconButton>
+            <IconButton onClick={this.setParentAsLibrary} color="primary">
+              <FaLevelUp />
+            </IconButton>
+            <IconButton
+              onClick={this.props.closeLibrary}
+              color="primary"
+              style={styles.closeButton}
+            >
+              <FaClose />
+            </IconButton>
+          </div>
+        </LibraryHeader>
+        {fullpath && (
+          <LibraryTable
+            basename={basename}
+            bookmark={bookmark}
+            contents={contents}
+            dirname={dirname}
+            fullpath={fullpath}
+            isDirectory
+            key={id}
+            onContentClick={this.onClick}
+            saveContentDataToParent={this.saveContentDataToParent}
+            saveContentsDataToParent={this.saveContentsDataToParent}
+          />
+        )}
       </div>
     );
   }

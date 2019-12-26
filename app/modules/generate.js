@@ -23,14 +23,14 @@ const generateCenterfolds = pages => {
 const generateContent = fullpath => {
   const isDirectory = fs.statSync(fullpath).isDirectory();
   return {
-    id: encodeURIComponent(fullpath),
     basename: path.basename(fullpath),
     bookmark: isDirectory ? NaN : 0,
+    contents: [],
     dirname: path.dirname(fullpath),
     extname: path.extname(fullpath),
     fullpath,
-    isDirectory,
-    contents: []
+    id: encodeURIComponent(fullpath),
+    isDirectory
   };
 };
 
