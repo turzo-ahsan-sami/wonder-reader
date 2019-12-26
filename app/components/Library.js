@@ -19,35 +19,6 @@ const styles = {
   }
 };
 
-const LibraryDrawer = ({
-  classes,
-  closeDrawer,
-  open,
-  openComic,
-  root,
-  saveContentDataToMain
-}) => (
-  <Drawer
-    anchor="top"
-    open={open}
-    onClose={closeDrawer}
-    PaperProps={{ style: styles.PaperProps }}
-    variant="temporary"
-    transitionDuration={125}
-  >
-    <div tabIndex={0} role="button" onKeyDown={closeDrawer}>
-      <LibraryLayout
-        className={classes.list}
-        closeLibrary={closeDrawer}
-        openComic={openComic}
-        root={root}
-        saveContentDataToParent={saveContentDataToMain}
-        updateRoot={this.updateRoot}
-      />
-    </div>
-  </Drawer>
-);
-
 class Library extends Component {
   state = {
     root: this.props.loadedLibrary
@@ -59,27 +30,36 @@ class Library extends Component {
 
   render() {
     const {
-      style,
       classes,
       closeDrawer,
       open,
       openComic,
-      saveContentDataToMain
+      saveContentDataToMain,
+      style
     } = this.props;
     const { root } = this.state;
 
     return (
       <div className="Library" style={style}>
-        <LibraryDrawer
-          {...{
-            classes,
-            closeDrawer,
-            open,
-            openComic,
-            root,
-            saveContentDataToMain
-          }}
-        />
+        <Drawer
+          anchor="top"
+          open={open}
+          onClose={closeDrawer}
+          PaperProps={{ style: styles.PaperProps }}
+          variant="temporary"
+          transitionDuration={125}
+        >
+          <div tabIndex={0} role="button" onKeyDown={closeDrawer}>
+            <LibraryLayout
+              className={classes.list}
+              closeLibrary={closeDrawer}
+              openComic={openComic}
+              root={root}
+              saveContentDataToParent={saveContentDataToMain}
+              updateRoot={this.updateRoot}
+            />
+          </div>
+        </Drawer>
       </div>
     );
   }
@@ -97,8 +77,8 @@ Library.propTypes = {
   open: PropTypes.bool.isRequired,
   openComic: PropTypes.func.isRequired,
   saveContentDataToMain: PropTypes.func.isRequired,
-  style: PropTypes.objectOf(PropTypes.object.isRequired)
+  style: PropTypes.object // eslint-disable-line
 };
 
-export { Library, LibraryDrawer };
+export { Library };
 export default withStyles(styles)(Library);

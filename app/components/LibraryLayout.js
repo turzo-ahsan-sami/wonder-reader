@@ -8,7 +8,9 @@ import LibraryTable from './LibraryTable';
 
 const polaritySort = require('../modules/polaritySort');
 const { copyArray, copyDeepObject } = require('../modules/copyData.js');
-const { dialog } = require('electron').remote;
+const { dialog } = require('electron').remote
+  ? require('electron').remote
+  : require('electron');
 const { generateNestedContentFromFilepath } = require('../modules/generate.js');
 
 const styles = {
