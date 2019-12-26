@@ -49,32 +49,20 @@ class LibraryLayout extends Component {
 
   renderButtons = () => (
     <div>
-      {this.renderFolderOpen()}
-      {this.renderLevelUp()}
-      {this.renderClose()}
+      <IconButton onClick={this.openDirectory} color="primary">
+        <FaFolderOpen />
+      </IconButton>
+      <IconButton onClick={this.setParentAsLibrary} color="primary">
+        <FaLevelUp />
+      </IconButton>
+      <IconButton
+        onClick={this.props.closeLibrary}
+        color="primary"
+        style={styles.closeButton}
+      >
+        <FaClose />
+      </IconButton>
     </div>
-  );
-
-  renderClose = () => (
-    <IconButton
-      onClick={this.props.closeLibrary}
-      color="primary"
-      style={styles.closeButton}
-    >
-      <FaClose />
-    </IconButton>
-  );
-
-  renderFolderOpen = () => (
-    <IconButton onClick={this.openDirectory} color="primary">
-      <FaFolderOpen />
-    </IconButton>
-  );
-
-  renderLevelUp = () => (
-    <IconButton onClick={this.setParentAsLibrary} color="primary">
-      <FaLevelUp />
-    </IconButton>
   );
 
   renderLibrary = () => {
@@ -150,8 +138,7 @@ class LibraryLayout extends Component {
       return [];
     }
     const sortedContent = copyArray(contents);
-    sortedContent.sort((a, b) => polaritySort(a, b, 'basename'));
-    return sortedContent;
+    return sortedContent.sort((a, b) => polaritySort(a, b, 'basename'));
   };
 
   updateContent = fullpath => {
@@ -165,7 +152,6 @@ class LibraryLayout extends Component {
   render() {
     const { fullpath } = this.state;
 
-    const libraryTable = fullpath ? this.renderLibrary() : null;
     return (
       <div className="library" style={styles.libraryStyles}>
         <LibraryHeader
@@ -174,7 +160,7 @@ class LibraryLayout extends Component {
           buttons={this.renderButtons()}
           onContentClick={this.onClick}
         />
-        {libraryTable}
+        {fullpath && this.renderLibrary()}
       </div>
     );
   }

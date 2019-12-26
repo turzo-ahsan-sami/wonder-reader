@@ -1,7 +1,7 @@
 import IconButton from '@material-ui/core/IconButton';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 import {
   FaAngleDoubleLeft,
   FaAngleDoubleRight,
@@ -54,39 +54,28 @@ const initButtons = [
   }
 ];
 
-class ButtonBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      buttons: initButtons
-    };
-  }
-
-  determineButtonFunction = button => (button.func ? button.func : () => {});
-
-  determineButtonStyle = button => {
-    const rotation =
-      typeof button.rotation === 'undefined' ? 0 : button.rotation;
-    return {
-      margin: '2px',
-      textShadow: '0 0 5px rgba(0,0,0,0.5)',
-      transform: `rotate(${rotation}deg)`
-    };
+const determineIcon = ({ pageCount }) =>
+  pageCount === 2 ? <FaMinusSquareO /> : <FaSquareO />;
+const determineIfChangePageCount = (icon, button) =>
+  button.name === 'changePageCount' ? icon : button.icon;
+const determineButtonStyle = button => {
+  const rotation = typeof button.rotation === 'undefined' ? 0 : button.rotation;
+  return {
+    margin: '2px',
+    textShadow: '0 0 5px rgba(0,0,0,0.5)',
+    transform: `rotate(${rotation}deg)`
   };
+};
+const determineButtonFunction = button =>
+  button.func ? button.func : () => {};
 
-  determineIcon = () => {
-    const { pageCount } = this.props;
-    return pageCount === 2 ? <FaMinusSquareO /> : <FaSquareO />;
-  };
+const ButtonBar = props => {
+  const { buttons, pageCount, setZoomLevel, zoomLevel } = props;
 
-  determineIfChangePageCount = (icon, button) =>
-    button.name === 'changePageCount' ? icon : button.icon;
-
-  renderButton = button => {
-    const { buttons } = this.props;
-    const buttonFunction = this.determineButtonFunction(buttons[button.name]);
-    const icon = this.determineIfChangePageCount(this.determineIcon(), button);
-    const style = this.determineButtonStyle(button);
+  const renderButton = button => {
+    const buttonFunction = determineButtonFunction(buttons[button.name]);
+    const icon = determineIfChangePageCount(determineIcon(pageCount), button);
+    const style = determineButtonStyle(button);
 
     if (button.color) {
       style.background = '#ef5350';
@@ -104,20 +93,15 @@ class ButtonBar extends Component {
     );
   };
 
-  render() {
-    const { setZoomLevel, zoomLevel } = this.props;
-    const { buttons } = this.state;
-    const renderedButtons = buttons.map(this.renderButton);
-    return (
-      <MuiThemeProvider theme={buttonTheme}>
-        <div style={buttonStyle}>
-          <Slider onChange={setZoomLevel} value={zoomLevel} />
-          {renderedButtons}
-        </div>
-      </MuiThemeProvider>
-    );
-  }
-}
+  return (
+    <MuiThemeProvider theme={buttonTheme}>
+      <div style={buttonStyle}>
+        <Slider onChange={setZoomLevel} value={zoomLevel} />
+        {initButtons.map(renderButton)}
+      </div>
+    </MuiThemeProvider>
+  );
+};
 
 ButtonBar.propTypes = {
   pageCount: PropTypes.number.isRequired,
