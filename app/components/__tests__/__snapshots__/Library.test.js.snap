@@ -11,7 +11,7 @@ ShallowWrapper {
       }
     }
     closeDrawer={[MockFunction]}
-    loadedLibrary="/home/alice/Documents/git/wonder-reader/app/components/__tests__"
+    loadedLibrary="/Users/alicemaldonado/Documents/git/wonder-reader/app/components/__tests__"
     open={true}
     openComic={[MockFunction]}
     saveContentDataToMain={[MockFunction]}
@@ -54,7 +54,7 @@ ShallowWrapper {
             className="classes.list"
             closeLibrary={[MockFunction]}
             openComic={[MockFunction]}
-            root="/home/alice/Documents/git/wonder-reader/app/components/__tests__"
+            root="/Users/alicemaldonado/Documents/git/wonder-reader/app/components/__tests__"
             saveContentDataToParent={[MockFunction]}
             updateRoot={[Function]}
           />
@@ -86,7 +86,7 @@ ShallowWrapper {
             className="classes.list"
             closeLibrary={[MockFunction]}
             openComic={[MockFunction]}
-            root="/home/alice/Documents/git/wonder-reader/app/components/__tests__"
+            root="/Users/alicemaldonado/Documents/git/wonder-reader/app/components/__tests__"
             saveContentDataToParent={[MockFunction]}
             updateRoot={[Function]}
           />
@@ -106,7 +106,7 @@ ShallowWrapper {
             className="classes.list"
             closeLibrary={[MockFunction]}
             openComic={[MockFunction]}
-            root="/home/alice/Documents/git/wonder-reader/app/components/__tests__"
+            root="/Users/alicemaldonado/Documents/git/wonder-reader/app/components/__tests__"
             saveContentDataToParent={[MockFunction]}
             updateRoot={[Function]}
           />,
@@ -123,7 +123,7 @@ ShallowWrapper {
             "className": "classes.list",
             "closeLibrary": [MockFunction],
             "openComic": [MockFunction],
-            "root": "/home/alice/Documents/git/wonder-reader/app/components/__tests__",
+            "root": "/Users/alicemaldonado/Documents/git/wonder-reader/app/components/__tests__",
             "saveContentDataToParent": [MockFunction],
             "updateRoot": [Function],
           },
@@ -168,7 +168,7 @@ ShallowWrapper {
               className="classes.list"
               closeLibrary={[MockFunction]}
               openComic={[MockFunction]}
-              root="/home/alice/Documents/git/wonder-reader/app/components/__tests__"
+              root="/Users/alicemaldonado/Documents/git/wonder-reader/app/components/__tests__"
               saveContentDataToParent={[MockFunction]}
               updateRoot={[Function]}
             />
@@ -200,7 +200,7 @@ ShallowWrapper {
               className="classes.list"
               closeLibrary={[MockFunction]}
               openComic={[MockFunction]}
-              root="/home/alice/Documents/git/wonder-reader/app/components/__tests__"
+              root="/Users/alicemaldonado/Documents/git/wonder-reader/app/components/__tests__"
               saveContentDataToParent={[MockFunction]}
               updateRoot={[Function]}
             />
@@ -220,7 +220,7 @@ ShallowWrapper {
               className="classes.list"
               closeLibrary={[MockFunction]}
               openComic={[MockFunction]}
-              root="/home/alice/Documents/git/wonder-reader/app/components/__tests__"
+              root="/Users/alicemaldonado/Documents/git/wonder-reader/app/components/__tests__"
               saveContentDataToParent={[MockFunction]}
               updateRoot={[Function]}
             />,
@@ -237,7 +237,7 @@ ShallowWrapper {
               "className": "classes.list",
               "closeLibrary": [MockFunction],
               "openComic": [MockFunction],
-              "root": "/home/alice/Documents/git/wonder-reader/app/components/__tests__",
+              "root": "/Users/alicemaldonado/Documents/git/wonder-reader/app/components/__tests__",
               "saveContentDataToParent": [MockFunction],
               "updateRoot": [Function],
             },

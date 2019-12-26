@@ -15,39 +15,34 @@ const filterByWiderImages = page => {
 // Returns with an array of indices for double page images for core array of image files
 const generateCenterfolds = pages => {
   const strainedPages = strainImages(pages);
-  const generateCenterfoldMap = page => strainedPages.indexOf(page);
-  return strainedPages.filter(filterByWiderImages).map(generateCenterfoldMap);
+  return strainedPages
+    .filter(filterByWiderImages)
+    .map(page => strainedPages.indexOf(page));
 };
-
-const generateContentPrototype = (fullpath, isDirectory) => ({
-  id: encodeURIComponent(fullpath),
-  basename: path.basename(fullpath),
-  bookmark: isDirectory ? NaN : 0,
-  dirname: path.dirname(fullpath),
-  extname: path.extname(fullpath),
-  fullpath,
-  isDirectory,
-  contents: []
-});
 
 const generateContent = fullpath => {
   const isDirectory = fs.statSync(fullpath).isDirectory();
-  return generateContentPrototype(fullpath, isDirectory);
+  return {
+    id: encodeURIComponent(fullpath),
+    basename: path.basename(fullpath),
+    bookmark: isDirectory ? NaN : 0,
+    dirname: path.dirname(fullpath),
+    extname: path.extname(fullpath),
+    fullpath,
+    isDirectory,
+    contents: []
+  };
 };
 
 // Must return array of object
 const generateContents = (content, cb) => {
   console.log(content);
   if (content.isDirectory) {
-    const renderContent = file =>
-      generateContent(path.join(content.fullpath, file));
-
     fs.readdir(content.fullpath, (err, files) => {
       if (!err) {
-        const strainedFiles = strainComics(files).map(file =>
-          path.join(content.fullpath, file)
-        );
-        const contents = strainedFiles.map(renderContent);
+        const contents = strainComics(files)
+          .map(file => path.join(content.fullpath, file))
+          .map(file => generateContent(file));
         cb(err, contents);
       } else {
         cb(null, {});
