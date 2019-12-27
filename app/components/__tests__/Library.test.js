@@ -9,7 +9,7 @@ Enzyme.configure({ adapter: new Adapter() });
 const props = {
   classes: { list: 'classes.list' },
   closeDrawer: jest.fn(),
-  loadedLibrary: __dirname,
+  loadedLibrary: './',
   open: true,
   openComic: jest.fn(),
   saveContentDataToMain: jest.fn(),
