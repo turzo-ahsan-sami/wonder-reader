@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import fs from 'fs';
+import path from 'path';
+import sizeOf from 'image-size';
 
+import File from '../modules/File';
 import Header from './Header';
 import Library from './Library';
 import Loading from './Loading';
+import NewButtonBar from './ButtonBar';
 import PageViewer from './PageViewer';
-import theme from './theme';
-
 import encodepath from '../modules/encodepath';
-import File from '../modules/File';
+import theme from './theme';
+import turnPage from '../modules/turnPage';
 import { generateCenterfolds } from '../modules/generate';
 import { strainOnlyComics } from '../modules/strain';
-import turnPage from '../modules/turnPage';
-
-const fs = require('fs');
-const path = require('path');
-const sizeOf = require('image-size');
 
 export default class App extends Component {
   state = {
@@ -42,66 +41,6 @@ export default class App extends Component {
     // Errors
     // error: false,
     errorMessage: '',
-
-    // Button Data to pass to Main => Header => ButtonBar
-    buttons: {
-      changePageCount: {
-        name: 'changePageCount',
-        disabled: false,
-        func: () => {
-          this.changePageCount();
-        }
-      },
-      nextComic: {
-        name: 'nextComic',
-        disabled: false,
-        func: () => {
-          this.openNextComic();
-        }
-      },
-      openLibrary: {
-        name: 'openLibrary',
-        disabled: false,
-        func: () => {
-          this.openLibrary();
-        }
-      },
-      pageLeft: {
-        name: 'pageLeft',
-        disabled: false,
-        func: () => {
-          this.turnPageLeft();
-        }
-      },
-      pageRight: {
-        name: 'pageRight',
-        disabled: false,
-        func: () => {
-          this.turnPageRight();
-        }
-      },
-      prevComic: {
-        name: 'prevComic',
-        disabled: false,
-        func: () => {
-          this.openPrevComic();
-        }
-      }
-      // options: {
-      //   name: 'options',
-      //   disabled: false,
-      //   func: () => {
-      //     this.toggleOptions();
-      //   }
-      // },
-      // trash: {
-      //   name: 'trash',
-      //   disabled: false,
-      //   func: () => {
-      //     this.clearCache();
-      //   }
-      // }
-    },
 
     // Material UI Drawer data
     top: false,
@@ -342,7 +281,12 @@ export default class App extends Component {
     this.setState({ zoomLevel: Number(value) });
   };
 
-  shouldPageTurn = () => {
+  shouldPageTurnLeft = () => {
+    const { currentPageIndex } = this.state;
+    return currentPageIndex !== 0;
+  };
+
+  shouldPageTurnRight = () => {
     const { currentPageIndex, pageCount, pages } = this.state;
 
     const ultimatePage = pages.length - 1;
@@ -357,16 +301,6 @@ export default class App extends Component {
         pageCount === 2 &&
         this.isCenterfoldsComing(penultimatePage))
     );
-  };
-
-  shouldPageTurnLeft = () => {
-    const { currentPageIndex } = this.state;
-    return currentPageIndex !== 0;
-  };
-
-  shouldPageTurnRight = () => {
-    const shouldPageTurn = this.shouldPageTurn();
-    return shouldPageTurn;
   };
 
   toggleDrawer = (side, open) => {
@@ -433,7 +367,6 @@ export default class App extends Component {
   render() {
     console.log('Main (state):', this.state);
     const {
-      buttons,
       content,
       encodedPages,
       isLoading,
@@ -446,13 +379,18 @@ export default class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <div className="main">
-          <Header
-            buttons={buttons}
-            changePageCount={this.changePageCount}
-            pageCount={pageCount}
-            setZoomLevel={this.setZoomLevel}
-            zoomLevel={zoomLevel}
-          />
+          <Header>
+            <NewButtonBar
+              changePageCount={this.changePageCount}
+              openLibrary={this.openLibrary}
+              openPrevComic={this.openPrevComic}
+              pageCount={pageCount}
+              setZoomLevel={this.setZoomLevel}
+              turnPageLeft={this.turnPageLeft}
+              turnPageRight={this.turnPageRight}
+              zoomLevel={zoomLevel}
+            />
+          </Header>
           <Library
             closeDrawer={this.closeLibrary}
             loadedLibrary={content.fullpath}
