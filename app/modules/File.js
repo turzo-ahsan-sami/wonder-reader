@@ -54,8 +54,8 @@ class File {
   // TODO: see how to create a deb file with dependencies
   // TODO: create snap with dependencies
   extractRarLinux(cb) {
-    const urar = new Unrar(this.origin);
-    urar.extract(this.tempdir, null, err => {
+    const unrar = new Unrar(this.origin);
+    unrar.extract(this.tempdir, null, err => {
       if (err) {
         this.error = true;
       } else {

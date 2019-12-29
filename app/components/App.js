@@ -342,7 +342,12 @@ export default class App extends Component {
     this.setState({ zoomLevel: Number(value) });
   };
 
-  shouldPageTurn = () => {
+  shouldPageTurnLeft = () => {
+    const { currentPageIndex } = this.state;
+    return currentPageIndex !== 0;
+  };
+
+  shouldPageTurnRight = () => {
     const { currentPageIndex, pageCount, pages } = this.state;
 
     const ultimatePage = pages.length - 1;
@@ -357,16 +362,6 @@ export default class App extends Component {
         pageCount === 2 &&
         this.isCenterfoldsComing(penultimatePage))
     );
-  };
-
-  shouldPageTurnLeft = () => {
-    const { currentPageIndex } = this.state;
-    return currentPageIndex !== 0;
-  };
-
-  shouldPageTurnRight = () => {
-    const shouldPageTurn = this.shouldPageTurn();
-    return shouldPageTurn;
   };
 
   toggleDrawer = (side, open) => {
