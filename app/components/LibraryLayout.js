@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import { FaClose, FaFolderOpen, FaLevelUp } from 'react-icons/lib/fa';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { FaClose, FaFolderOpen, FaLevelUp } from 'react-icons/lib/fa';
 
 import LibraryHeader from './LibraryHeader';
 import LibraryTable from './LibraryTable';
 
-const { copyArray, copyDeepObject } = require('../modules/copyData.js');
+const { copyDeepObject } = require('../modules/copyData.js');
 const { dialog } = require('electron').remote;
 const { generateNestedContentFromFilepath } = require('../modules/generate.js');
-const polaritySort = require('../modules/polaritySort');
 
 class LibraryLayout extends Component {
   state = {
@@ -130,15 +129,6 @@ class LibraryLayout extends Component {
   setParentAsLibrary = () => {
     const { dirname } = this.state;
     this.updateContent(dirname);
-  };
-
-  sortContents = contents => {
-    if (!contents) {
-      return [];
-    }
-    const sortedContent = copyArray(contents);
-    sortedContent.sort((a, b) => polaritySort(a, b, 'basename'));
-    return sortedContent;
   };
 
   updateContent = fullpath => {
