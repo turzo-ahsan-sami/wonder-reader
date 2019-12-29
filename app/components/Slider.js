@@ -13,17 +13,17 @@ const styles = {
     display: 'flex',
     float: 'left',
     marginTop: '7px',
-    padding: '3px'
+    padding: '3px',
   },
   wide: {
-    width: '100px'
+    width: '100px',
   },
   zoomLevel: {
     cursor: 'default',
     fontFamily: 'Carter One',
     fontSize: '20px',
-    width: '45px'
-  }
+    width: '45px',
+  },
 };
 
 class Slider extends Component {
@@ -37,7 +37,7 @@ class Slider extends Component {
     document.getElementById('SliderInput').blur();
   };
 
-  onChange = e => {
+  onChange = (e) => {
     const { onChange } = this.props;
     const { value } = e.target;
     console.log(value);
@@ -57,7 +57,7 @@ class Slider extends Component {
 
 Slider.propTypes = {
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired
+  value: PropTypes.number.isRequired,
 };
 
 const Input = ({ onChange, value }) => (
