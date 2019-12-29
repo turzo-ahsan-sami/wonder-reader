@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const styles = {
-  width: '100px'
+  width: '100px',
 };
 
 const SliderInput = ({ onChange, value }) => (
@@ -20,7 +20,7 @@ const SliderInput = ({ onChange, value }) => (
 
 SliderInput.propTypes = {
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };
 
 export default SliderInput;

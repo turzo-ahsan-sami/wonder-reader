@@ -1,7 +1,7 @@
 const os = require('os');
 const path = require('path');
 
-const encodeUnix = filepath => {
+const encodeUnix = (filepath) => {
   const tempPath = filepath.split(path.sep);
 
   let newPath = '';
@@ -11,7 +11,7 @@ const encodeUnix = filepath => {
   return `/${newPath}`.replace(/'/g, "\\'"); // To set root folder && Fixes err with the character \'
 };
 
-const encodeWin = filepath => {
+const encodeWin = (filepath) => {
   const tempPath = filepath.split(path.sep);
 
   let newPath = '';

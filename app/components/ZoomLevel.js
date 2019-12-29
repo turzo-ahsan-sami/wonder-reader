@@ -5,7 +5,7 @@ const styles = {
   fontFamily: 'Carter One',
   fontSize: '20px',
   width: '45px',
-  cursor: 'default'
+  cursor: 'default',
 };
 
 const ZoomLevel = ({ value }) => (
@@ -15,7 +15,7 @@ const ZoomLevel = ({ value }) => (
 );
 
 ZoomLevel.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };
 
 export default ZoomLevel;

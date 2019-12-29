@@ -2,7 +2,7 @@ import path from 'path';
 
 import {
   // generateCenterfolds,
-  generateContent
+  generateContent,
   // generateContents,
   // generateNestedContentFromFilepath
 } from '../generate';
@@ -18,7 +18,7 @@ describe('generate', () => {
         extname: '.js',
         fullpath: __filename,
         id: encodeURIComponent(__filename),
-        isDirectory: false
+        isDirectory: false,
       });
     });
 
@@ -31,7 +31,7 @@ describe('generate', () => {
         extname: '',
         fullpath: __dirname,
         id: encodeURIComponent(__dirname),
-        isDirectory: true
+        isDirectory: true,
       });
     });
   });

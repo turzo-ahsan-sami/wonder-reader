@@ -11,14 +11,14 @@ const props = {
     {
       key: 0,
       page: 'abc.png',
-      width: 100
+      width: 100,
     },
     {
       key: 1,
       page: 'deb.png',
-      width: 300
-    }
-  ]
+      width: 300,
+    },
+  ],
 };
 const sampleData = [1, 2, 3, 4, 5].map(n => ({ width: n }));
 

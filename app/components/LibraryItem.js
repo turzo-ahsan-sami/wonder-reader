@@ -10,23 +10,23 @@ const iconSize = 20;
 
 const styles = {
   bbb: {
-    color: '#bbb'
+    color: '#bbb',
   },
   percent: {
     color: '#999',
-    fontSize: '14px'
+    fontSize: '14px',
   },
   TableRow: {
     cursor: 'pointer',
     fontFamily: 'Montserrat',
-    fontSize: '20px'
+    fontSize: '20px',
   },
   three33: {
-    color: '#333'
+    color: '#333',
   },
   wide: {
-    width: '10px'
-  }
+    width: '10px',
+  },
 };
 
 const LibraryItem = ({ basename, dirname, id, isDirectory, onRowClick }) => (
@@ -58,7 +58,7 @@ LibraryItem.propTypes = {
   dirname: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   isDirectory: PropTypes.bool.isRequired,
-  onRowClick: PropTypes.func.isRequired
+  onRowClick: PropTypes.func.isRequired,
 };
 
 export default LibraryItem;

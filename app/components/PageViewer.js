@@ -9,7 +9,7 @@ class PageViewer extends Component {
     // currentComicPage: null,
     // currentZoomLevel: 100,
     marginLeft: 0,
-    marginTop: 0
+    marginTop: 0,
   };
 
   componentDidUpdate() {
@@ -66,7 +66,7 @@ class PageViewer extends Component {
             marginLeft: this.state.marginLeft,
             marginTop: this.state.marginTop,
             height: `${zoomLevel}%`,
-            width: `${zoomLevel}%`
+            width: `${zoomLevel}%`,
           }}
         >
           {generatePages({ pages })}
@@ -81,14 +81,14 @@ PageViewer.propTypes = {
     PropTypes.shape({
       key: PropTypes.any,
       page: PropTypes.string,
-      width: PropTypes.number
-    })
+      width: PropTypes.number,
+    }),
   ),
-  zoomLevel: PropTypes.number.isRequired
+  zoomLevel: PropTypes.number.isRequired,
 };
 
 PageViewer.defaultProps = {
-  pages: []
+  pages: [],
 };
 
 export default PageViewer;

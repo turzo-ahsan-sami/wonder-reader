@@ -6,7 +6,7 @@ describe('strain.js', () => {
     const testFilenames = {
       cbr: 'test.cbr',
       cbz: 'test.cbz',
-      pdf: 'test.pdf'
+      pdf: 'test.pdf',
     };
     expect(isComic(testFilenames.cbr)).toBe(true);
     expect(isComic(testFilenames.cbz)).toBe(true);
@@ -23,7 +23,7 @@ describe('strain.js', () => {
       gif: 'test.gif',
       bmp: 'test.bmp',
       webp: 'test.webp',
-      doc: 'test.doc'
+      doc: 'test.doc',
     };
 
     expect(isImage(testFilenames.jpg)).toBe(true);

@@ -11,9 +11,9 @@ describe('Loading', () => {
     const props = {
       classes: {
         root: 'sampleRoot',
-        progress: 'sampleProgress'
+        progress: 'sampleProgress',
       },
-      isLoading: true
+      isLoading: true,
     };
     const wrapper = shallow(<Loading {...props} />);
     expect(wrapper).toMatchSnapshot();

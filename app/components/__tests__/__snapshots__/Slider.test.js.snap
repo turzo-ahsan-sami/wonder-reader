@@ -25,21 +25,42 @@ ShallowWrapper {
           onChange={[Function]}
           value={100}
         />,
-        <ZoomLevel
-          value={100}
-        />,
+        <div
+          className="zoomLevel"
+          style={
+            Object {
+              "cursor": "default",
+              "fontFamily": "Carter One",
+              "fontSize": "20px",
+              "width": "45px",
+            }
+          }
+        >
+          100
+        </div>,
       ],
       "className": "slider",
       "id": "sliderComponent",
       "style": Object {
-        "border": "1px solid rgba(255,255,255,0.3)",
-        "borderRadius": "5px",
-        "borderTop": "2px solid rgba(255,255,255,0.8)",
-        "boxShadow": "inset rgb(135, 169, 214) 0px 3px 0px, inset rgba(0, 0, 0, 0.15) 0px 10px 10px",
-        "display": "flex",
-        "float": "left",
-        "marginTop": "7px",
-        "padding": "3px",
+        "Slider": Object {
+          "border": "1px solid rgba(255,255,255,0.3)",
+          "borderRadius": "5px",
+          "borderTop": "2px solid rgba(255,255,255,0.8)",
+          "boxShadow": "inset rgb(135, 169, 214) 0px 3px 0px, inset rgba(0, 0, 0, 0.15) 0px 10px 10px",
+          "display": "flex",
+          "float": "left",
+          "marginTop": "7px",
+          "padding": "3px",
+        },
+        "wide": Object {
+          "width": "100px",
+        },
+        "zoomLevel": Object {
+          "cursor": "default",
+          "fontFamily": "Carter One",
+          "fontSize": "20px",
+          "width": "45px",
+        },
       },
     },
     "ref": null,
@@ -59,13 +80,20 @@ ShallowWrapper {
       Object {
         "instance": null,
         "key": undefined,
-        "nodeType": "function",
+        "nodeType": "host",
         "props": Object {
-          "value": 100,
+          "children": 100,
+          "className": "zoomLevel",
+          "style": Object {
+            "cursor": "default",
+            "fontFamily": "Carter One",
+            "fontSize": "20px",
+            "width": "45px",
+          },
         },
         "ref": null,
-        "rendered": null,
-        "type": [Function],
+        "rendered": 100,
+        "type": "div",
       },
     ],
     "type": "div",
@@ -81,21 +109,42 @@ ShallowWrapper {
             onChange={[Function]}
             value={100}
           />,
-          <ZoomLevel
-            value={100}
-          />,
+          <div
+            className="zoomLevel"
+            style={
+              Object {
+                "cursor": "default",
+                "fontFamily": "Carter One",
+                "fontSize": "20px",
+                "width": "45px",
+              }
+            }
+          >
+            100
+          </div>,
         ],
         "className": "slider",
         "id": "sliderComponent",
         "style": Object {
-          "border": "1px solid rgba(255,255,255,0.3)",
-          "borderRadius": "5px",
-          "borderTop": "2px solid rgba(255,255,255,0.8)",
-          "boxShadow": "inset rgb(135, 169, 214) 0px 3px 0px, inset rgba(0, 0, 0, 0.15) 0px 10px 10px",
-          "display": "flex",
-          "float": "left",
-          "marginTop": "7px",
-          "padding": "3px",
+          "Slider": Object {
+            "border": "1px solid rgba(255,255,255,0.3)",
+            "borderRadius": "5px",
+            "borderTop": "2px solid rgba(255,255,255,0.8)",
+            "boxShadow": "inset rgb(135, 169, 214) 0px 3px 0px, inset rgba(0, 0, 0, 0.15) 0px 10px 10px",
+            "display": "flex",
+            "float": "left",
+            "marginTop": "7px",
+            "padding": "3px",
+          },
+          "wide": Object {
+            "width": "100px",
+          },
+          "zoomLevel": Object {
+            "cursor": "default",
+            "fontFamily": "Carter One",
+            "fontSize": "20px",
+            "width": "45px",
+          },
         },
       },
       "ref": null,
@@ -115,13 +164,20 @@ ShallowWrapper {
         Object {
           "instance": null,
           "key": undefined,
-          "nodeType": "function",
+          "nodeType": "host",
           "props": Object {
-            "value": 100,
+            "children": 100,
+            "className": "zoomLevel",
+            "style": Object {
+              "cursor": "default",
+              "fontFamily": "Carter One",
+              "fontSize": "20px",
+              "width": "45px",
+            },
           },
           "ref": null,
-          "rendered": null,
-          "type": [Function],
+          "rendered": 100,
+          "type": "div",
         },
       ],
       "type": "div",

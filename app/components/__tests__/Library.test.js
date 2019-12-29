@@ -13,7 +13,7 @@ const props = {
   open: true,
   openComic: jest.fn(),
   saveContentDataToMain: jest.fn(),
-  style: {}
+  style: {},
 };
 
 describe('Library', () => {

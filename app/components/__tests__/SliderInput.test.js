@@ -10,7 +10,7 @@ describe('SliderInput', () => {
   const onChangeFunc = jest.fn();
   it('should render', () => {
     const wrapper = shallow(
-      <SliderInput onChange={onChangeFunc} value={100} />
+      <SliderInput onChange={onChangeFunc} value={100} />,
     );
     expect(wrapper).toMatchSnapshot();
   });

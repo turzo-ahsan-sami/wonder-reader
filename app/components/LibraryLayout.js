@@ -1,26 +1,26 @@
 import IconButton from '@material-ui/core/IconButton';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import electron from 'electron';
 import { FaClose, FaFolderOpen, FaLevelUp } from 'react-icons/lib/fa';
 
 import LibraryHeader from './LibraryHeader';
 import LibraryTable from './LibraryTable';
 
 const { copyDeepObject } = require('../modules/copyData.js');
-const { dialog } = require('electron').remote
-  ? require('electron').remote
-  : require('electron');
 const { generateNestedContentFromFilepath } = require('../modules/generate.js');
+
+const { dialog } = electron.remote ? electron.remote : electron;
 
 const styles = {
   closeButton: {
-    background: '#ef5350'
+    background: '#ef5350',
   },
   libraryStyles: {
     marginTop: '64px',
     maxHeight: 'calc(90vh - 64px)',
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 };
 
 class LibraryLayout extends Component {
@@ -32,7 +32,7 @@ class LibraryLayout extends Component {
     fullpath: null,
     id: 'libraryRoot',
     isDirectory: true,
-    root: ''
+    root: '',
   };
 
   componentDidMount() {
@@ -58,7 +58,7 @@ class LibraryLayout extends Component {
   openDirectory = () => {
     const { updateRoot } = this.props;
     const properties = ['openDirectory'];
-    dialog.showOpenDialog({ properties }, filepaths => {
+    dialog.showOpenDialog({ properties }, (filepaths) => {
       if (Array.isArray(filepaths)) {
         const filepath = filepaths[0];
         updateRoot(filepath);
@@ -67,12 +67,12 @@ class LibraryLayout extends Component {
     });
   };
 
-  saveContentDataToParent = content => {
+  saveContentDataToParent = (content) => {
     const newContent = copyDeepObject(content);
     this.setState(newContent);
   };
 
-  saveContentsDataToParent = contents => {
+  saveContentsDataToParent = (contents) => {
     const newContent = copyDeepObject(this.state);
     newContent.contents = contents;
     this.setState({ contents: newContent });
@@ -83,8 +83,8 @@ class LibraryLayout extends Component {
     this.updateContent(dirname);
   };
 
-  updateContent = fullpath => {
-    generateNestedContentFromFilepath(fullpath, content => {
+  updateContent = (filepath) => {
+    generateNestedContentFromFilepath(filepath, (content) => {
       const newContent = content;
       newContent.id = 'libraryRoot';
       this.setState(newContent);
@@ -137,7 +137,7 @@ class LibraryLayout extends Component {
 }
 
 LibraryLayout.defaultProps = {
-  root: null
+  root: null,
 };
 
 LibraryLayout.propTypes = {
@@ -145,7 +145,7 @@ LibraryLayout.propTypes = {
   openComic: PropTypes.func.isRequired,
   root: PropTypes.string,
   saveContentDataToParent: PropTypes.func.isRequired,
-  updateRoot: PropTypes.func.isRequired
+  updateRoot: PropTypes.func.isRequired,
 };
 
 export default LibraryLayout;

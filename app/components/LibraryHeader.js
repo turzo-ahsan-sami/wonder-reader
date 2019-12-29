@@ -24,7 +24,7 @@ const LibraryHeader = ({ children, position, title }) => (
 LibraryHeader.propTypes = {
   children: PropTypes.node.isRequired,
   position: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
 };
 
 export default LibraryHeader;

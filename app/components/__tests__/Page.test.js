@@ -12,7 +12,7 @@ describe('Page', () => {
       alt: 'alt',
       id: 'id',
       src: 'src',
-      width: 500
+      width: 500,
     };
     const wrapper = shallow(<Page {...props} />);
     expect(wrapper).toMatchSnapshot();

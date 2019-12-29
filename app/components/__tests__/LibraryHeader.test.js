@@ -10,12 +10,12 @@ describe('LibraryHeader', () => {
   it('should render', () => {
     const props = {
       position: 'fixed',
-      title: 'title'
+      title: 'title',
     };
     const wrapper = shallow(
       <LibraryHeader {...props}>
         <div id="buttons" />
-      </LibraryHeader>
+      </LibraryHeader>,
     );
     expect(wrapper).toMatchSnapshot();
   });

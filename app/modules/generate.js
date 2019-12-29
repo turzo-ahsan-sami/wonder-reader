@@ -7,20 +7,20 @@ const sizeOf = require('image-size');
 
 // function variables
 // const sortNumber = (a, b) => a - b;
-const filterByWiderImages = page => {
+const filterByWiderImages = (page) => {
   const { height, width } = sizeOf(page);
   return width >= height;
 };
 
 // Returns with an array of indices for double page images for core array of image files
-const generateCenterfolds = pages => {
+const generateCenterfolds = (pages) => {
   const strainedPages = strainImages(pages);
   return strainedPages
     .filter(filterByWiderImages)
     .map(page => strainedPages.indexOf(page));
 };
 
-const generateContent = fullpath => {
+const generateContent = (fullpath) => {
   const isDirectory = fs.statSync(fullpath).isDirectory();
   return {
     basename: path.basename(fullpath),
@@ -30,7 +30,7 @@ const generateContent = fullpath => {
     extname: path.extname(fullpath),
     fullpath,
     id: encodeURIComponent(fullpath),
-    isDirectory
+    isDirectory,
   };
 };
 
@@ -65,5 +65,5 @@ export {
   generateCenterfolds,
   generateContent,
   generateContents,
-  generateNestedContentFromFilepath
+  generateNestedContentFromFilepath,
 };

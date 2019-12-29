@@ -11,13 +11,13 @@ import LibraryItem from './LibraryItem';
 
 const styles = {
   font: {
-    fontFamily: 'Carter One'
+    fontFamily: 'Carter One',
   },
   LibraryItem: {
     marginLeft: '5vw',
     maxHeight: '50vh',
-    maxWidth: '50vw'
-  }
+    maxWidth: '50vw',
+  },
 };
 
 const HeaderRow = () => (
@@ -57,14 +57,14 @@ LibraryTable.propTypes = {
       basename: PropTypes.string.isRequired,
       dirname: PropTypes.string.isRequired,
       id: PropTypes.string.isRequired,
-      isDirectory: PropTypes.bool.isRequired
-    })
+      isDirectory: PropTypes.bool.isRequired,
+    }),
   ),
-  onContentClick: PropTypes.func.isRequired
+  onContentClick: PropTypes.func.isRequired,
 };
 
 LibraryTable.defaultProps = {
-  contents: []
+  contents: [],
 };
 
 export { generateLibraryItem, HeaderRow };

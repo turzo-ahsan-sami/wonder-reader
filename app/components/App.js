@@ -29,7 +29,7 @@ export default class App extends Component {
       pending: 0,
       error: false,
       errorMessage: '',
-      stat: ''
+      stat: '',
     },
     pages: [],
     encodedPages: [],
@@ -50,43 +50,43 @@ export default class App extends Component {
         disabled: false,
         func: () => {
           this.changePageCount();
-        }
+        },
       },
       nextComic: {
         name: 'nextComic',
         disabled: false,
         func: () => {
           this.openNextComic();
-        }
+        },
       },
       openLibrary: {
         name: 'openLibrary',
         disabled: false,
         func: () => {
           this.openLibrary();
-        }
+        },
       },
       pageLeft: {
         name: 'pageLeft',
         disabled: false,
         func: () => {
           this.turnPageLeft();
-        }
+        },
       },
       pageRight: {
         name: 'pageRight',
         disabled: false,
         func: () => {
           this.turnPageRight();
-        }
+        },
       },
       prevComic: {
         name: 'prevComic',
         disabled: false,
         func: () => {
           this.openPrevComic();
-        }
-      }
+        },
+      },
       // options: {
       //   name: 'options',
       //   disabled: false,
@@ -117,11 +117,11 @@ export default class App extends Component {
     isLoading: false,
 
     // Image cache
-    images: [] // eslint-disable-line react/no-unused-state
+    images: [], // eslint-disable-line react/no-unused-state
   };
 
   componentDidMount() {
-    window.addEventListener('keydown', e => {
+    window.addEventListener('keydown', (e) => {
       const { openedComic } = this.state;
 
       const isComicActive = openedComic.name !== null;
@@ -135,7 +135,7 @@ export default class App extends Component {
     });
   }
 
-  arrowKeyTurnPage = code => {
+  arrowKeyTurnPage = (code) => {
     if (code === 'ArrowRight') {
       this.turnPageRight();
     } else if (code === 'ArrowLeft') {
@@ -207,14 +207,14 @@ export default class App extends Component {
           page,
           key,
           width: width * ratio,
-          height: height * ratio
+          height: height * ratio,
         };
       }
     }
     return encodedPages;
   };
 
-  isCenterfold = index => {
+  isCenterfold = (index) => {
     const { centerfolds } = this.state;
     return centerfolds.includes(index);
   };
@@ -228,7 +228,7 @@ export default class App extends Component {
   };
   loadImages = () => {
     const { pages } = this.state;
-    const images = pages.map(page => {
+    const images = pages.map((page) => {
       const img = new Image();
       img.src = page.encodedPagePath;
       return img;
@@ -242,21 +242,21 @@ export default class App extends Component {
       return {
         encodedPagePath: encodePath(pagePath),
         key,
-        pagePath
+        pagePath,
       };
     });
 
-  openComic = fullpath => {
+  openComic = (fullpath) => {
     const Comic = new File(fullpath);
     const isLoading = true;
     this.setState({ isLoading }, () => {
-      Comic.extract(comic => {
+      Comic.extract((comic) => {
         this.postComicExtract(comic);
       });
     });
   };
 
-  openAdjacentComic = polarity => {
+  openAdjacentComic = (polarity) => {
     const { openedComic } = this.state;
     if (openedComic.name !== null) {
       const originDirname = path.dirname(openedComic.origin);
@@ -292,11 +292,11 @@ export default class App extends Component {
     }
   };
 
-  postComicExtract = comic => {
+  postComicExtract = (comic) => {
     if (comic.error) {
       this.throwError(true, comic.errorMessage);
     } else {
-      this.generatePages(comic.tempdir, page => {
+      this.generatePages(comic.tempdir, (page) => {
         this.postGeneratePages(page, comic);
       });
     }
@@ -313,15 +313,15 @@ export default class App extends Component {
         openedComic,
         isLoading,
         pages,
-        top
+        top,
       },
       () => {
         this.determinePages();
-      }
+      },
     );
   };
 
-  saveContentDataToMain = content => {
+  saveContentDataToMain = (content) => {
     this.setState({ content });
   };
 
@@ -329,15 +329,15 @@ export default class App extends Component {
     console.log('setCurrentPages', newPageIndex, pagesToDisplay);
     const encodedPages = this.generateEncodedPages(
       newPageIndex,
-      pagesToDisplay
+      pagesToDisplay,
     );
     this.setState({
       currentPageIndex: newPageIndex,
-      encodedPages
+      encodedPages,
     });
   };
 
-  setZoomLevel = value => {
+  setZoomLevel = (value) => {
     this.setState({ zoomLevel: Number(value) });
   };
 
@@ -365,7 +365,7 @@ export default class App extends Component {
 
   toggleDrawer = (side, open) => {
     this.setState({
-      [side]: open
+      [side]: open,
     });
   };
 
@@ -382,13 +382,13 @@ export default class App extends Component {
     }
   };
 
-  turnPage = polarity => {
+  turnPage = (polarity) => {
     const {
       centerfolds,
       currentPageIndex,
       openedComic,
       pageCount,
-      pages
+      pages,
     } = this.state;
 
     console.log(openedComic);
@@ -398,7 +398,7 @@ export default class App extends Component {
         centerfolds,
         pageCount,
         pages,
-        polarity
+        polarity,
       });
       this.setCurrentPages(newPageIndex, pagesToDisplay);
     }
@@ -427,7 +427,7 @@ export default class App extends Component {
       openedComic,
       pageCount,
       top,
-      zoomLevel
+      zoomLevel,
     } = this.state;
 
     return (

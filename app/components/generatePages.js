@@ -23,13 +23,13 @@ generatePages.propTypes = {
     PropTypes.shape({
       key: PropTypes.any,
       page: PropTypes.string,
-      width: PropTypes.number
-    })
-  )
+      width: PropTypes.number,
+    }),
+  ),
 };
 
 generatePages.defaultProps = {
-  pages: []
+  pages: [],
 };
 
 export { generateTotalSize };
