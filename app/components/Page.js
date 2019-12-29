@@ -17,7 +17,7 @@ Page.propTypes = {
   alt: PropTypes.string.isRequired,
   id: PropTypes.string, // eslint-disable-line
   src: PropTypes.string, // eslint-disable-line
-  width: PropTypes.number.isRequired
+  width: PropTypes.number.isRequired,
 };
 
 export default Page;

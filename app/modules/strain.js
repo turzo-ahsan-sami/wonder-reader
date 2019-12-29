@@ -8,7 +8,7 @@ const polaritySort = require('../modules/polaritySort.js');
 const comicTypes = ['.cbr', '.cbz'];
 const imageTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
 
-const isSomething = types => filename => {
+const isSomething = types => (filename) => {
   const extname = path.extname(filename).toLowerCase();
   return types.includes(extname);
 };
@@ -16,14 +16,14 @@ const isSomething = types => filename => {
 const isComic = isSomething(comicTypes);
 const isImage = isSomething(imageTypes);
 
-const sortArrayByAlpha = ARRAY => {
+const sortArrayByAlpha = (ARRAY) => {
   const newARRAY = copyArray(ARRAY);
   newARRAY.sort((a, b) => polaritySort(a, b));
   return newARRAY;
 };
 
 // Cleans out non image files from ARRAY
-const strainer = (ARRAY, dirname) => fileTypes => {
+const strainer = (ARRAY, dirname) => (fileTypes) => {
   function isProperFileType(file) {
     const extname = path.extname(file);
     const isThisAProperFileType = fileTypes.includes(extname.toLowerCase());
@@ -49,5 +49,5 @@ export {
   sortArrayByAlpha,
   strainComics,
   strainOnlyComics,
-  strainImages
+  strainImages,
 };

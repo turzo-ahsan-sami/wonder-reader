@@ -7,7 +7,7 @@ import {
   FaAngleRight,
   FaBook,
   FaMinusSquareO,
-  FaSquareO
+  FaSquareO,
 } from 'react-icons/lib/fa';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
@@ -20,56 +20,56 @@ const initButtons = [
     name: 'openLibrary',
     icon: <FaBook />,
     rotation: 0,
-    key: '000'
+    key: '000',
   },
   {
     name: 'changePageCount',
     icon: <FaMinusSquareO />,
     rotation: 90,
-    key: '001'
+    key: '001',
   },
   {
     name: 'prevComic',
     icon: <FaAngleDoubleLeft />,
     rotation: 0,
-    key: '002'
+    key: '002',
   },
   {
     name: 'pageLeft',
     icon: <FaAngleLeft />,
     rotation: 0,
-    key: '003'
+    key: '003',
   },
   {
     name: 'pageRight',
     icon: <FaAngleRight />,
     rotation: 0,
-    key: '004'
+    key: '004',
   },
   {
     name: 'nextComic',
     icon: <FaAngleDoubleRight />,
     rotation: 0,
-    key: '005'
-  }
+    key: '005',
+  },
 ];
 
 class ButtonBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      buttons: initButtons
+      buttons: initButtons,
     };
   }
 
   determineButtonFunction = button => (button.func ? button.func : () => {});
 
-  determineButtonStyle = item => {
+  determineButtonStyle = (item) => {
     const rotation = typeof item.rotation === 'undefined' ? 0 : item.rotation;
     return {
       margin: '2px',
       textShadow: '0 0 5px rgba(0,0,0,0.5)',
-      transform: `rotate(${rotation}deg)`
+      transform: `rotate(${rotation}deg)`,
     };
   };
 
@@ -81,7 +81,7 @@ class ButtonBar extends Component {
   determineIfChangePageCount = (icons, item) =>
     item.name === 'changePageCount' ? icons : item.icon;
 
-  renderButton = item => {
+  renderButton = (item) => {
     const { buttons } = this.props;
     const button = buttons[item.name];
     const icon = this.determineIfChangePageCount(this.determineIcon(), item);
@@ -122,7 +122,7 @@ class ButtonBar extends Component {
 ButtonBar.propTypes = {
   pageCount: PropTypes.number.isRequired,
   setZoomLevel: PropTypes.func.isRequired,
-  zoomLevel: PropTypes.number.isRequired
+  zoomLevel: PropTypes.number.isRequired,
 };
 
 export default ButtonBar;

@@ -10,13 +10,13 @@ import LibraryItem from './LibraryItem';
 
 const styles = {
   font: {
-    fontFamily: 'Carter One'
+    fontFamily: 'Carter One',
   },
   LibraryItem: {
     marginLeft: '5vw',
     maxHeight: '50vh',
-    maxWidth: '50vw'
-  }
+    maxWidth: '50vw',
+  },
 };
 
 const HeaderRow = () => (
@@ -31,7 +31,7 @@ const HeaderRow = () => (
 );
 
 class LibraryTable extends Component {
-  generateLibraryItem = content => {
+  generateLibraryItem = (content) => {
     const { basename, contents, dirname, fullpath, id, isDirectory } = content;
 
     const { onContentClick } = this.props;

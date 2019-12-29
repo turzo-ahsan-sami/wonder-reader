@@ -24,7 +24,7 @@ const LibraryHeader = ({ buttons, position, title }) => (
 LibraryHeader.propTypes = {
   buttons: PropTypes.object.isRequired, // eslint-disable-line
   position: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
 };
 
 export default LibraryHeader;

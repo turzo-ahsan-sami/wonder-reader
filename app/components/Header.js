@@ -12,7 +12,7 @@ const Header = ({
   changePageCount,
   pageCount,
   setZoomLevel,
-  zoomLevel
+  zoomLevel,
 }) => (
   <AppBar>
     <Toolbar>
@@ -34,7 +34,7 @@ Header.propTypes = {
   changePageCount: PropTypes.func.isRequired,
   pageCount: PropTypes.number.isRequired,
   setZoomLevel: PropTypes.func.isRequired,
-  zoomLevel: PropTypes.number.isRequired
+  zoomLevel: PropTypes.number.isRequired,
 };
 
 export default Header;

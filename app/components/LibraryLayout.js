@@ -12,13 +12,13 @@ const { generateNestedContentFromFilepath } = require('../modules/generate.js');
 
 const styles = {
   closeButton: {
-    background: '#ef5350'
+    background: '#ef5350',
   },
   libraryStyles: {
     marginTop: '64px',
     maxHeight: 'calc(90vh - 64px)',
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 };
 
 class LibraryLayout extends Component {
@@ -30,7 +30,7 @@ class LibraryLayout extends Component {
     fullpath: null,
     isDirectory: true,
     root: '',
-    contents: []
+    contents: [],
   };
 
   componentDidMount() {
@@ -93,7 +93,7 @@ class LibraryLayout extends Component {
     );
   };
 
-  onClick = content => {
+  onClick = (content) => {
     if (content.isDirectory) {
       this.onDirectoryClick(content);
     } else {
@@ -101,11 +101,11 @@ class LibraryLayout extends Component {
     }
   };
 
-  onDirectoryClick = content => {
+  onDirectoryClick = (content) => {
     this.updateContent(content.fullpath);
   };
 
-  onFileClick = content => {
+  onFileClick = (content) => {
     this.props.openComic(content.fullpath);
   };
 
@@ -114,24 +114,24 @@ class LibraryLayout extends Component {
     const { updateRoot } = this.props;
     dialog.showOpenDialog(
       {
-        properties: ['openDirectory']
+        properties: ['openDirectory'],
       },
-      filepaths => {
+      (filepaths) => {
         if (Array.isArray(filepaths)) {
           const filepath = filepaths[0];
           updateRoot(filepath);
           this.updateContent(filepath);
         }
-      }
+      },
     );
   };
 
-  saveContentDataToParent = content => {
+  saveContentDataToParent = (content) => {
     const newContent = copyDeepObject(content);
     this.setState(newContent);
   };
 
-  saveContentsDataToParent = contents => {
+  saveContentsDataToParent = (contents) => {
     const newContent = copyDeepObject(this.state);
     newContent.contents = contents;
     this.setState({ contents: newContent });
@@ -142,8 +142,8 @@ class LibraryLayout extends Component {
     this.updateContent(dirname);
   };
 
-  updateContent = fullpath => {
-    generateNestedContentFromFilepath(fullpath, content => {
+  updateContent = (fullpath) => {
+    generateNestedContentFromFilepath(fullpath, (content) => {
       const newContent = content;
       newContent.id = 'libraryRoot';
       this.setState(newContent);
@@ -169,7 +169,7 @@ class LibraryLayout extends Component {
 }
 
 LibraryLayout.defaultProps = {
-  root: null
+  root: null,
 };
 
 LibraryLayout.propTypes = {
@@ -177,7 +177,7 @@ LibraryLayout.propTypes = {
   openComic: PropTypes.func.isRequired,
   root: PropTypes.string,
   saveContentDataToParent: PropTypes.func.isRequired,
-  updateRoot: PropTypes.func.isRequired
+  updateRoot: PropTypes.func.isRequired,
 };
 
 export default LibraryLayout;
