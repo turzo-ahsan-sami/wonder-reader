@@ -1,21 +1,63 @@
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import React, { Component } from 'react';
-import { MuiThemeProvider } from '@material-ui/core/styles';
 
+import File from '../modules/File';
 import Header from './Header';
 import Library from './Library';
 import Loading from './Loading';
 import PageViewer from './PageViewer';
-import theme from './theme';
-
 import encodepath from '../modules/encodepath';
-import File from '../modules/File';
+import theme from './theme';
+import turnPage from '../modules/turnPage';
 import { generateCenterfolds } from '../modules/generate';
 import { strainOnlyComics } from '../modules/strain';
-import turnPage from '../modules/turnPage';
 
 const fs = require('fs');
 const path = require('path');
 const sizeOf = require('image-size');
+
+const encodePages = (openedComic, pageCount, pages) => (
+  newPageIndex,
+  pagesToDisplay
+) => {
+  const encodedPages = [];
+  const pagesToRender = Math.min(pageCount, pagesToDisplay);
+  for (let i = 0; i < pagesToRender; i += 1) {
+    const key = newPageIndex + i;
+    if (key < pages.length) {
+      // Stops from trying to read beyond comic page length
+      const temp = openedComic.tempdir;
+      const pageKey = openedComic.pages[key];
+      const pagePath = path.join(temp, pageKey);
+      const { width, height } = sizeOf(pagePath);
+      const ratio = key === newPageIndex ? 1 : encodedPages[0].height / height;
+
+      encodedPages[i] = {
+        page: encodepath(pagePath),
+        key,
+        width: width * ratio,
+        height: height * ratio
+      };
+    }
+  }
+  return encodedPages;
+};
+
+const generateImages = page => {
+  const img = new Image();
+  img.src = page.encodedPagePath;
+  return img;
+};
+
+const generatePageData = tempdir => (file, key) => {
+  const pagePath = path.join(tempdir, file);
+  const encodedPagePath = encodepath(pagePath);
+  return {
+    pagePath,
+    encodedPagePath,
+    key
+  };
+};
 
 export default class App extends Component {
   state = {
@@ -155,7 +197,7 @@ export default class App extends Component {
     this.toggleDrawer('top', false);
   };
 
-  determineAvailableAdjComic = (err, files, polarity) => {
+  determineAvailableAdjComic = polarity => (err, files) => {
     const { openedComic } = this.state;
     const originDirname = path.dirname(openedComic.origin);
     const strainedComics = strainOnlyComics(files);
@@ -181,37 +223,15 @@ export default class App extends Component {
 
   generatePages = (tempdir, cb) => {
     fs.readdir(tempdir, (err, files) => {
-      const pages = this.mapPages(files, tempdir);
+      const pages = files.map(generatePageData(tempdir));
       cb(pages);
     });
   };
 
-  generateEncodedPages = (newPageIndex, pagesToDisplay) => {
+  generateEncodedPages = () => {
     const { openedComic, pageCount, pages } = this.state;
 
-    const encodedPages = [];
-    const pagesToRender = Math.min(pageCount, pagesToDisplay);
-    for (let i = 0; i < pagesToRender; i += 1) {
-      const key = newPageIndex + i;
-      if (key < pages.length) {
-        // Stops from trying to read beyond comic page length
-        const temp = openedComic.tempdir;
-        const pageKey = openedComic.pages[key];
-        const pagePath = path.join(temp, pageKey);
-        const page = encodepath(pagePath);
-        const { width, height } = sizeOf(pagePath);
-        const ratio =
-          key === newPageIndex ? 1 : encodedPages[0].height / height;
-
-        encodedPages[i] = {
-          page,
-          key,
-          width: width * ratio,
-          height: height * ratio
-        };
-      }
-    }
-    return encodedPages;
+    return encodePages(openedComic, pageCount, pages);
   };
 
   isCenterfold = index => {
@@ -226,26 +246,12 @@ export default class App extends Component {
       this.isCenterfold(currentPageIndex + 1)
     );
   };
+
   loadImages = () => {
     const { pages } = this.state;
-    const images = pages.map(page => {
-      const img = new Image();
-      img.src = page.encodedPagePath;
-      return img;
-    });
+    const images = pages.map(generateImages);
     this.setState({ images });
   };
-
-  mapPages = (files, tempdir) =>
-    files.map((file, key) => {
-      const pagePath = path.join(tempdir, file);
-      const encodedPagePath = encodepath(pagePath);
-      return {
-        pagePath,
-        encodedPagePath,
-        key
-      };
-    });
 
   openComic = fullpath => {
     const Comic = new File(fullpath);
@@ -261,9 +267,7 @@ export default class App extends Component {
     const { openedComic } = this.state;
     if (openedComic.name !== null) {
       const originDirname = path.dirname(openedComic.origin);
-      fs.readdir(originDirname, (err, files) => {
-        this.determineAvailableAdjComic(err, files, polarity);
-      });
+      fs.readdir(originDirname, this.determineAvailableAdjComic(polarity));
     }
   };
 
@@ -297,29 +301,20 @@ export default class App extends Component {
     if (comic.error) {
       this.throwError(true, comic.errorMessage);
     } else {
-      this.generatePages(comic.tempdir, page => {
-        this.postGeneratePages(page, comic);
+      this.generatePages(comic.tempdir, pages => {
+        const pagePaths = pages.map(page => page.pagePath);
+        this.setState(
+          {
+            centerfolds: generateCenterfolds(pagePaths),
+            isLoading: false,
+            openedComic: comic,
+            pages,
+            top: false
+          },
+          this.determinePages
+        );
       });
     }
-  };
-
-  postGeneratePages = (pages, openedComic) => {
-    const pagePaths = pages.map(page => page.pagePath);
-    const centerfolds = generateCenterfolds(pagePaths);
-    const isLoading = false;
-    const top = false;
-    this.setState(
-      {
-        centerfolds,
-        openedComic,
-        isLoading,
-        pages,
-        top
-      },
-      () => {
-        this.determinePages();
-      }
-    );
   };
 
   saveContentDataToMain = content => {
@@ -328,13 +323,9 @@ export default class App extends Component {
 
   setCurrentPages = (newPageIndex, pagesToDisplay) => {
     console.log('setCurrentPages', newPageIndex, pagesToDisplay);
-    const encodedPages = this.generateEncodedPages(
-      newPageIndex,
-      pagesToDisplay
-    );
     this.setState({
       currentPageIndex: newPageIndex,
-      encodedPages
+      encodedPages: this.generateEncodedPages()(newPageIndex, pagesToDisplay)
     });
   };
 
@@ -342,7 +333,12 @@ export default class App extends Component {
     this.setState({ zoomLevel: Number(value) });
   };
 
-  shouldPageTurn = () => {
+  shouldPageTurnLeft = () => {
+    const { currentPageIndex } = this.state;
+    return currentPageIndex !== 0;
+  };
+
+  shouldPageTurnRight = () => {
     const { currentPageIndex, pageCount, pages } = this.state;
 
     const ultimatePage = pages.length - 1;
@@ -357,16 +353,6 @@ export default class App extends Component {
         pageCount === 2 &&
         this.isCenterfoldsComing(penultimatePage))
     );
-  };
-
-  shouldPageTurnLeft = () => {
-    const { currentPageIndex } = this.state;
-    return currentPageIndex !== 0;
-  };
-
-  shouldPageTurnRight = () => {
-    const shouldPageTurn = this.shouldPageTurn();
-    return shouldPageTurn;
   };
 
   toggleDrawer = (side, open) => {
