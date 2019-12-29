@@ -1,15 +1,25 @@
-import React, { Component } from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import { FaClose, FaFolderOpen, FaLevelUp } from 'react-icons/lib/fa';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { FaClose, FaFolderOpen, FaLevelUp } from 'react-icons/lib/fa';
 
 import LibraryHeader from './LibraryHeader';
 import LibraryTable from './LibraryTable';
 
-const { copyArray, copyDeepObject } = require('../modules/copyData.js');
+const { copyDeepObject } = require('../modules/copyData.js');
 const { dialog } = require('electron').remote;
 const { generateNestedContentFromFilepath } = require('../modules/generate.js');
-const polaritySort = require('../modules/polaritySort');
+
+const styles = {
+  closeButton: {
+    background: '#ef5350',
+  },
+  libraryStyles: {
+    marginTop: '64px',
+    maxHeight: 'calc(90vh - 64px)',
+    overflowY: 'auto',
+  },
+};
 
 class LibraryLayout extends Component {
   state = {
@@ -20,7 +30,7 @@ class LibraryLayout extends Component {
     fullpath: null,
     isDirectory: true,
     root: '',
-    contents: []
+    contents: [],
   };
 
   componentDidMount() {
@@ -83,7 +93,7 @@ class LibraryLayout extends Component {
     );
   };
 
-  onClick = content => {
+  onClick = (content) => {
     if (content.isDirectory) {
       this.onDirectoryClick(content);
     } else {
@@ -91,11 +101,11 @@ class LibraryLayout extends Component {
     }
   };
 
-  onDirectoryClick = content => {
+  onDirectoryClick = (content) => {
     this.updateContent(content.fullpath);
   };
 
-  onFileClick = content => {
+  onFileClick = (content) => {
     this.props.openComic(content.fullpath);
   };
 
@@ -104,24 +114,24 @@ class LibraryLayout extends Component {
     const { updateRoot } = this.props;
     dialog.showOpenDialog(
       {
-        properties: ['openDirectory']
+        properties: ['openDirectory'],
       },
-      filepaths => {
+      (filepaths) => {
         if (Array.isArray(filepaths)) {
           const filepath = filepaths[0];
           updateRoot(filepath);
           this.updateContent(filepath);
         }
-      }
+      },
     );
   };
 
-  saveContentDataToParent = content => {
+  saveContentDataToParent = (content) => {
     const newContent = copyDeepObject(content);
     this.setState(newContent);
   };
 
-  saveContentsDataToParent = contents => {
+  saveContentsDataToParent = (contents) => {
     const newContent = copyDeepObject(this.state);
     newContent.contents = contents;
     this.setState({ contents: newContent });
@@ -132,17 +142,8 @@ class LibraryLayout extends Component {
     this.updateContent(dirname);
   };
 
-  sortContents = contents => {
-    if (!contents) {
-      return [];
-    }
-    const sortedContent = copyArray(contents);
-    sortedContent.sort((a, b) => polaritySort(a, b, 'basename'));
-    return sortedContent;
-  };
-
-  updateContent = fullpath => {
-    generateNestedContentFromFilepath(fullpath, content => {
+  updateContent = (fullpath) => {
+    generateNestedContentFromFilepath(fullpath, (content) => {
       const newContent = content;
       newContent.id = 'libraryRoot';
       this.setState(newContent);
@@ -168,7 +169,7 @@ class LibraryLayout extends Component {
 }
 
 LibraryLayout.defaultProps = {
-  root: null
+  root: null,
 };
 
 LibraryLayout.propTypes = {
@@ -176,18 +177,7 @@ LibraryLayout.propTypes = {
   openComic: PropTypes.func.isRequired,
   root: PropTypes.string,
   saveContentDataToParent: PropTypes.func.isRequired,
-  updateRoot: PropTypes.func.isRequired
-};
-
-const styles = {
-  closeButton: {
-    background: '#ef5350'
-  },
-  libraryStyles: {
-    marginTop: '64px',
-    maxHeight: 'calc(90vh - 64px)',
-    overflowY: 'auto'
-  }
+  updateRoot: PropTypes.func.isRequired,
 };
 
 export default LibraryLayout;

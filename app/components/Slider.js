@@ -1,5 +1,30 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+
+const boxShadow =
+  'inset rgb(135, 169, 214) 0px 3px 0px, inset rgba(0, 0, 0, 0.15) 0px 10px 10px';
+
+const styles = {
+  Slider: {
+    border: '1px solid rgba(255,255,255,0.3)',
+    borderRadius: '5px',
+    borderTop: '2px solid rgba(255,255,255,0.8)',
+    boxShadow,
+    display: 'flex',
+    float: 'left',
+    marginTop: '7px',
+    padding: '3px',
+  },
+  wide: {
+    width: '100px',
+  },
+  zoomLevel: {
+    cursor: 'default',
+    fontFamily: 'Carter One',
+    fontSize: '20px',
+    width: '45px',
+  },
+};
 
 class Slider extends Component {
   componentDidMount() {
@@ -12,7 +37,7 @@ class Slider extends Component {
     document.getElementById('SliderInput').blur();
   };
 
-  onChange = e => {
+  onChange = (e) => {
     const { onChange } = this.props;
     const { value } = e.target;
     console.log(value);
@@ -32,7 +57,7 @@ class Slider extends Component {
 
 Slider.propTypes = {
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired
+  value: PropTypes.number.isRequired,
 };
 
 const Input = ({ onChange, value }) => (
@@ -53,30 +78,5 @@ const ZoomLevel = ({ value }) => (
     {value}
   </div>
 );
-
-const boxShadow =
-  'inset rgb(135, 169, 214) 0px 3px 0px, inset rgba(0, 0, 0, 0.15) 0px 10px 10px';
-
-const styles = {
-  Slider: {
-    border: '1px solid rgba(255,255,255,0.3)',
-    borderTop: '2px solid rgba(255,255,255,0.8)',
-    borderRadius: '5px',
-    display: 'flex',
-    float: 'left',
-    padding: '3px',
-    marginTop: '7px',
-    boxShadow
-  },
-  wide: {
-    width: '100px'
-  },
-  zoomLevel: {
-    fontFamily: 'Carter One',
-    fontSize: '20px',
-    width: '45px',
-    cursor: 'default'
-  }
-};
 
 export default Slider;

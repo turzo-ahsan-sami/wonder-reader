@@ -6,7 +6,7 @@ const turnPage = (
   pageCount,
   pagesLength,
   polarity,
-  cb
+  cb,
 ) => {
   // centerfolds for singlePaging ( [2, 5, 11]  )
   // currentPageIndex for currentPage, which will make a new var newPageIndex ( Num )
