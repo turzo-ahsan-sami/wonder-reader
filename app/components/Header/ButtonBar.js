@@ -1,6 +1,6 @@
-import React from 'react';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {
   FaAngleDoubleLeft,
   FaAngleDoubleRight,
@@ -8,12 +8,12 @@ import {
   FaAngleRight,
   FaBook,
   FaMinusSquareO,
-  FaSquareO
+  FaSquareO,
 } from 'react-icons/lib/fa';
 
-import Button from './HeaderButton';
+import Button from './Button';
 import Slider from './Slider';
-import { buttonStyle, buttonTheme } from './buttonStyle';
+import { buttonStyle, buttonTheme } from '../buttonStyle';
 
 const NewButtonBar = ({
   changePageCount,
@@ -23,7 +23,7 @@ const NewButtonBar = ({
   setZoomLevel,
   turnPageLeft,
   turnPageRight,
-  zoomLevel
+  zoomLevel,
 }) => (
   <MuiThemeProvider theme={buttonTheme}>
     <div style={buttonStyle}>
@@ -58,7 +58,7 @@ NewButtonBar.propTypes = {
   setZoomLevel: PropTypes.func.isRequired,
   turnPageLeft: PropTypes.func.isRequired,
   turnPageRight: PropTypes.func.isRequired,
-  zoomLevel: PropTypes.number.isRequired
+  zoomLevel: PropTypes.number.isRequired,
 };
 
 export default NewButtonBar;
