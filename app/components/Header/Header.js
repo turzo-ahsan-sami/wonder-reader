@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBar from './ButtonBar';
 import headerStyle from '../headerStyle';
 
-const Header = (props) => (
+const Header = props => (
   <AppBar>
     <Toolbar>
       <Typography variant="title" style={headerStyle}>

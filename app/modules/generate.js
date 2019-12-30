@@ -1,52 +1,48 @@
 // centerfold.js returns an array with the index locations of supposed centerfolds
-import { strainComics } from './strain';
+import { strainComics, strainImages } from './strain';
 
 const fs = require('fs');
 const path = require('path');
-
 const sizeOf = require('image-size');
-const { strainImages } = require('./strain.js');
 
 // function variables
-// const sortNumber = (a, b) => a - b;
-
-// Returns with an array of indices for double page images for core array of image files
-const generateCenterfolds = pages => {
-  const strainedPages = strainImages(pages);
-  const filtered = strainedPages.filter(page => {
-    const dimensions = sizeOf(page);
-    return dimensions.width >= dimensions.height;
-  });
-  return filtered.map(item => strainedPages.indexOf(item));
+const isPageWider = (page) => {
+  const dimensions = sizeOf(page);
+  return dimensions.width >= dimensions.height;
 };
 
-const generateContent = fullpath => {
+// Returns with an array of indices for double page images for core array of image files
+const generateCenterfolds = (pages) => {
+  const strainedPages = strainImages(pages);
+  return strainedPages
+    .filter(isPageWider)
+    .map(item => strainedPages.indexOf(item));
+};
+
+const generateContent = (fullpath) => {
   // Must return object
   if (fullpath && fullpath === null) {
     return null;
   }
   const stats = fs.statSync(fullpath);
   const isDirectory = stats.isDirectory();
-  const content = generateContentPrototype(fullpath, isDirectory);
-  return content;
+  return {
+    basename: path.basename(fullpath),
+    bookmark: isDirectory ? NaN : 0,
+    contents: [],
+    dirname: path.dirname(fullpath),
+    extname: path.extname(fullpath),
+    fullpath,
+    id: encodeURIComponent(fullpath),
+    isDirectory,
+  };
 };
-
-const generateContentPrototype = (fullpath, isDirectory) => ({
-  id: encodeURIComponent(fullpath),
-  basename: path.basename(fullpath),
-  bookmark: isDirectory ? NaN : 0,
-  dirname: path.dirname(fullpath),
-  extname: path.extname(fullpath),
-  fullpath,
-  isDirectory,
-  contents: []
-});
 
 // Must return array of object
 const generateContents = (content, cb) => {
   console.log(content);
   if (content.isDirectory) {
-    const renderContent = file => {
+    const renderContent = (file) => {
       const filepath = path.join(content.fullpath, file);
       return generateContent(filepath);
     };
@@ -77,5 +73,5 @@ export {
   generateCenterfolds,
   generateContent,
   generateContents,
-  generateNestedContentFromFilepath
+  generateNestedContentFromFilepath,
 };

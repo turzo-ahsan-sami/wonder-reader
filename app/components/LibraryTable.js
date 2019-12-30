@@ -8,6 +8,17 @@ import { FaPercent } from 'react-icons/lib/fa';
 
 import LibraryItem from './LibraryItem';
 
+const styles = {
+  font: {
+    fontFamily: 'Carter One',
+  },
+  LibraryItem: {
+    marginLeft: '5vw',
+    maxHeight: '50vh',
+    maxWidth: '50vw',
+  },
+};
+
 const HeaderRow = () => (
   <TableRow style={styles.font}>
     <TableCell padding="checkbox" />
@@ -20,7 +31,7 @@ const HeaderRow = () => (
 );
 
 class LibraryTable extends Component {
-  generateLibraryItem = content => {
+  generateLibraryItem = (content) => {
     const { basename, contents, dirname, fullpath, id, isDirectory } = content;
 
     const { onContentClick } = this.props;
@@ -59,16 +70,5 @@ class LibraryTable extends Component {
     );
   }
 }
-
-const styles = {
-  font: {
-    fontFamily: 'Carter One'
-  },
-  LibraryItem: {
-    marginLeft: '5vw',
-    maxHeight: '50vh',
-    maxWidth: '50vw'
-  }
-};
 
 export default LibraryTable;

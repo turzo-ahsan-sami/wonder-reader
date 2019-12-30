@@ -12,20 +12,20 @@ const styles = theme => ({
     height: '100vh',
     width: '100vw',
     zIndex: '1301',
-    backgroundColor: 'rgba(0,0,0,0.2)'
+    backgroundColor: 'rgba(0,0,0,0.2)',
   },
   Paper: {
     height: '50px',
     width: '50px',
     margin: 'auto',
-    marginTop: '30vh'
+    marginTop: '30vh',
   },
   root: theme.mixins.gutters({
     flexGrow: 1,
     paddingTop: 16,
     paddingBottom: 16,
-    marginTop: theme.spacing.unit * 3
-  })
+    marginTop: theme.spacing.unit * 3,
+  }),
 });
 
 const Loading = ({ classes, isLoading }) =>
@@ -49,7 +49,7 @@ const PaperElement = ({ classes }) => (
 
 Loading.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line
-  isLoading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(Loading);

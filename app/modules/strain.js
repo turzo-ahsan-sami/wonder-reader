@@ -8,32 +8,28 @@ const polaritySort = require('../modules/polaritySort.js');
 const comicTypes = ['.cbr', '.cbz'];
 const imageTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
 
-const isComic = filename => isSomething(filename, comicTypes);
-const isImage = filename => isSomething(filename, imageTypes);
-
-// const isProperFileType = (x, i)
-
-const isSomething = (filename, types) => {
+const isSomething = types => (filename) => {
   const extname = path.extname(filename).toLowerCase();
   return types.includes(extname);
 };
 
-const sortArrayByAlpha = ARRAY => {
+const isComic = isSomething(comicTypes);
+const isImage = isSomething(imageTypes);
+
+const sortArrayByAlpha = (ARRAY) => {
   const newARRAY = copyArray(ARRAY);
   newARRAY.sort((a, b) => polaritySort(a, b));
   return newARRAY;
 };
 
 // Cleans out non image files from ARRAY
-const strainer = (fileTypes, ARRAY, dirname) => {
-  function isProperFileType(x, i) {
-    // console.log(x, i);
-    const extname = path.extname(ARRAY[i]);
-    let isThisAProperFileType = fileTypes.includes(extname.toLowerCase());
+const strainer = (ARRAY, dirname) => (fileTypes) => {
+  function isProperFileType(file) {
+    const extname = path.extname(file);
+    const isThisAProperFileType = fileTypes.includes(extname.toLowerCase());
     if (dirname) {
-      const filepath = path.join(dirname, ARRAY[i]);
-      isThisAProperFileType =
-        isThisAProperFileType || isDirectory.sync(filepath);
+      const filepath = path.join(dirname, file);
+      return isThisAProperFileType || isDirectory.sync(filepath);
     }
     return isThisAProperFileType;
   }
@@ -41,9 +37,9 @@ const strainer = (fileTypes, ARRAY, dirname) => {
   return sortArrayByAlpha(newARRAY);
 };
 
-const strainComics = (ARRAY, dirname) => strainer(comicTypes, ARRAY, dirname);
-const strainOnlyComics = ARRAY => strainer(comicTypes, ARRAY);
-const strainImages = ARRAY => strainer(imageTypes, ARRAY);
+const strainComics = strainer(comicTypes);
+const strainOnlyComics = strainer(comicTypes);
+const strainImages = strainer(imageTypes);
 
 export {
   comicTypes,
@@ -53,5 +49,5 @@ export {
   sortArrayByAlpha,
   strainComics,
   strainOnlyComics,
-  strainImages
+  strainImages,
 };

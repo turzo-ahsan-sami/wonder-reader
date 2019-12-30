@@ -1,7 +1,7 @@
 const os = require('os');
 const path = require('path');
 
-const encodeUnix = tempPath => {
+const encodeUnix = (tempPath) => {
   let newPath = '';
   for (let j = 0; j < tempPath.length; j += 1) {
     newPath = path.join(newPath, encodeURIComponent(tempPath[j]));
@@ -11,7 +11,7 @@ const encodeUnix = tempPath => {
   return newPath;
 };
 
-const encodeWin = tempPath => {
+const encodeWin = (tempPath) => {
   let newPath = '';
   // Saves letter drive information
   const c = tempPath[0]; // eslint-disable-line
@@ -23,7 +23,7 @@ const encodeWin = tempPath => {
 };
 
 // Encodes each folder, then merging it all together
-const encodepath = filepath => {
+const encodepath = (filepath) => {
   const tempPath = filepath.split(path.sep);
   return os.platform === 'win32' ? encodeWin(tempPath) : encodeUnix(tempPath);
 };
