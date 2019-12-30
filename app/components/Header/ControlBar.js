@@ -15,7 +15,7 @@ import Button from './Button';
 import Slider from './Slider';
 import { buttonStyle, buttonTheme } from '../buttonStyle';
 
-const NewButtonBar = ({
+const ControlBar = ({
   changePageCount,
   openLibrary,
   openPrevComic,
@@ -50,7 +50,7 @@ const NewButtonBar = ({
   </MuiThemeProvider>
 );
 
-NewButtonBar.propTypes = {
+ControlBar.propTypes = {
   changePageCount: PropTypes.func.isRequired,
   openLibrary: PropTypes.func.isRequired,
   openPrevComic: PropTypes.func.isRequired,
@@ -61,4 +61,4 @@ NewButtonBar.propTypes = {
   zoomLevel: PropTypes.number.isRequired,
 };
 
-export default NewButtonBar;
+export default ControlBar;

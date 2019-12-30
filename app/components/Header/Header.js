@@ -4,7 +4,7 @@ import React from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import ButtonBar from './ButtonBar';
+import ControlBar from './ControlBar';
 import headerStyle from '../headerStyle';
 
 const Header = props => (
@@ -13,7 +13,7 @@ const Header = props => (
       <Typography variant="title" style={headerStyle}>
         Wonder Reader
       </Typography>
-      <ButtonBar {...props} />
+      <ControlBar {...props} />
     </Toolbar>
   </AppBar>
 );
