@@ -1,7 +1,7 @@
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import React, { Component } from 'react';
 import fs from 'fs';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import path from 'path';
+import React, { Component } from 'react';
 import sizeOf from 'image-size';
 
 import File from '../modules/File';
@@ -9,11 +9,11 @@ import Header from './Header';
 import Library from './Library';
 import Loading from './Loading';
 import PageViewer from './PageViewer';
-import encodepath from '../modules/encodepath';
 import theme from './theme';
-import turnPage from '../modules/turnPage';
-import { generateCenterfolds } from '../modules/generate';
-import { strainOnlyComics } from '../modules/strain';
+import { encodePath, generate, strain, turnPage } from '../modules';
+
+const { generateCenterfolds } = generate;
+const { strainOnlyComics } = strain;
 
 export default class App extends Component {
   state = {
@@ -136,7 +136,7 @@ export default class App extends Component {
         const temp = openedComic.tempdir;
         const pageKey = openedComic.pages[key];
         const pagePath = path.join(temp, pageKey);
-        const page = encodepath(pagePath);
+        const page = encodePath(pagePath);
         const { width, height } = sizeOf(pagePath);
         const ratio =
           key === newPageIndex ? 1 : encodedPages[0].height / height;
@@ -177,7 +177,7 @@ export default class App extends Component {
   mapPages = (files, tempdir) =>
     files.map((file, key) => {
       const pagePath = path.join(tempdir, file);
-      const encodedPagePath = encodepath(pagePath);
+      const encodedPagePath = encodePath(pagePath);
       return {
         pagePath,
         encodedPagePath,

@@ -23,9 +23,9 @@ const encodeWin = (tempPath) => {
 };
 
 // Encodes each folder, then merging it all together
-const encodepath = (filepath) => {
+const encodePath = (filepath) => {
   const tempPath = filepath.split(path.sep);
   return os.platform === 'win32' ? encodeWin(tempPath) : encodeUnix(tempPath);
 };
 
-export default encodepath;
+export default encodePath;

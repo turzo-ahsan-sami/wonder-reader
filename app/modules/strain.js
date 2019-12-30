@@ -3,7 +3,7 @@ const { copyArray } = require('./copyData');
 const isDirectory = require('is-directory');
 const path = require('path');
 
-const polaritySort = require('../modules/polaritySort.js');
+const polaritySort = require('./polaritySort.js');
 
 const comicTypes = ['.cbr', '.cbz'];
 const imageTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
