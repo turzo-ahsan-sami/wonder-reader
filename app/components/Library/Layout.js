@@ -1,14 +1,18 @@
 import IconButton from '@material-ui/core/IconButton';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import electron from 'electron';
 import { FaClose, FaFolderOpen, FaLevelUp } from 'react-icons/lib/fa';
 
-import LibraryHeader from './LibraryHeader';
-import LibraryTable from './LibraryTable';
+import Header from './Header';
+import Table from './Table/Table';
 
-const { copyDeepObject } = require('../modules/copyData.js');
-const { dialog } = require('electron').remote;
-const { generateNestedContentFromFilepath } = require('../modules/generate.js');
+const { copyDeepObject } = require('../../modules/copyData.js');
+const {
+  generateNestedContentFromFilepath,
+} = require('../../modules/generate.js');
+
+const { dialog } = electron.remote ? electron.remote : electron;
 
 const styles = {
   closeButton: {
@@ -21,7 +25,7 @@ const styles = {
   },
 };
 
-class LibraryLayout extends Component {
+class Layout extends Component {
   state = {
     id: 'libraryRoot',
     basename: '',
@@ -43,14 +47,6 @@ class LibraryLayout extends Component {
   componentWillUnmount() {
     this.props.saveContentDataToParent(this.state);
   }
-
-  renderButtons = () => (
-    <div>
-      {this.renderFolderOpen()}
-      {this.renderLevelUp()}
-      {this.renderClose()}
-    </div>
-  );
 
   renderClose = () => (
     <IconButton
@@ -74,11 +70,11 @@ class LibraryLayout extends Component {
     </IconButton>
   );
 
-  renderLibary = () => {
+  renderLibrary = () => {
     const { basename, bookmark, contents, dirname, fullpath, id } = this.state;
 
     return (
-      <LibraryTable
+      <Table
         key={id}
         basename={basename}
         bookmark={bookmark}
@@ -153,26 +149,27 @@ class LibraryLayout extends Component {
   render() {
     const { fullpath } = this.state;
 
-    const libraryTable = fullpath ? this.renderLibary() : null;
+    const libraryTable = fullpath ? this.renderLibrary() : null;
     return (
       <div className="library" style={styles.libraryStyles}>
-        <LibraryHeader
-          position="fixed"
-          title="Library"
-          buttons={this.renderButtons()}
-          onContentClick={this.onClick}
-        />
+        <Header position="fixed" title="Body" onContentClick={this.onClick}>
+          <div>
+            {this.renderFolderOpen()}
+            {this.renderLevelUp()}
+            {this.renderClose()}
+          </div>
+        </Header>
         {libraryTable}
       </div>
     );
   }
 }
 
-LibraryLayout.defaultProps = {
+Layout.defaultProps = {
   root: null,
 };
 
-LibraryLayout.propTypes = {
+Layout.propTypes = {
   closeLibrary: PropTypes.func.isRequired,
   openComic: PropTypes.func.isRequired,
   root: PropTypes.string,
@@ -180,4 +177,4 @@ LibraryLayout.propTypes = {
   updateRoot: PropTypes.func.isRequired,
 };
 
-export default LibraryLayout;
+export default Layout;

@@ -18,6 +18,7 @@
     "compat/compat": "error",
     "consistent-return": "warn",
     "import/no-extraneous-dependencies": "off",
+    "import/no-named-as-default": "off",
     "import/no-unresolved": "error",
     "jsx-a11y/anchor-is-valid": "off",
     "no-console": "warn",
