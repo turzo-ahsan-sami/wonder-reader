@@ -118,6 +118,7 @@ class LibraryLayout extends Component {
           </div>
         </LibraryHeader>
         {fullpath && (
+          // Library expects only a few props
           <LibraryTable
             basename={basename}
             bookmark={bookmark}
