@@ -8,11 +8,11 @@ import Typography from '@material-ui/core/Typography';
 import headerStyle from '../headerStyle';
 import { buttonStyle, buttonTheme } from '../buttonStyle';
 
-const Header = ({ children, position, title }) => (
+const Header = ({ children, position }) => (
   <AppBar style={{ position }}>
     <Toolbar>
       <Typography variant="title" style={headerStyle}>
-        {title}
+        Library
       </Typography>
       <MuiThemeProvider theme={buttonTheme}>
         <div style={buttonStyle}>{children}</div>
@@ -24,7 +24,6 @@ const Header = ({ children, position, title }) => (
 Header.propTypes = {
   children: PropTypes.node.isRequired,
   position: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
 };
 
 export default Header;

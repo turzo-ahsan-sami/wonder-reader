@@ -1,9 +1,8 @@
-import IconButton from '@material-ui/core/IconButton';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import electron from 'electron';
-import { FaClose, FaFolderOpen, FaLevelUp } from 'react-icons/lib/fa';
 
+import * as IconButtons from './Icons';
 import Header from './Header';
 import Table from './Table/Table';
 
@@ -27,14 +26,13 @@ const styles = {
 
 class Layout extends Component {
   state = {
-    id: 'libraryRoot',
     basename: '',
     bookmark: '',
+    contents: [],
     dirname: '',
     fullpath: null,
     isDirectory: true,
     root: '',
-    contents: [],
   };
 
   componentDidMount() {
@@ -47,47 +45,6 @@ class Layout extends Component {
   componentWillUnmount() {
     this.props.saveContentDataToParent(this.state);
   }
-
-  renderClose = () => (
-    <IconButton
-      onClick={this.props.closeLibrary}
-      color="primary"
-      style={styles.closeButton}
-    >
-      <FaClose />
-    </IconButton>
-  );
-
-  renderFolderOpen = () => (
-    <IconButton onClick={this.openDirectory} color="primary">
-      <FaFolderOpen />
-    </IconButton>
-  );
-
-  renderLevelUp = () => (
-    <IconButton onClick={this.setParentAsLibrary} color="primary">
-      <FaLevelUp />
-    </IconButton>
-  );
-
-  renderLibrary = () => {
-    const { basename, bookmark, contents, dirname, fullpath, id } = this.state;
-
-    return (
-      <Table
-        key={id}
-        basename={basename}
-        bookmark={bookmark}
-        dirname={dirname}
-        fullpath={fullpath}
-        isDirectory
-        contents={contents}
-        onContentClick={this.onClick}
-        saveContentDataToParent={this.saveContentDataToParent}
-        saveContentsDataToParent={this.saveContentsDataToParent}
-      />
-    );
-  };
 
   onClick = (content) => {
     if (content.isDirectory) {
@@ -147,19 +104,29 @@ class Layout extends Component {
   };
 
   render() {
-    const { fullpath } = this.state;
+    const { basename, bookmark, contents, dirname, fullpath } = this.state;
 
-    const libraryTable = fullpath ? this.renderLibrary() : null;
     return (
       <div className="library" style={styles.libraryStyles}>
-        <Header position="fixed" title="Body" onContentClick={this.onClick}>
-          <div>
-            {this.renderFolderOpen()}
-            {this.renderLevelUp()}
-            {this.renderClose()}
-          </div>
+        <Header position="fixed" onContentClick={this.onClick}>
+          <IconButtons.FolderOpen onClick={this.openDirectory} />
+          <IconButtons.LevelUp onClick={this.setParentAsLibrary} />
+          <IconButtons.Close onClick={this.props.closeLibrary} />
         </Header>
-        {libraryTable}
+        {fullpath && (
+          <Table
+            key="libraryRoot"
+            basename={basename}
+            bookmark={bookmark}
+            dirname={dirname}
+            fullpath={fullpath}
+            isDirectory
+            contents={contents}
+            onContentClick={this.onClick}
+            saveContentDataToParent={this.saveContentDataToParent}
+            saveContentsDataToParent={this.saveContentsDataToParent}
+          />
+        )}
       </div>
     );
   }
