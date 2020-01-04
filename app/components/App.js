@@ -7,11 +7,11 @@ import Loading from './Loading';
 import PageViewer from './PageViewer';
 import theme from './theme';
 
-import encodepath from '../modules/encodepath';
 import File from '../modules/File';
+import encodepath from '../modules/encodepath';
+import turnPage from '../modules/turnPage';
 import { generateCenterfolds } from '../modules/generate';
 import { strainOnlyComics } from '../modules/strain';
-import turnPage from '../modules/turnPage';
 
 const fs = require('fs');
 const path = require('path');

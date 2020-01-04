@@ -8,8 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import headerStyle from '../headerStyle';
 import { buttonStyle, buttonTheme } from '../buttonStyle';
 
-const Header = ({ children, position }) => (
-  <AppBar style={{ position }}>
+const Header = ({ children }) => (
+  <AppBar style={{ position: 'fixed' }}>
     <Toolbar>
       <Typography variant="title" style={headerStyle}>
         Library
@@ -23,7 +23,6 @@ const Header = ({ children, position }) => (
 
 Header.propTypes = {
   children: PropTypes.node.isRequired,
-  position: PropTypes.string.isRequired,
 };
 
 export default Header;

@@ -3,13 +3,11 @@ import React from 'react';
 import { FaClose, FaFolderOpen, FaLevelUp } from 'react-icons/lib/fa';
 
 const styles = {
-  closeButton: {
-    background: '#ef5350',
-  },
+  background: '#ef5350',
 };
 
 const Close = onClick => (
-  <IconButton onClick={onClick} color="primary" style={styles.closeButton}>
+  <IconButton onClick={onClick} color="primary" style={styles}>
     <FaClose />
   </IconButton>
 );

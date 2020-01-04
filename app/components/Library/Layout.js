@@ -14,14 +14,9 @@ const {
 const { dialog } = electron.remote ? electron.remote : electron;
 
 const styles = {
-  closeButton: {
-    background: '#ef5350',
-  },
-  libraryStyles: {
-    marginTop: '64px',
-    maxHeight: 'calc(90vh - 64px)',
-    overflowY: 'auto',
-  },
+  marginTop: '64px',
+  maxHeight: 'calc(90vh - 64px)',
+  overflowY: 'auto',
 };
 
 class Layout extends Component {
@@ -107,8 +102,8 @@ class Layout extends Component {
     const { basename, bookmark, contents, dirname, fullpath } = this.state;
 
     return (
-      <div className="library" style={styles.libraryStyles}>
-        <Header position="fixed" onContentClick={this.onClick}>
+      <div className="library" style={styles}>
+        <Header>
           <IconButtons.FolderOpen onClick={this.openDirectory} />
           <IconButtons.LevelUp onClick={this.setParentAsLibrary} />
           <IconButtons.Close onClick={this.props.closeLibrary} />
