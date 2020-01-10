@@ -57,7 +57,7 @@ class Slider extends Component {
   render() {
     const { value } = this.props;
     return (
-      <div className="slider" id="sliderComponent" style={styles}>
+      <div className="slider" id="sliderComponent" style={styles.Slider}>
         <SliderInput onChange={this.onChange} value={value} />
         <div className="zoomLevel" style={styles.zoomLevel}>
           {value}
