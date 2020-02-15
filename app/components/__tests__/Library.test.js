@@ -21,4 +21,14 @@ describe('Library', () => {
     const wrapper = shallow(<Library {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
+
+  it('should update state with { root: filename }', () => {
+    const sampleFilepath = 'sampleFilepath';
+    const sampleLibrary = new Library({ loadedLibrary: 'root' });
+    sampleLibrary.setState = jest.fn();
+    sampleLibrary.updateRoot(sampleFilepath);
+    expect(sampleLibrary.setState).toHaveBeenCalledWith({
+      root: sampleFilepath,
+    });
+  });
 });

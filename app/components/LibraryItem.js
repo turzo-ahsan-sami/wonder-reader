@@ -2,11 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import { FaPercent } from 'react-icons/lib/fa';
 
-import { FaFolderO, FaFileArchiveO, FaPercent } from 'react-icons/lib/fa';
+import LibraryItemIcon from './LibraryItemIcon';
 // import Bookmark from './Bookmark.js';
-
-const iconSize = 20;
 
 const styles = {
   bbb: {
@@ -37,11 +36,7 @@ const LibraryItem = ({ basename, dirname, id, isDirectory, onRowClick }) => (
     style={styles.TableRow}
   >
     <TableCell numeric padding="checkbox" style={styles.wide}>
-      {isDirectory ? (
-        <FaFolderO size={iconSize} />
-      ) : (
-        <FaFileArchiveO size={iconSize} />
-      )}
+      <LibraryItemIcon iconSize={30} isDirectory={isDirectory} />
     </TableCell>
     <TableCell style={styles.three33}>{basename}</TableCell>
     <TableCell numeric style={styles.bbb}>
