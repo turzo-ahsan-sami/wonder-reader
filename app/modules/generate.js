@@ -36,7 +36,7 @@ const generateContent = (fullpath) => {
 
 // Must return array of object
 const generateContents = (content, cb) => {
-  console.log(content);
+  // console.log(content);
   if (content.isDirectory) {
     fs.readdir(content.fullpath, (err, files) => {
       if (!err) {

@@ -78,17 +78,19 @@ class LibraryLayout extends Component {
     this.setState({ contents: newContent });
   };
 
+  setContentToState = (content) => {
+    const newContent = content;
+    newContent.id = 'libraryRoot';
+    this.setState(newContent);
+  };
+
   setParentAsLibrary = () => {
     const { dirname } = this.state;
     this.updateContent(dirname);
   };
 
   updateContent = (filepath) => {
-    generateNestedContentFromFilepath(filepath, (content) => {
-      const newContent = content;
-      newContent.id = 'libraryRoot';
-      this.setState(newContent);
-    });
+    generateNestedContentFromFilepath(filepath, this.setContentToState);
   };
 
   render() {

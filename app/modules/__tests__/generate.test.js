@@ -3,8 +3,8 @@ import path from 'path';
 import {
   // generateCenterfolds,
   generateContent,
-  // generateContents,
-  // generateNestedContentFromFilepath
+  generateContents,
+  generateNestedContentFromFilepath,
 } from '../generate';
 
 describe('generate', () => {
@@ -32,6 +32,50 @@ describe('generate', () => {
         fullpath: __dirname,
         id: encodeURIComponent(__dirname),
         isDirectory: true,
+      });
+    });
+  });
+
+  describe('generateContents', () => {
+    const sampleDirectory = path.join(__dirname, 'sampleFiles');
+    const sampleFullpath = path.join(sampleDirectory, 'sample.txt.cbz');
+    const encodedSampleFullpath = encodeURIComponent(sampleFullpath);
+
+    it('should generate content from __dirname/sampleFiles', (done) => {
+      const content = generateContent(sampleDirectory);
+      generateContents(content, (err, contents) => {
+        expect(err).toBe(null);
+        expect(contents).toEqual([
+          {
+            basename: 'sample.txt.cbz',
+            bookmark: 0,
+            contents: [],
+            dirname: sampleDirectory,
+            extname: '.cbz',
+            fullpath: sampleFullpath,
+            id: encodedSampleFullpath,
+            isDirectory: false,
+          },
+        ]);
+        done();
+      });
+    });
+  });
+
+  describe('generateNestedContentFromFilepath', () => {
+    it('should generate content', (done) => {
+      generateNestedContentFromFilepath(__dirname, (content) => {
+        expect(content).toEqual({
+          basename: '__tests__',
+          bookmark: NaN,
+          contents: [],
+          dirname: path.dirname(__dirname),
+          extname: '',
+          fullpath: __dirname,
+          id: encodeURIComponent(__dirname),
+          isDirectory: true,
+        });
+        done();
       });
     });
   });
