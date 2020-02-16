@@ -7,7 +7,7 @@ ShallowWrapper {
   Symbol(enzyme.__unrendered__): <LibraryLayout
     closeLibrary={[MockFunction]}
     openComic={[MockFunction]}
-    root="./"
+    root="."
     saveContentDataToParent={[MockFunction]}
     updateRoot={[MockFunction]}
   />,

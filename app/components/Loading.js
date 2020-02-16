@@ -48,5 +48,5 @@ Loading.propTypes = {
   isLoading: PropTypes.bool.isRequired,
 };
 
-export { Loading };
+export { Loading, PaperElement };
 export default withStyles(styles)(Loading);

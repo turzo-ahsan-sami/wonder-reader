@@ -56,15 +56,8 @@ class LibraryLayout extends Component {
 
   // Function to open `Load` window, and pass path to generateContent, then setstate
   openDirectory = () => {
-    const { updateRoot } = this.props;
     const properties = ['openDirectory'];
-    dialog.showOpenDialog({ properties }, (filepaths) => {
-      if (Array.isArray(filepaths)) {
-        const filepath = filepaths[0];
-        updateRoot(filepath);
-        this.updateContent(filepath);
-      }
-    });
+    dialog.showOpenDialog({ properties }, this.updateRoot);
   };
 
   saveContentDataToParent = (content) => {
@@ -79,7 +72,7 @@ class LibraryLayout extends Component {
   };
 
   setContentToState = (content) => {
-    const newContent = content;
+    const newContent = copyDeepObject(content);
     newContent.id = 'libraryRoot';
     this.setState(newContent);
   };
@@ -91,6 +84,14 @@ class LibraryLayout extends Component {
 
   updateContent = (filepath) => {
     generateNestedContentFromFilepath(filepath, this.setContentToState);
+  };
+
+  updateRoot = ([filepath]) => {
+    if (filepath) {
+      const { updateRoot } = this.props;
+      updateRoot(filepath);
+      this.updateContent(filepath);
+    }
   };
 
   render() {
