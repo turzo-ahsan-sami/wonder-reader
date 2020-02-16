@@ -1,7 +1,8 @@
+import fs from 'fs';
 import path from 'path';
 
 import {
-  // generateCenterfolds,
+  generateCenterfolds,
   generateContent,
   generateContents,
   generateNestedContentFromFilepath,
@@ -36,10 +37,29 @@ describe('generate', () => {
     });
   });
 
+  describe('generateCenterfolds', () => {
+    it('should create an array of valid centerfold images', (done) => {
+      const sampleDirectory = path.join(__dirname, 'sampleFiles');
+      const createFilepath = file => path.join(sampleDirectory, file);
+      const expectedCenterfoldIndex = 2;
+      fs.readdir(sampleDirectory, (_, files) => {
+        const filepaths = files.map(createFilepath);
+        const centerfolds = generateCenterfolds(
+          files.map(file => path.join(sampleDirectory, file)),
+        );
+        expect(centerfolds).toEqual([expectedCenterfoldIndex]);
+        expect(filepaths[expectedCenterfoldIndex]).toBe(
+          createFilepath('03-sample-centerfold.jpg'),
+        );
+        done();
+      });
+    });
+  });
+
   describe('generateContents', () => {
     const sampleDirectory = path.join(__dirname, 'sampleFiles');
-    const sampleFullpath = path.join(sampleDirectory, 'sample.txt.cbz');
-    const encodedSampleFullpath = encodeURIComponent(sampleFullpath);
+    const sampleFilepath = path.join(sampleDirectory, 'sample.txt.cbz');
+    const encodedSampleFullpath = encodeURIComponent(sampleFilepath);
 
     it('should generate content from __dirname/sampleFiles', (done) => {
       const content = generateContent(sampleDirectory);
@@ -52,11 +72,30 @@ describe('generate', () => {
             contents: [],
             dirname: sampleDirectory,
             extname: '.cbz',
-            fullpath: sampleFullpath,
+            fullpath: sampleFilepath,
             id: encodedSampleFullpath,
             isDirectory: false,
           },
         ]);
+        done();
+      });
+    });
+
+    it('should generate an empty object from __dirname/sampleFiles/sample.txt.cbr', (done) => {
+      const content = generateContent(sampleFilepath);
+      generateContents(content, (err, contents) => {
+        expect(err).toBe(null);
+        expect(contents).toEqual({});
+        done();
+      });
+    });
+
+    it('should generate an empty object from an FS error', (done) => {
+      const content = generateContent(sampleFilepath);
+      content.isDirectory = true;
+      generateContents(content, (err, contents) => {
+        expect(err).toBe(null);
+        expect(contents).toEqual({});
         done();
       });
     });
