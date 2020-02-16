@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+/* istanbul ignore next */
 const styles = theme => ({
   LoaderElement: {
     position: 'absolute',
