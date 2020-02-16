@@ -3,8 +3,10 @@ import React, { Component } from 'react';
 
 import SliderInput from './SliderInput';
 
-const boxShadow =
-  'inset rgb(135, 169, 214) 0px 3px 0px, inset rgba(0, 0, 0, 0.15) 0px 10px 10px';
+const boxShadow = [
+  'inset rgb(135, 169, 214) 0px 3px 0px',
+  'inset rgba(0, 0, 0, 0.15) 0px 10px 10px',
+].join(', ');
 
 const styles = {
   Slider: {
@@ -50,12 +52,13 @@ class Slider extends Component {
   onChange = (e) => {
     const { onChange } = this.props;
     const { value } = e.target;
-    console.log(value);
+    // console.log(value);
     onChange(value);
   };
 
   render() {
     const { value } = this.props;
+
     return (
       <div className="slider" id="sliderComponent" style={styles.Slider}>
         <SliderInput onChange={this.onChange} value={value} />

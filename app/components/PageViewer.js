@@ -55,7 +55,7 @@ class PageViewer extends Component {
   }
 
   render() {
-    console.log('PageViewer:', this.props);
+    // console.log('PageViewer:', this.props);
     const { pages, zoomLevel } = this.props;
 
     return (

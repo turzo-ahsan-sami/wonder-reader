@@ -4,6 +4,7 @@ import Enzyme, { shallow } from 'enzyme';
 import React from 'react';
 
 import LibraryLayout from '../LibraryLayout';
+import LibraryTable from '../LibraryTable';
 
 const {
   generateNestedContentFromFilepath,
@@ -45,7 +46,34 @@ describe('LibraryLayout', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('should render a LibraryTable with a truthy state.fullpath', () => {
+    const wrapper = shallow(<LibraryLayout {...props} />);
+    wrapper.setState({ fullpath: 'sample' });
+    expect(wrapper.find(LibraryTable)).toHaveLength(1);
+  });
+
   describe('Class Functions', () => {
+    describe('onClick', () => {
+      const fullpath = 'sample';
+      const createArguments = isDirectory => ({
+        fullpath,
+        isDirectory,
+      });
+      it('should updateContent if target.isDirectory', () => {
+        const wrapper = new LibraryLayout(props);
+        wrapper.updateContent = jest.fn();
+        wrapper.onClick(createArguments(true));
+        expect(wrapper.updateContent).toHaveBeenCalledWith(fullpath);
+      });
+
+      it('should props.openComic if !target.isDirectory', () => {
+        const wrapper = new LibraryLayout(props);
+        wrapper.updateContent = jest.fn();
+        wrapper.onClick(createArguments(false));
+        expect(props.openComic).toHaveBeenCalledWith(fullpath);
+      });
+    });
+
     describe('openDirectory', () => {
       it('should show dialog', () => {
         const wrapper = new LibraryLayout(props);
@@ -97,15 +125,35 @@ describe('LibraryLayout', () => {
         done();
       });
     });
-  });
 
-  it('should generateNestedContent and set that data to state', () => {
-    const wrapper = new LibraryLayout(props);
-    wrapper.setContentToState = jest.fn();
-    wrapper.updateContent('.');
-    expect(generateNestedContentFromFilepath).toHaveBeenCalledWith(
-      '.',
-      wrapper.setContentToState,
-    );
+    describe('updateContent', () => {
+      it('should generateNestedContent and set that data to state', () => {
+        const wrapper = new LibraryLayout(props);
+        wrapper.setContentToState = jest.fn();
+        wrapper.updateContent('.');
+        expect(generateNestedContentFromFilepath).toHaveBeenCalledWith(
+          '.',
+          wrapper.setContentToState,
+        );
+      });
+    });
+
+    describe('updateRoot', () => {
+      it('should updateContent with a valid [filepath]', () => {
+        const sampleFilepath = 'sample';
+        const wrapper = new LibraryLayout(props);
+        wrapper.updateContent = jest.fn();
+        wrapper.updateRoot([sampleFilepath]);
+        expect(wrapper.updateContent).toHaveBeenCalledWith(sampleFilepath);
+      });
+
+      it('should not updateContent with a invalid [filepath]', () => {
+        const sampleFilepath = '';
+        const wrapper = new LibraryLayout(props);
+        wrapper.updateContent = jest.fn();
+        wrapper.updateRoot([sampleFilepath]);
+        expect(wrapper.updateContent).not.toHaveBeenCalled();
+      });
+    });
   });
 });

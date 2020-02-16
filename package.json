@@ -33,7 +33,9 @@
     "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings -r babel-register ./internals/scripts/RunTests.js e2e",
     "test-watch": "npm test -- --watch"
   },
-  "browserslist": ["electron 1.6"],
+  "browserslist": [
+    "electron 1.6"
+  ],
   "lint-staged": {
     "*.js": [
       "cross-env NODE_ENV=development eslint --cache --format=node_modules/eslint-formatter-pretty",
@@ -195,7 +197,7 @@
     "prettier": "1.13.5",
     "prop-types": "15.6.1",
     "react-icons": "2.2.7",
-    "react-test-renderer": "16.4.0",
+    "react-test-renderer": "^16.12.0",
     "redux-logger": "3.0.6",
     "rimraf": "2.6.2",
     "sinon": "5.1.1",

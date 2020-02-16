@@ -35,6 +35,7 @@ class LibraryLayout extends Component {
     root: '',
   };
 
+  /* istanbul ignore next */
   componentDidMount() {
     const { root } = this.props;
     if (root) {
@@ -42,6 +43,7 @@ class LibraryLayout extends Component {
     }
   }
 
+  /* istanbul ignore next */
   componentWillUnmount() {
     this.props.saveContentDataToParent(this.state);
   }
