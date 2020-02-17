@@ -1,28 +1,27 @@
 // strain.js cleans out the dirty files, like .DS_Store
-const { copyArray } = require('./copyData');
 const path = require('path');
 
 const polaritySort = require('../modules/polaritySort.js');
+const { copyArray } = require('../modules/copyData');
 
 const comicTypes = ['.cbr', '.cbz'];
 const imageTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
 
 // Determiner Functions
-const isSomething = (filename, types) =>
+const isSomething = types => filename =>
   types.includes(path.extname(filename).toLowerCase());
 
-const isComic = filename => isSomething(filename, comicTypes);
-const isImage = filename => isSomething(filename, imageTypes);
+const isComic = isSomething(comicTypes);
+const isImage = isSomething(imageTypes);
 
 // Array Functions
-const sortArrayByAlpha = ARRAY =>
-  copyArray(ARRAY).sort((a, b) => polaritySort(a, b));
+const isFileAFileType = fileTypes => file =>
+  fileTypes.includes(path.extname(file));
+const sortArrayByAlpha = ARRAY => copyArray(ARRAY).sort(polaritySort);
 
 // Cleans out non image files from ARRAY
 const strainer = fileTypes => files =>
-  sortArrayByAlpha(
-    files.filter(file => fileTypes.includes(path.extname(file))),
-  );
+  files.filter(isFileAFileType(fileTypes)).sort(polaritySort);
 
 const strainComics = strainer(comicTypes);
 const strainOnlyComics = strainer(comicTypes);
